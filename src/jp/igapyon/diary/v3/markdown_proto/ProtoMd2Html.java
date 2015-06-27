@@ -31,10 +31,16 @@ public class ProtoMd2Html {
 	}
 
 	public static void main(final String[] args) throws IOException {
+
 		final StringWriter strWriter = new StringWriter();
 		final BufferedWriter writer = new BufferedWriter(strWriter);
+
+		final HtmlDocumentBuilder builder = new HtmlDocumentBuilder(writer);
+		// without head and body.
+		builder.setEmitAsDocument(false);
+
 		final MarkupParser parser = new MarkupParser(new MarkdownLanguage(),
-				new HtmlDocumentBuilder(writer));
+				builder);
 		parser.parse(readTextFile(new File(
 				"./src/jp/igapyon/diary/v3/markdown_proto/test001.md")));
 
