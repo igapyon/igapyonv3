@@ -28,8 +28,20 @@ public class ProtoWiki2Html {
 
 		{
 			final IgapyonWikiModel model = new IgapyonWikiModel("", "");
+			// model.addCodeFormatter("java", new JavaCodeFilter());
+
+			writer.write(model.render("= Level 1 =", false));
+			writer.write(model.render("== Level 2 ==", false));
+			writer.write(model.render("=== Level 3 ===", false));
+			writer.write(model.render("==== Level 4 ====", false));
 			writer.write(model.render("*もんげーシンプルな [[Hello World]] wiki タグなう.",
 					false));
+			writer.write(model
+					.render("<source lang=\"java\" title=\"title\">public class MyClass {}</source>",
+							false));
+			// writer.write(model
+			// .render("<source lang=\"java\" collapse=\"true\" first-line=\"2\" highlight=\"[4,6]\" title=\"title\">public class MyClass {}</source>",
+			// false));
 		}
 
 		writer.write("</div>\n");
