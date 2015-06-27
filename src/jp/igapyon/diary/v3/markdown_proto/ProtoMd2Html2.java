@@ -7,6 +7,7 @@ import java.io.StringWriter;
 
 import jp.igapyon.diary.v3.util.IgapyonV3Util;
 
+import org.pegdown.Extensions;
 import org.pegdown.PegDownProcessor;
 
 public class ProtoMd2Html2 {
@@ -15,7 +16,7 @@ public class ProtoMd2Html2 {
 		final StringWriter strWriter = new StringWriter();
 		final BufferedWriter writer = new BufferedWriter(strWriter);
 
-		final PegDownProcessor processor = new PegDownProcessor();
+		final PegDownProcessor processor = new PegDownProcessor(Extensions.ALL);
 		String aaa = processor
 				.markdownToHtml(IgapyonV3Util.readTextFile(new File(
 						"./src/jp/igapyon/diary/v3/markdown_proto/test001.md")));
