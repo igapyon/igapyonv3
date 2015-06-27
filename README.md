@@ -13,3 +13,7 @@ Written in #‎Java
 Using Java Wikipedia API (Bliki engine) to convert between MediaWiki and HTML. 
   https://code.google.com/p/gwtwiki/
   https://code.google.com/p/gwtwiki/downloads/list
+
+  
+# TODO
+Update jars in bliki.core.libs.
