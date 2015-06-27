@@ -21,7 +21,7 @@ public class ProtoWiki2Html {
 		writer.write("<meta name=\"description\" content=\"\">\n");
 		writer.write("<meta name=\"author\" content=\"\">\n");
 		writer.write("<title>タイトル</title>\n");
-		writer.write("<link rel=\"stylesheet\" href=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css\">\n");
+		writer.write("<link rel=\"stylesheet\" href=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css\">\n");
 		writer.write("</head>\n");
 		writer.write("<body>\n");
 		writer.write("<div class=\"container\">");
@@ -34,8 +34,8 @@ public class ProtoWiki2Html {
 
 		writer.write("</div>\n");
 
-		writer.write("<script src=\"//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js\"></script>\n");
-		writer.write("<script src=\"//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js\"></script>\n");
+		writer.write("<script src=\"//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js\"></script>\n");
+		writer.write("<script src=\"//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js\"></script>\n");
 		writer.write("</body>\n");
 		writer.write("</html>\n");
 
