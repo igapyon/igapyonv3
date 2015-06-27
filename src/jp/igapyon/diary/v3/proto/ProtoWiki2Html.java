@@ -1,8 +1,5 @@
 package jp.igapyon.diary.v3.proto;
 
-import java.io.IOException;
-import java.io.StringWriter;
-
 /**
  * Now checking...
  * https://bitbucket.org/axelclk/info.bliki.wiki/wiki/Mediawiki2HTML
@@ -11,15 +8,9 @@ import java.io.StringWriter;
  */
 public class ProtoWiki2Html {
 	public static void main(final String[] args) {
-		final StringWriter writer = new StringWriter();
-		try {
-			IgapyonWikiModel.toHtml("もんげーシンプルな [[Hello World]] wiki タグなう.",
-					writer);
-			writer.flush();
-			writer.close();
-		} catch (IOException ex) {
-			ex.printStackTrace();
-		}
-		System.out.println("[" + writer.toString() + "]");
+		final IgapyonWikiModel model = new IgapyonWikiModel("", "");
+		final String result = model.render(
+				"もんげーシンプルな [[Hello World]] wiki タグなう.", false);
+		System.out.println("[" + result + "]");
 	}
 }
