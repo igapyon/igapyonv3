@@ -18,12 +18,11 @@ public class ProtoMd2Html {
 		final BufferedReader reader = new BufferedReader(new InputStreamReader(
 				new FileInputStream(file), "UTF-8"));
 		for (;;) {
-			final String line = reader.readLine();
-			if (line == null) {
+			final int iRead = reader.read();
+			if (iRead < 0) {
 				break;
 			}
-			writer.write(line);
-			writer.write("\n");
+			writer.write((char) iRead);
 		}
 		reader.close();
 		writer.close();
