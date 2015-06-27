@@ -1,6 +1,9 @@
 package jp.igapyon.diary.v3.proto;
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.StringWriter;
 
 /**
@@ -27,21 +30,24 @@ public class ProtoWiki2Html {
 		writer.write("<div class=\"container\">");
 
 		{
+			final BufferedReader reader = new BufferedReader(
+					new InputStreamReader(new FileInputStream(
+							"./src/jp/igapyon/diary/v3/proto/test001.wiki")));
+			final StringWriter wikiInput = new StringWriter();
+			for (;;) {
+				final String line = reader.readLine();
+				if (line == null) {
+					break;
+				}
+				wikiInput.write(line);
+				wikiInput.write("\n");
+			}
+			wikiInput.close();
+
 			final IgapyonWikiModel model = new IgapyonWikiModel("", "");
 			// model.addCodeFormatter("java", new JavaCodeFilter());
 
-			writer.write(model.render("= Level 1 =", false));
-			writer.write(model.render("== Level 2 ==", false));
-			writer.write(model.render("=== Level 3 ===", false));
-			writer.write(model.render("==== Level 4 ====", false));
-			writer.write(model.render("*もんげーシンプルな [[Hello World]] wiki タグなう.",
-					false));
-			writer.write(model
-					.render("<source lang=\"java\">public class MyClass {}</source>",
-							false));
-			// writer.write(model
-			// .render("<source lang=\"java\" collapse=\"true\" first-line=\"2\" highlight=\"[4,6]\" title=\"title\">public class MyClass {}</source>",
-			// false));
+			writer.write(model.render(wikiInput.toString(), false));
 		}
 
 		writer.write("</div>\n");
