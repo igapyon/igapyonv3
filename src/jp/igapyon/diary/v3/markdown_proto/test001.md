@@ -11,3 +11,4 @@ public class MyClass {}
 
 :::java
 public class MyClass {}
+:::
