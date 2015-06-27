@@ -2,7 +2,7 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
-	<classpathentry kind="lib" path="lib/mylyn/org.eclipse.mylyn.wikitext.core_2.5.0.v20150522-1430.jar"/>
+	<classpathentry kind="lib" path="lib/mylyn/org.eclipse.mylyn.wikitext.core_2.5.0.v20150522-1430.jar" sourcepath="lib/mylyn/org.eclipse.mylyn.wikitext.core.source_2.5.0.v20150522-1430.jar"/>
 	<classpathentry kind="lib" path="lib/mylyn/org.eclipse.mylyn.wikitext.markdown.core_2.5.0.v20150508-2326.jar" sourcepath="lib/mylyn/org.eclipse.mylyn.wikitext.markdown.core.source_2.5.0.v20150508-2326.jar"/>
 	<classpathentry kind="lib" path="lib/mylyn/com.google.gson_2.2.4.v201311231704.jar"/>
 	<classpathentry kind="lib" path="lib/mylyn/com.google.gwtorm_1.1.4.v201112241444.jar"/>
