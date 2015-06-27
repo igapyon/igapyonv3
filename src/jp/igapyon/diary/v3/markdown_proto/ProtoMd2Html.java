@@ -17,12 +17,13 @@ public class ProtoMd2Html {
 		final StringWriter writer = new StringWriter();
 		final BufferedReader reader = new BufferedReader(new InputStreamReader(
 				new FileInputStream(file), "UTF-8"));
+		final char[] buf = new char[2048];
 		for (;;) {
-			final int iRead = reader.read();
-			if (iRead < 0) {
+			final int iReadLen = reader.read(buf);
+			if (iReadLen < 0) {
 				break;
 			}
-			writer.write((char) iRead);
+			writer.write(buf, 0, iReadLen);
 		}
 		reader.close();
 		writer.close();
