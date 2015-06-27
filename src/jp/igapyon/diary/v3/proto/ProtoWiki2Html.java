@@ -37,7 +37,7 @@ public class ProtoWiki2Html {
 			writer.write(model.render("*もんげーシンプルな [[Hello World]] wiki タグなう.",
 					false));
 			writer.write(model
-					.render("<source lang=\"java\" title=\"title\">public class MyClass {}</source>",
+					.render("<source lang=\"java\">public class MyClass {}</source>",
 							false));
 			// writer.write(model
 			// .render("<source lang=\"java\" collapse=\"true\" first-line=\"2\" highlight=\"[4,6]\" title=\"title\">public class MyClass {}</source>",

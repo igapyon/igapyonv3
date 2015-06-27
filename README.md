@@ -17,8 +17,8 @@ Using Java Wikipedia API (Bliki engine) to convert between MediaWiki and HTML.
 # Memo
 MediaWiki: Help:Formatting
   https://www.mediawiki.org/wiki/Help:Formatting
-  
-
+MediaWiki: Extension:SyntaxHighlighter
+  https://www.mediawiki.org/wiki/Extension:SyntaxHighlighter
 
 # TODO
 Update jars in bliki.core.libs.
