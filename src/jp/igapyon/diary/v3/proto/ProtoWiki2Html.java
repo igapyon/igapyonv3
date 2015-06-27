@@ -28,7 +28,7 @@ public class ProtoWiki2Html {
 
 		{
 			final IgapyonWikiModel model = new IgapyonWikiModel("", "");
-			writer.write(model.render("もんげーシンプルな [[Hello World]] wiki タグなう.",
+			writer.write(model.render("*もんげーシンプルな [[Hello World]] wiki タグなう.",
 					false));
 		}
 

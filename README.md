@@ -14,6 +14,11 @@ Using Java Wikipedia API (Bliki engine) to convert between MediaWiki and HTML.
   https://code.google.com/p/gwtwiki/
   https://code.google.com/p/gwtwiki/downloads/list
 
+# Memo
+MediaWiki: Help:Formatting
+  https://www.mediawiki.org/wiki/Help:Formatting
   
+
+
 # TODO
 Update jars in bliki.core.libs.
