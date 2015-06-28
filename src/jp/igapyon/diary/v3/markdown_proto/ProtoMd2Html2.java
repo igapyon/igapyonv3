@@ -27,8 +27,11 @@ public class ProtoMd2Html2 {
 													 * , PegDownPlugins
 													 */);
 		final String bodyMarkdown = processor
-				.markdownToHtml(IgapyonV3Util.readTextFile(new File(
-						"./src/jp/igapyon/diary/v3/markdown_proto/test001.md")));
+				.markdownToHtml(
+						IgapyonV3Util
+								.readTextFile(new File(
+										"./src/jp/igapyon/diary/v3/markdown_proto/test001.md")),
+						new MyLinkRenderer());
 		writer.write(bodyMarkdown);
 
 		IgapyonV3Util.writePostHtml(writer);
