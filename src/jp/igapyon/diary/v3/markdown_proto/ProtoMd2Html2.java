@@ -27,14 +27,15 @@ public class ProtoMd2Html2 {
 		writer.write("<link rel=\"stylesheet\" href=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css\">\n");
 		writer.write("</head>\n");
 		writer.write("<body>\n");
-		writer.write("<div class=\"container\">");
+		// Use container-fluid instead container.
+		writer.write("<div class=\"container-fluid\">");
 
 		final PegDownProcessor processor = new PegDownProcessor(
 				Extensions.FENCED_CODE_BLOCKS /* , PegDownPlugins */);
-		String aaa = processor
+		final String bodyMarkdown = processor
 				.markdownToHtml(IgapyonV3Util.readTextFile(new File(
 						"./src/jp/igapyon/diary/v3/markdown_proto/test001.md")));
-		writer.write(aaa);
+		writer.write(bodyMarkdown);
 
 		writer.write("</div>\n");
 
@@ -43,7 +44,7 @@ public class ProtoMd2Html2 {
 		writer.write("<!-- Compiled and minified JavaScript -->\n");
 		writer.write("<script src=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js\"></script>\n");
 		writer.write("</body>\n");
-		writer.write("</html>\n");
+		writer.write("</html>");
 
 		writer.close();
 		System.out.println(writer.toString());
