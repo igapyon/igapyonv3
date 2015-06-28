@@ -16,7 +16,10 @@ public class ProtoMd2Html2 {
 				"Toshiki Iga");
 
 		final PegDownProcessor processor = new PegDownProcessor(
-				Extensions.FENCED_CODE_BLOCKS /* , PegDownPlugins */);
+				Extensions.FENCED_CODE_BLOCKS | Extensions.TABLES /*
+																 * ,
+																 * PegDownPlugins
+																 */);
 		final String bodyMarkdown = processor
 				.markdownToHtml(IgapyonV3Util.readTextFile(new File(
 						"./src/jp/igapyon/diary/v3/markdown_proto/test001.md")));
