@@ -7,12 +7,14 @@ import org.pegdown.LinkRenderer;
 import org.pegdown.ast.WikiLinkNode;
 
 public class MyLinkRenderer extends LinkRenderer {
+	/**
+	 * Override Wiki link.
+	 */
 	@Override
-	public Rendering render(WikiLinkNode node) {
-		System.out.println("TRACE LinkRenderer#MyLinkRenderer()");
+	public Rendering render(final WikiLinkNode node) {
 		try {
-			// To Hatena keywords.
-			String url = "http://d.hatena.ne.jp/keyword/"
+			// Treat as Hatena keywords.
+			final String url = "http://d.hatena.ne.jp/keyword/"
 					+ URLEncoder.encode(node.getText().replace(' ', '-'),
 							"UTF-8") + "";
 			return new Rendering(url, node.getText());
@@ -20,5 +22,4 @@ public class MyLinkRenderer extends LinkRenderer {
 			throw new IllegalStateException();
 		}
 	}
-
 }
