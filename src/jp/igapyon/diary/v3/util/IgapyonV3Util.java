@@ -33,16 +33,18 @@ public class IgapyonV3Util {
 		return writer.toString();
 	}
 
-	public static void writePreHtml(final Writer writer) throws IOException {
+	public static void writePreHtml(final Writer writer, final String title,
+			final String description, final String author) throws IOException {
 		writer.write("<!DOCTYPE html>\n");
 		writer.write("<html lang=\"ja\">\n");
 		writer.write("<head>\n");
 		writer.write("<meta charset=\"utf-8\">\n");
 		writer.write("<meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">\n");
 		writer.write("<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n");
-		writer.write("<meta name=\"description\" content=\"\">\n");
-		writer.write("<meta name=\"author\" content=\"\">\n");
-		writer.write("<title>タイトル</title>\n");
+		writer.write("<meta name=\"description\" content=\"" + description
+				+ "\">\n");
+		writer.write("<meta name=\"author\" content=\"" + author + "\">\n");
+		writer.write("<title>" + title + "</title>\n");
 		writer.write("<!-- Compiled and minified CSS -->\n");
 		writer.write("<link rel=\"stylesheet\" href=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css\">\n");
 

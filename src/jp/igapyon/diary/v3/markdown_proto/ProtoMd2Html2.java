@@ -12,7 +12,8 @@ import org.pegdown.PegDownProcessor;
 public class ProtoMd2Html2 {
 	public static void main(final String[] args) throws IOException {
 		final StringWriter writer = new StringWriter();
-		IgapyonV3Util.writePreHtml(writer);
+		IgapyonV3Util.writePreHtml(writer, "Title", "Descriptoin",
+				"Toshiki Iga");
 
 		final PegDownProcessor processor = new PegDownProcessor(
 				Extensions.FENCED_CODE_BLOCKS /* , PegDownPlugins */);
