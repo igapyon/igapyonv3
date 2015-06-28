@@ -20,4 +20,6 @@ http://www.igapyon.jp/
 
 [[Java]]
 
+[いがぴょん](http://www.igapyon.jp "うげうげ")
+
 Support ~~strikethroughs~~
