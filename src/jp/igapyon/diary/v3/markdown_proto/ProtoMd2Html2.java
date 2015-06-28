@@ -16,10 +16,16 @@ public class ProtoMd2Html2 {
 				"Toshiki Iga");
 
 		final PegDownProcessor processor = new PegDownProcessor(
-				Extensions.FENCED_CODE_BLOCKS | Extensions.TABLES /*
-																 * ,
-																 * PegDownPlugins
-																 */);
+				Extensions.AUTOLINKS | Extensions.STRIKETHROUGH
+						| Extensions.FENCED_CODE_BLOCKS | Extensions.TABLES
+						| Extensions.WIKILINKS /*
+												 * Support [[Wiki-style links]].
+												 * URL rendering is performed by
+												 * the active {@link
+												 * LinkRenderer}.
+												 *//*
+													 * , PegDownPlugins
+													 */);
 		final String bodyMarkdown = processor
 				.markdownToHtml(IgapyonV3Util.readTextFile(new File(
 						"./src/jp/igapyon/diary/v3/markdown_proto/test001.md")));
