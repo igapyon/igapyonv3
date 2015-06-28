@@ -19,3 +19,5 @@ Name | Age
 http://www.igapyon.jp/
 
 [[Java]]
+
+Support ~~strikethroughs~~
