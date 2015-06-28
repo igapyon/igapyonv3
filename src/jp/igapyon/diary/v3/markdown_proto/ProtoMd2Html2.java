@@ -21,7 +21,10 @@ public class ProtoMd2Html2 {
 		writer.write("<meta name=\"description\" content=\"\">\n");
 		writer.write("<meta name=\"author\" content=\"\">\n");
 		writer.write("<title>タイトル</title>\n");
+		writer.write("<!-- Compiled and minified CSS -->\n");
 		writer.write("<link rel=\"stylesheet\" href=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css\">\n");
+		writer.write("<!-- Optional theme -->\n");
+		writer.write("<link rel=\"stylesheet\" href=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css\">\n");
 		writer.write("</head>\n");
 		writer.write("<body>\n");
 		writer.write("<div class=\"container\">");
@@ -35,8 +38,10 @@ public class ProtoMd2Html2 {
 
 		writer.write("</div>\n");
 
-		writer.write("<script src=\"//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js\"></script>\n");
-		writer.write("<script src=\"//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js\"></script>\n");
+		writer.write("<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->\n");
+		writer.write("<script src=\"https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js\"></script>\n");
+		writer.write("<!-- Compiled and minified JavaScript -->\n");
+		writer.write("<script src=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js\"></script>\n");
 		writer.write("</body>\n");
 		writer.write("</html>\n");
 
