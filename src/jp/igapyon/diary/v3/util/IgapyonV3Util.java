@@ -45,16 +45,18 @@ public class IgapyonV3Util {
 		writer.write("<title>タイトル</title>\n");
 		writer.write("<!-- Compiled and minified CSS -->\n");
 		writer.write("<link rel=\"stylesheet\" href=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css\">\n");
+
+		// see: http://getbootstrap.com/examples/theme/
 		writer.write("<!-- Optional theme -->\n");
 		writer.write("<link rel=\"stylesheet\" href=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css\">\n");
 		writer.write("</head>\n");
 		writer.write("<body>\n");
 		// Use container-fluid instead container.
-		writer.write("<div class=\"container-fluid\">");
+		writer.write("<div class=\"container-fluid\">\n");
 	}
 
 	public static void writePostHtml(final Writer writer) throws IOException {
-		writer.write("</div><!-- container-fluid -->\n");
+		writer.write("\n</div><!-- container-fluid -->\n");
 
 		writer.write("<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->\n");
 		writer.write("<script src=\"https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js\"></script>\n");
