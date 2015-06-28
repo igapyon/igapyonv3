@@ -6,8 +6,16 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.StringWriter;
+import java.io.Writer;
 
 public class IgapyonV3Util {
+	/**
+	 * Read string from text file.
+	 * 
+	 * @param file
+	 * @return
+	 * @throws IOException
+	 */
 	public static String readTextFile(final File file) throws IOException {
 		final StringWriter writer = new StringWriter();
 		final BufferedReader reader = new BufferedReader(new InputStreamReader(
@@ -23,5 +31,36 @@ public class IgapyonV3Util {
 		reader.close();
 		writer.close();
 		return writer.toString();
+	}
+
+	public static void writePreHtml(final Writer writer) throws IOException {
+		writer.write("<!DOCTYPE html>\n");
+		writer.write("<html lang=\"ja\">\n");
+		writer.write("<head>\n");
+		writer.write("<meta charset=\"utf-8\">\n");
+		writer.write("<meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">\n");
+		writer.write("<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n");
+		writer.write("<meta name=\"description\" content=\"\">\n");
+		writer.write("<meta name=\"author\" content=\"\">\n");
+		writer.write("<title>タイトル</title>\n");
+		writer.write("<!-- Compiled and minified CSS -->\n");
+		writer.write("<link rel=\"stylesheet\" href=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css\">\n");
+		writer.write("<!-- Optional theme -->\n");
+		writer.write("<link rel=\"stylesheet\" href=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css\">\n");
+		writer.write("</head>\n");
+		writer.write("<body>\n");
+		// Use container-fluid instead container.
+		writer.write("<div class=\"container-fluid\">");
+	}
+
+	public static void writePostHtml(final Writer writer) throws IOException {
+		writer.write("</div><!-- container-fluid -->\n");
+
+		writer.write("<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->\n");
+		writer.write("<script src=\"https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js\"></script>\n");
+		writer.write("<!-- Compiled and minified JavaScript -->\n");
+		writer.write("<script src=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js\"></script>\n");
+		writer.write("</body>\n");
+		writer.write("</html>");
 	}
 }
