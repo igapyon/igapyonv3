@@ -67,7 +67,10 @@ public class IgapyonV3Util {
 		writer.write("<script src=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js\"></script>\n");
 		writer.write("<script>\n");
 		writer.write("$(function() {\n");
+		writer.write("  $(\"h2\").addClass(\"alert alert-warning\");\n");
+		writer.write("  $(\"h3\").addClass(\"bg-success\");\n");
 		writer.write("  $(\"table\").addClass(\"table table-bordered\");\n");
+
 		writer.write("});\n");
 		writer.write("</script>\n");
 
