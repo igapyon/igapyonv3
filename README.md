@@ -5,20 +5,12 @@ Diary system called Igapyon v3.
 
 Hashtag: #‎igapyonv3‬
 
-Data format: ‪#‎MediaWiki
+Data format: ‪#‎Markdown
 Web design: ‪#‎Bootstrap‬
 
 Written in #‎Java
 
-Using Java Wikipedia API (Bliki engine) to convert between MediaWiki and HTML. 
-  https://code.google.com/p/gwtwiki/
-  https://code.google.com/p/gwtwiki/downloads/list
-
 # Memo
-MediaWiki: Help:Formatting
-  https://www.mediawiki.org/wiki/Help:Formatting
-MediaWiki: Extension:SyntaxHighlighter
-  https://www.mediawiki.org/wiki/Extension:SyntaxHighlighter
+http://getbootstrap.com/components/
 
 # TODO
-Update jars in bliki.core.libs.

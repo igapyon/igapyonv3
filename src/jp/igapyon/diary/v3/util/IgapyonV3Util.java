@@ -56,6 +56,14 @@ public class IgapyonV3Util {
 		writer.write("<body>\n");
 		// Use container-fluid instead container.
 		writer.write("<div class=\"container-fluid\">\n");
+
+		writer.write("<div class=\"jumbotron\">\n");
+		writer.write("  <h1>トップレベルヘッダー</h1>\n");
+		writer.write("  <p>あと、ここに画像入れたい。</p>\n");
+		writer.write("  <p>ここに description を書く方向性にて...。Markdown には渡さず自力で処理。あるいは、ここのみ取り出して別途生成かも。また、h1 は冒頭のみ想定。ほかにあれば、通常系で処理。</p>\n");
+		writer.write("</div>\n");
+
+		writer.write("<div class=\"container-fluid\">\n");
 	}
 
 	public static void writePostHtml(final Writer writer) throws IOException {
