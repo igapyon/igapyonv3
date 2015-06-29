@@ -19,13 +19,8 @@ public class ProtoMd2Html2 {
 				Extensions.AUTOLINKS | Extensions.STRIKETHROUGH
 						| Extensions.FENCED_CODE_BLOCKS | Extensions.TABLES
 						| Extensions.WIKILINKS /*
-												 * Support [[Wiki-style links]].
-												 * URL rendering is performed by
-												 * the active {@link
-												 * LinkRenderer}.
-												 *//*
-													 * , PegDownPlugins
-													 */);
+												 * , PegDownPlugins
+												 */);
 		final String bodyMarkdown = processor
 				.markdownToHtml(
 						IgapyonV3Util

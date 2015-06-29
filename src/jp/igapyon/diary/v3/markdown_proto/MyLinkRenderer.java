@@ -8,7 +8,7 @@ import org.pegdown.ast.WikiLinkNode;
 
 public class MyLinkRenderer extends LinkRenderer {
 	/**
-	 * Override Wiki link.
+	 * Override Wiki link. for [[]] style.
 	 */
 	@Override
 	public Rendering render(final WikiLinkNode node) {
