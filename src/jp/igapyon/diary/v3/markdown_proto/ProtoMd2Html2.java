@@ -1,7 +1,10 @@
 package jp.igapyon.diary.v3.markdown_proto;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.io.StringWriter;
 
 import jp.igapyon.diary.v3.util.IgapyonV3Util;
@@ -21,17 +24,24 @@ public class ProtoMd2Html2 {
 						| Extensions.WIKILINKS /*
 												 * , PegDownPlugins
 												 */);
-		final String bodyMarkdown = processor
-				.markdownToHtml(
-						IgapyonV3Util
-								.readTextFile(new File(
-										"./src/jp/igapyon/diary/v3/markdown_proto/test001.md")),
-						new MyLinkRenderer());
+		final String bodyMarkdown = processor.markdownToHtml(IgapyonV3Util
+				.readTextFile(new File("./test/data/src/test001.md")),
+				new MyLinkRenderer());
 		writer.write(bodyMarkdown);
 
 		IgapyonV3Util.writePostHtml(writer);
 
 		writer.close();
+
+		write(writer.toString(), new File("./test/data/output/test001.html"));
 		System.out.println(writer.toString());
+	}
+
+	public static void write(final String strHtml, final File file)
+			throws IOException {
+		final BufferedWriter writer = new BufferedWriter(
+				new OutputStreamWriter(new FileOutputStream(file), "UTF-8"));
+		writer.write(strHtml);
+		writer.close();
 	}
 }

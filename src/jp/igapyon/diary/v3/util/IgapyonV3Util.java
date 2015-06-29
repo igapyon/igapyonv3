@@ -52,19 +52,6 @@ public class IgapyonV3Util {
 		writer.write("<!-- Optional theme -->\n");
 		writer.write("<link rel=\"stylesheet\" href=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css\">\n");
 
-		// for table
-		writer.write("<style type=\"text/css\">");
-		writer.write("table {");
-		writer.write("  border: 1px solid #dddddd;");
-		writer.write("}");
-		writer.write("table th,");
-		writer.write("table td {");
-		writer.write("  padding: 2px;");
-		writer.write("  border-top: 1px solid #dddddd;");
-		writer.write("  border-left: 1px solid #dddddd;");
-		writer.write("}");
-		writer.write("</style>");
-
 		writer.write("</head>\n");
 		writer.write("<body>\n");
 		// Use container-fluid instead container.
