@@ -1,16 +1,21 @@
-# Igapyon Diary System v3
-https://github.com/igapyon/igapyonv3
+Igapyon Diary System v3
+=======================
 
-Diary system called Igapyon v3.
+[Igapyon Diary System](https://github.com/igapyon/igapyonv3) v3 is OSS diary system written in Java.
+I call this in short as Igapyon v3.
 
-Hashtag: #‎igapyonv3‬
+## Parts 
+- Hashtag: #‎igapyonv3‬
+- Data format: ‪#‎Markdown
+- Web design: ‪#‎Bootstrap‬
+- Written in #‎Java
 
-Data format: ‪#‎Markdown
-Web design: ‪#‎Bootstrap‬
+## Depends
+Great thanks for great OSSs.
+- [pegdown](https://github.com/sirthias/pegdown)
+- [parboiled](https://github.com/sirthias/parboiled)
+- [ASM](http://asm.ow2.org/)
 
-Written in #‎Java
+## Refs
+- [Bootstrap Components](http://getbootstrap.com/components/)
 
-# Memo
-http://getbootstrap.com/components/
-
-# TODO
