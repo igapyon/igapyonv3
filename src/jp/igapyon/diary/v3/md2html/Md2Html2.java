@@ -9,7 +9,7 @@ import jp.igapyon.diary.v3.util.IgapyonV3Util;
 import org.pegdown.Extensions;
 import org.pegdown.PegDownProcessor;
 
-public class ProtoMd2Html2 {
+public class Md2Html2 {
 	public void myProcess(final File inputMd, final File outputHtml)
 			throws IOException {
 		final StringWriter writer = new StringWriter();
@@ -48,10 +48,10 @@ public class ProtoMd2Html2 {
 						file,
 						new File(targetDir + "/" + replaceExt(subFile, ".html")));
 			}
-		}.parseDir(new File("./test/data/src"));
+		}.parseDir(new File("./test/data/src"), ".md");
 	}
 
 	public static void main(final String[] args) throws IOException {
-		new ProtoMd2Html2().process();
+		new Md2Html2().process();
 	}
 }

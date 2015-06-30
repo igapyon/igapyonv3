@@ -4,7 +4,11 @@ import java.io.File;
 import java.io.IOException;
 
 public abstract class AbstractParseDir {
-	public void parseDir(final File lookup) throws IOException {
+	protected String fileExt = ".md";
+
+	public void parseDir(final File lookup, final String fileExt)
+			throws IOException {
+		this.fileExt = fileExt;
 		parseDir(lookup, lookup);
 	}
 
@@ -44,7 +48,7 @@ public abstract class AbstractParseDir {
 				parseDir(baseDir, file);
 			}
 			if (file.isFile()) {
-				if (file.getName().toLowerCase().endsWith(".md")) {
+				if (file.getName().toLowerCase().endsWith(fileExt)) {
 					final String baseDirStr = baseDir.getCanonicalPath();
 					final String targetFileStr = file.getCanonicalPath();
 					String targetRelFileStr = targetFileStr
