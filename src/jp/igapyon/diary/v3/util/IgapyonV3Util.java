@@ -1,10 +1,13 @@
 package jp.igapyon.diary.v3.util;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.io.StringWriter;
 import java.io.Writer;
 
@@ -31,6 +34,21 @@ public class IgapyonV3Util {
 		reader.close();
 		writer.close();
 		return writer.toString();
+	}
+
+	/**
+	 * Write html file.
+	 * 
+	 * @param strHtml
+	 * @param file
+	 * @throws IOException
+	 */
+	public static void writeHtmlFile(final String strHtml, final File file)
+			throws IOException {
+		final BufferedWriter writer = new BufferedWriter(
+				new OutputStreamWriter(new FileOutputStream(file), "UTF-8"));
+		writer.write(strHtml);
+		writer.close();
 	}
 
 	public static void writePreHtml(final Writer writer, final String title,

@@ -1,10 +1,7 @@
 package jp.igapyon.diary.v3.markdown_proto;
 
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStreamWriter;
 import java.io.StringWriter;
 
 import jp.igapyon.diary.v3.util.IgapyonV3Util;
@@ -33,17 +30,8 @@ public class ProtoMd2Html2 {
 
 		writer.close();
 
-		writeHtmlFile(writer.toString(), new File(
+		IgapyonV3Util.writeHtmlFile(writer.toString(), new File(
 				"./test/data/output/test001.html"));
 		System.out.println(writer.toString());
 	}
-
-	public static void writeHtmlFile(final String strHtml, final File file)
-			throws IOException {
-		final BufferedWriter writer = new BufferedWriter(
-				new OutputStreamWriter(new FileOutputStream(file), "UTF-8"));
-		writer.write(strHtml);
-		writer.close();
-	}
-
 }
