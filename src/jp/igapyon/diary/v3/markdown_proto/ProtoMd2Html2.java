@@ -33,15 +33,17 @@ public class ProtoMd2Html2 {
 
 		writer.close();
 
-		write(writer.toString(), new File("./test/data/output/test001.html"));
+		writeHtmlFile(writer.toString(), new File(
+				"./test/data/output/test001.html"));
 		System.out.println(writer.toString());
 	}
 
-	public static void write(final String strHtml, final File file)
+	public static void writeHtmlFile(final String strHtml, final File file)
 			throws IOException {
 		final BufferedWriter writer = new BufferedWriter(
 				new OutputStreamWriter(new FileOutputStream(file), "UTF-8"));
 		writer.write(strHtml);
 		writer.close();
 	}
+
 }
