@@ -1,4 +1,4 @@
-package jp.igapyon.diary.v3.markdown_proto;
+package jp.igapyon.diary.v3.md2html;
 
 import java.io.File;
 import java.io.IOException;
