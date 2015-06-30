@@ -10,7 +10,8 @@ import org.pegdown.Extensions;
 import org.pegdown.PegDownProcessor;
 
 public class ProtoMd2Html2 {
-	public static void main(final String[] args) throws IOException {
+	public void myProcess(final File inputMd, final File outputHtml)
+			throws IOException {
 		final StringWriter writer = new StringWriter();
 		IgapyonV3Util.writePreHtml(writer, "Title", "Descriptoin",
 				"Toshiki Iga");
@@ -21,17 +22,36 @@ public class ProtoMd2Html2 {
 						| Extensions.WIKILINKS /*
 												 * , PegDownPlugins
 												 */);
-		final String bodyMarkdown = processor.markdownToHtml(IgapyonV3Util
-				.readTextFile(new File("./test/data/src/test001.md")),
-				new MyLinkRenderer());
+		final String bodyMarkdown = processor.markdownToHtml(
+				IgapyonV3Util.readTextFile(inputMd), new MyLinkRenderer());
 		writer.write(bodyMarkdown);
 
 		IgapyonV3Util.writePostHtml(writer);
 
 		writer.close();
 
-		IgapyonV3Util.writeHtmlFile(writer.toString(), new File(
-				"./test/data/output/test001.html"));
-		System.out.println(writer.toString());
+		if (outputHtml.getParentFile().exists() == false) {
+			outputHtml.getParentFile().mkdirs();
+		}
+
+		IgapyonV3Util.writeHtmlFile(writer.toString(), outputHtml);
+		// System.out.println(writer.toString());
+	}
+
+	public void process() throws IOException {
+		final String targetDir = "./test/data/output";
+		new AbstractParseDir() {
+			@Override
+			public void parseFile(File baseDir, File file) throws IOException {
+				final String subFile = getSubdir(baseDir, file);
+				myProcess(
+						file,
+						new File(targetDir + "/" + replaceExt(subFile, ".html")));
+			}
+		}.parseDir(new File("./test/data/src"));
+	}
+
+	public static void main(final String[] args) throws IOException {
+		new ProtoMd2Html2().process();
 	}
 }
