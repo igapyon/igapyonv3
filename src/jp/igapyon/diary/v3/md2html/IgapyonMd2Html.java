@@ -112,6 +112,7 @@ public class IgapyonMd2Html {
 	}
 
 	public static void main(final String[] args) throws IOException {
+		// TODO args to be input, output dir.
 		new IgapyonMd2Html()
 				.processDir("./test/data/src", "./test/data/output");
 	}
