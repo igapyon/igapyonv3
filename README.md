@@ -19,3 +19,8 @@ Great thanks for great OSSs.
 ## Refs
 - [Bootstrap Components](http://getbootstrap.com/components/)
 
+## TODO
+- Consider CDN off mode. for offline.
+
+## Trash
+- using glyphicon as h* is not so good. 
