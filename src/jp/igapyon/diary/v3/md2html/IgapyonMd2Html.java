@@ -13,8 +13,9 @@ import org.pegdown.PegDownProcessor;
 public class IgapyonMd2Html {
 	public void processFile(final File sourceMd, final File targetHtml)
 			throws IOException {
-		final StringWriter writer = new StringWriter();
-		IgapyonV3Util.writePreHtml(writer, "Title", "Descriptoin",
+		final StringWriter outputHtmlWriter = new StringWriter();
+		// TODO first h1 to be title, after text to be description
+		IgapyonV3Util.writePreHtml(outputHtmlWriter, "Title", "Descriptoin",
 				"Toshiki Iga");
 
 		final PegDownProcessor processor = new PegDownProcessor(
@@ -28,22 +29,22 @@ public class IgapyonMd2Html {
 
 		final String bodyMarkdown = processor.markdownToHtml(inputMdString,
 				new MyLinkRenderer());
-		writer.write(bodyMarkdown);
+		outputHtmlWriter.write(bodyMarkdown);
 
-		IgapyonV3Util.writePostHtml(writer);
+		IgapyonV3Util.writePostHtml(outputHtmlWriter);
 
-		writer.close();
+		outputHtmlWriter.close();
 
 		if (targetHtml.getParentFile().exists() == false) {
 			targetHtml.getParentFile().mkdirs();
 		}
 
-		if (checkWriteNecessary(writer.toString(), targetHtml) == false) {
+		if (checkWriteNecessary(outputHtmlWriter.toString(), targetHtml) == false) {
 			// no need to write
 			return;
 		}
 
-		IgapyonV3Util.writeHtmlFile(writer.toString(), targetHtml);
+		IgapyonV3Util.writeHtmlFile(outputHtmlWriter.toString(), targetHtml);
 	}
 
 	protected boolean checkWriteNecessary(final String outputData,
