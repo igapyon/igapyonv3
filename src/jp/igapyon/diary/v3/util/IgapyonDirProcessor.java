@@ -1,9 +1,9 @@
-package jp.igapyon.diary.v3.md2html;
+package jp.igapyon.diary.v3.util;
 
 import java.io.File;
 import java.io.IOException;
 
-public abstract class AbstractParseDir {
+public abstract class IgapyonDirProcessor {
 	protected String fileExt = ".md";
 
 	public void parseDir(final File lookup, final String fileExt)
