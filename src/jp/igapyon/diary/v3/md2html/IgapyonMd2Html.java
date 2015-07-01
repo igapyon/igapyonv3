@@ -38,23 +38,32 @@ public class IgapyonMd2Html {
 			targetHtml.getParentFile().mkdirs();
 		}
 
-		if (targetHtml.exists() == false) {
-			System.out.println("md2html: A: " + targetHtml.getCanonicalPath());
-		} else {
-			final String origOutputHtmlString = IgapyonV3Util
-					.readTextFile(targetHtml);
-			if (writer.toString().equals(origOutputHtmlString)) {
-				System.out.println("md2html: N: "
-						+ targetHtml.getCanonicalPath());
-				// nothing changed. then return here!!!
-				return;
-			} else {
-				System.out.println("md2html: U: "
-						+ targetHtml.getCanonicalPath());
-			}
+		if (checkWriteNecessary(writer.toString(), targetHtml) == false) {
+			// no need to write
+			return;
 		}
 
 		IgapyonV3Util.writeHtmlFile(writer.toString(), targetHtml);
+	}
+
+	protected boolean checkWriteNecessary(final String outputData,
+			final File targetHtml) throws IOException {
+		if (targetHtml.exists() == false) {
+			System.out.println("md2html: A: " + targetHtml.getCanonicalPath());
+			return true;
+		} else {
+			final String origOutputHtmlString = IgapyonV3Util
+					.readTextFile(targetHtml);
+			if (outputData.equals(origOutputHtmlString)) {
+				System.out.println("md2html: N: "
+						+ targetHtml.getCanonicalPath());
+				return false;
+			} else {
+				System.out.println("md2html: U: "
+						+ targetHtml.getCanonicalPath());
+				return true;
+			}
+		}
 	}
 
 	public void processDir(final File sourceMdDir, final File targetHtmlDir)
