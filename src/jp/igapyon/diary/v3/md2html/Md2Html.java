@@ -9,7 +9,7 @@ import jp.igapyon.diary.v3.util.IgapyonV3Util;
 import org.pegdown.Extensions;
 import org.pegdown.PegDownProcessor;
 
-public class Md2Html2 {
+public class Md2Html {
 	public void myProcess(final File inputMd, final File outputHtml)
 			throws IOException {
 		final StringWriter writer = new StringWriter();
@@ -52,6 +52,6 @@ public class Md2Html2 {
 	}
 
 	public static void main(final String[] args) throws IOException {
-		new Md2Html2().process();
+		new Md2Html().process();
 	}
 }
