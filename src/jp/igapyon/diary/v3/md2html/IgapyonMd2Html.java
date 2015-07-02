@@ -50,17 +50,18 @@ public class IgapyonMd2Html {
 	protected boolean checkWriteNecessary(final String outputData,
 			final File targetHtml) throws IOException {
 		if (targetHtml.exists() == false) {
-			System.out.println("md2html: A: " + targetHtml.getCanonicalPath());
+			System.out
+					.println("md2html: add: " + targetHtml.getCanonicalPath());
 			return true;
 		} else {
 			final String origOutputHtmlString = IgapyonV3Util
 					.readTextFile(targetHtml);
 			if (outputData.equals(origOutputHtmlString)) {
-				System.out.println("md2html: N: "
+				System.out.println("md2html: non: "
 						+ targetHtml.getCanonicalPath());
 				return false;
 			} else {
-				System.out.println("md2html: U: "
+				System.out.println("md2html: upd: "
 						+ targetHtml.getCanonicalPath());
 				return true;
 			}
