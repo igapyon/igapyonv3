@@ -10,11 +10,17 @@ import jp.igapyon.diary.v3.util.IgapyonV3Util;
 import org.pegdown.Extensions;
 import org.pegdown.PegDownProcessor;
 
+/**
+ * Igapyon's Markdown to Html converter.
+ * 
+ * @author Toshiki Iga
+ */
 public class IgapyonMd2Html {
 	public void processFile(final File sourceMd, final File targetHtml)
 			throws IOException {
 		final StringWriter outputHtmlWriter = new StringWriter();
 		// TODO first h1 to be title, after text to be description
+		// TODO properties should be VO.
 		IgapyonV3Util.writePreHtml(outputHtmlWriter, "Title", "Descriptoin",
 				"Toshiki Iga");
 
@@ -39,7 +45,8 @@ public class IgapyonMd2Html {
 			targetHtml.getParentFile().mkdirs();
 		}
 
-		if (checkWriteNecessary(outputHtmlWriter.toString(), targetHtml) == false) {
+		if (checkWriteNecessary("md2html", outputHtmlWriter.toString(),
+				targetHtml) == false) {
 			// no need to write
 			return;
 		}
@@ -47,21 +54,30 @@ public class IgapyonMd2Html {
 		IgapyonV3Util.writeHtmlFile(outputHtmlWriter.toString(), targetHtml);
 	}
 
-	protected boolean checkWriteNecessary(final String outputData,
-			final File targetHtml) throws IOException {
+	/**
+	 * 
+	 * @param titleString
+	 *            like 'md2html'.
+	 * @param outputData
+	 * @param targetHtml
+	 * @return
+	 * @throws IOException
+	 */
+	protected boolean checkWriteNecessary(final String titleString,
+			final String outputData, final File targetHtml) throws IOException {
 		if (targetHtml.exists() == false) {
-			System.out
-					.println("md2html: add: " + targetHtml.getCanonicalPath());
+			System.out.println(titleString + ": add: "
+					+ targetHtml.getCanonicalPath());
 			return true;
 		} else {
 			final String origOutputHtmlString = IgapyonV3Util
 					.readTextFile(targetHtml);
 			if (outputData.equals(origOutputHtmlString)) {
-				System.out.println("md2html: non: "
+				System.out.println(titleString + ": non: "
 						+ targetHtml.getCanonicalPath());
 				return false;
 			} else {
-				System.out.println("md2html: upd: "
+				System.out.println(titleString + ": upd: "
 						+ targetHtml.getCanonicalPath());
 				return true;
 			}
