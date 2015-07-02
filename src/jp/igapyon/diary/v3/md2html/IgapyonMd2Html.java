@@ -45,43 +45,13 @@ public class IgapyonMd2Html {
 			targetHtml.getParentFile().mkdirs();
 		}
 
-		if (checkWriteNecessary("md2html", outputHtmlWriter.toString(),
-				targetHtml) == false) {
+		if (IgapyonV3Util.checkWriteNecessary("md2html",
+				outputHtmlWriter.toString(), targetHtml) == false) {
 			// no need to write
 			return;
 		}
 
 		IgapyonV3Util.writeHtmlFile(outputHtmlWriter.toString(), targetHtml);
-	}
-
-	/**
-	 * 
-	 * @param titleString
-	 *            like 'md2html'.
-	 * @param outputData
-	 * @param targetHtml
-	 * @return
-	 * @throws IOException
-	 */
-	protected boolean checkWriteNecessary(final String titleString,
-			final String outputData, final File targetHtml) throws IOException {
-		if (targetHtml.exists() == false) {
-			System.out.println(titleString + ": add: "
-					+ targetHtml.getCanonicalPath());
-			return true;
-		} else {
-			final String origOutputHtmlString = IgapyonV3Util
-					.readTextFile(targetHtml);
-			if (outputData.equals(origOutputHtmlString)) {
-				System.out.println(titleString + ": non: "
-						+ targetHtml.getCanonicalPath());
-				return false;
-			} else {
-				System.out.println(titleString + ": upd: "
-						+ targetHtml.getCanonicalPath());
-				return true;
-			}
-		}
 	}
 
 	public void processDir(final File sourceMdDir, final File targetHtmlDir)
