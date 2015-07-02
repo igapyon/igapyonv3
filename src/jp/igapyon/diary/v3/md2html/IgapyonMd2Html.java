@@ -18,6 +18,11 @@ import org.pegdown.PegDownProcessor;
 public class IgapyonMd2Html {
 	public void processFile(final File sourceMd, final File targetHtml)
 			throws IOException {
+		// TODO 最初に Markdown ファイルを解析。ジャンボエリアを確定。description のところまで行を進める。
+		// TODO description のところの前後で Markdown ファイルを分割。
+		// TODO 別れたファイルを、おのおの html 化。前半はジャンボ処理。META タグの description
+		// には画像を含めない処理が必要???
+
 		final StringWriter outputHtmlWriter = new StringWriter();
 		// TODO first h1 to be title, after text to be description
 		// TODO properties should be VO.
