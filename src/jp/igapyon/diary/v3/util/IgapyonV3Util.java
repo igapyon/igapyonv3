@@ -8,8 +8,16 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.io.StringReader;
 import java.io.StringWriter;
 import java.io.Writer;
+import java.util.ArrayList;
+import java.util.List;
+
+import jp.igapyon.diary.v3.md2html.MyLinkRenderer;
+
+import org.pegdown.Extensions;
+import org.pegdown.PegDownProcessor;
 
 public class IgapyonV3Util {
 	/**
@@ -51,7 +59,8 @@ public class IgapyonV3Util {
 		writer.close();
 	}
 
-	public static void writePreHtml(final Writer writer, final String title,
+	public static void writePreHtml(final Writer writer,
+			final String mdStringHead, final String title,
 			final String description, final String author) throws IOException {
 		writer.write("<!DOCTYPE html>\n");
 		writer.write("<html lang=\"ja\">\n");
@@ -76,9 +85,20 @@ public class IgapyonV3Util {
 		writer.write("<div class=\"container-fluid\">\n");
 
 		writer.write("<div class=\"jumbotron\">\n");
-		writer.write("  <h1>トップレベルヘッダー</h1>\n");
-		writer.write("  <p>あと、ここに画像入れたい。</p>\n");
-		writer.write("  <p>ここに description を書く方向性にて...。Markdown には渡さず自力で処理。あるいは、ここのみ取り出して別途生成かも。また、h1 は冒頭のみ想定。ほかにあれば、通常系で処理。</p>\n");
+
+		if (mdStringHead.length() > 0) {
+			final PegDownProcessor processor = new PegDownProcessor(
+					Extensions.AUTOLINKS | Extensions.STRIKETHROUGH
+							| Extensions.FENCED_CODE_BLOCKS | Extensions.TABLES
+							| Extensions.WIKILINKS /*
+													 * , PegDownPlugins
+													 */);
+
+			final String bodyMarkdown = processor.markdownToHtml(mdStringHead,
+					new MyLinkRenderer());
+			writer.write(bodyMarkdown);
+		}
+
 		writer.write("</div>\n");
 
 		writer.write("<div class=\"container-fluid\">\n");
@@ -134,5 +154,29 @@ public class IgapyonV3Util {
 				return true;
 			}
 		}
+	}
+
+	public static List<String> stringToList(final String stringWithNewline)
+			throws IOException {
+		final List<String> result = new ArrayList<String>();
+		final BufferedReader reader = new BufferedReader(new StringReader(
+				stringWithNewline));
+		for (;;) {
+			final String line = reader.readLine();
+			if (line == null) {
+				break;
+			}
+			result.add(line);
+		}
+		return result;
+	}
+
+	public static String listToString(final List<String> stringList) {
+		final StringBuilder builder = new StringBuilder();
+		for (String look : stringList) {
+			builder.append(look);
+			builder.append('\n');
+		}
+		return builder.toString();
 	}
 }
