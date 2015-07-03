@@ -101,6 +101,7 @@ public class IgapyonV3Util {
 
 		writer.write("</div>\n");
 
+		// TODO container should be outside.
 		writer.write("<div class=\"container-fluid\">\n");
 	}
 
