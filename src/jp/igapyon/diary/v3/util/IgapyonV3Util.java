@@ -17,6 +17,7 @@ import java.util.List;
 import jp.igapyon.diary.v3.md2html.MyLinkRenderer;
 
 import org.pegdown.Extensions;
+import org.pegdown.LinkRenderer;
 import org.pegdown.PegDownProcessor;
 
 public class IgapyonV3Util {
@@ -87,14 +88,7 @@ public class IgapyonV3Util {
 		writer.write("<div class=\"jumbotron\">\n");
 
 		if (mdStringHead.length() > 0) {
-			final PegDownProcessor processor = new PegDownProcessor(
-					Extensions.AUTOLINKS | Extensions.STRIKETHROUGH
-							| Extensions.FENCED_CODE_BLOCKS | Extensions.TABLES
-							| Extensions.WIKILINKS /*
-													 * , PegDownPlugins
-													 */);
-
-			final String bodyMarkdown = processor.markdownToHtml(mdStringHead,
+			final String bodyMarkdown = simpleMd2Html(mdStringHead,
 					new MyLinkRenderer());
 			writer.write(bodyMarkdown);
 		}
@@ -103,6 +97,18 @@ public class IgapyonV3Util {
 
 		// TODO container should be outside.
 		writer.write("<div class=\"container-fluid\">\n");
+	}
+
+	public static String simpleMd2Html(final String mdString,
+			final LinkRenderer linkRenderer) {
+		final PegDownProcessor processor = new PegDownProcessor(
+				Extensions.AUTOLINKS | Extensions.STRIKETHROUGH
+						| Extensions.FENCED_CODE_BLOCKS | Extensions.TABLES
+						| Extensions.WIKILINKS /*
+												 * , PegDownPlugins
+												 */);
+
+		return processor.markdownToHtml(mdString, new MyLinkRenderer());
 	}
 
 	public static void writePostHtml(final Writer writer) throws IOException {

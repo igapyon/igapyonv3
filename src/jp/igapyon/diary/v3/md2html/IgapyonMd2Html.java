@@ -8,9 +8,6 @@ import java.util.List;
 import jp.igapyon.diary.v3.util.IgapyonDirProcessor;
 import jp.igapyon.diary.v3.util.IgapyonV3Util;
 
-import org.pegdown.Extensions;
-import org.pegdown.PegDownProcessor;
-
 /**
  * Igapyon's Markdown to Html converter.
  * 
@@ -91,14 +88,7 @@ public class IgapyonMd2Html {
 		IgapyonV3Util.writePreHtml(outputHtmlWriter, mdStringHead, "Title",
 				"Descriptoin", "Toshiki Iga");
 
-		final PegDownProcessor processor = new PegDownProcessor(
-				Extensions.AUTOLINKS | Extensions.STRIKETHROUGH
-						| Extensions.FENCED_CODE_BLOCKS | Extensions.TABLES
-						| Extensions.WIKILINKS /*
-												 * , PegDownPlugins
-												 */);
-
-		final String bodyMarkdown = processor.markdownToHtml(mdStringBody,
+		final String bodyMarkdown = IgapyonV3Util.simpleMd2Html(mdStringBody,
 				new MyLinkRenderer());
 		outputHtmlWriter.write(bodyMarkdown);
 
