@@ -94,8 +94,11 @@ public class IgapyonV3Util {
 	public static void writePreHtml(final Writer writer,
 			final String mdStringHead, final String title,
 			final String description, final String author) throws IOException {
-		writer.write("<!DOCTYPE html>\n");
-		writer.write("<html lang=\"ja\">\n");
+
+		writer.write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
+		writer.write("<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">\n");
+		// FIXME lang should be variable
+		writer.write("<html xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"ja\" lang=\"ja\">");
 		writer.write("<head>\n");
 		writer.write("<meta charset=\"utf-8\">\n");
 		writer.write("<meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">\n");
