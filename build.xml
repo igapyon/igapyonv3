@@ -13,12 +13,19 @@
 				<fileset dir="./">
 					<include name="igapyonv3-*.jar" />
 				</fileset>
+				<fileset dir="./lib/pegdown">
+					<include name="*.jar" />
+				</fileset>
+				<fileset dir="./lib/ant">
+					<include name="*.jar" />
+				</fileset>
 			</classpath>
 		</taskdef>
-		<md2html source="./" target="./"/>
+		<md2html source="./" target="./" />
+		<md2html source="./test/data/src" target="./test/data/output" recursivedir="true" />
 	</target>
 
-	<target name="pack">
+	<target name="pack" depends="compile,jar">
 		<echo>packing project</echo>
 		<delete file="${project.zip}" />
 		<delete dir="bin" />

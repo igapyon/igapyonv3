@@ -71,6 +71,9 @@ public class IgapyonMd2HtmlTask extends Task {
 	public void execute() throws BuildException {
 		checkAttr();
 
+		System.out.println("md2html: source=" + source + ", target=" + target
+				+ ", recursivedir=" + recursivedir);
+
 		try {
 			new IgapyonMd2Html().processDir(source, target, recursivedir);
 		} catch (IOException e) {
