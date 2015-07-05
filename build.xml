@@ -6,6 +6,18 @@
 	<property name="project.zip" value="${project}-${version}-src.zip" />
 	<property name="project.main.jar" value="${project}-${version}.jar" />
 
+	<target name="md2html">
+		<echo>run project</echo>
+		<taskdef name="md2html" classname="jp.igapyon.diary.v3.md2html.task.IgapyonMd2HtmlTask">
+			<classpath>
+				<fileset dir="./">
+					<include name="igapyonv3-*.jar" />
+				</fileset>
+			</classpath>
+		</taskdef>
+		<md2html source="./" target="./"/>
+	</target>
+
 	<target name="pack">
 		<echo>packing project</echo>
 		<delete file="${project.zip}" />

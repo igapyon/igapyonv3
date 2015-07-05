@@ -140,8 +140,8 @@ public class IgapyonMd2Html {
 		IgapyonV3Util.writeHtmlFile(outputHtmlWriter.toString(), targetHtml);
 	}
 
-	public void processDir(final File sourceMdDir, final File targetHtmlDir)
-			throws IOException {
+	public void processDir(final File sourceMdDir, final File targetHtmlDir,
+			final boolean recursivedir) throws IOException {
 		if (sourceMdDir.exists() == false) {
 			System.err.println("md2html: source dir not exists: "
 					+ sourceMdDir.getAbsolutePath());
@@ -166,27 +166,29 @@ public class IgapyonMd2Html {
 
 		new IgapyonDirProcessor() {
 			@Override
-			public void parseFile(File baseDir, File file) throws IOException {
+			public void parseFile(final File baseDir, final File file)
+					throws IOException {
 				final String subFile = getSubdir(baseDir, file);
 				processFile(
 						file,
 						new File(targetHtmlDir + "/"
 								+ replaceExt(subFile, ".html")));
 			}
-		}.parseDir(sourceMdDir, ".md");
+		}.parseDir(sourceMdDir, ".md", recursivedir);
 	}
 
 	public void processDir(final String sourceMdDirString,
-			final String targetHtmlDirString) throws IOException {
+			final String targetHtmlDirString, final boolean recursivedir)
+			throws IOException {
 		final File sourceMdDir = new File(sourceMdDirString);
 		final File targetHtmlDir = new File(targetHtmlDirString);
 
-		processDir(sourceMdDir, targetHtmlDir);
+		processDir(sourceMdDir, targetHtmlDir, recursivedir);
 	}
 
 	public static void main(final String[] args) throws IOException {
 		// TODO args to be input, output dir.
-		new IgapyonMd2Html()
-				.processDir("./test/data/src", "./test/data/output");
+		new IgapyonMd2Html().processDir("./test/data/src",
+				"./test/data/output", true);
 	}
 }

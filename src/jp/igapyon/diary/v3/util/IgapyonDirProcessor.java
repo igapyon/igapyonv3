@@ -37,10 +37,10 @@ import java.io.IOException;
 public abstract class IgapyonDirProcessor {
 	protected String fileExt = ".md";
 
-	public void parseDir(final File lookup, final String fileExt)
-			throws IOException {
+	public void parseDir(final File lookup, final String fileExt,
+			final boolean recursivedir) throws IOException {
 		this.fileExt = fileExt;
-		parseDir(lookup, lookup);
+		parseDir(lookup, lookup, recursivedir);
 	}
 
 	public static String getSubdir(final File baseDir, final File file)
@@ -68,15 +68,17 @@ public abstract class IgapyonDirProcessor {
 		return withoutExt + newExt;
 	}
 
-	protected void parseDir(final File baseDir, final File lookup)
-			throws IOException {
+	protected void parseDir(final File baseDir, final File lookup,
+			final boolean recursivedir) throws IOException {
 		final File[] files = lookup.listFiles();
 		if (files == null) {
 			return;
 		}
 		for (File file : files) {
 			if (file.isDirectory()) {
-				parseDir(baseDir, file);
+				if (recursivedir) {
+					parseDir(baseDir, file, recursivedir);
+				}
 			}
 			if (file.isFile()) {
 				if (file.getName().toLowerCase().endsWith(fileExt)) {

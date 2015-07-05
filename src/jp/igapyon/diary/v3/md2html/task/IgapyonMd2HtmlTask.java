@@ -41,6 +41,7 @@ import org.apache.tools.ant.Task;
 public class IgapyonMd2HtmlTask extends Task {
 	protected String source;
 	protected String target;
+	protected boolean recursivedir = false;
 
 	public String getSource() {
 		return source;
@@ -58,12 +59,20 @@ public class IgapyonMd2HtmlTask extends Task {
 		this.target = target;
 	}
 
+	public boolean isRecursivedir() {
+		return recursivedir;
+	}
+
+	public void setRecursivedir(final boolean recursivedir) {
+		this.recursivedir = recursivedir;
+	}
+
 	@Override
 	public void execute() throws BuildException {
 		checkAttr();
 
 		try {
-			new IgapyonMd2Html().processDir(source, target);
+			new IgapyonMd2Html().processDir(source, target, recursivedir);
 		} catch (IOException e) {
 			throw new BuildException("error occured.", e);
 		}
