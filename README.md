@@ -11,10 +11,11 @@ I call this in short as Igapyon v3.
 - Written in #‎Java
 
 ## Depends
-Great thanks for great OSSs.
+Igapyon Diary depends on several great OSSs. Great thanks to great OSSs.
 - [pegdown](https://github.com/sirthias/pegdown)
 - [parboiled](https://github.com/sirthias/parboiled)
 - [ASM](http://asm.ow2.org/)
+- [Bootstrap](http://getbootstrap.com/)
 
 ## Refs
 - [Bootstrap Components](http://getbootstrap.com/components/)
