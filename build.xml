@@ -42,6 +42,9 @@
 				<fileset dir="./lib/pegdown">
 					<include name="*.jar" />
 				</fileset>
+				<fileset dir="./lib/ant">
+					<include name="*.jar" />
+				</fileset>
 			</classpath>
 			<src path="src/" />
 			<include name="**/*.java" />
