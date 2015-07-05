@@ -5,7 +5,7 @@ Igapyon Diary System v3
 I call this in short as Igapyon v3.
 
 ## Subprojects
-- [IgapyonMd2Html](https://github.com/igapyon/igapyonv3/blob/master/IgapyonMd2Html.md)
+- [IgapyonMd2Html](https://github.com/igapyon/igapyonv3/blob/master/IgapyonMd2Html.md) : IgapyonMd2Html is command line utility which convert Markdown text (.md) to Html text with Bootstrap (.html).
 
 ## Parts 
 - Hashtag: #‎igapyonv3‬
