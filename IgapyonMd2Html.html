@@ -26,7 +26,28 @@
 </ul><h2><a href="#depends" name="depends">Depends</a></h2><p>IgapyonMd2Html depends on several great OSSs. Great thanks to great OSSs. - <a href="https://github.com/sirthias/pegdown">pegdown</a> - <a href="https://github.com/sirthias/parboiled">parboiled</a> - <a href="http://asm.ow2.org/">ASM</a> - <a href="http://getbootstrap.com/">Bootstrap</a></p><h2><a href="#main-project" name="main-project">Main project</a></h2>
 <ul>
   <li><a href="https://github.com/igapyon/igapyonv3/blob/master/README.md">igapyonv3</a></li>
-</ul><h2><a href="#refs" name="refs">Refs</a></h2>
+</ul><h2><a href="#usage" name="usage">Usage</a></h2><h3><a href="#java-usage" name="java-usage">Java usage</a></h3>
+<pre><code class="Java">    new IgapyonMd2Html().processDir(&quot;./&quot;, &quot;./&quot;, false);
+</code></pre><h3><a href="#ant-usage" name="ant-usage">ant usage</a></h3><p>Ant usage is below:</p>
+<pre><code class="xml">	&lt;target name=&quot;md2html&quot;&gt;
+		&lt;echo&gt;run project&lt;/echo&gt;
+		&lt;taskdef name=&quot;md2html&quot; classname=&quot;jp.igapyon.diary.v3.md2html.task.IgapyonMd2HtmlTask&quot;&gt;
+			&lt;classpath&gt;
+				&lt;fileset dir=&quot;./&quot;&gt;
+					&lt;include name=&quot;igapyonv3-*.jar&quot; /&gt;
+				&lt;/fileset&gt;
+				&lt;fileset dir=&quot;./lib/pegdown&quot;&gt;
+					&lt;include name=&quot;*.jar&quot; /&gt;
+				&lt;/fileset&gt;
+				&lt;fileset dir=&quot;./lib/ant&quot;&gt;
+					&lt;include name=&quot;*.jar&quot; /&gt;
+				&lt;/fileset&gt;
+			&lt;/classpath&gt;
+		&lt;/taskdef&gt;
+		&lt;md2html source=&quot;./&quot; target=&quot;./&quot; /&gt;
+		&lt;md2html source=&quot;./test/data/src&quot; target=&quot;./test/data/output&quot; recursivedir=&quot;true&quot; /&gt;
+	&lt;/target&gt;
+</code></pre><h2><a href="#refs" name="refs">Refs</a></h2>
 <ul>
   <li><a href="http://getbootstrap.com/components/">Bootstrap Components</a></li>
 </ul><h2><a href="#similar-project" name="similar-project">Similar project</a></h2>

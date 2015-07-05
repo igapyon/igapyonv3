@@ -19,6 +19,37 @@ IgapyonMd2Html depends on several great OSSs. Great thanks to great OSSs.
 ## Main project
 - [igapyonv3](https://github.com/igapyon/igapyonv3/blob/master/README.md)
 
+## Usage
+### Java usage
+
+```Java
+    new IgapyonMd2Html().processDir("./", "./", false);
+```
+
+### ant usage
+Ant usage is below:
+
+```xml
+	<target name="md2html">
+		<echo>run project</echo>
+		<taskdef name="md2html" classname="jp.igapyon.diary.v3.md2html.task.IgapyonMd2HtmlTask">
+			<classpath>
+				<fileset dir="./">
+					<include name="igapyonv3-*.jar" />
+				</fileset>
+				<fileset dir="./lib/pegdown">
+					<include name="*.jar" />
+				</fileset>
+				<fileset dir="./lib/ant">
+					<include name="*.jar" />
+				</fileset>
+			</classpath>
+		</taskdef>
+		<md2html source="./" target="./" />
+		<md2html source="./test/data/src" target="./test/data/output" recursivedir="true" />
+	</target>
+```xml
+
 ## Refs
 - [Bootstrap Components](http://getbootstrap.com/components/)
 
