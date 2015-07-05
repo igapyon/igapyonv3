@@ -22,6 +22,9 @@ IgapyonMd2Html depends on several great OSSs. Great thanks to great OSSs.
 ## Refs
 - [Bootstrap Components](http://getbootstrap.com/components/)
 
+## Similar project
+- [Apache Doxia](https://maven.apache.org/doxia/) : Doxia is full featured conveter. IgapyonMd2Html is focused in for Dairy.
+
 ## TODO
 - Consider CDN off mode. for offline.
 
