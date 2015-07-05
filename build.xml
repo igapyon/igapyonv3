@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="IgapyonV3" default="build" basedir=".">
 	<property name="project" value="igapyonv3" />
-	<property name="version" value="0.0.1" />
+	<property name="version" value="0.1.0" />
 
 	<property name="project.zip" value="${project}-${version}-src.zip" />
 	<property name="project.main.jar" value="${project}-${version}.jar" />
