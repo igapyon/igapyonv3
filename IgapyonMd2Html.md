@@ -17,7 +17,7 @@ IgapyonMd2Html depends on several great OSSs. Great thanks to great OSSs.
 - [Bootstrap](http://getbootstrap.com/)
 
 ## Main project
-- [igapyonv3](https://github.com/igapyon/igapyonv3/README.md)
+- [igapyonv3](https://github.com/igapyon/igapyonv3/blob/master/README.md)
 
 ## Refs
 - [Bootstrap Components](http://getbootstrap.com/components/)
