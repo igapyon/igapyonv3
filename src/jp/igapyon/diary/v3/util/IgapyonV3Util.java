@@ -111,8 +111,9 @@ public class IgapyonV3Util {
 		writer.write("<link rel=\"stylesheet\" href=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css\">\n");
 
 		// see: http://getbootstrap.com/examples/theme/
-		writer.write("<!-- Optional theme -->\n");
-		writer.write("<link rel=\"stylesheet\" href=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css\">\n");
+		// try to remove optional theme
+		// writer.write("<!-- Optional theme -->\n");
+		// writer.write("<link rel=\"stylesheet\" href=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css\">\n");
 
 		writer.write("</head>\n");
 		writer.write("<body>\n");
