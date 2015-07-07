@@ -71,9 +71,11 @@ public class IgapyonMd2HtmlTask extends Task {
 	public void execute() throws BuildException {
 		checkAttr();
 
-		System.out.println("md2html: ver:" + IgapyonMd2Html.VERSION
-				+ ", source:[" + source + "], target:[" + target
-				+ "], recursivedir=" + recursivedir);
+		System.out.println("md2html: Igapyon Diary System v3 (igapyonv3) ver"
+				+ IgapyonMd2Html.VERSION);
+		System.out.println("   source:[" + source + "]");
+		System.out.println("   target:[" + target + "]");
+		System.out.println("   recursivedir:" + recursivedir);
 
 		try {
 			new IgapyonMd2Html().processDir(source, target, recursivedir);
