@@ -152,15 +152,17 @@ public class IgapyonV3Util {
 		writer.write("<!-- Compiled and minified JavaScript -->\n");
 		writer.write("<script src=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js\"></script>\n");
 
-		// TODO Should be preset on HTML tag class.
-		writer.write("<script>\n");
-		writer.write("$(function() {\n");
-		// writer.write(" $(\"h2\").addClass(\"alert alert-warning\");\n");
-		// writer.write(" $(\"h3\").addClass(\"bg-success\");\n");
-		// writer.write(" $(\"h4\").addClass(\"bg-info\");\n");
-		writer.write("  $(\"table\").addClass(\"table table-bordered\");\n");
-		writer.write("});\n");
-		writer.write("</script>\n");
+		if (false) {
+			// Codes for direct jQuery call.
+			writer.write("<script>\n");
+			writer.write("$(function() {\n");
+			// writer.write(" $(\"h2\").addClass(\"alert alert-warning\");\n");
+			// writer.write(" $(\"h3\").addClass(\"bg-success\");\n");
+			// writer.write(" $(\"h4\").addClass(\"bg-info\");\n");
+			// writer.write("  $(\"table\").addClass(\"table table-bordered\");\n");
+			writer.write("});\n");
+			writer.write("</script>\n");
+		}
 
 		writer.write("</body>\n");
 		writer.write("</html>");

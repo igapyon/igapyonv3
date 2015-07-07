@@ -34,6 +34,7 @@ package jp.igapyon.diary.v3.md2html;
 import org.pegdown.LinkRenderer;
 import org.pegdown.ToHtmlSerializer;
 import org.pegdown.ast.HeaderNode;
+import org.pegdown.ast.TableNode;
 
 public class MyToHtmlSerializer extends ToHtmlSerializer {
 
@@ -63,6 +64,27 @@ public class MyToHtmlSerializer extends ToHtmlSerializer {
 		} else {
 			// Original
 			printTag(node, "h" + node.getLevel());
+		}
+	}
+
+	@Override
+	public void visit(TableNode node) {
+		if (true) {
+			currentTableNode = node;
+
+			printer.println().print('<').print("table")
+					.print(" class=\"table table-bordered\"").print('>')
+					.indent(+2);
+			visitChildren(node);
+			printer.indent(-2).println().print('<').print('/').print("table")
+					.print('>');
+
+			currentTableNode = null;
+		} else {
+			// Original
+			currentTableNode = node;
+			printIndentedTag(node, "table");
+			currentTableNode = null;
 		}
 	}
 }
