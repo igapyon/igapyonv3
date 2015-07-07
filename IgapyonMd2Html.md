@@ -48,7 +48,7 @@ Ant usage is below:
 		<md2html source="./" target="./" />
 		<md2html source="./test/data/src" target="./test/data/output" recursivedir="true" />
 	</target>
-```xml
+```
 
 ## Refs
 - [Bootstrap Components](http://getbootstrap.com/components/)
