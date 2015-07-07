@@ -15,7 +15,7 @@
 <div class="jumbotron">
 <h1><a href="#トップレベルヘッダー" name="トップレベルヘッダー">トップレベルヘッダー</a></h1><p>ここに description を書く方向性にて...。h1 は冒頭のみ想定。h1 処理が待たれる。ここには画像も入れることが可能であってほしい。</p></div>
 <div class="container-fluid">
-<h2><a href="#はじめに" name="はじめに">はじめに</a></h2><h3><a href="#つぎに" name="つぎに">つぎに</a></h3><p>うげうげ</p>
+<h2 class="alert alert-warning"><a href="#はじめに" name="はじめに">はじめに</a></h2><h3 class="bg-success"><a href="#つぎに" name="つぎに">つぎに</a></h3><p>うげうげ</p>
 <ul>
   <li>ひとつめ</li>
 </ul>
@@ -46,9 +46,6 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 <script>
 $(function() {
-  $("h2").addClass("alert alert-warning");
-  $("h3").addClass("bg-success");
-  $("h4").addClass("bg-info");
   $("table").addClass("table table-bordered");
 });
 </script>

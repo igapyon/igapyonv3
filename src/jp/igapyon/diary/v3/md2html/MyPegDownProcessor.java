@@ -17,23 +17,29 @@ public class MyPegDownProcessor extends PegDownProcessor {
 		super(options);
 	}
 
-	public String markdownToHtml(String markdownSource, LinkRenderer linkRenderer) {
+	public String markdownToHtml(String markdownSource,
+			LinkRenderer linkRenderer) {
 		return markdownToHtml(markdownSource.toCharArray(), linkRenderer);
 	}
 
-	public String markdownToHtml(char[] markdownSource, LinkRenderer linkRenderer) {
-		return markdownToHtml(markdownSource, linkRenderer, Collections.<String, VerbatimSerializer> emptyMap());
+	public String markdownToHtml(char[] markdownSource,
+			LinkRenderer linkRenderer) {
+		return markdownToHtml(markdownSource, linkRenderer,
+				Collections.<String, VerbatimSerializer> emptyMap());
 	}
 
-	public String markdownToHtml(char[] markdownSource, LinkRenderer linkRenderer,
+	public String markdownToHtml(char[] markdownSource,
+			LinkRenderer linkRenderer,
 			Map<String, VerbatimSerializer> verbatimSerializerMap) {
 		List<ToHtmlSerializerPlugin> plugins = new ArrayList<ToHtmlSerializerPlugin>();
-		plugins.add(new MyToHtmlSerializerPlugin());
-		return markdownToHtml(markdownSource, linkRenderer, verbatimSerializerMap, plugins);
+		return markdownToHtml(markdownSource, linkRenderer,
+				verbatimSerializerMap, plugins);
 	}
 
-	public String markdownToHtml(char[] markdownSource, LinkRenderer linkRenderer,
-			Map<String, VerbatimSerializer> verbatimSerializerMap, List<ToHtmlSerializerPlugin> plugins) {
+	public String markdownToHtml(char[] markdownSource,
+			LinkRenderer linkRenderer,
+			Map<String, VerbatimSerializer> verbatimSerializerMap,
+			List<ToHtmlSerializerPlugin> plugins) {
 		try {
 			RootNode astRoot = parseMarkdown(markdownSource);
 			return new MyToHtmlSerializer(linkRenderer).toHtml(astRoot);
