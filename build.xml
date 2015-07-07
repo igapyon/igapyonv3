@@ -6,6 +6,8 @@
 	<property name="project.zip" value="${project}-${version}-src.zip" />
 	<property name="project.main.jar" value="${project}-${version}.jar" />
 
+	<target name="build" depends="compile,jar,pack" />
+
 	<target name="md2html">
 		<echo>run project</echo>
 		<taskdef name="md2html" classname="jp.igapyon.diary.v3.md2html.task.IgapyonMd2HtmlTask">
@@ -25,7 +27,7 @@
 		<md2html source="./test/data/src" target="./test/data/output" recursivedir="true" />
 	</target>
 
-	<target name="pack" depends="compile,jar">
+	<target name="pack">
 		<echo>packing project</echo>
 		<delete file="${project.zip}" />
 		<delete dir="bin" />
@@ -69,6 +71,4 @@
 			<include name="**/*.java" />
 		</javac>
 	</target>
-
-	<target name="build" depends="compile,jar,pack" />
 </project>

@@ -58,6 +58,8 @@ Ant usage is below:
 
 ## TODO
 - Consider CDN off mode. for offline.
+- Think about extends of PegDown with attr class. IgapyonPegDownAttr? IgapyonPegDownAttrItem.??? 
+- Jumbo switch IgapyonPagDownConf class???
 
 ## Trash memo
 - using glyphicon as h* is not so good. 
