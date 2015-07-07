@@ -45,6 +45,7 @@ import java.io.Writer;
 import java.util.ArrayList;
 import java.util.List;
 
+import jp.igapyon.diary.v3.md2html.IgapyonMd2Html;
 import jp.igapyon.diary.v3.md2html.pegdownext.IgapyonLinkRenderer;
 import jp.igapyon.diary.v3.md2html.pegdownext.IgapyonPegDownProcessor;
 
@@ -106,6 +107,9 @@ public class IgapyonV3Util {
 		writer.write("<meta name=\"description\" content=\"" + description
 				+ "\">\n");
 		writer.write("<meta name=\"author\" content=\"" + author + "\">\n");
+		writer.write("<meta name=\"generator\" content=\""
+				+ "Igapyon Diary System v3 (igapyonv3) ver"
+				+ IgapyonMd2Html.VERSION + "\">\n");
 		writer.write("<title>" + title + "</title>\n");
 		writer.write("<!-- Compiled and minified CSS -->\n");
 		writer.write("<link rel=\"stylesheet\" href=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css\">\n");
