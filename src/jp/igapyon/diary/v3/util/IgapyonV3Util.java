@@ -45,11 +45,11 @@ import java.io.Writer;
 import java.util.ArrayList;
 import java.util.List;
 
-import jp.igapyon.diary.v3.md2html.MyLinkRenderer;
-
 import org.pegdown.Extensions;
 import org.pegdown.LinkRenderer;
-import org.pegdown.PegDownProcessor;
+
+import jp.igapyon.diary.v3.md2html.MyLinkRenderer;
+import jp.igapyon.diary.v3.md2html.MyPegDownProcessor;
 
 public class IgapyonV3Util {
 	/**
@@ -61,8 +61,7 @@ public class IgapyonV3Util {
 	 */
 	public static String readTextFile(final File file) throws IOException {
 		final StringWriter writer = new StringWriter();
-		final BufferedReader reader = new BufferedReader(new InputStreamReader(
-				new FileInputStream(file), "UTF-8"));
+		final BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file), "UTF-8"));
 		final char[] buf = new char[2048];
 		for (;;) {
 			final int iReadLen = reader.read(buf);
@@ -83,37 +82,36 @@ public class IgapyonV3Util {
 	 * @param file
 	 * @throws IOException
 	 */
-	public static void writeHtmlFile(final String strHtml, final File file)
-			throws IOException {
-		final BufferedWriter writer = new BufferedWriter(
-				new OutputStreamWriter(new FileOutputStream(file), "UTF-8"));
+	public static void writeHtmlFile(final String strHtml, final File file) throws IOException {
+		final BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), "UTF-8"));
 		writer.write(strHtml);
 		writer.close();
 	}
 
-	public static void writePreHtml(final Writer writer,
-			final String mdStringHead, final String title,
+	public static void writePreHtml(final Writer writer, final String mdStringHead, final String title,
 			final String description, final String author) throws IOException {
 
 		writer.write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
-		writer.write("<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">\n");
+		writer.write(
+				"<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">\n");
 		// FIXME lang should be variable
 		writer.write("<html xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"ja\" lang=\"ja\">");
 		writer.write("<head>\n");
 		writer.write("<meta charset=\"utf-8\">\n");
 		writer.write("<meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">\n");
 		writer.write("<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n");
-		writer.write("<meta name=\"description\" content=\"" + description
-				+ "\">\n");
+		writer.write("<meta name=\"description\" content=\"" + description + "\">\n");
 		writer.write("<meta name=\"author\" content=\"" + author + "\">\n");
 		writer.write("<title>" + title + "</title>\n");
 		writer.write("<!-- Compiled and minified CSS -->\n");
-		writer.write("<link rel=\"stylesheet\" href=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css\">\n");
+		writer.write(
+				"<link rel=\"stylesheet\" href=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css\">\n");
 
 		// see: http://getbootstrap.com/examples/theme/
 		// try to remove optional theme
 		// writer.write("<!-- Optional theme -->\n");
-		// writer.write("<link rel=\"stylesheet\" href=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css\">\n");
+		// writer.write("<link rel=\"stylesheet\"
+		// href=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css\">\n");
 
 		writer.write("</head>\n");
 		writer.write("<body>\n");
@@ -123,8 +121,7 @@ public class IgapyonV3Util {
 		writer.write("<div class=\"jumbotron\">\n");
 
 		if (mdStringHead.length() > 0) {
-			final String bodyMarkdown = simpleMd2Html(mdStringHead,
-					new MyLinkRenderer());
+			final String bodyMarkdown = simpleMd2Html(mdStringHead, new MyLinkRenderer());
 			writer.write(bodyMarkdown);
 		}
 
@@ -134,15 +131,9 @@ public class IgapyonV3Util {
 		writer.write("<div class=\"container-fluid\">\n");
 	}
 
-	public static String simpleMd2Html(final String mdString,
-			final LinkRenderer linkRenderer) {
-		final PegDownProcessor processor = new PegDownProcessor(
-				Extensions.AUTOLINKS | Extensions.STRIKETHROUGH
-						| Extensions.FENCED_CODE_BLOCKS | Extensions.TABLES
-						| Extensions.WIKILINKS /*
-												 * , PegDownPlugins
-												 */);
-
+	public static String simpleMd2Html(final String mdString, final LinkRenderer linkRenderer) {
+		final MyPegDownProcessor processor = new MyPegDownProcessor(Extensions.AUTOLINKS | Extensions.STRIKETHROUGH
+				| Extensions.FENCED_CODE_BLOCKS | Extensions.TABLES | Extensions.WIKILINKS);
 		return processor.markdownToHtml(mdString, new MyLinkRenderer());
 	}
 
@@ -157,9 +148,9 @@ public class IgapyonV3Util {
 		// TODO Should be preset on HTML tag class.
 		writer.write("<script>\n");
 		writer.write("$(function() {\n");
-		writer.write("  $(\"h2\").addClass(\"alert alert-warning\");\n");
-		writer.write("  $(\"h3\").addClass(\"bg-success\");\n");
-		writer.write("  $(\"h4\").addClass(\"bg-info\");\n");
+		// writer.write(" $(\"h2\").addClass(\"alert alert-warning\");\n");
+		// writer.write(" $(\"h3\").addClass(\"bg-success\");\n");
+		// writer.write(" $(\"h4\").addClass(\"bg-info\");\n");
 		writer.write("  $(\"table\").addClass(\"table table-bordered\");\n");
 		writer.write("});\n");
 		writer.write("</script>\n");
@@ -177,32 +168,26 @@ public class IgapyonV3Util {
 	 * @return
 	 * @throws IOException
 	 */
-	public static boolean checkWriteNecessary(final String titleString,
-			final String outputData, final File targetHtml) throws IOException {
+	public static boolean checkWriteNecessary(final String titleString, final String outputData, final File targetHtml)
+			throws IOException {
 		if (targetHtml.exists() == false) {
-			System.out.println(titleString + ": add: "
-					+ targetHtml.getCanonicalPath());
+			System.out.println(titleString + ": add: " + targetHtml.getCanonicalPath());
 			return true;
 		} else {
-			final String origOutputHtmlString = IgapyonV3Util
-					.readTextFile(targetHtml);
+			final String origOutputHtmlString = IgapyonV3Util.readTextFile(targetHtml);
 			if (outputData.equals(origOutputHtmlString)) {
-				System.out.println(titleString + ": non: "
-						+ targetHtml.getCanonicalPath());
+				System.out.println(titleString + ": non: " + targetHtml.getCanonicalPath());
 				return false;
 			} else {
-				System.out.println(titleString + ": upd: "
-						+ targetHtml.getCanonicalPath());
+				System.out.println(titleString + ": upd: " + targetHtml.getCanonicalPath());
 				return true;
 			}
 		}
 	}
 
-	public static List<String> stringToList(final String stringWithNewline)
-			throws IOException {
+	public static List<String> stringToList(final String stringWithNewline) throws IOException {
 		final List<String> result = new ArrayList<String>();
-		final BufferedReader reader = new BufferedReader(new StringReader(
-				stringWithNewline));
+		final BufferedReader reader = new BufferedReader(new StringReader(stringWithNewline));
 		for (;;) {
 			final String line = reader.readLine();
 			if (line == null) {
