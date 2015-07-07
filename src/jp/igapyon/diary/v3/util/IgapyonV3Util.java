@@ -45,8 +45,8 @@ import java.io.Writer;
 import java.util.ArrayList;
 import java.util.List;
 
-import jp.igapyon.diary.v3.md2html.MyLinkRenderer;
-import jp.igapyon.diary.v3.md2html.MyPegDownProcessor;
+import jp.igapyon.diary.v3.md2html.pegdownext.IgapyonLinkRenderer;
+import jp.igapyon.diary.v3.md2html.pegdownext.IgapyonPegDownProcessor;
 
 import org.pegdown.Extensions;
 import org.pegdown.LinkRenderer;
@@ -125,7 +125,7 @@ public class IgapyonV3Util {
 
 		if (mdStringHead.length() > 0) {
 			final String bodyMarkdown = simpleMd2Html(mdStringHead,
-					new MyLinkRenderer());
+					new IgapyonLinkRenderer());
 			writer.write(bodyMarkdown);
 		}
 
@@ -137,11 +137,11 @@ public class IgapyonV3Util {
 
 	public static String simpleMd2Html(final String mdString,
 			final LinkRenderer linkRenderer) {
-		final MyPegDownProcessor processor = new MyPegDownProcessor(
+		final IgapyonPegDownProcessor processor = new IgapyonPegDownProcessor(
 				Extensions.AUTOLINKS | Extensions.STRIKETHROUGH
 						| Extensions.FENCED_CODE_BLOCKS | Extensions.TABLES
 						| Extensions.WIKILINKS);
-		return processor.markdownToHtml(mdString, new MyLinkRenderer());
+		return processor.markdownToHtml(mdString, new IgapyonLinkRenderer());
 	}
 
 	public static void writePostHtml(final Writer writer) throws IOException {

@@ -29,52 +29,64 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *********************************************************************** */
-package jp.igapyon.diary.v3.md2html;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+package jp.igapyon.diary.v3.md2html.pegdownext;
 
 import org.pegdown.LinkRenderer;
-import org.pegdown.ParsingTimeoutException;
-import org.pegdown.PegDownProcessor;
-import org.pegdown.VerbatimSerializer;
-import org.pegdown.ast.RootNode;
-import org.pegdown.plugins.ToHtmlSerializerPlugin;
+import org.pegdown.ToHtmlSerializer;
+import org.pegdown.ast.HeaderNode;
+import org.pegdown.ast.TableNode;
 
-public class MyPegDownProcessor extends PegDownProcessor {
-	public MyPegDownProcessor(int options) {
-		super(options);
+public class IgapyonToHtmlSerializer extends ToHtmlSerializer {
+
+	public IgapyonToHtmlSerializer(LinkRenderer linkRenderer) {
+		super(linkRenderer);
 	}
 
-	public String markdownToHtml(String markdownSource,
-			LinkRenderer linkRenderer) {
-		return markdownToHtml(markdownSource.toCharArray(), linkRenderer);
+	@Override
+	public void visit(HeaderNode node) {
+		final String tag = "h" + node.getLevel();
+
+		// TODO class should be locate at outside.
+
+		if (tag.equals("h2")) {
+			printer.print('<').print(tag)
+					.print(" class=\"alert alert-warning\"").print('>');
+			visitChildren(node);
+			printer.print('<').print('/').print(tag).print('>');
+		} else if (tag.equals("h3")) {
+			printer.print('<').print(tag).print(" class=\"bg-success\"")
+					.print('>');
+			visitChildren(node);
+			printer.print('<').print('/').print(tag).print('>');
+		} else if (tag.equals("h4")) {
+			printer.print('<').print(tag).print(" class=\"bg-info\"")
+					.print('>');
+			visitChildren(node);
+			printer.print('<').print('/').print(tag).print('>');
+		} else {
+			// Original
+			printTag(node, "h" + node.getLevel());
+		}
 	}
 
-	public String markdownToHtml(char[] markdownSource,
-			LinkRenderer linkRenderer) {
-		return markdownToHtml(markdownSource, linkRenderer,
-				Collections.<String, VerbatimSerializer> emptyMap());
-	}
+	@Override
+	public void visit(TableNode node) {
+		if (true) {
+			currentTableNode = node;
 
-	public String markdownToHtml(char[] markdownSource,
-			LinkRenderer linkRenderer,
-			Map<String, VerbatimSerializer> verbatimSerializerMap) {
-		return markdownToHtml(markdownSource, linkRenderer,
-				verbatimSerializerMap, new ArrayList<ToHtmlSerializerPlugin>());
-	}
+			printer.println().print('<').print("table")
+					.print(" class=\"table table-bordered\"").print('>')
+					.indent(+2);
+			visitChildren(node);
+			printer.indent(-2).println().print('<').print('/').print("table")
+					.print('>');
 
-	public String markdownToHtml(char[] markdownSource,
-			LinkRenderer linkRenderer,
-			Map<String, VerbatimSerializer> verbatimSerializerMap,
-			List<ToHtmlSerializerPlugin> plugins) {
-		try {
-			RootNode astRoot = parseMarkdown(markdownSource);
-			return new MyToHtmlSerializer(linkRenderer).toHtml(astRoot);
-		} catch (ParsingTimeoutException e) {
-			return null;
+			currentTableNode = null;
+		} else {
+			// Original
+			currentTableNode = node;
+			printIndentedTag(node, "table");
+			currentTableNode = null;
 		}
 	}
 }

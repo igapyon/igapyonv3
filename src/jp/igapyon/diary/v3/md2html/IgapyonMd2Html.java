@@ -36,6 +36,7 @@ import java.io.IOException;
 import java.io.StringWriter;
 import java.util.List;
 
+import jp.igapyon.diary.v3.md2html.pegdownext.IgapyonLinkRenderer;
 import jp.igapyon.diary.v3.util.IgapyonDirProcessor;
 import jp.igapyon.diary.v3.util.IgapyonV3Util;
 
@@ -122,7 +123,7 @@ public class IgapyonMd2Html {
 				"Descriptoin", "Toshiki Iga");
 
 		final String bodyMarkdown = IgapyonV3Util.simpleMd2Html(mdStringBody,
-				new MyLinkRenderer());
+				new IgapyonLinkRenderer());
 		outputHtmlWriter.write(bodyMarkdown);
 
 		IgapyonV3Util.writePostHtml(outputHtmlWriter);

@@ -29,62 +29,28 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *********************************************************************** */
-package jp.igapyon.diary.v3.md2html;
+package jp.igapyon.diary.v3.md2html.pegdownext;
+
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 
 import org.pegdown.LinkRenderer;
-import org.pegdown.ToHtmlSerializer;
-import org.pegdown.ast.HeaderNode;
-import org.pegdown.ast.TableNode;
+import org.pegdown.ast.WikiLinkNode;
 
-public class MyToHtmlSerializer extends ToHtmlSerializer {
-
-	public MyToHtmlSerializer(LinkRenderer linkRenderer) {
-		super(linkRenderer);
-	}
-
+public class IgapyonLinkRenderer extends LinkRenderer {
+	/**
+	 * Override Wiki link. for [[]] style.
+	 */
 	@Override
-	public void visit(HeaderNode node) {
-		final String tag = "h" + node.getLevel();
-
-		if (tag.equals("h2")) {
-			printer.print('<').print(tag)
-					.print(" class=\"alert alert-warning\"").print('>');
-			visitChildren(node);
-			printer.print('<').print('/').print(tag).print('>');
-		} else if (tag.equals("h3")) {
-			printer.print('<').print(tag).print(" class=\"bg-success\"")
-					.print('>');
-			visitChildren(node);
-			printer.print('<').print('/').print(tag).print('>');
-		} else if (tag.equals("h4")) {
-			printer.print('<').print(tag).print(" class=\"bg-info\"")
-					.print('>');
-			visitChildren(node);
-			printer.print('<').print('/').print(tag).print('>');
-		} else {
-			// Original
-			printTag(node, "h" + node.getLevel());
-		}
-	}
-
-	@Override
-	public void visit(TableNode node) {
-		if (true) {
-			currentTableNode = node;
-
-			printer.println().print('<').print("table")
-					.print(" class=\"table table-bordered\"").print('>')
-					.indent(+2);
-			visitChildren(node);
-			printer.indent(-2).println().print('<').print('/').print("table")
-					.print('>');
-
-			currentTableNode = null;
-		} else {
-			// Original
-			currentTableNode = node;
-			printIndentedTag(node, "table");
-			currentTableNode = null;
+	public Rendering render(final WikiLinkNode node) {
+		try {
+			// Treat as Hatena keywords.
+			final String url = "http://d.hatena.ne.jp/keyword/"
+					+ URLEncoder.encode(node.getText().replace(' ', '-'),
+							"UTF-8") + "";
+			return new Rendering(url, node.getText());
+		} catch (UnsupportedEncodingException e) {
+			throw new IllegalStateException();
 		}
 	}
 }

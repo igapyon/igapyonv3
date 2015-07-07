@@ -29,28 +29,52 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *********************************************************************** */
-package jp.igapyon.diary.v3.md2html;
+package jp.igapyon.diary.v3.md2html.pegdownext;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 
 import org.pegdown.LinkRenderer;
-import org.pegdown.ast.WikiLinkNode;
+import org.pegdown.ParsingTimeoutException;
+import org.pegdown.PegDownProcessor;
+import org.pegdown.VerbatimSerializer;
+import org.pegdown.ast.RootNode;
+import org.pegdown.plugins.ToHtmlSerializerPlugin;
 
-public class MyLinkRenderer extends LinkRenderer {
-	/**
-	 * Override Wiki link. for [[]] style.
-	 */
-	@Override
-	public Rendering render(final WikiLinkNode node) {
+public class IgapyonPegDownProcessor extends PegDownProcessor {
+	public IgapyonPegDownProcessor(int options) {
+		super(options);
+	}
+
+	public String markdownToHtml(String markdownSource,
+			LinkRenderer linkRenderer) {
+		return markdownToHtml(markdownSource.toCharArray(), linkRenderer);
+	}
+
+	public String markdownToHtml(char[] markdownSource,
+			LinkRenderer linkRenderer) {
+		return markdownToHtml(markdownSource, linkRenderer,
+				Collections.<String, VerbatimSerializer> emptyMap());
+	}
+
+	public String markdownToHtml(char[] markdownSource,
+			LinkRenderer linkRenderer,
+			Map<String, VerbatimSerializer> verbatimSerializerMap) {
+		return markdownToHtml(markdownSource, linkRenderer,
+				verbatimSerializerMap, new ArrayList<ToHtmlSerializerPlugin>());
+	}
+
+	public String markdownToHtml(char[] markdownSource,
+			LinkRenderer linkRenderer,
+			Map<String, VerbatimSerializer> verbatimSerializerMap,
+			List<ToHtmlSerializerPlugin> plugins) {
 		try {
-			// Treat as Hatena keywords.
-			final String url = "http://d.hatena.ne.jp/keyword/"
-					+ URLEncoder.encode(node.getText().replace(' ', '-'),
-							"UTF-8") + "";
-			return new Rendering(url, node.getText());
-		} catch (UnsupportedEncodingException e) {
-			throw new IllegalStateException();
+			RootNode astRoot = parseMarkdown(markdownSource);
+			return new IgapyonToHtmlSerializer(linkRenderer).toHtml(astRoot);
+		} catch (ParsingTimeoutException e) {
+			return null;
 		}
 	}
 }
