@@ -46,8 +46,6 @@ import jp.igapyon.diary.v3.util.IgapyonV3Util;
  * @author Toshiki Iga
  */
 public class IgapyonMd2Html {
-	public static final String VERSION = "010";
-
 	/**
 	 * 
 	 * 
@@ -196,7 +194,7 @@ public class IgapyonMd2Html {
 		final String target = "./test/data/output";
 		final boolean recursivedir = true;
 
-		System.out.println("md2html: ver:" + IgapyonMd2Html.VERSION
+		System.out.println("md2html: ver:" + IgapyonMd2HtmlConst.VERSION
 				+ ", source:[" + source + "], target:[" + target
 				+ "], recursivedir=" + recursivedir);
 
