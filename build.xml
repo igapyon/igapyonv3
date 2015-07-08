@@ -28,6 +28,7 @@
 		</taskdef>
 		<md2html source="./" target="./" />
 		<md2html source="./test/data/src" target="./test/data/output" recursivedir="true" />
+		<md2html source="./lib/commons-cli" target="./lib/commons-cli" recursivedir="false" />
 	</target>
 
 	<target name="pack">
