@@ -43,6 +43,7 @@ import jp.igapyon.diary.v3.util.IgapyonV3Util;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.DefaultParser;
+import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 
@@ -52,6 +53,50 @@ import org.apache.commons.cli.ParseException;
  * @author Toshiki Iga
  */
 public class IgapyonMd2Html {
+	public static void main(final String[] args) throws IOException {
+		final Options options = new Options();
+		options.addOption("s", true,
+				"source directory which contains .md file.");
+		options.addOption("t", true,
+				"target directory which will contains .html file.");
+		options.addOption("r", false, "treat directory recursive.");
+		options.addOption("h", false, "show help.");
+
+		final CommandLineParser parser = new DefaultParser();
+		CommandLine commandLine;
+		try {
+			commandLine = parser.parse(options, args);
+		} catch (ParseException e) {
+			System.err.println(e.toString());
+			return;
+		}
+
+		if (commandLine.hasOption("h")) {
+			HelpFormatter formatter = new HelpFormatter();
+			formatter.printHelp("md2html", options);
+			return;
+		}
+
+		if (commandLine.hasOption("s") == false) {
+			throw new IllegalArgumentException("-s must be set.");
+		}
+		if (commandLine.hasOption("t") == false) {
+			throw new IllegalArgumentException("-t must be set.");
+		}
+
+		final String source = commandLine.getOptionValue("s");
+		final String target = commandLine.getOptionValue("t");
+		final boolean recursivedir = commandLine.hasOption("r");
+
+		System.out.println(IgapyonMd2HtmlConst.PROGRAM_DISPLAY_NAME + " ver:"
+				+ IgapyonMd2HtmlConst.VERSION);
+		System.out.println("  source:[" + source + "]");
+		System.out.println("  target:[" + target + "]");
+		System.out.println("  recursivedir=" + recursivedir);
+
+		new IgapyonMd2Html().processDir(source, target, recursivedir);
+	}
+
 	/**
 	 * 
 	 * 
@@ -191,44 +236,5 @@ public class IgapyonMd2Html {
 		final File targetHtmlDir = new File(targetHtmlDirString);
 
 		processDir(sourceMdDir, targetHtmlDir, recursivedir);
-	}
-
-	public static void main(final String[] args) throws IOException {
-		// TODO args to be input, output dir.
-
-		final Options options = new Options();
-		options.addOption("s", true,
-				"Source directory which contains .md file.");
-		options.addOption("t", true,
-				"Target directory which will contains .html file.");
-		options.addOption("r", false, "Treat directory recursive.");
-
-		CommandLineParser parser = new DefaultParser();
-		CommandLine commandLine;
-		try {
-			commandLine = parser.parse(options, args);
-		} catch (ParseException e) {
-			System.err.println("引数解析エラー");
-			return;
-		}
-
-		if (commandLine.hasOption("s") == false) {
-			throw new IllegalArgumentException("-s must be set.");
-		}
-		if (commandLine.hasOption("t") == false) {
-			throw new IllegalArgumentException("-s must be set.");
-		}
-
-		final String source = commandLine.getOptionValue("s");
-		final String target = commandLine.getOptionValue("t");
-		final boolean recursivedir = commandLine.hasOption("r");
-
-		System.out.println(IgapyonMd2HtmlConst.PROGRAM_DISPLAY_NAME + " ver:"
-				+ IgapyonMd2HtmlConst.VERSION);
-		System.out.println("  source:[" + source + "]");
-		System.out.println("  target:[" + target + "]");
-		System.out.println("  recursivedir=" + recursivedir);
-
-		new IgapyonMd2Html().processDir(source, target, recursivedir);
 	}
 }
