@@ -11,10 +11,14 @@ IgapyonMd2Html is command line utility which convert Markdown text (*.md) to Htm
 
 ## Depends
 IgapyonMd2Html depends on several great OSSs. Great thanks to great OSSs.
+
 - [pegdown](https://github.com/sirthias/pegdown)
 - [parboiled](https://github.com/sirthias/parboiled)
 - [ASM](http://asm.ow2.org/)
 - [Bootstrap](http://getbootstrap.com/)
+- [jQuery](https://jquery.com/)
+- [Apache Ant](http://ant.apache.org/)
+- [Apache Commons CLI](https://commons.apache.org/proper/commons-cli/)
 
 ## Main project
 - [igapyonv3](https://github.com/igapyon/igapyonv3/blob/master/README.md)
