@@ -40,6 +40,7 @@ public class IgapyonPegDownTagConf {
 	public static IgapyonPegDownTagConf getDefault() {
 		final IgapyonPegDownTagConf tagConf = new IgapyonPegDownTagConf();
 
+		tagConf.setAttrClassValue("h1", "alert alert-danger");
 		tagConf.setAttrClassValue("h2", "alert alert-warning");
 		tagConf.setAttrClassValue("h3", "bg-success");
 		tagConf.setAttrClassValue("h4", "bg-info");
