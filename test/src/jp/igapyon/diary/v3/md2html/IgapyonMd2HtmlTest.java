@@ -43,5 +43,7 @@ public class IgapyonMd2HtmlTest {
 	public void testProcessDirStringString() throws Exception {
 		new IgapyonMd2Html().processDir("./test/data/src",
 				"./test/data/output", true);
+		new IgapyonMd2Html().processDir("./lib/commons-cli",
+				"./lib/commons-cli", false);
 	}
 }

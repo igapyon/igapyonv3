@@ -20,3 +20,6 @@ Igapyon Diary System v3 (#igapyonv3) depends on several great OSSs. Great thanks
 - [parboiled](https://github.com/sirthias/parboiled)
 - [ASM](http://asm.ow2.org/)
 - [Bootstrap](http://getbootstrap.com/)
+- [jQuery](https://jquery.com/)
+- [Apache Ant](http://ant.apache.org/)
+- [Apache Commons CLI](https://commons.apache.org/proper/commons-cli/)
