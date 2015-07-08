@@ -40,6 +40,12 @@ import jp.igapyon.diary.v3.md2html.pegdownext.IgapyonLinkRenderer;
 import jp.igapyon.diary.v3.util.IgapyonDirProcessor;
 import jp.igapyon.diary.v3.util.IgapyonV3Util;
 
+import org.apache.commons.cli.CommandLine;
+import org.apache.commons.cli.CommandLineParser;
+import org.apache.commons.cli.DefaultParser;
+import org.apache.commons.cli.Options;
+import org.apache.commons.cli.ParseException;
+
 /**
  * Igapyon's Markdown to Html converter.
  * 
@@ -190,13 +196,38 @@ public class IgapyonMd2Html {
 	public static void main(final String[] args) throws IOException {
 		// TODO args to be input, output dir.
 
-		final String source = "./test/data/src";
-		final String target = "./test/data/output";
-		final boolean recursivedir = true;
+		final Options options = new Options();
+		options.addOption("s", true,
+				"Source directory which contains .md file.");
+		options.addOption("t", true,
+				"Target directory which will contains .html file.");
+		options.addOption("r", false, "Treat directory recursive.");
 
-		System.out.println("md2html: ver:" + IgapyonMd2HtmlConst.VERSION
-				+ ", source:[" + source + "], target:[" + target
-				+ "], recursivedir=" + recursivedir);
+		CommandLineParser parser = new DefaultParser();
+		CommandLine commandLine;
+		try {
+			commandLine = parser.parse(options, args);
+		} catch (ParseException e) {
+			System.err.println("引数解析エラー");
+			return;
+		}
+
+		if (commandLine.hasOption("s") == false) {
+			throw new IllegalArgumentException("-s must be set.");
+		}
+		if (commandLine.hasOption("t") == false) {
+			throw new IllegalArgumentException("-s must be set.");
+		}
+
+		final String source = commandLine.getOptionValue("s");
+		final String target = commandLine.getOptionValue("t");
+		final boolean recursivedir = commandLine.hasOption("r");
+
+		System.out.println(IgapyonMd2HtmlConst.PROGRAM_DISPLAY_NAME + " ver:"
+				+ IgapyonMd2HtmlConst.VERSION);
+		System.out.println("  source:[" + source + "]");
+		System.out.println("  target:[" + target + "]");
+		System.out.println("  recursivedir=" + recursivedir);
 
 		new IgapyonMd2Html().processDir(source, target, recursivedir);
 	}
