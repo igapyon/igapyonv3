@@ -32,5 +32,29 @@
 package jp.igapyon.diary.v3.md2html;
 
 public class IgapyonMd2HtmlSettings {
+	/**
+	 * if null: use CDN.
+	 */
+	protected String targetPathJQuery;
 
+	/**
+	 * if null: use CDN.
+	 */
+	protected String targetPathBootstrap;
+
+	public String getTargetPathJQuery() {
+		return targetPathJQuery;
+	}
+
+	public void setTargetPathJQuery(String targetPathJQuery) {
+		this.targetPathJQuery = targetPathJQuery;
+	}
+
+	public String getTargetPathBootstrap() {
+		return targetPathBootstrap;
+	}
+
+	public void setTargetPathBootstrap(String targetPathBootstrap) {
+		this.targetPathBootstrap = targetPathBootstrap;
+	}
 }
