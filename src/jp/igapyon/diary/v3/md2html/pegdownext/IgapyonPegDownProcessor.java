@@ -72,7 +72,8 @@ public class IgapyonPegDownProcessor extends PegDownProcessor {
 			List<ToHtmlSerializerPlugin> plugins) {
 		try {
 			RootNode astRoot = parseMarkdown(markdownSource);
-			return new IgapyonToHtmlSerializer(linkRenderer).toHtml(astRoot);
+			return new IgapyonToHtmlSerializer(linkRenderer,
+					IgapyonPegDownTagConf.getDefault()).toHtml(astRoot);
 		} catch (ParsingTimeoutException e) {
 			return null;
 		}

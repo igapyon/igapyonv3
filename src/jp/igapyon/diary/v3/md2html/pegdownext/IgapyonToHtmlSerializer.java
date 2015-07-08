@@ -37,30 +37,59 @@ import org.pegdown.ast.HeaderNode;
 import org.pegdown.ast.TableNode;
 
 public class IgapyonToHtmlSerializer extends ToHtmlSerializer {
+	protected IgapyonPegDownTagConf tagConf;
 
-	public IgapyonToHtmlSerializer(LinkRenderer linkRenderer) {
+	public IgapyonToHtmlSerializer(final LinkRenderer linkRenderer,
+			final IgapyonPegDownTagConf tagConf) {
 		super(linkRenderer);
+		this.tagConf = tagConf;
 	}
 
 	@Override
 	public void visit(HeaderNode node) {
 		final String tag = "h" + node.getLevel();
 
-		// TODO class should be locate at outside.
-
+/**
 		if (tag.equals("h2")) {
-			printer.print('<').print(tag)
-					.print(" class=\"alert alert-warning\"").print('>');
+			printer.print('<').print(tag);
+			if (tagConf.getAttrClassValue(tag) != null) {
+				printer.print(" class=\"" + tagConf.getAttrClassValue(tag)
+						+ "\"");
+			}
+			printer.print('>');
 			visitChildren(node);
 			printer.print('<').print('/').print(tag).print('>');
 		} else if (tag.equals("h3")) {
-			printer.print('<').print(tag).print(" class=\"bg-success\"")
-					.print('>');
+			printer.print('<').print(tag);
+			if (tagConf.getAttrClassValue(tag) != null) {
+				printer.print(" class=\"" + tagConf.getAttrClassValue(tag)
+						+ "\"");
+			}
+			printer.print('>');
 			visitChildren(node);
 			printer.print('<').print('/').print(tag).print('>');
 		} else if (tag.equals("h4")) {
-			printer.print('<').print(tag).print(" class=\"bg-info\"")
-					.print('>');
+			printer.print('<').print(tag);
+			if (tagConf.getAttrClassValue(tag) != null) {
+				printer.print(" class=\"" + tagConf.getAttrClassValue(tag)
+						+ "\"");
+			}
+			printer.print('>');
+			visitChildren(node);
+			printer.print('<').print('/').print(tag).print('>');
+		} else {
+			// Original
+			printTag(node, "h" + node.getLevel());
+		}
+		*/
+
+		if (tagConf.getAttrClassValue(tag) != null) {
+			printer.print('<').print(tag);
+			if (tagConf.getAttrClassValue(tag) != null) {
+				printer.print(" class=\"" + tagConf.getAttrClassValue(tag)
+						+ "\"");
+			}
+			printer.print('>');
 			visitChildren(node);
 			printer.print('<').print('/').print(tag).print('>');
 		} else {
@@ -71,12 +100,18 @@ public class IgapyonToHtmlSerializer extends ToHtmlSerializer {
 
 	@Override
 	public void visit(TableNode node) {
-		if (true) {
+		if (tagConf.getAttrClassValue("table") != null) {
 			currentTableNode = node;
 
-			printer.println().print('<').print("table")
-					.print(" class=\"table table-bordered\"").print('>')
-					.indent(+2);
+			printer.println().print('<');
+			printer.print("table");
+
+			if (tagConf.getAttrClassValue("table") != null) {
+				printer.print(" class=\"" + tagConf.getAttrClassValue("table")
+						+ "\"");
+			}
+
+			printer.print('>').indent(+2);
 			visitChildren(node);
 			printer.indent(-2).println().print('<').print('/').print("table")
 					.print('>');
