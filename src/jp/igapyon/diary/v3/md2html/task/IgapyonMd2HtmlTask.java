@@ -34,7 +34,7 @@ package jp.igapyon.diary.v3.md2html.task;
 import java.io.IOException;
 
 import jp.igapyon.diary.v3.md2html.IgapyonMd2Html;
-import jp.igapyon.diary.v3.md2html.IgapyonMd2HtmlConst;
+import jp.igapyon.diary.v3.md2html.IgapyonMd2HtmlConstants;
 
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Task;
@@ -73,8 +73,8 @@ public class IgapyonMd2HtmlTask extends Task {
 		checkAttr();
 
 		System.out.println("md2html: "
-				+ IgapyonMd2HtmlConst.PROGRAM_DISPLAY_NAME + " ver"
-				+ IgapyonMd2HtmlConst.VERSION);
+				+ IgapyonMd2HtmlConstants.PROGRAM_DISPLAY_NAME + " ver"
+				+ IgapyonMd2HtmlConstants.VERSION);
 		System.out.println("   source:[" + source + "]");
 		System.out.println("   target:[" + target + "]");
 		System.out.println("   recursivedir:" + recursivedir);

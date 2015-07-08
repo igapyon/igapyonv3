@@ -88,8 +88,8 @@ public class IgapyonMd2Html {
 		final String target = commandLine.getOptionValue("t");
 		final boolean recursivedir = commandLine.hasOption("r");
 
-		System.out.println(IgapyonMd2HtmlConst.PROGRAM_DISPLAY_NAME + " ver:"
-				+ IgapyonMd2HtmlConst.VERSION);
+		System.out.println(IgapyonMd2HtmlConstants.PROGRAM_DISPLAY_NAME + " ver:"
+				+ IgapyonMd2HtmlConstants.VERSION);
 		System.out.println("  source:[" + source + "]");
 		System.out.println("  target:[" + target + "]");
 		System.out.println("  recursivedir=" + recursivedir);
