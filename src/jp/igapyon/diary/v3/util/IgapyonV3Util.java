@@ -46,10 +46,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import jp.igapyon.diary.v3.md2html.IgapyonMd2HtmlConstants;
+import jp.igapyon.diary.v3.md2html.IgapyonMd2HtmlSettings;
 import jp.igapyon.diary.v3.md2html.pegdownext.IgapyonLinkRenderer;
 import jp.igapyon.diary.v3.md2html.pegdownext.IgapyonPegDownProcessor;
 
-import org.pegdown.Extensions;
 import org.pegdown.LinkRenderer;
 
 public class IgapyonV3Util {
@@ -92,8 +92,8 @@ public class IgapyonV3Util {
 		writer.close();
 	}
 
-	public static void writePreHtml(final Writer writer,
-			final String mdStringHead, final String title,
+	public static void writePreHtml(final IgapyonMd2HtmlSettings settings,
+			final Writer writer, final String mdStringHead, final String title,
 			final String description, final String author) throws IOException {
 
 		writer.write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
@@ -128,7 +128,7 @@ public class IgapyonV3Util {
 		writer.write("<div class=\"jumbotron\">\n");
 
 		if (mdStringHead.length() > 0) {
-			final String bodyMarkdown = simpleMd2Html(mdStringHead,
+			final String bodyMarkdown = simpleMd2Html(settings, mdStringHead,
 					new IgapyonLinkRenderer());
 			writer.write(bodyMarkdown);
 		}
@@ -139,12 +139,10 @@ public class IgapyonV3Util {
 		writer.write("<div class=\"container-fluid\">\n");
 	}
 
-	public static String simpleMd2Html(final String mdString,
-			final LinkRenderer linkRenderer) {
+	public static String simpleMd2Html(final IgapyonMd2HtmlSettings settings,
+			final String mdString, final LinkRenderer linkRenderer) {
 		final IgapyonPegDownProcessor processor = new IgapyonPegDownProcessor(
-				Extensions.AUTOLINKS | Extensions.STRIKETHROUGH
-						| Extensions.FENCED_CODE_BLOCKS | Extensions.TABLES
-						| Extensions.WIKILINKS);
+				settings.getPegdownProcessorExtensions());
 		return processor.markdownToHtml(mdString, new IgapyonLinkRenderer());
 	}
 

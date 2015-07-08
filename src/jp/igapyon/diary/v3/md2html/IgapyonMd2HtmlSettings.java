@@ -31,6 +31,8 @@
  *********************************************************************** */
 package jp.igapyon.diary.v3.md2html;
 
+import org.pegdown.Extensions;
+
 public class IgapyonMd2HtmlSettings {
 	/**
 	 * if null: use CDN.
@@ -41,6 +43,10 @@ public class IgapyonMd2HtmlSettings {
 	 * if null: use CDN.
 	 */
 	protected String targetPathBootstrap;
+
+	protected int pegdownProcessorExtensions = Extensions.AUTOLINKS
+			| Extensions.STRIKETHROUGH | Extensions.FENCED_CODE_BLOCKS
+			| Extensions.TABLES | Extensions.WIKILINKS;
 
 	public String getTargetPathJQuery() {
 		return targetPathJQuery;
@@ -56,5 +62,13 @@ public class IgapyonMd2HtmlSettings {
 
 	public void setTargetPathBootstrap(String targetPathBootstrap) {
 		this.targetPathBootstrap = targetPathBootstrap;
+	}
+
+	public int getPegdownProcessorExtensions() {
+		return pegdownProcessorExtensions;
+	}
+
+	public void setPegdownProcessorExtensions(int pegdownProcessorExtensions) {
+		this.pegdownProcessorExtensions = pegdownProcessorExtensions;
 	}
 }

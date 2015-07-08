@@ -46,6 +46,8 @@ import jp.igapyon.diary.v3.util.IgapyonV3Util;
  * @author Toshiki Iga
  */
 public class IgapyonMd2Html {
+	protected IgapyonMd2HtmlSettings settings = new IgapyonMd2HtmlSettings();
+
 	public static void main(final String[] args) throws IOException {
 		new IgapyonMd2HtmlCli().process(args);
 	}
@@ -121,11 +123,11 @@ public class IgapyonMd2Html {
 		// TODO first h1 to be title, after text to be description
 		// TODO properties should be VO.
 		// TODO Description link with Markdown.
-		IgapyonV3Util.writePreHtml(outputHtmlWriter, mdStringHead, "Title",
-				"Descriptoin", "Toshiki Iga");
+		IgapyonV3Util.writePreHtml(settings, outputHtmlWriter, mdStringHead,
+				"Title", "Descriptoin", "Toshiki Iga");
 
-		final String bodyMarkdown = IgapyonV3Util.simpleMd2Html(mdStringBody,
-				new IgapyonLinkRenderer());
+		final String bodyMarkdown = IgapyonV3Util.simpleMd2Html(settings,
+				mdStringBody, new IgapyonLinkRenderer());
 		outputHtmlWriter.write(bodyMarkdown);
 
 		IgapyonV3Util.writePostHtml(outputHtmlWriter);
