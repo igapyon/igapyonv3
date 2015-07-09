@@ -37,6 +37,7 @@ import java.io.StringWriter;
 import java.util.List;
 
 import jp.igapyon.diary.v3.md2html.pegdownext.IgapyonLinkRenderer;
+import jp.igapyon.diary.v3.md2html.pegdownext.IgapyonPegDownTagConf;
 import jp.igapyon.diary.v3.util.IgapyonDirProcessor;
 import jp.igapyon.diary.v3.util.IgapyonV3Util;
 
@@ -123,12 +124,23 @@ public class IgapyonMd2Html {
 		// TODO first h1 to be title, after text to be description
 		// TODO properties should be VO.
 		// TODO Description link with Markdown.
-		IgapyonV3Util.writePreHtml(settings, outputHtmlWriter, mdStringHead,
-				"Title", "Descriptoin", "Toshiki Iga");
 
-		final String bodyMarkdown = IgapyonV3Util.simpleMd2Html(settings,
-				mdStringBody, new IgapyonLinkRenderer());
-		outputHtmlWriter.write(bodyMarkdown);
+		{
+			final IgapyonPegDownTagConf tagConf = IgapyonPegDownTagConf
+					.getDefault();
+
+			tagConf.setAttrClassValue("h1", null);
+			IgapyonV3Util.writePreHtml(settings, tagConf, outputHtmlWriter,
+					mdStringHead, "Title", "Descriptoin", "Toshiki Iga");
+		}
+
+		{
+			final IgapyonPegDownTagConf tagConf = IgapyonPegDownTagConf
+					.getDefault();
+			final String bodyMarkdown = IgapyonV3Util.simpleMd2Html(settings,
+					tagConf, mdStringBody, new IgapyonLinkRenderer());
+			outputHtmlWriter.write(bodyMarkdown);
+		}
 
 		IgapyonV3Util.writePostHtml(outputHtmlWriter);
 

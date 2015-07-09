@@ -44,8 +44,19 @@ import org.pegdown.ast.RootNode;
 import org.pegdown.plugins.ToHtmlSerializerPlugin;
 
 public class IgapyonPegDownProcessor extends PegDownProcessor {
+	protected IgapyonPegDownTagConf tagConf = IgapyonPegDownTagConf
+			.getDefault();
+
 	public IgapyonPegDownProcessor(int options) {
 		super(options);
+	}
+
+	public IgapyonPegDownTagConf getTagConf() {
+		return tagConf;
+	}
+
+	public void setTagConf(final IgapyonPegDownTagConf tagConf) {
+		this.tagConf = tagConf;
 	}
 
 	public String markdownToHtml(String markdownSource,
@@ -72,8 +83,8 @@ public class IgapyonPegDownProcessor extends PegDownProcessor {
 			List<ToHtmlSerializerPlugin> plugins) {
 		try {
 			RootNode astRoot = parseMarkdown(markdownSource);
-			return new IgapyonToHtmlSerializer(linkRenderer,
-					IgapyonPegDownTagConf.getDefault()).toHtml(astRoot);
+			return new IgapyonToHtmlSerializer(linkRenderer, getTagConf())
+					.toHtml(astRoot);
 		} catch (ParsingTimeoutException e) {
 			return null;
 		}

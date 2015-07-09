@@ -49,6 +49,7 @@ import jp.igapyon.diary.v3.md2html.IgapyonMd2HtmlConstants;
 import jp.igapyon.diary.v3.md2html.IgapyonMd2HtmlSettings;
 import jp.igapyon.diary.v3.md2html.pegdownext.IgapyonLinkRenderer;
 import jp.igapyon.diary.v3.md2html.pegdownext.IgapyonPegDownProcessor;
+import jp.igapyon.diary.v3.md2html.pegdownext.IgapyonPegDownTagConf;
 
 import org.pegdown.LinkRenderer;
 
@@ -93,7 +94,8 @@ public class IgapyonV3Util {
 	}
 
 	public static void writePreHtml(final IgapyonMd2HtmlSettings settings,
-			final Writer writer, final String mdStringHead, final String title,
+			final IgapyonPegDownTagConf tagConf, final Writer writer,
+			final String mdStringHead, final String title,
 			final String description, final String author) throws IOException {
 
 		writer.write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
@@ -128,8 +130,8 @@ public class IgapyonV3Util {
 		writer.write("<div class=\"jumbotron\">\n");
 
 		if (mdStringHead.length() > 0) {
-			final String bodyMarkdown = simpleMd2Html(settings, mdStringHead,
-					new IgapyonLinkRenderer());
+			final String bodyMarkdown = simpleMd2Html(settings, tagConf,
+					mdStringHead, new IgapyonLinkRenderer());
 			writer.write(bodyMarkdown);
 		}
 
@@ -140,9 +142,11 @@ public class IgapyonV3Util {
 	}
 
 	public static String simpleMd2Html(final IgapyonMd2HtmlSettings settings,
-			final String mdString, final LinkRenderer linkRenderer) {
+			final IgapyonPegDownTagConf tagConf, final String mdString,
+			final LinkRenderer linkRenderer) {
 		final IgapyonPegDownProcessor processor = new IgapyonPegDownProcessor(
 				settings.getPegdownProcessorExtensions());
+		processor.setTagConf(tagConf);
 		return processor.markdownToHtml(mdString, new IgapyonLinkRenderer());
 	}
 
