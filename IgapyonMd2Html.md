@@ -3,13 +3,14 @@ IgapyonMd2Html
 
 IgapyonMd2Html is command line utility which convert Markdown text (*.md) to Html text with Bootstrap (*.html). 
 
-## Parts 
+## Basic info
+### Parts 
 - Hashtag: #‎igapyonv3‬
 - Data format: ‪#‎Markdown
 - Web design: ‪#‎Bootstrap‬
 - Written in #‎Java
 
-## Depends
+### Depends
 IgapyonMd2Html depends on several great OSSs. Great thanks to great OSSs.
 
 - [pegdown](https://github.com/sirthias/pegdown)
@@ -20,8 +21,12 @@ IgapyonMd2Html depends on several great OSSs. Great thanks to great OSSs.
 - [Apache Ant](http://ant.apache.org/)
 - [Apache Commons CLI](https://commons.apache.org/proper/commons-cli/)
 
-## Main project
+## Project info
+### Main project
 - [igapyonv3](https://github.com/igapyon/igapyonv3/blob/master/README.md)
+
+### Similar project
+- [Apache Doxia](https://maven.apache.org/doxia/) : Doxia is full featured conveter. IgapyonMd2Html is focused in for Dairy.
 
 ## Usage
 ### Java usage
@@ -54,15 +59,12 @@ Ant usage is below:
 	</target>
 ```
 
-## Refs
+### Refs
 - [Bootstrap Components](http://getbootstrap.com/components/)
 
-## Similar project
-- [Apache Doxia](https://maven.apache.org/doxia/) : Doxia is full featured conveter. IgapyonMd2Html is focused in for Dairy.
 
-## TODO
+### TODO
 - Consider CDN off mode. for offline.
-- Jumbo switch IgapyonPagDownConf class???
 
-## Trash memo
+### Trash memo
 - using glyphicon as h* is not so good. 
