@@ -65,6 +65,8 @@ Ant usage is below:
 
 ### TODO
 - Consider CDN off mode. for offline.
+- Supporting without CDN needs to analyze deapth of dir.
+- Up to website to display what this product enable.
 
 ### Trash memo
 - using glyphicon as h* is not so good. 
