@@ -34,7 +34,6 @@ package jp.igapyon.diary.v3.md2html;
 import java.io.File;
 import java.io.IOException;
 import java.io.StringWriter;
-import java.util.List;
 
 import jp.igapyon.diary.v3.md2html.pegdownext.IgapyonLinkRenderer;
 import jp.igapyon.diary.v3.md2html.pegdownext.IgapyonPegDownProcessor;
@@ -58,58 +57,6 @@ public class IgapyonMd2Html {
 		new IgapyonMd2HtmlCli().process(args);
 	}
 
-	/**
-	 * 
-	 * 
-	 * FIXME check with trim() or not???
-	 * 
-	 * @deprecated
-	 * @param mdLines
-	 * @return
-	 */
-	@Deprecated
-	protected int getSeparateIndex(final List<String> mdLines) {
-		int separateIndex = 0;
-		// 切れ目サーチ
-		if (mdLines.size() <= 2) {
-			// ジャンボ部分なし
-			return 0;
-		}
-		if (mdLines.get(0).startsWith("#")) {
-			// h があった!
-			if (mdLines.get(1).startsWith("#")) {
-				// でも、次の行も h。ここは切れ目だ
-				return 1;
-			}
-			// 1 まで進める
-			separateIndex = 1;
-		} else if (mdLines.get(1).startsWith("===")) {
-			// これも h1
-			if (mdLines.get(2).startsWith("#")) {
-				// ここが切れ目
-				return 2;
-			}
-			// 2 まで進める
-			separateIndex = 2;
-		}
-
-		for (; separateIndex < mdLines.size(); separateIndex++) {
-			if (mdLines.get(separateIndex).startsWith("#")) {
-				// ここでヘッド部分と分離します。
-				return separateIndex;
-			}
-			if (separateIndex + 1 < mdLines.size()) {
-				if (mdLines.get(separateIndex + 1).startsWith("===")
-						|| mdLines.get(separateIndex + 1).startsWith("---")) {
-					// ここでヘッド部分と分離します。
-					return separateIndex;
-				}
-			}
-		}
-		// ヘッドのみで、ボディがない
-		return mdLines.size() - 1;
-	}
-
 	public void processFile(final File sourceMd, final File targetHtml)
 			throws IOException {
 		// TODO 最初に Markdown ファイルを解析。ジャンボエリアを確定。description のところまで行を進める。
@@ -120,7 +67,6 @@ public class IgapyonMd2Html {
 		final String inputMdString = IgapyonV3Util.readTextFile(sourceMd);
 		final char[] inputMdChars = inputMdString.toCharArray();
 
-		// aaaaaaaaaaaaaaaaaaaaaaa
 		final IgapyonPegDownProcessor processor = new IgapyonPegDownProcessor(
 				settings.getPegdownProcessorExtensions());
 		final RootNode rootNode = processor.parseMarkdown(inputMdChars);
@@ -158,6 +104,7 @@ public class IgapyonMd2Html {
 			final IgapyonPegDownTagConf tagConf = IgapyonPegDownTagConf
 					.getDefault();
 
+			// set h1 to null for Jumbotron.
 			tagConf.setAttrClassValue("h1", null);
 			IgapyonV3Util.writePreHtml(settings, tagConf, outputHtmlWriter,
 					mdStringHead, "Toshiki Iga");
@@ -190,6 +137,7 @@ public class IgapyonMd2Html {
 
 	public void processDir(final File sourceMdDir, final File targetHtmlDir,
 			final boolean recursivedir) throws IOException {
+		// TODO check to be another method.
 		if (sourceMdDir.exists() == false) {
 			System.err.println("md2html: source dir not exists: "
 					+ sourceMdDir.getAbsolutePath());
