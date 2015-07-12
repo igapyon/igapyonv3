@@ -64,8 +64,6 @@ Ant usage is below:
 
 
 ### TODO
-- Process first comment. for Apache support.
-		RootNode astRoot = parseMarkdown(markdownSource); TOBE skipping html comment.
 - Consider CDN off mode. for offline.
 - Supporting without CDN needs to analyze deapth of dir.
 - Up to website to display what this product enable.

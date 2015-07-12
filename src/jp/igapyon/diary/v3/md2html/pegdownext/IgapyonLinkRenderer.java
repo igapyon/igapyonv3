@@ -40,6 +40,8 @@ import org.pegdown.ast.WikiLinkNode;
 public class IgapyonLinkRenderer extends LinkRenderer {
 	/**
 	 * Override Wiki link. for [[]] style.
+	 * 
+	 * TODO support WikiPedia en/jp.
 	 */
 	@Override
 	public Rendering render(final WikiLinkNode node) {
