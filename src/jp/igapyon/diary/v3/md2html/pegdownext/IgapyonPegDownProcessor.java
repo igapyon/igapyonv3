@@ -77,12 +77,20 @@ public class IgapyonPegDownProcessor extends PegDownProcessor {
 				verbatimSerializerMap, new ArrayList<ToHtmlSerializerPlugin>());
 	}
 
+	/**
+	 * Core of md to html.
+	 * 
+	 * @param markdownSource
+	 * @param linkRenderer
+	 * @param verbatimSerializerMap
+	 * @param plugins
+	 */
 	public String markdownToHtml(char[] markdownSource,
 			LinkRenderer linkRenderer,
 			Map<String, VerbatimSerializer> verbatimSerializerMap,
 			List<ToHtmlSerializerPlugin> plugins) {
 		try {
-			RootNode astRoot = parseMarkdown(markdownSource);
+			final RootNode astRoot = parseMarkdown(markdownSource);
 			return new IgapyonToHtmlSerializer(linkRenderer, getTagConf())
 					.toHtml(astRoot);
 		} catch (ParsingTimeoutException e) {

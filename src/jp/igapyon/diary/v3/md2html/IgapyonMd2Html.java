@@ -37,9 +37,18 @@ import java.io.StringWriter;
 import java.util.List;
 
 import jp.igapyon.diary.v3.md2html.pegdownext.IgapyonLinkRenderer;
+import jp.igapyon.diary.v3.md2html.pegdownext.IgapyonPegDownProcessor;
 import jp.igapyon.diary.v3.md2html.pegdownext.IgapyonPegDownTagConf;
 import jp.igapyon.diary.v3.util.IgapyonDirProcessor;
 import jp.igapyon.diary.v3.util.IgapyonV3Util;
+
+import org.pegdown.ast.AnchorLinkNode;
+import org.pegdown.ast.HeaderNode;
+import org.pegdown.ast.Node;
+import org.pegdown.ast.ParaNode;
+import org.pegdown.ast.RootNode;
+import org.pegdown.ast.SuperNode;
+import org.pegdown.ast.TextNode;
 
 /**
  * Igapyon's Markdown to Html converter.
@@ -58,9 +67,11 @@ public class IgapyonMd2Html {
 	 * 
 	 * FIXME check with trim() or not???
 	 * 
+	 * @deprecated
 	 * @param mdLines
 	 * @return
 	 */
+	@Deprecated
 	protected int getSeparateIndex(final List<String> mdLines) {
 		int separateIndex = 0;
 		// 切れ目サーチ
@@ -103,6 +114,85 @@ public class IgapyonMd2Html {
 		return mdLines.size() - 1;
 	}
 
+	/**
+	 * TODO Move to commons.
+	 */
+	public HeaderNode getFistHeader(final RootNode rootNode) {
+		for (Node node : rootNode.getChildren()) {
+			if (node instanceof HeaderNode) {
+				return (HeaderNode) node;
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * TODO Move to commons.
+	 */
+	public HeaderNode getSecondHeader(final RootNode rootNode) {
+		boolean isFirstHeader = true;
+		for (Node node : rootNode.getChildren()) {
+			if (node instanceof HeaderNode) {
+				if (isFirstHeader) {
+					isFirstHeader = false;
+				} else {
+					return (HeaderNode) node;
+				}
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * todo move
+	 * 
+	 * @param node
+	 * @return
+	 */
+	public String getElementText(final Node node) {
+		if (node instanceof AnchorLinkNode) {
+			final AnchorLinkNode lookNode = (AnchorLinkNode) node;
+			return lookNode.getText();
+		} else if (node instanceof ParaNode) {
+			final ParaNode lookNode = (ParaNode) node;
+			return getElementChildText(lookNode);
+		} else if (node instanceof SuperNode) {
+			final SuperNode lookNode = (SuperNode) node;
+			return getElementChildText(lookNode);
+		} else if (node instanceof TextNode) {
+			final TextNode lookNode = (TextNode) node;
+			return lookNode.getText();
+		} else {
+			System.out.println("TRACE: unknown node: " + node.toString());
+			return "";
+		}
+	}
+
+	public String getElementChildText(final Node rootNode) {
+		return getElementChildText(rootNode, 0, Integer.MAX_VALUE);
+	}
+
+	public String getElementChildText(final Node rootNode,
+			final int startIndex, final int endIndex) {
+		StringBuilder builder = null;
+		for (Node node : rootNode.getChildren()) {
+			if (node.getStartIndex() < startIndex) {
+				continue;
+			}
+			if (node.getEndIndex() > endIndex) {
+				continue;
+			}
+			if (builder == null) {
+				builder = new StringBuilder();
+			}
+			builder.append(getElementText(node));
+		}
+		if (builder == null) {
+			return null;
+		}
+		return builder.toString();
+	}
+
 	public void processFile(final File sourceMd, final File targetHtml)
 			throws IOException {
 		// TODO 最初に Markdown ファイルを解析。ジャンボエリアを確定。description のところまで行を進める。
@@ -111,14 +201,33 @@ public class IgapyonMd2Html {
 		// には画像を含めない処理が必要???
 
 		final String inputMdString = IgapyonV3Util.readTextFile(sourceMd);
-		final List<String> mdLines = IgapyonV3Util.stringToList(inputMdString);
+		final char[] inputMdChars = inputMdString.toCharArray();
 
-		final int separateIndex = getSeparateIndex(mdLines);
-		final List<String> mdLinesHead = mdLines.subList(0, separateIndex);
-		final List<String> mdLinesBody = mdLines.subList(separateIndex,
-				mdLines.size());
-		final String mdStringHead = IgapyonV3Util.listToString(mdLinesHead);
-		final String mdStringBody = IgapyonV3Util.listToString(mdLinesBody);
+		// aaaaaaaaaaaaaaaaaaaaaaa
+		final IgapyonPegDownProcessor processor = new IgapyonPegDownProcessor(
+				settings.getPegdownProcessorExtensions());
+		final RootNode rootNode = processor.parseMarkdown(inputMdChars);
+
+		final HeaderNode firstHeader = getFistHeader(rootNode);
+		final HeaderNode secondHeader = getSecondHeader(rootNode);
+
+		if (firstHeader != null) {
+			settings.setHtmlTitle(getElementChildText(firstHeader));
+		}
+		if (firstHeader != null && secondHeader != null) {
+			String desc = getElementChildText(rootNode,
+					firstHeader.getEndIndex(), secondHeader.getStartIndex());
+			settings.setHtmlDescription(desc);
+		}
+
+		String mdStringHead = inputMdString;
+		String mdStringBody = "";
+		if (firstHeader != null && secondHeader != null) {
+			mdStringHead = inputMdString.substring(0,
+					secondHeader.getStartIndex());
+			mdStringBody = inputMdString
+					.substring(secondHeader.getStartIndex());
+		}
 
 		final StringWriter outputHtmlWriter = new StringWriter();
 		// TODO first h1 to be title, after text to be description
@@ -131,7 +240,7 @@ public class IgapyonMd2Html {
 
 			tagConf.setAttrClassValue("h1", null);
 			IgapyonV3Util.writePreHtml(settings, tagConf, outputHtmlWriter,
-					mdStringHead, "Title", "Descriptoin", "Toshiki Iga");
+					mdStringHead, "Toshiki Iga");
 		}
 
 		{

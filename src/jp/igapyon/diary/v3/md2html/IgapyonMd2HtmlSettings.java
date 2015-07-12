@@ -44,6 +44,10 @@ public class IgapyonMd2HtmlSettings {
 	 */
 	protected String targetPathBootstrap;
 
+	protected String htmlTitle;
+
+	protected String htmlDescription;
+
 	protected int pegdownProcessorExtensions = Extensions.AUTOLINKS
 			| Extensions.STRIKETHROUGH | Extensions.FENCED_CODE_BLOCKS
 			| Extensions.TABLES | Extensions.WIKILINKS;
@@ -70,5 +74,23 @@ public class IgapyonMd2HtmlSettings {
 
 	public void setPegdownProcessorExtensions(int pegdownProcessorExtensions) {
 		this.pegdownProcessorExtensions = pegdownProcessorExtensions;
+	}
+
+	// html section
+
+	public String getHtmlTitle() {
+		return htmlTitle;
+	}
+
+	public void setHtmlTitle(String htmlTitle) {
+		this.htmlTitle = htmlTitle;
+	}
+
+	public String getHtmlDescription() {
+		return htmlDescription;
+	}
+
+	public void setHtmlDescription(String htmlDescription) {
+		this.htmlDescription = htmlDescription;
 	}
 }

@@ -95,8 +95,7 @@ public class IgapyonV3Util {
 
 	public static void writePreHtml(final IgapyonMd2HtmlSettings settings,
 			final IgapyonPegDownTagConf tagConf, final Writer writer,
-			final String mdStringHead, final String title,
-			final String description, final String author) throws IOException {
+			final String mdStringHead, final String author) throws IOException {
 
 		writer.write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
 		writer.write("<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">\n");
@@ -106,13 +105,13 @@ public class IgapyonV3Util {
 		writer.write("<meta charset=\"utf-8\">\n");
 		writer.write("<meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">\n");
 		writer.write("<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n");
-		writer.write("<meta name=\"description\" content=\"" + description
-				+ "\">\n");
+		writer.write("<meta name=\"description\" content=\""
+				+ settings.getHtmlDescription() + "\">\n");
 		writer.write("<meta name=\"author\" content=\"" + author + "\">\n");
 		writer.write("<meta name=\"generator\" content=\""
 				+ IgapyonMd2HtmlConstants.PROGRAM_DISPLAY_NAME + " ver"
 				+ IgapyonMd2HtmlConstants.VERSION + "\">\n");
-		writer.write("<title>" + title + "</title>\n");
+		writer.write("<title>" + settings.getHtmlTitle() + "</title>\n");
 		writer.write("<!-- Compiled and minified CSS -->\n");
 		writer.write("<link rel=\"stylesheet\" href=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css\">\n");
 
@@ -204,6 +203,13 @@ public class IgapyonV3Util {
 		}
 	}
 
+	/**
+	 * @deprecated I decide to imple without this method.
+	 * @param stringWithNewline
+	 * @return
+	 * @throws IOException
+	 */
+	@Deprecated
 	public static List<String> stringToList(final String stringWithNewline)
 			throws IOException {
 		final List<String> result = new ArrayList<String>();
