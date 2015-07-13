@@ -65,7 +65,14 @@ Ant usage is below:
 
 ### TODO
 - Up to website to display what this product enable.
-- Next and Prev like igapyonv2.
+- img tag for Face.
+- consider keyword impl.
+- Return to index link.
+- adv area.
+- is date area is from filename?
+- tail format for About igapyon.
+- tail format for last modified (or other impl like metaarea)
+- Next and Prev like igapyonv2. based on idxdiary?
 - Consider CDN off mode. for offline.
 - Supporting without CDN needs to analyze deapth of dir.
 
