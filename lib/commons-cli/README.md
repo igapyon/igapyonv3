@@ -94,6 +94,6 @@ Additional Resources
 + [Apache Commons Homepage](https://commons.apache.org/)
 + [Apache Bugtracker (JIRA)](https://issues.apache.org/jira/)
 + [Apache Commons Twitter Account](https://twitter.com/ApacheCommons)
-+ #apachecommons IRC channel on freenode.org
++ \#apachecommons IRC channel on freenode.org
 
 [ml]:https://commons.apache.org/mail-lists.html
