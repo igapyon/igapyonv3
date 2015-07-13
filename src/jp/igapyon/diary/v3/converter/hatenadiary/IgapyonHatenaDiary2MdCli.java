@@ -29,11 +29,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *********************************************************************** */
-package jp.igapyon.diary.v3.hatenadiary2md;
+package jp.igapyon.diary.v3.converter.hatenadiary;
 
-/**
- * Convert HatenaDiary xml to md files.
- */
-public class IgapyonHatenaDiary2Md {
+public class IgapyonHatenaDiary2MdCli {
 
 }
