@@ -45,6 +45,16 @@ import java.io.Writer;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+
 import jp.igapyon.diary.v3.md2html.IgapyonMd2HtmlConstants;
 import jp.igapyon.diary.v3.md2html.IgapyonMd2HtmlSettings;
 import jp.igapyon.diary.v3.md2html.pegdownext.IgapyonLinkRenderer;
@@ -52,6 +62,9 @@ import jp.igapyon.diary.v3.md2html.pegdownext.IgapyonPegDownProcessor;
 import jp.igapyon.diary.v3.md2html.pegdownext.IgapyonPegDownTagConf;
 
 import org.pegdown.LinkRenderer;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.xml.sax.SAXException;
 
 public class IgapyonV3Util {
 	/**
@@ -232,5 +245,42 @@ public class IgapyonV3Util {
 			builder.append('\n');
 		}
 		return builder.toString();
+	}
+
+	public static Element xml2Element(final String inputXml) {
+		try {
+			final DocumentBuilder builder = DocumentBuilderFactory
+					.newInstance().newDocumentBuilder();
+			final Document document = builder.parse(inputXml);
+			return document.getDocumentElement();
+		} catch (ParserConfigurationException ex) {
+			throw new IllegalArgumentException("XML read exception: "
+					+ ex.toString());
+		} catch (IOException ex) {
+			throw new IllegalArgumentException("XML read exception: "
+					+ ex.toString());
+		} catch (SAXException ex) {
+			throw new IllegalArgumentException("XML read exception: "
+					+ ex.toString());
+		}
+	}
+
+	public static String element2Xml(final Element rootElement) {
+		try {
+			final StringWriter writer = new StringWriter();
+			final Transformer transformer = TransformerFactory.newInstance()
+					.newTransformer();
+			final DOMSource source = new DOMSource(rootElement);
+			final StreamResult target = new StreamResult(writer);
+			transformer.transform(source, target);
+			writer.flush();
+			return writer.toString();
+		} catch (TransformerConfigurationException ex) {
+			throw new IllegalArgumentException("XML write exception: "
+					+ ex.toString());
+		} catch (TransformerException ex) {
+			throw new IllegalArgumentException("XML write exception: "
+					+ ex.toString());
+		}
 	}
 }
