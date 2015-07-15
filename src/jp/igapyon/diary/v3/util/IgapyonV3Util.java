@@ -32,12 +32,10 @@
 package jp.igapyon.diary.v3.util;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStreamWriter;
 import java.io.StringReader;
 import java.io.Writer;
 import java.util.ArrayList;
@@ -61,7 +59,12 @@ public class IgapyonV3Util {
 	 * @throws IOException
 	 */
 	public static String readTextFile(final File file) throws IOException {
-		return IOUtils.toString(new FileInputStream(file), "UTF-8");
+		final FileInputStream inStream = new FileInputStream(file);
+		try {
+			return IOUtils.toString(inStream, "UTF-8");
+		} finally {
+			IOUtils.closeQuietly(inStream);
+		}
 	}
 
 	/**
@@ -73,10 +76,13 @@ public class IgapyonV3Util {
 	 */
 	public static void writeHtmlFile(final String strHtml, final File file)
 			throws IOException {
-		final BufferedWriter writer = new BufferedWriter(
-				new OutputStreamWriter(new FileOutputStream(file), "UTF-8"));
-		writer.write(strHtml);
-		writer.close();
+		final FileOutputStream outStream = new FileOutputStream(file);
+		try {
+			IOUtils.write(strHtml, outStream, "UTF-8");
+			outStream.flush();
+		} finally {
+			IOUtils.closeQuietly(outStream);
+		}
 	}
 
 	public static void writePreHtml(final IgapyonMd2HtmlSettings settings,
