@@ -31,15 +31,11 @@
  *********************************************************************** */
 package jp.igapyon.diary.v3.util;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.StringReader;
 import java.io.Writer;
-import java.util.ArrayList;
-import java.util.List;
 
 import jp.igapyon.diary.v3.md2html.IgapyonMd2HtmlConstants;
 import jp.igapyon.diary.v3.md2html.IgapyonMd2HtmlSettings;
@@ -193,36 +189,5 @@ public class IgapyonV3Util {
 				return true;
 			}
 		}
-	}
-
-	/**
-	 * @deprecated I decide to imple without this method.
-	 * @param stringWithNewline
-	 * @return
-	 * @throws IOException
-	 */
-	@Deprecated
-	public static List<String> stringToList(final String stringWithNewline)
-			throws IOException {
-		final List<String> result = new ArrayList<String>();
-		final BufferedReader reader = new BufferedReader(new StringReader(
-				stringWithNewline));
-		for (;;) {
-			final String line = reader.readLine();
-			if (line == null) {
-				break;
-			}
-			result.add(line);
-		}
-		return result;
-	}
-
-	public static String listToString(final List<String> stringList) {
-		final StringBuilder builder = new StringBuilder();
-		for (String look : stringList) {
-			builder.append(look);
-			builder.append('\n');
-		}
-		return builder.toString();
 	}
 }
