@@ -48,6 +48,9 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.xml.sax.SAXException;
 
+/**
+ * Basic XML static utils.
+ */
 public class IgapyonXmlUtil {
 	/**
 	 * Convert XML string to Element.
@@ -56,21 +59,20 @@ public class IgapyonXmlUtil {
 	 *            XML string.
 	 * @return Element
 	 */
-	public static Element stringToElement(final String inputXml) {
+	public static Element stringToElement(final String inputXml)
+			throws IOException {
 		try {
 			final DocumentBuilder builder = DocumentBuilderFactory
 					.newInstance().newDocumentBuilder();
 			final Document document = builder.parse(inputXml);
 			return document.getDocumentElement();
 		} catch (ParserConfigurationException ex) {
-			throw new IllegalArgumentException("XML read exception: "
-					+ ex.toString());
-		} catch (IOException ex) {
-			throw new IllegalArgumentException("XML read exception: "
-					+ ex.toString());
+			throw new IOException(
+					"IgapyonXmlUtil#stringToElement: Fail to configure xml parser: ",
+					ex);
 		} catch (SAXException ex) {
-			throw new IllegalArgumentException("XML read exception: "
-					+ ex.toString());
+			throw new IOException(
+					"IgapyonXmlUtil#stringToElement: Fail to process xml: ", ex);
 		}
 	}
 
@@ -81,7 +83,8 @@ public class IgapyonXmlUtil {
 	 *            Element.
 	 * @return XML string.
 	 */
-	public static String elementToString(final Element rootElement) {
+	public static String elementToString(final Element rootElement)
+			throws IOException {
 		try {
 			final StringWriter writer = new StringWriter();
 			final Transformer transformer = TransformerFactory.newInstance()
@@ -92,11 +95,13 @@ public class IgapyonXmlUtil {
 			writer.flush();
 			return writer.toString();
 		} catch (TransformerConfigurationException ex) {
-			throw new IllegalArgumentException("XML write exception: "
-					+ ex.toString());
+			throw new IOException(
+					"IgapyonXmlUtil#elementToString: Fail to configure xml transformer: ",
+					ex);
 		} catch (TransformerException ex) {
-			throw new IllegalArgumentException("XML write exception: "
-					+ ex.toString());
+			throw new IOException(
+					"IgapyonXmlUtil#elementToString: Fail to transform xml: ",
+					ex);
 		}
 	}
 }
