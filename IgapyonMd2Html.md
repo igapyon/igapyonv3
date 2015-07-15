@@ -20,6 +20,7 @@ IgapyonMd2Html depends on several great OSSs. Great thanks to great OSSs.
 - [jQuery](https://jquery.com/)
 - [Apache Ant](http://ant.apache.org/)
 - [Apache Commons CLI](https://commons.apache.org/proper/commons-cli/)
+- [Apache Commons IO](https://commons.apache.org/proper/commons-io/)
 
 ## Project info
 ### Main project

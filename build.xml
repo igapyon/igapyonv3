@@ -24,6 +24,9 @@
 				<fileset dir="./lib/commons-cli">
 					<include name="*.jar" />
 				</fileset>
+				<fileset dir="./lib/commons-io">
+					<include name="*.jar" />
+				</fileset>
 			</classpath>
 		</taskdef>
 		<md2html source="./" target="./" />
@@ -71,6 +74,9 @@
 					<include name="*.jar" />
 				</fileset>
 				<fileset dir="./lib/commons-cli">
+					<include name="*.jar" />
+				</fileset>
+				<fileset dir="./lib/commons-io">
 					<include name="*.jar" />
 				</fileset>
 			</classpath>
