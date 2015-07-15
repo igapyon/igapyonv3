@@ -37,10 +37,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.StringReader;
-import java.io.StringWriter;
 import java.io.Writer;
 import java.util.ArrayList;
 import java.util.List;
@@ -51,6 +49,7 @@ import jp.igapyon.diary.v3.md2html.pegdownext.IgapyonLinkRenderer;
 import jp.igapyon.diary.v3.md2html.pegdownext.IgapyonPegDownProcessor;
 import jp.igapyon.diary.v3.md2html.pegdownext.IgapyonPegDownTagConf;
 
+import org.apache.commons.io.IOUtils;
 import org.pegdown.LinkRenderer;
 
 public class IgapyonV3Util {
@@ -62,20 +61,7 @@ public class IgapyonV3Util {
 	 * @throws IOException
 	 */
 	public static String readTextFile(final File file) throws IOException {
-		final StringWriter writer = new StringWriter();
-		final BufferedReader reader = new BufferedReader(new InputStreamReader(
-				new FileInputStream(file), "UTF-8"));
-		final char[] buf = new char[2048];
-		for (;;) {
-			final int iReadLen = reader.read(buf);
-			if (iReadLen < 0) {
-				break;
-			}
-			writer.write(buf, 0, iReadLen);
-		}
-		reader.close();
-		writer.close();
-		return writer.toString();
+		return IOUtils.toString(new FileInputStream(file), "UTF-8");
 	}
 
 	/**
