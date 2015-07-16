@@ -63,8 +63,6 @@ public class IgapyonHatenaDiary2Md {
 			System.out.println(item.getString());
 		}
 
-		String outputHtmlWriter = "";
-
 		// if (IgapyonV3Util.checkWriteNecessary("hatenadiary2md",
 		// outputHtmlWriter.toString(), targetHtml) == false) {
 		// // no need to write
