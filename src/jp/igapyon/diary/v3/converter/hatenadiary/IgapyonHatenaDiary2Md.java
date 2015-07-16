@@ -51,6 +51,11 @@ public class IgapyonHatenaDiary2Md {
 				"./test/data/output/hatena/diary/001/"));
 	}
 
+	public void processDay(final Element dayElement, final File targetMdDir)
+			throws IOException {
+		System.out.println(dayElement.toString());
+	}
+
 	public void processFile(final File sourceXml, final File targetMdDir)
 			throws IOException {
 
@@ -58,10 +63,10 @@ public class IgapyonHatenaDiary2Md {
 		final Element rootElement = IgapyonXmlUtil
 				.stringToElement(inputXmlString);
 
-		final NodeList nodeList = rootElement.getChildNodes();
+		final NodeList nodeList = rootElement.getElementsByTagName("day");
 		for (int index = 0; index < nodeList.getLength(); index++) {
 			final Node look = nodeList.item(index);
-			System.out.println(look.toString());
+			processDay((Element) look, targetMdDir);
 		}
 
 		String outputHtmlWriter = "";
