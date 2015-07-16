@@ -33,16 +33,12 @@ package jp.igapyon.diary.v3.converter.hatenadiary;
 
 import java.io.File;
 import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.List;
 
 import jp.igapyon.diary.v3.util.IgapyonV3Util;
 import jp.igapyon.util.IgapyonXmlUtil;
 
 import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
 
 /**
  * Convert HatenaDiary xml to md files.
@@ -54,42 +50,6 @@ public class IgapyonHatenaDiary2Md {
 				"./test/data/output/hatena/diary/001/"));
 	}
 
-	public IgapyonHatenaDiaryItem parseDay(final Element dayElement)
-			throws IOException {
-		final IgapyonHatenaDiaryItem item = new IgapyonHatenaDiaryItem();
-
-		final SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-
-		try {
-			item.setDate(format.parse(dayElement.getAttribute("date")));
-		} catch (ParseException e) {
-			throw new IOException("Fail to parse date field", e);
-		}
-		item.setTitle(dayElement.getAttribute("title"));
-
-		final NodeList nodeList = dayElement.getElementsByTagName("body");
-		for (int index = 0; index < nodeList.getLength(); index++) {
-			final Element look = (Element) nodeList.item(index);
-			item.setBody((item.getBody() == null ? "" : item.getBody())
-					+ look.getTextContent());
-		}
-
-		// TODO support comments... or not.
-
-		return item;
-	}
-
-	public List<IgapyonHatenaDiaryItem> parseRoot(final Element rootElement)
-			throws IOException {
-		final List<IgapyonHatenaDiaryItem> result = new ArrayList<IgapyonHatenaDiaryItem>();
-		final NodeList nodeList = rootElement.getElementsByTagName("day");
-		for (int index = 0; index < nodeList.getLength(); index++) {
-			final Element look = (Element) nodeList.item(index);
-			result.add(parseDay(look));
-		}
-		return result;
-	}
-
 	public void processFile(final File sourceXml, final File targetMdDir)
 			throws IOException {
 
@@ -97,8 +57,9 @@ public class IgapyonHatenaDiary2Md {
 		final Element rootElement = IgapyonXmlUtil
 				.stringToElement(inputXmlString);
 
-		final List<IgapyonHatenaDiaryItem> result = parseRoot(rootElement);
-		for (IgapyonHatenaDiaryItem item : result) {
+		final List<IgapyonHatenaDiaryItem> diaryItemList = IgapyonHatenaDiaryXmlUtil
+				.parseRoot(rootElement);
+		for (IgapyonHatenaDiaryItem item : diaryItemList) {
 			System.out.println(item.getString());
 		}
 

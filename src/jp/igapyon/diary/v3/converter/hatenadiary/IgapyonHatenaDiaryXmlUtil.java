@@ -31,42 +31,49 @@
  *********************************************************************** */
 package jp.igapyon.diary.v3.converter.hatenadiary;
 
+import java.io.IOException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.List;
 
-public class IgapyonHatenaDiaryItem {
-	protected Date date;
-	protected String title;
-	protected String body;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
 
-	final SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+public class IgapyonHatenaDiaryXmlUtil {
+	public static IgapyonHatenaDiaryItem parseDay(final Element dayElement)
+			throws IOException {
+		final IgapyonHatenaDiaryItem item = new IgapyonHatenaDiaryItem();
 
-	public Date getDate() {
-		return date;
+		final SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+
+		try {
+			item.setDate(format.parse(dayElement.getAttribute("date")));
+		} catch (ParseException e) {
+			throw new IOException("Fail to parse date field", e);
+		}
+		item.setTitle(dayElement.getAttribute("title"));
+
+		final NodeList nodeList = dayElement.getElementsByTagName("body");
+		for (int index = 0; index < nodeList.getLength(); index++) {
+			final Element look = (Element) nodeList.item(index);
+			item.setBody((item.getBody() == null ? "" : item.getBody())
+					+ look.getTextContent());
+		}
+
+		// TODO support comments... or not.
+
+		return item;
 	}
 
-	public void setDate(Date date) {
-		this.date = date;
-	}
-
-	public String getTitle() {
-		return title;
-	}
-
-	public void setTitle(String title) {
-		this.title = title;
-	}
-
-	public String getBody() {
-		return body;
-	}
-
-	public void setBody(String body) {
-		this.body = body;
-	}
-
-	public String getString() {
-		return "[" + format.format(getDate()) + "] " + getTitle() + " ["
-				+ getBody() + "]";
+	public static List<IgapyonHatenaDiaryItem> parseRoot(
+			final Element rootElement) throws IOException {
+		final List<IgapyonHatenaDiaryItem> result = new ArrayList<IgapyonHatenaDiaryItem>();
+		final NodeList nodeList = rootElement.getElementsByTagName("day");
+		for (int index = 0; index < nodeList.getLength(); index++) {
+			final Element look = (Element) nodeList.item(index);
+			result.add(parseDay(look));
+		}
+		return result;
 	}
 }
