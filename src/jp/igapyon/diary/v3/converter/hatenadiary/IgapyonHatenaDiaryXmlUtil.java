@@ -32,8 +32,6 @@
 package jp.igapyon.diary.v3.converter.hatenadiary;
 
 import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -56,13 +54,7 @@ public class IgapyonHatenaDiaryXmlUtil {
 			throws IOException {
 		final IgapyonHatenaDiaryItem item = new IgapyonHatenaDiaryItem();
 
-		final SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-
-		try {
-			item.setDate(format.parse(dayElement.getAttribute("date")));
-		} catch (ParseException e) {
-			throw new IOException("Fail to parse date field", e);
-		}
+		item.setDate(dayElement.getAttribute("date"));
 		item.setTitle(dayElement.getAttribute("title"));
 
 		final NodeList nodeList = dayElement.getElementsByTagName("body");

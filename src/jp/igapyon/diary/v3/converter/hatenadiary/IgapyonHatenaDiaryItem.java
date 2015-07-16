@@ -31,6 +31,7 @@
  *********************************************************************** */
 package jp.igapyon.diary.v3.converter.hatenadiary;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -40,6 +41,16 @@ public class IgapyonHatenaDiaryItem {
 	protected String body;
 
 	final SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+
+	public void setDate(String date) {
+		try {
+			this.date = format.parse(date);
+		} catch (ParseException e) {
+			new IllegalArgumentException("Fail to parse hatena style date.", e);
+		}
+	}
+
+	// //////////////////////
 
 	public Date getDate() {
 		return date;
