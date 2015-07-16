@@ -35,6 +35,8 @@ import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 import jp.igapyon.diary.v3.util.IgapyonV3Util;
 import jp.igapyon.util.IgapyonXmlUtil;
@@ -52,7 +54,7 @@ public class IgapyonHatenaDiary2Md {
 				"./test/data/output/hatena/diary/001/"));
 	}
 
-	public void processDay(final Element dayElement, final File targetMdDir)
+	public IgapyonHatenaDiaryItem parseDay(final Element dayElement)
 			throws IOException {
 		final IgapyonHatenaDiaryItem item = new IgapyonHatenaDiaryItem();
 
@@ -74,7 +76,18 @@ public class IgapyonHatenaDiary2Md {
 
 		// TODO support comments... or not.
 
-		System.out.println(item.getString());
+		return item;
+	}
+
+	public List<IgapyonHatenaDiaryItem> parseRoot(final Element rootElement)
+			throws IOException {
+		final List<IgapyonHatenaDiaryItem> result = new ArrayList<IgapyonHatenaDiaryItem>();
+		final NodeList nodeList = rootElement.getElementsByTagName("day");
+		for (int index = 0; index < nodeList.getLength(); index++) {
+			final Element look = (Element) nodeList.item(index);
+			result.add(parseDay(look));
+		}
+		return result;
 	}
 
 	public void processFile(final File sourceXml, final File targetMdDir)
@@ -84,10 +97,9 @@ public class IgapyonHatenaDiary2Md {
 		final Element rootElement = IgapyonXmlUtil
 				.stringToElement(inputXmlString);
 
-		final NodeList nodeList = rootElement.getElementsByTagName("day");
-		for (int index = 0; index < nodeList.getLength(); index++) {
-			final Element look = (Element) nodeList.item(index);
-			processDay(look, targetMdDir);
+		final List<IgapyonHatenaDiaryItem> result = parseRoot(rootElement);
+		for (IgapyonHatenaDiaryItem item : result) {
+			System.out.println(item.getString());
 		}
 
 		String outputHtmlWriter = "";
