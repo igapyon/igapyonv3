@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- テスト用データとして、いがぴょんの日記＠はてな からテスト用に一部抽出 -->
+<diary>
+<day date="2004-02-04" title="はてなダイアリーを使ってみる">
+<body>
+*はてなダイアリーことはじめ
+読者のid:ryuzi_kambeさんに勧められて、ためしに作ってみました。羽生章洋さんも はてなダイアリーを書かれていますし、なんかトレンドに乗ってみたって感じです。
+
+ただし 私の場合 本家があるので、こちらの更新がいつまで続くのか、自信ありませんです。まあ、まずは利用方法に慣れるべく試してみます。
+
+おおっ わらわらの日記(http://d.hatena.ne.jp/waraya/)を発見。
+
+*講習会の講師
+じみち、じみち。
+
+*アンテナとの連動は不調
+う…わからん。
+
+*日記メモ
+*WebStoryUnit
+http://www.geocities.jp/interplay3d/WebStoryUnit/indexJ.htm
+Webブラウザからの操作を記録したHttpUnitコードの生成を行うとのこと。面白いプロダクトを考える人もいるものですねぇ。
+
+*新型クリエ: 音楽＋カメラの「TJ37」、まるで“紙の手帳”な「TH55」～進化した手帳CLIEが登場 http://www.itmedia.co.jp/mobile/articles/0402/03/news033.html うーん。ほしい。しかもデジカメになるんですね。
+
+*「100億円ビジネスを目指す」：黒字化目前のインフォテリア、2004年の事業戦略を語る
+http://japan.cnet.com/news/ent/story/0,2000047623,20064113,00.htm?ref=rss
+今まで赤字だったんだ…。知りませんでした。
+
+*第11回　ビジネススキルを学び、キャリアの幅を広げる
+http://jibun.atmarkit.co.jp/lcareer01/rensai/ten11/ten01.html
+こういう記事を見るにつけ、私のスキル・キャリアは いったいどのような状態にあるのだろうって悩みます。
+
+*三菱電機の第3四半期決算は減収増益、純利益が110億円に
+http://japan.cnet.com/news/biz/story/0,2000050156,20064082,00.htm?ref=rss
+なんだか儲かっていますなぁ。
+
+*ITエンジニアにも重要な心の健康 - 第5回　カウンセラーはどう選ぶ？
+http://jibun.atmarkit.co.jp/ljibun01/column/stress/stress05.html
+情報処理業界は平均的に見てストレスが多いからなぁ。
+
+*プロジェクトマネジメントスキル 実践養成講座 - 第1回　プロジェクトメンバーを1つにまとめる
+http://jibun.atmarkit.co.jp/lskill01/rensai/pm01/pm01.html
+大変良い記事です。しびれました。PMをどのように育成したらよいのか、PMは如何にあるべきか。考えさせられます。(状況＆場面によって私はPM的作業に従事することがありますから…)
+
+*クリティカル・シンキングで身に付く「考える力」- 第6回　手順を踏んで考える
+http://jibun.atmarkit.co.jp/lskill01/rensai/cri-think/think06.html
+本の執筆を不労所得呼ばわりしないでほしい…。ってそれは余談ですが。
+
+*NTTが通信分野でのLinux導入を目的にODSL加入
+http://japan.cnet.com/news/com/story/0,2000047668,20064109,00.htm?ref=rss
+なんてことだ。NTTまでもがODSLに加入してしまうとは。もう こうなっては「ビバ・オープンソース」って感じです。
+
+</body>
+</day>
+<day date="2004-02-05" title="仕事忙しいです">
+<body>
+*講習会の講師は終了
+ようやっと講習会の講師を行う一連のシリーズが完了しました。ふう。ほっとしました。
+
+*田町の仕事が忙しいです
+仕事忙しいです。来週の水曜日が休日だったなんて！！！ 結構ショックです (ここでの１日の勘違いはキビシイ)
+
+*はてなダイアリーを使ってみて
+結構更新が便利ですね。感心します。そして アンテナ (Webページ更新検知)が埋め込まれたページがすぐに生成されるのが、これがまた秀逸です。トラックバックも好印象ですし…。はてなダイアリーおそるべし。Web日記がこんなに簡単に作れちゃう時代なんですねぇ。
+
+</body>
+<comments>
+<comment>
+<username>ryuzi_kambe</username>
+<body>http://homepage2.nifty.com/igat/igapyon/diary/2004/ig040204.html から、ここへのリンクがはってないのは、意図的なものなのでございましょうか。</body>
+<timestamp>1076035118</timestamp>
+</comment>
+<comment>
+<username>ryuzi_kambe</username>
+<body>とりあえず id:igapyon であてずっぽうで来てしまいました :-)</body>
+<timestamp>1076035171</timestamp>
+</comment>
+<comment>
+<username>ryuzi_kambe</username>
+<body>見出し部分に、*[Java]などと書いておくと、あとで読み返すときにとっても便利です。</body>
+<timestamp>1076035250</timestamp>
+</comment>
+<comment>
+<username>ryuzi_kambe</username>
+<body>[]でくくられたものはカテゴリ名として扱われ、過去の日記の中からその見出しがついているものを＜串刺し＞にして時芸列でリストアップにしてくれます。</body>
+<timestamp>1076035335</timestamp>
+</comment>
+<comment>
+<username>igapyon</username>
+<body>ちゃんとリンク張りました (苦笑) ちょっとずつはてなダイアリーの機能を勉強しますね。ありがとうございます。</body>
+<timestamp>1076120939</timestamp>
+</comment>
+</comments>
+</day>
+</diary>

@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- テスト用データとして、いがぴょんの日記＠はてな からテスト用に一部抽出 -->
+<diary>
+<day date="2015-06-15" title="大阪梅田近辺と大宮のコワーキングスペース情報メモ">
+<body>
+*p1*大阪梅田近辺と大宮のコワーキングスペース情報メモ
+**大阪梅田近辺
+-[http://www.osakan-space.com/:title=オオサカンスペース]
+--御堂筋線の本町駅近く。事前予約必要。歴史の長いコワーキングスペースとのこと。
+-[http://cr-nakatsu.com/:title=コモンルーム中津]
+--御堂筋線の中津駅近く。
+-[https://kc-i.jp/facilities/thelab/cafelab/:title=グランフロント カフェラボ]
+--JR大阪駅近く。コワーキングスペースではないが、短時間滞在なら要チェックの快適ポイントとのこと
+
+**大宮(さいたま)
+-[http://office7f.com/:title=コワーキングスペース7F]
+--コワーキングスペースを知る上で、一度訪問しておくべき場所であると、その道に詳しい人から教えてもらいました。
+</body>
+</day>
+<day date="2015-06-26" title="Mylyn による Markdown 記法の html 化 のメモ">
+<body>
+*p1*Mylyn による Markdown 記法の html 化 のメモ
+
+
+import org.eclipse.mylyn.wikitext.core.parser.MarkupParser;
+import org.eclipse.mylyn.wikitext.core.parser.builder.HtmlDocumentBuilder;
+import org.eclipse.mylyn.wikitext.markdown.core.MarkdownLanguage;
+
+		final HtmlDocumentBuilder builder = new HtmlDocumentBuilder(writer);
+		// without head and body.
+		builder.setEmitAsDocument(false);
+
+		final MarkupParser parser = new MarkupParser(new MarkdownLanguage(),
+				builder);
+		parser.parse(&quot;# top&quot;);
+
+</body>
+</day>
+<day date="2015-06-27" title="Java でかかれた Markdown プロセッサー探し">
+<body>
+*p1*Java でかかれた Markdown プロセッサー探し
+-Markdown to HTML with Java/Scala
+--http://stackoverflow.com/questions/19784525/markdown-to-html-with-java-scala
+
+**そこに載っているリスト
+-txtmark http://github.com/rjeschke/txtmark (claims to be fastest MD processor running on the JVM)
+--Apache License?
+-Markdown4j http://code.google.com/p/markdown4j (fork of txtmark, advantages? more active dev?)
+--New BSD
+-MarkdownPapers http://markdown.tautua.org/ (based on JavaCC parser)
+--Apache License, AST based
+-pegdown http://github.com/sirthias/pegdown
+--Apache License, Plugin based.
+
+そして、これ以外には Eclipse Mylyn も調べました。
+
+**個人的な結論
+pegdown が最も私のニーズを満たしているという結論に至りました。
+</body>
+</day>
+<day date="2015-06-28" title="Bliki による MediaWiki 記法の html 化 のメモ">
+<body>
+*p1*Bliki による MediaWiki 記法の html 化 のメモ
+
+
+import info.bliki.wiki.model.WikiModel;
+
+WikiModel model = new WikiModel(&quot;&quot;, &quot;&quot;);
+writer.write(model.render(&quot;# top #&quot;, false));
+
+</body>
+</day>
+<day date="2015-06-30" title="Windows 8.1 + .NET Framework 3.5">
+<body>
+*p1*Windows 8.1 + .NET Framework 3.5 memo
+-https://msdn.microsoft.com/en-us/library/hh506443
+
+</body>
+</day>
+<day date="2015-07-09" title="メモ: Microsoft Windows Dynamic Cache Service">
+<body>
+*p1*メモ: Microsoft Windows Dynamic Cache Service
+Microsoft Windows Dynamic Cache Service という MS 提供ツールがあります。
+- http://www.microsoft.com/en-us/download/details.aspx?id=9258
+--Dynamically manage the size of the Windows System File Cache.
+--The Microsoft Windows Dynamic Cache Service will manage the working set size of the Windows System File Cache. For 64 bit systems this service helps to address the problem of excessive cached read I/O that could eventually consume all of physical memory.
+
+OS のファイルキャッシュが OS メモリを枯渇するような症状を防止する機能のようです。
+
+
+</body>
+</day>
+<day date="2015-07-14" title="Java で XML 読み書き">
+<body>
+*p1*Java で XML 読み書き
+よく忘れてしまいます。今一度、メモ。
+&gt;|Java|
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+
+public class Sample {
+
+	public static void main(String[] args) throws Exception {
+		Element rootElement = null;
+		{
+			// read xml
+			final DocumentBuilder builder = DocumentBuilderFactory
+					.newInstance().newDocumentBuilder();
+			final Document document = builder.parse(new File(&quot;./build.xml&quot;));
+			rootElement = document.getDocumentElement();
+		}
+
+		final NodeList nodeList = rootElement.getChildNodes();
+		for (int index = 0; index &lt; nodeList.getLength(); index++) {
+			final Node look = nodeList.item(index);
+			System.out.println(look.toString());
+		}
+
+		{
+			// write xml
+			final Transformer transformer = TransformerFactory.newInstance()
+					.newTransformer();
+			final DOMSource source = new DOMSource(rootElement);
+			final OutputStream outStream = new BufferedOutputStream(
+					new FileOutputStream(new File(&quot;./build-test.xml&quot;)));
+			final StreamResult target = new StreamResult(outStream);
+			transformer.transform(source, target);
+		}
+	}
+}
+||&lt;
+
+</body>
+</day>
+<day date="2038-01-19" title="2038年問題">
+<body>
+
+</body>
+</day>
+</diary>
