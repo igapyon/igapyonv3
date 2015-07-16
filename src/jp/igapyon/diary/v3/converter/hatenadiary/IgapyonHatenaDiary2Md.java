@@ -38,7 +38,6 @@ import jp.igapyon.diary.v3.util.IgapyonV3Util;
 import jp.igapyon.util.IgapyonXmlUtil;
 
 import org.w3c.dom.Element;
-import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 /**
@@ -53,7 +52,16 @@ public class IgapyonHatenaDiary2Md {
 
 	public void processDay(final Element dayElement, final File targetMdDir)
 			throws IOException {
-		System.out.println(dayElement.toString());
+		System.out.print(dayElement.getAttribute("date") + " ");
+		System.out.println(dayElement.getAttribute("title"));
+
+		final NodeList nodeList = dayElement.getElementsByTagName("body");
+		for (int index = 0; index < nodeList.getLength(); index++) {
+			final Element look = (Element) nodeList.item(index);
+			System.out.println(look.getTextContent());
+		}
+
+		// TODO support comments... or not.
 	}
 
 	public void processFile(final File sourceXml, final File targetMdDir)
@@ -65,8 +73,8 @@ public class IgapyonHatenaDiary2Md {
 
 		final NodeList nodeList = rootElement.getElementsByTagName("day");
 		for (int index = 0; index < nodeList.getLength(); index++) {
-			final Node look = nodeList.item(index);
-			processDay((Element) look, targetMdDir);
+			final Element look = (Element) nodeList.item(index);
+			processDay(look, targetMdDir);
 		}
 
 		String outputHtmlWriter = "";
