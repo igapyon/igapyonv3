@@ -41,6 +41,17 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
 public class IgapyonHatenaDiaryXmlUtil {
+	public static List<IgapyonHatenaDiaryItem> parseRoot(
+			final Element rootElement) throws IOException {
+		final List<IgapyonHatenaDiaryItem> result = new ArrayList<IgapyonHatenaDiaryItem>();
+		final NodeList nodeList = rootElement.getElementsByTagName("day");
+		for (int index = 0; index < nodeList.getLength(); index++) {
+			final Element look = (Element) nodeList.item(index);
+			result.add(parseDay(look));
+		}
+		return result;
+	}
+
 	public static IgapyonHatenaDiaryItem parseDay(final Element dayElement)
 			throws IOException {
 		final IgapyonHatenaDiaryItem item = new IgapyonHatenaDiaryItem();
@@ -64,16 +75,5 @@ public class IgapyonHatenaDiaryXmlUtil {
 		// TODO support comments... or not.
 
 		return item;
-	}
-
-	public static List<IgapyonHatenaDiaryItem> parseRoot(
-			final Element rootElement) throws IOException {
-		final List<IgapyonHatenaDiaryItem> result = new ArrayList<IgapyonHatenaDiaryItem>();
-		final NodeList nodeList = rootElement.getElementsByTagName("day");
-		for (int index = 0; index < nodeList.getLength(); index++) {
-			final Element look = (Element) nodeList.item(index);
-			result.add(parseDay(look));
-		}
-		return result;
 	}
 }
