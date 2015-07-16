@@ -31,9 +31,47 @@
  *********************************************************************** */
 package jp.igapyon.diary.v3.converter.hatenadiary;
 
+import java.io.File;
+import java.io.IOException;
+
+import jp.igapyon.diary.v3.util.IgapyonV3Util;
+import jp.igapyon.util.IgapyonXmlUtil;
+
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+
 /**
  * Convert HatenaDiary xml to md files.
  */
 public class IgapyonHatenaDiary2Md {
+	public static void main(final String[] args) throws IOException {
+		new IgapyonHatenaDiary2Md().processFile(new File(
+				"./test/data/src/hatena/diary/001/test901.xml"), new File(
+				"./test/data/output/hatena/diary/001/"));
+	}
 
+	public void processFile(final File sourceXml, final File targetMdDir)
+			throws IOException {
+
+		final String inputXmlString = IgapyonV3Util.readTextFile(sourceXml);
+		final Element rootElement = IgapyonXmlUtil
+				.stringToElement(inputXmlString);
+
+		final NodeList nodeList = rootElement.getChildNodes();
+		for (int index = 0; index < nodeList.getLength(); index++) {
+			final Node look = nodeList.item(index);
+			System.out.println(look.toString());
+		}
+
+		String outputHtmlWriter = "";
+
+		// if (IgapyonV3Util.checkWriteNecessary("hatenadiary2md",
+		// outputHtmlWriter.toString(), targetHtml) == false) {
+		// // no need to write
+		// return;
+		// }
+		//
+		// IgapyonV3Util.writeHtmlFile(outputHtmlWriter.toString(), targetHtml);
+	}
 }

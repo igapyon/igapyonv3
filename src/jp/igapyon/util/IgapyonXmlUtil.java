@@ -31,6 +31,7 @@
  *********************************************************************** */
 package jp.igapyon.util;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.StringWriter;
 
@@ -64,7 +65,8 @@ public class IgapyonXmlUtil {
 		try {
 			final DocumentBuilder builder = DocumentBuilderFactory
 					.newInstance().newDocumentBuilder();
-			final Document document = builder.parse(inputXml);
+			final Document document = builder.parse(new ByteArrayInputStream(
+					inputXml.getBytes("UTF-8")));
 			return document.getDocumentElement();
 		} catch (ParserConfigurationException ex) {
 			throw new IOException(
