@@ -33,6 +33,8 @@ package jp.igapyon.diary.v3.converter.hatenadiary;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 import jp.igapyon.diary.v3.util.IgapyonV3Util;
 import jp.igapyon.util.IgapyonXmlUtil;
@@ -52,16 +54,27 @@ public class IgapyonHatenaDiary2Md {
 
 	public void processDay(final Element dayElement, final File targetMdDir)
 			throws IOException {
-		System.out.print(dayElement.getAttribute("date") + " ");
-		System.out.println(dayElement.getAttribute("title"));
+		final IgapyonHatenaDiaryItem item = new IgapyonHatenaDiaryItem();
+
+		final SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+
+		try {
+			item.setDate(format.parse(dayElement.getAttribute("date")));
+		} catch (ParseException e) {
+			throw new IOException("Fail to parse date field", e);
+		}
+		item.setTitle(dayElement.getAttribute("title"));
 
 		final NodeList nodeList = dayElement.getElementsByTagName("body");
 		for (int index = 0; index < nodeList.getLength(); index++) {
 			final Element look = (Element) nodeList.item(index);
-			System.out.println(look.getTextContent());
+			item.setBody((item.getBody() == null ? "" : item.getBody())
+					+ look.getTextContent());
 		}
 
 		// TODO support comments... or not.
+
+		System.out.println(item.getString());
 	}
 
 	public void processFile(final File sourceXml, final File targetMdDir)
