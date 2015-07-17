@@ -7,8 +7,8 @@ IgapyonMd2Html is command line utility which convert Markdown text (*.md) to Htm
 
 Convert|Image
 -------|------
-Source |![IgapyonMd2Html-input.png](https://raw.githubusercontent.com/igapyon/igapyonv3/master/doc/image/IgapyonMd2Html-input.png)
-Target |![IgapyonMd2Html-output.png](https://raw.githubusercontent.com/igapyon/igapyonv3/master/doc/image/IgapyonMd2Html-output.png)
+Input  |![IgapyonMd2Html-input.png](https://raw.githubusercontent.com/igapyon/igapyonv3/master/doc/image/IgapyonMd2Html-input.png)
+Output |![IgapyonMd2Html-output.png](https://raw.githubusercontent.com/igapyon/igapyonv3/master/doc/image/IgapyonMd2Html-output.png)
 
 ### Parts 
 - Hashtag: #‎igapyonv3‬
