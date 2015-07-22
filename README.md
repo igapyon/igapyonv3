@@ -15,6 +15,10 @@ One of main feature is converter which convert Markdown text (*.md) to Html text
 - [IgapyonMd2Html](https://github.com/igapyon/igapyonv3/blob/master/IgapyonMd2Html.md) : Command line utility which convert Markdown text (.md) to Html text with Bootstrap (.html).
 - [IgapyonHatenaDiary2Md](https://github.com/igapyon/igapyonv3/blob/master/IgapyonHatenaDiary2Md.md) : IgapyonHatenaDiary2Md is command line utility which convert Hatena Diary xml (*.xml) to md text (*.md).
 
+### License
+[Igapyon Diary System v3](https://github.com/igapyon/igapyonv3) is released under GNU LGPL version 3 and Apache License version 2 (dual license). 
+You can select either LGPL or ASL or both. 
+
 ### Depends
 Igapyon Diary System v3 (#igapyonv3) depends on several great OSSs. Great thanks to great OSSs.
 

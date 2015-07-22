@@ -6,6 +6,10 @@ IgapyonMd2Html
 ## Basic info
 - Homepage: https://github.com/igapyon/igapyonv3/blob/master/IgapyonMd2Html.md
 
+### License
+IgapyonMd2Html is released under GNU LGPL version 3 and Apache License version 2 (dual license). 
+You can select either LGPL or ASL or both. 
+
 ### Simple sample
 IgapyonMd2Html convert like below:
 
