@@ -1,9 +1,13 @@
 IgapyonMd2Html
 ==============
 
-IgapyonMd2Html is command line utility which convert Markdown text (*.md) to Html text with Bootstrap (*.html). 
+[IgapyonMd2Html](https://github.com/igapyon/igapyonv3/blob/master/IgapyonMd2Html.md) is a command line utility which convert Markdown text (*.md) to Html text with Bootstrap (*.html). 
 
 ## Basic info
+- Homepage: https://github.com/igapyon/igapyonv3/blob/master/IgapyonMd2Html.md
+
+### Simple sample
+IgapyonMd2Html convert like below:
 
 Convert|Image
 -------|------
@@ -85,3 +89,24 @@ Ant usage is below:
 
 ### Trash memo
 - using glyphicon as h* is not so good. 
+
+# META-INF
+`META-INF` is reserved word in IgapyonMd2Html on \<h1\>, and is used in \<meta keywords\> and will be discard in html.
+
+## Date
+First one is used in html.
+
+- 2015-07-24: Small change.
+- 2015-07-23: Newly created.
+
+## Author
+- Toshiki Iga
+
+## Keywords
+Keywords list description. You can use , or - or both.
+
+- Igapyon, diary
+- Bootstrap, Markdown
+
+## Todo
+- Consider new word to describe md's relative location.

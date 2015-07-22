@@ -1,7 +1,7 @@
 Igapyon Diary System v3
 =======================
 
-[Igapyon Diary System v3](https://github.com/igapyon/igapyonv3) (#igapyonv3) is OSS diary system written in Java.
+[Igapyon Diary System v3](https://github.com/igapyon/igapyonv3) (#igapyonv3) is an OSS diary system written in Java.
 One of main feature is converter which convert Markdown text (*.md) to Html text with Bootstrap (*.html)
 
 ##About
