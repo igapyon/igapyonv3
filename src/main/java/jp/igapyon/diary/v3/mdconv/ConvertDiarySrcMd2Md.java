@@ -34,7 +34,7 @@ public class ConvertDiarySrcMd2Md {
 				processDir(file);
 			} else if (file.isFile()) {
 				if (file.getName().startsWith("ig") && file.getName().endsWith(".src.md")) {
-					System.out.println(file.getName());
+//					System.out.println(file.getName());
 					processFile(file);
 				}
 			}

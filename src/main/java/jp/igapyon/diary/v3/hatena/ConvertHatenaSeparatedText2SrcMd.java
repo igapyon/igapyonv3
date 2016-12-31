@@ -41,7 +41,7 @@ public class ConvertHatenaSeparatedText2SrcMd {
 				processDir(file);
 			} else if (file.isFile()) {
 				if (file.getName().startsWith("ig") && file.getName().endsWith(".src.hatenadiary")) {
-					System.out.println(file.getName());
+//					System.out.println(file.getName());
 					processFile(file);
 				}
 			}

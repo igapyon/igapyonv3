@@ -64,7 +64,7 @@ public class GenerateIndexDiaryHtml {
 			} else if (file.isFile()) {
 				if (file.getName().startsWith("ig") && file.getName().endsWith(".html")
 						&& false == file.getName().endsWith(".src.html")) {
-					System.out.println(file.getName());
+//					System.out.println(file.getName());
 					processFile(file, path);
 				}
 			}
