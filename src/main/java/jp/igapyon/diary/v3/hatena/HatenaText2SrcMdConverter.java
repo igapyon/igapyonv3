@@ -183,7 +183,7 @@ public class HatenaText2SrcMdConverter {
 		// タブは２スペースに変換。
 		for (int index = 0; index < lines.size(); index++) {
 			String line = lines.get(index);
-			line = StringUtils.replaceAll(line, "\t", "");
+			line = StringUtils.replaceAll(line, "\t", "  ");
 			lines.set(index, line);
 		}
 
