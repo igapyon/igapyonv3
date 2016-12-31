@@ -35,7 +35,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class IgapyonPegDownTagConf {
-	protected final Map<String, IgapyonPegDownTagAttr> tagAttrMap = new HashMap<>();
+	protected final Map<String, IgapyonPegDownTagAttr> tagAttrMap = new HashMap<String, IgapyonPegDownTagAttr>();
 
 	public static IgapyonPegDownTagConf getDefault() {
 		final IgapyonPegDownTagConf tagConf = new IgapyonPegDownTagConf();
@@ -49,8 +49,7 @@ public class IgapyonPegDownTagConf {
 		return tagConf;
 	}
 
-	public void setAttrClassValue(final String tagName,
-			final String tagClassValue) {
+	public void setAttrClassValue(final String tagName, final String tagClassValue) {
 		final IgapyonPegDownTagAttr tagAttr = new IgapyonPegDownTagAttr();
 		tagAttr.setTagClassValue(tagClassValue);
 
