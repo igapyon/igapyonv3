@@ -39,8 +39,6 @@ import jp.igapyon.diary.v3.md2html.pegdownext.IgapyonLinkRenderer;
 import jp.igapyon.diary.v3.md2html.pegdownext.IgapyonPegDownProcessor;
 import jp.igapyon.diary.v3.md2html.pegdownext.IgapyonPegDownTagConf;
 import jp.igapyon.diary.v3.md2html.pegdownext.IgapyonPegDownUtil;
-import jp.igapyon.diary.v3.util.IgapyonDirProcessor;
-import jp.igapyon.diary.v3.util.IgapyonV3Util;
 
 import org.pegdown.ast.HeaderNode;
 import org.pegdown.ast.RootNode;

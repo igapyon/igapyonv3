@@ -29,7 +29,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *********************************************************************** */
-package jp.igapyon.diary.v3.util;
+package jp.igapyon.diary.v3.md2html;
 
 import java.io.File;
 import java.io.IOException;

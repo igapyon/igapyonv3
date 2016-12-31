@@ -60,21 +60,15 @@ public class IgapyonXmlUtil {
 	 *            XML string.
 	 * @return Element
 	 */
-	public static Element stringToElement(final String inputXml)
-			throws IOException {
+	public static Element stringToElement(final String inputXml) throws IOException {
 		try {
-			final DocumentBuilder builder = DocumentBuilderFactory
-					.newInstance().newDocumentBuilder();
-			final Document document = builder.parse(new ByteArrayInputStream(
-					inputXml.getBytes("UTF-8")));
+			final DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+			final Document document = builder.parse(new ByteArrayInputStream(inputXml.getBytes("UTF-8")));
 			return document.getDocumentElement();
 		} catch (ParserConfigurationException ex) {
-			throw new IOException(
-					"IgapyonXmlUtil#stringToElement: Fail to configure xml parser: ",
-					ex);
+			throw new IOException("IgapyonXmlUtil#stringToElement: Fail to configure xml parser: ", ex);
 		} catch (SAXException ex) {
-			throw new IOException(
-					"IgapyonXmlUtil#stringToElement: Fail to process xml: ", ex);
+			throw new IOException("IgapyonXmlUtil#stringToElement: Fail to process xml: ", ex);
 		}
 	}
 
@@ -85,25 +79,19 @@ public class IgapyonXmlUtil {
 	 *            Element.
 	 * @return XML string.
 	 */
-	public static String elementToString(final Element rootElement)
-			throws IOException {
+	public static String elementToString(final Element rootElement) throws IOException {
 		try {
 			final StringWriter writer = new StringWriter();
-			final Transformer transformer = TransformerFactory.newInstance()
-					.newTransformer();
+			final Transformer transformer = TransformerFactory.newInstance().newTransformer();
 			final DOMSource source = new DOMSource(rootElement);
 			final StreamResult target = new StreamResult(writer);
 			transformer.transform(source, target);
 			writer.flush();
 			return writer.toString();
 		} catch (TransformerConfigurationException ex) {
-			throw new IOException(
-					"IgapyonXmlUtil#elementToString: Fail to configure xml transformer: ",
-					ex);
+			throw new IOException("IgapyonXmlUtil#elementToString: Fail to configure xml transformer: ", ex);
 		} catch (TransformerException ex) {
-			throw new IOException(
-					"IgapyonXmlUtil#elementToString: Fail to transform xml: ",
-					ex);
+			throw new IOException("IgapyonXmlUtil#elementToString: Fail to transform xml: ", ex);
 		}
 	}
 }

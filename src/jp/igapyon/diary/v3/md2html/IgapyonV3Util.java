@@ -29,7 +29,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *********************************************************************** */
-package jp.igapyon.diary.v3.util;
+package jp.igapyon.diary.v3.md2html;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -37,8 +37,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.Writer;
 
-import jp.igapyon.diary.v3.md2html.IgapyonMd2HtmlConstants;
-import jp.igapyon.diary.v3.md2html.IgapyonMd2HtmlSettings;
 import jp.igapyon.diary.v3.md2html.pegdownext.IgapyonLinkRenderer;
 import jp.igapyon.diary.v3.md2html.pegdownext.IgapyonPegDownProcessor;
 import jp.igapyon.diary.v3.md2html.pegdownext.IgapyonPegDownTagConf;
