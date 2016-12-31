@@ -31,9 +31,17 @@ public class HatenaTextUtil {
 		}
 
 		// URLパートは前半部分です。カッコは除去。
-		final String linkURL = linkString.substring(1, linkMat.start());
+		String linkURL = linkString.substring(1, linkMat.start());
 		// タイトルは後半部分です。カッコは除去。
 		final String linkTitle = linkString.substring(linkMat.end(), linkString.length() - 1);
+
+		// URL
+		{
+			if (linkURL.indexOf("http://d.hatena.ne.jp/igapyon/") >= 0) {
+				linkURL = "https://igapyon.github.io/diary/" + linkURL.substring(30, 34) + "/ig"
+						+ linkURL.substring(32, 38) + ".html";
+			}
+		}
 
 		// md 形式のリンクへとおきかえます。
 		final String mdLink = "[" + linkTitle + "](" + linkURL + ")";
