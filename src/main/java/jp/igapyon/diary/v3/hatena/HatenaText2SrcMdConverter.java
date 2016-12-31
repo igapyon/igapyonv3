@@ -187,6 +187,13 @@ public class HatenaText2SrcMdConverter {
 			lines.set(index, line);
 		}
 
+		// はてなリンク形式を md リンク形式に変換します。
+		for (int index = 0; index < lines.size(); index++) {
+			String line = lines.get(index);
+			line = HatenaTextUtil.convertHatenaLink2MdLink(line);
+			lines.set(index, line);
+		}
+
 		String newName = file.getName().substring(0, file.getName().length() - (".src.hatenadiary".length()))
 				+ ".html.src.md";
 		FileUtils.writeLines(new File(file.getParentFile(), newName), lines);
