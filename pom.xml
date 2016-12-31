@@ -74,7 +74,7 @@
 	<!-- v201612251240 ....................... -->
 	<!-- ===================================== -->
 	<repositories>
-		<!-- blancofw repository -->
+		<!-- igapyon repository -->
 		<repository>
 			<id>igapyon</id>
 			<name>igapyon maven repos</name>
