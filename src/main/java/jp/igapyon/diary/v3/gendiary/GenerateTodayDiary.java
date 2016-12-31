@@ -9,11 +9,12 @@ import java.util.List;
 
 import org.apache.commons.io.FileUtils;
 
+/**
+ * 今日付けの日記 igyyMMdd.html.src.md ファイルが存在しなければこれを新規作成します。
+ * 
+ * @author Toshiki Iga
+ */
 public class GenerateTodayDiary {
-
-	public static void main(String[] args) throws IOException {
-		new GenerateTodayDiary().process();
-	}
 
 	public void process() throws IOException {
 		File dir = new File(".");
@@ -28,7 +29,13 @@ public class GenerateTodayDiary {
 		}
 	}
 
-	void processDir(final File dir) throws IOException {
+	/**
+	 * 主たるエントリーポイント。
+	 * 
+	 * @param dir
+	 * @throws IOException
+	 */
+	public void processDir(final File dir) throws IOException {
 		final Date today = new Date();
 
 		final String yyyy = new SimpleDateFormat("yyyy").format(today);
@@ -61,5 +68,15 @@ public class GenerateTodayDiary {
 
 		FileUtils.writeLines(file, lines);
 		System.out.println("New diary md file is created.");
+	}
+
+	/**
+	 * テスト用のエントリポイント。
+	 * 
+	 * @param args
+	 * @throws IOException
+	 */
+	public static void main(String[] args) throws IOException {
+		new GenerateTodayDiary().process();
 	}
 }

@@ -8,13 +8,15 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 
 /**
- * 分割されたはてなテキストからMDファイルを生成。
+ * 分割された「はてなテキスト」からMDファイル (.html.src.md) を生成します。
+ * 
+ * はてな記法の一部しかサポートできていません。
+ * 
+ * TODO せめてリンク埋め込みだけでもサポートしたい。
+ * 
+ * @author Toshiki Iga
  */
 public class ConvertHatenaSeparatedText2SrcMd {
-	public static void main(String[] args) throws IOException {
-		new ConvertHatenaSeparatedText2SrcMd().process();
-	}
-
 	public void process() throws IOException {
 		File dir = new File(".");
 		dir = dir.getCanonicalFile();
@@ -29,7 +31,7 @@ public class ConvertHatenaSeparatedText2SrcMd {
 		}
 	}
 
-	void processDir(final File dir) throws IOException {
+	public void processDir(final File dir) throws IOException {
 		final File[] files = dir.listFiles();
 		if (files == null) {
 			return;
@@ -194,5 +196,15 @@ public class ConvertHatenaSeparatedText2SrcMd {
 		String newName = file.getName().substring(0, file.getName().length() - (".src.hatenadiary".length()))
 				+ ".html.src.md";
 		FileUtils.writeLines(new File(file.getParentFile(), newName), lines);
+	}
+
+	/**
+	 * テスト用のエントリポイント。
+	 * 
+	 * @param args
+	 * @throws IOException
+	 */
+	public static void main(String[] args) throws IOException {
+		new ConvertHatenaSeparatedText2SrcMd().process();
 	}
 }

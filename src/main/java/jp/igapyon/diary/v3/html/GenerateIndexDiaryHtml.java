@@ -52,7 +52,7 @@ public class GenerateIndexDiaryHtml {
 		return diaryItemInfoList;
 	}
 
-	void processDir(final File dir, String path) throws IOException {
+public	void processDir(final File dir, String path) throws IOException {
 		final File[] files = dir.listFiles();
 		if (files == null) {
 			return;
