@@ -17,21 +17,9 @@ import org.apache.commons.lang3.StringUtils;
  * @author Toshiki Iga
  */
 public class ConvertHatenaSeparatedText2SrcMd {
-	public void process() throws IOException {
-		File dir = new File(".");
-		dir = dir.getCanonicalFile();
-		System.out.println(dir.getPath());
-
-		if (dir.getName().equals("diary")) {
-			System.out.println("期待通りディレクトリ");
-			processDir(dir);
-		} else {
-			System.out.println("期待とは違うディレクトリ:" + dir.getName());
-			return;
-		}
-	}
-
 	public void processDir(final File dir) throws IOException {
+		System.err.println("Convert HatenaText to .html.src.md");
+
 		final File[] files = dir.listFiles();
 		if (files == null) {
 			return;
@@ -41,7 +29,6 @@ public class ConvertHatenaSeparatedText2SrcMd {
 				processDir(file);
 			} else if (file.isFile()) {
 				if (file.getName().startsWith("ig") && file.getName().endsWith(".src.hatenadiary")) {
-//					System.out.println(file.getName());
 					processFile(file);
 				}
 			}
@@ -49,6 +36,7 @@ public class ConvertHatenaSeparatedText2SrcMd {
 	}
 
 	void processFile(final File file) throws IOException {
+		final String origString = FileUtils.readFileToString(file, "UTF-8");
 		final List<String> lines = FileUtils.readLines(file, "UTF-8");
 
 		// 本体
@@ -196,15 +184,10 @@ public class ConvertHatenaSeparatedText2SrcMd {
 		String newName = file.getName().substring(0, file.getName().length() - (".src.hatenadiary".length()))
 				+ ".html.src.md";
 		FileUtils.writeLines(new File(file.getParentFile(), newName), lines);
-	}
 
-	/**
-	 * テスト用のエントリポイント。
-	 * 
-	 * @param args
-	 * @throws IOException
-	 */
-	public static void main(String[] args) throws IOException {
-		new ConvertHatenaSeparatedText2SrcMd().process();
+		final String destString = FileUtils.readFileToString(file, "UTF-8");
+		if (origString.equals(destString) == false) {
+			System.err.println("file updated: " + file.getAbsolutePath());
+		}
 	}
 }

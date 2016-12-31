@@ -36,27 +36,10 @@ import jp.igapyon.diary.v3.util.SimpleTagSoupUtil;
 public class GenerateIndexDiaryHtml {
 	private List<DiaryItemInfo> diaryItemInfoList = new ArrayList<DiaryItemInfo>();
 
-	public List<DiaryItemInfo> process() throws IOException {
-		File dir = new File(".");
-		dir = dir.getCanonicalFile();
-		System.out.println(dir.getPath());
-
-		if (dir.getName().equals("diary")) {
-			System.out.println("期待通りディレクトリ");
-			processDir(dir, "");
-		} else {
-			System.out.println("期待とは違うディレクトリ:" + dir.getName());
-		}
-
-		Collections.sort(diaryItemInfoList, new DiaryItemInfoComparator());
-
-		return diaryItemInfoList;
-	}
-
-	public void processDir(final File dir, String path) throws IOException {
+	public List<DiaryItemInfo> processDir(final File dir, String path) throws IOException {
 		final File[] files = dir.listFiles();
 		if (files == null) {
-			return;
+			return diaryItemInfoList;
 		}
 		for (File file : files) {
 			if (file.isDirectory()) {
@@ -64,11 +47,14 @@ public class GenerateIndexDiaryHtml {
 			} else if (file.isFile()) {
 				if (file.getName().startsWith("ig") && file.getName().endsWith(".html")
 						&& false == file.getName().endsWith(".src.html")) {
-//					System.out.println(file.getName());
 					processFile(file, path);
 				}
 			}
 		}
+
+		Collections.sort(diaryItemInfoList, new DiaryItemInfoComparator());
+
+		return diaryItemInfoList;
 	}
 
 	void processFile(final File file, final String path) throws IOException {
