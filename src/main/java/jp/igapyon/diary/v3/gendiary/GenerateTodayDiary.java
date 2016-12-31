@@ -15,29 +15,60 @@ import org.apache.commons.io.FileUtils;
  * @author Toshiki Iga
  */
 public class GenerateTodayDiary {
+	private Date today = null;
+
+	public GenerateTodayDiary() {
+		today = new Date();
+	}
+
+	/**
+	 * 本日の日記ファイルを取得します。
+	 * 
+	 * @param yearDir
+	 * @return
+	 */
+	public File getTodayDiaryFile(final File yearDir) {
+		// ファイル名は igyyMMdd.html.src.md 形式。
+		final String yymmdd = new SimpleDateFormat("yyMMdd").format(today);
+		return new File(yearDir, ("ig" + yymmdd + ".html.src.md"));
+	}
+
+	/**
+	 * 日記システムの今日の日記のためのルートディレクトリを取得します。
+	 * 
+	 * ディレクトリが存在しない場合は新規作成します。
+	 * 
+	 * @param rootdir
+	 * @return
+	 * @throws IOException
+	 */
+	public File getYearDir(final File rootdir) throws IOException {
+		final String yyyy = new SimpleDateFormat("yyyy").format(today);
+		final File yearDir = new File(rootdir, yyyy);
+		if (yearDir.exists() == false) {
+			if (yearDir.mkdirs() == false) {
+				throw new IOException("Fail to create 'year' dir [" + yearDir.getCanonicalPath() + "]. End process.");
+			}
+			System.err.println("New Year dir was created: " + yearDir.getAbsolutePath());
+		}
+
+		return yearDir;
+	}
+
 	/**
 	 * 主たるエントリーポイント。
 	 * 
-	 * @param dir
+	 * @param rootdir
 	 * @throws IOException
 	 */
-	public void processDir(final File dir) throws IOException {
-		final Date today = new Date();
-
-		final String yyyy = new SimpleDateFormat("yyyy").format(today);
-		final File yearDir = new File(dir, yyyy);
-		if (yearDir.exists() == false) {
-			if (yearDir.mkdirs() == false) {
-				System.err.println("ディレクトリを作成できません:" + yearDir.getCanonicalPath());
-				return;
-			}
-		}
+	public void processDir(final File rootdir) throws IOException {
+		final File yearDir = getYearDir(rootdir);
 
 		// ファイル名は igyyMMdd.html.src.md 形式。
-		final String yymmdd = new SimpleDateFormat("yyMMdd").format(today);
-		final File file = new File(yearDir, "ig" + yymmdd + ".html.src.md");
+		final File file = getTodayDiaryFile(yearDir);
 		if (file.exists()) {
 			// すでに本日の日記ファイルは存在します。処理中断します。
+			System.err.println("Today's diary is alread exist.: " + file.getAbsolutePath());
 			return;
 		}
 
@@ -58,7 +89,7 @@ public class GenerateTodayDiary {
 
 		// 日記ファイルを新規作成します。
 		FileUtils.writeLines(file, lines);
-		System.out.println("diary md file created: " + file.getAbsolutePath());
+		System.err.println("Today's diary md file was created: " + file.getAbsolutePath());
 	}
 
 	/**
@@ -71,7 +102,7 @@ public class GenerateTodayDiary {
 		File dir = new File(".");
 		dir = dir.getCanonicalFile();
 
-		if (dir.getName().equals("diary")) {
+		if (dir.getName().equals("igapyonv3")) {
 			new GenerateTodayDiary().processDir(dir);
 		} else {
 			System.out.println("期待とは違うディレクトリ:" + dir.getName());
