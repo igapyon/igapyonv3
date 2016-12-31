@@ -19,7 +19,7 @@ import jp.igapyon.util.IgapyonXmlUtil;
  * 
  * @author Toshiki Iga
  */
-public class HatenaXml2SeparatedText {
+public class HatenaXml2SeparatedTextConverter {
 	public void processFile(final File sourceXml, final File targetMdDir) throws IOException {
 		String inputXmlString = FileUtils.readFileToString(sourceXml, "UTF-8");
 		inputXmlString = inputXmlString.replace('\u001c', '−');
@@ -72,6 +72,6 @@ public class HatenaXml2SeparatedText {
 	 * @throws IOException
 	 */
 	public static final void main(final String[] args) throws IOException {
-		new HatenaXml2SeparatedText().processFile(new File("/tmp/igapyon.xml"), new File("."));
+		new HatenaXml2SeparatedTextConverter().processFile(new File("/tmp/igapyon.xml"), new File("."));
 	}
 }

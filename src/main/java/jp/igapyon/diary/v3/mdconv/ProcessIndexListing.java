@@ -12,7 +12,7 @@ import jp.igapyon.diary.v3.item.DiaryItemInfo;
 /**
  * 指定されたファイルの一覧部分を更新する仕組みです。
  * 
- * 他のクラスに併合されるべき処理と考えます。
+ * TODO 他のクラスに併合されるべき処理と考えます。
  */
 public class ProcessIndexListing {
 	public void process(File fileTarget, final List<DiaryItemInfo> diaryItemInfoList) throws IOException {

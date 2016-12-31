@@ -16,7 +16,7 @@ import org.apache.commons.lang3.StringUtils;
  * 
  * @author Toshiki Iga
  */
-public class ConvertHatenaSeparatedText2SrcMd {
+public class HatenaText2SrcMdConverter {
 	public void processDir(final File dir) throws IOException {
 		final File[] files = dir.listFiles();
 		if (files == null) {

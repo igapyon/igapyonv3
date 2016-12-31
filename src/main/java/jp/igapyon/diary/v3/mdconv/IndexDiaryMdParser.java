@@ -12,7 +12,7 @@ import jp.igapyon.diary.v3.item.DiaryItemInfo;
 /**
  * .md ファイルからコンテンツ一覧を作成します。
  */
-public class GenerateIndexDiaryMd {
+public class IndexDiaryMdParser {
 	private List<DiaryItemInfo> diaryItemInfoList = new ArrayList<DiaryItemInfo>();
 
 	public List<DiaryItemInfo> processDir(final File dir, String path) throws IOException {

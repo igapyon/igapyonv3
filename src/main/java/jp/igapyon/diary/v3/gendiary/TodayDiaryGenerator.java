@@ -14,10 +14,10 @@ import org.apache.commons.io.FileUtils;
  * 
  * @author Toshiki Iga
  */
-public class GenerateTodayDiary {
+public class TodayDiaryGenerator {
 	private Date today = null;
 
-	public GenerateTodayDiary() {
+	public TodayDiaryGenerator() {
 		today = new Date();
 	}
 
@@ -103,7 +103,7 @@ public class GenerateTodayDiary {
 		dir = dir.getCanonicalFile();
 
 		if (dir.getName().equals("igapyonv3")) {
-			new GenerateTodayDiary().processDir(dir);
+			new TodayDiaryGenerator().processDir(dir);
 		} else {
 			System.out.println("期待とは違うディレクトリ:" + dir.getName());
 			return;

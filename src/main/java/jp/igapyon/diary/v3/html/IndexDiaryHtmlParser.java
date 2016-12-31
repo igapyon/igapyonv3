@@ -33,7 +33,7 @@ import jp.igapyon.diary.v3.util.SimpleTagSoupUtil;
  * 
  * @author Toshiki Iga
  */
-public class GenerateIndexDiaryHtml {
+public class IndexDiaryHtmlParser {
 	private List<DiaryItemInfo> diaryItemInfoList = new ArrayList<DiaryItemInfo>();
 
 	public List<DiaryItemInfo> processDir(final File dir, String path) throws IOException {

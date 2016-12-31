@@ -9,7 +9,7 @@ import org.apache.commons.io.FileUtils;
 /**
  * .src.md から .md を生成するためのクラス。
  */
-public class ConvertDiarySrcMd2Md {
+public class DiarySrcMd2MdConverter {
 	public void processDir(final File dir) throws IOException {
 		final File[] files = dir.listFiles();
 		if (files == null) {
