@@ -38,6 +38,7 @@
 		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/org.pegdown/pegdown -->
+		<!-- currently version must be 1.5.0 -->
 		<dependency>
 			<groupId>org.pegdown</groupId>
 			<artifactId>pegdown</artifactId>
@@ -123,12 +124,6 @@
 						</goals>
 					</execution>
 				</executions>
-				<configuration>
-					<excludes>
-						<exclude>blanco/sample/</exclude>
-						<exclude>blanco/sample/**/*</exclude>
-					</excludes>
-				</configuration>
 			</plugin>
 
 			<!-- copy jar files into lib directory. -->
