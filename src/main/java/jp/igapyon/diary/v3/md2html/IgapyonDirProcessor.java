@@ -37,24 +37,20 @@ import java.io.IOException;
 public abstract class IgapyonDirProcessor {
 	protected String fileExt = ".md";
 
-	public void parseDir(final File lookup, final String fileExt,
-			final boolean recursivedir) throws IOException {
+	public void parseDir(final File lookup, final String fileExt, final boolean recursivedir) throws IOException {
 		this.fileExt = fileExt;
 		parseDir(lookup, lookup, recursivedir);
 	}
 
-	public static String getSubdir(final File baseDir, final File file)
-			throws IOException {
+	public static String getSubdir(final File baseDir, final File file) throws IOException {
 		final String baseDirStr = baseDir.getCanonicalPath();
 		final String targetFileStr = file.getCanonicalPath();
 		if (targetFileStr.startsWith(baseDirStr) == false) {
-			throw new IllegalArgumentException("getSubdir: file["
-					+ file.getCanonicalPath() + "] must starts with baseDir["
-					+ baseDir.getCanonicalPath() + "].");
+			throw new IllegalArgumentException("getSubdir: file[" + file.getCanonicalPath()
+					+ "] must starts with baseDir[" + baseDir.getCanonicalPath() + "].");
 		}
 		String targetRelFileStr = targetFileStr.substring(baseDirStr.length());
-		if (targetRelFileStr.startsWith("/")
-				|| targetRelFileStr.startsWith("\\")) {
+		if (targetRelFileStr.startsWith("/") || targetRelFileStr.startsWith("\\")) {
 			targetRelFileStr = targetRelFileStr.substring(1);
 		}
 		return targetRelFileStr;
@@ -68,8 +64,7 @@ public abstract class IgapyonDirProcessor {
 		return withoutExt + newExt;
 	}
 
-	protected void parseDir(final File baseDir, final File lookup,
-			final boolean recursivedir) throws IOException {
+	protected void parseDir(final File baseDir, final File lookup, final boolean recursivedir) throws IOException {
 		final File[] files = lookup.listFiles();
 		if (files == null) {
 			return;
@@ -84,10 +79,8 @@ public abstract class IgapyonDirProcessor {
 				if (file.getName().toLowerCase().endsWith(fileExt)) {
 					final String baseDirStr = baseDir.getCanonicalPath();
 					final String targetFileStr = file.getCanonicalPath();
-					String targetRelFileStr = targetFileStr
-							.substring(baseDirStr.length());
-					if (targetRelFileStr.startsWith("/")
-							|| targetRelFileStr.startsWith("\\")) {
+					String targetRelFileStr = targetFileStr.substring(baseDirStr.length());
+					if (targetRelFileStr.startsWith("/") || targetRelFileStr.startsWith("\\")) {
 						targetRelFileStr = targetRelFileStr.substring(1);
 					}
 
@@ -97,6 +90,5 @@ public abstract class IgapyonDirProcessor {
 		}
 	}
 
-	public abstract void parseFile(final File baseDir, final File file)
-			throws IOException;
+	public abstract void parseFile(final File baseDir, final File file) throws IOException;
 }

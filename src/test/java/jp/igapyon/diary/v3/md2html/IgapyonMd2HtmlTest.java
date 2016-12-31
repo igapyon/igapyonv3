@@ -41,9 +41,7 @@ import org.junit.Test;
 public class IgapyonMd2HtmlTest {
 	@Test
 	public void testProcessDirStringString() throws Exception {
-		new IgapyonMd2Html().processDir("./test/data/src",
-				"./test/data/output", true);
-		new IgapyonMd2Html().processDir("./lib/commons-cli",
-				"./lib/commons-cli", false);
+		new IgapyonMd2Html().processDir("./test/data/src", "./test/data/output", true);
+		new IgapyonMd2Html().processDir("./lib/commons-cli", "./lib/commons-cli", false);
 	}
 }

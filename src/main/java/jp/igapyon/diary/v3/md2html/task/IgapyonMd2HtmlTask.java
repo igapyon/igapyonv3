@@ -33,11 +33,11 @@ package jp.igapyon.diary.v3.md2html.task;
 
 import java.io.IOException;
 
-import jp.igapyon.diary.v3.md2html.IgapyonMd2Html;
-import jp.igapyon.diary.v3.md2html.IgapyonMd2HtmlConstants;
-
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Task;
+
+import jp.igapyon.diary.v3.md2html.IgapyonMd2Html;
+import jp.igapyon.diary.v3.md2html.IgapyonMd2HtmlConstants;
 
 public class IgapyonMd2HtmlTask extends Task {
 	protected String source;
