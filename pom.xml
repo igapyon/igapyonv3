@@ -69,6 +69,34 @@
 		</dependency>
 	</dependencies>
 
+	<!-- ===================================== -->
+	<!-- blanco Framework standard maven defs. -->
+	<!-- v201612251240 ....................... -->
+	<!-- ===================================== -->
+	<repositories>
+		<!-- blancofw repository -->
+		<repository>
+			<id>blancofw</id>
+			<name>blancofw maven repos</name>
+			<url>https://igapyon.github.io/blancofw-maven2</url>
+		</repository>
+	</repositories>
+
+	<distributionManagement>
+		<!-- deploy into local repository for github -->
+		<repository>
+			<id>deploy-repository</id>
+			<name>deployRepository</name>
+			<url>file:///${project.basedir}/../blancofw-maven2</url>
+		</repository>
+	</distributionManagement>
+
+	<!-- basic spec for jar -->
+	<properties>
+		<!-- set source as UTF-8 -->
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+
 	<build>
 		<plugins>
 			<!-- compile as JDK 1.6 -->
@@ -80,6 +108,43 @@
 					<source>1.6</source>
 					<target>1.6</target>
 				</configuration>
+			</plugin>
+
+			<!-- create sources.jar -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<version>3.0.1</version>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<excludes>
+						<exclude>blanco/sample/</exclude>
+						<exclude>blanco/sample/**/*</exclude>
+					</excludes>
+				</configuration>
+			</plugin>
+
+			<!-- copy jar files into lib directory. -->
+			<plugin>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<executions>
+					<execution>
+						<phase>install</phase>
+						<goals>
+							<goal>copy-dependencies</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${project.build.directory}/lib</outputDirectory>
+						</configuration>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>
