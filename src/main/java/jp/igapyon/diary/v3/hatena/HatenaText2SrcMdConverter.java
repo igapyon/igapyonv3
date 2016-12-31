@@ -75,6 +75,7 @@ public class HatenaText2SrcMdConverter {
 			}
 		}
 
+		// 最初の空行を除去。
 		for (int index = 0; index < lines.size(); index++) {
 			String line = lines.get(index);
 			if (line.trim().length() == 0) {
@@ -177,6 +178,13 @@ public class HatenaText2SrcMdConverter {
 					lines.add(index++, "");
 				}
 			}
+		}
+
+		// タブは２スペースに変換。
+		for (int index = 0; index < lines.size(); index++) {
+			String line = lines.get(index);
+			line = StringUtils.replaceAll(line, "\t", "");
+			lines.set(index, line);
 		}
 
 		String newName = file.getName().substring(0, file.getName().length() - (".src.hatenadiary".length()))
