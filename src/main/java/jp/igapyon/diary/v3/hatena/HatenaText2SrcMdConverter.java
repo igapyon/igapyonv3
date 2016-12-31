@@ -187,6 +187,14 @@ public class HatenaText2SrcMdConverter {
 			lines.set(index, line);
 		}
 
+		// 直リンク形式を md リンク形式に変換します。
+		// はてなリンクより先に処理の必要あります。
+		for (int index = 0; index < lines.size(); index++) {
+			String line = lines.get(index);
+			line = HatenaTextUtil.convertSimpleUrl2MdLink(line);
+			lines.set(index, line);
+		}
+
 		// はてなリンク形式を md リンク形式に変換します。
 		for (int index = 0; index < lines.size(); index++) {
 			String line = lines.get(index);

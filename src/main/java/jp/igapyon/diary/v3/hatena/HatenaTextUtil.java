@@ -49,4 +49,28 @@ public class HatenaTextUtil {
 		// 該当箇所以降の置換は再帰処理とします。
 		return source.substring(0, mat.start()) + mdLink + convertHatenaLink2MdLink(source.substring(mat.end()));
 	}
+
+	public static String convertSimpleUrl2MdLink(final String source) {
+		// はてなリンクパターン。小さいマッチのために「?」を利用しています。
+		final Pattern pat = Pattern.compile("\\[.*?\\]");
+		final Matcher mat = pat.matcher(source);
+
+		if (mat.find()) {
+			// そこまで読み飛ばします。
+			return source.substring(0, mat.end()) + convertSimpleUrl2MdLink(source.substring(mat.end()));
+		}
+
+		// 一致しませんでした。置換する箇所はありませんでした。
+
+		// では次に、URLそものも張り付きを見つけます。
+		final Pattern simpleurlPat = Pattern.compile("http(s)?://([\\w-]+\\.)+[\\w-]+(/[\\w-./?%&=]*)?");
+		final Matcher simpleurlMat = simpleurlPat.matcher(source);
+		if (simpleurlMat.find() == false) {
+			// そぼくURLリンクも存在しません。単に与えられた文字を戻します。
+			return source;
+		}
+
+		return source.substring(0, simpleurlMat.start()) + "[" + simpleurlMat.group() + "](" + simpleurlMat.group()
+				+ ")" + convertSimpleUrl2MdLink(source.substring(simpleurlMat.end()));
+	}
 }
