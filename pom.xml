@@ -6,7 +6,7 @@
 	<packaging>jar</packaging>
 	<version>1.0-SNAPSHOT</version>
 	<name>IgapyonV3</name>
-	<url>http://maven.apache.org</url>
+	<url>https://igapyon.github.io/igapyon-maven2</url>
 
 	<dependencies>
 		<!-- https://mvnrepository.com/artifact/junit/junit -->
@@ -76,9 +76,9 @@
 	<repositories>
 		<!-- blancofw repository -->
 		<repository>
-			<id>blancofw</id>
-			<name>blancofw maven repos</name>
-			<url>https://igapyon.github.io/blancofw-maven2</url>
+			<id>igapyon</id>
+			<name>igapyon maven repos</name>
+			<url>https://igapyon.github.io/igapyon-maven2</url>
 		</repository>
 	</repositories>
 
@@ -87,7 +87,7 @@
 		<repository>
 			<id>deploy-repository</id>
 			<name>deployRepository</name>
-			<url>file:///${project.basedir}/../blancofw-maven2</url>
+			<url>file:///${project.basedir}/../igapyon-maven2</url>
 		</repository>
 	</distributionManagement>
 
