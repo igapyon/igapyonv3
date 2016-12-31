@@ -15,20 +15,6 @@ import org.apache.commons.io.FileUtils;
  * @author Toshiki Iga
  */
 public class GenerateTodayDiary {
-
-	public void process() throws IOException {
-		File dir = new File(".");
-		dir = dir.getCanonicalFile();
-		System.out.println(dir.getPath());
-
-		if (dir.getName().equals("diary")) {
-			processDir(dir);
-		} else {
-			System.out.println("期待とは違うディレクトリ:" + dir.getName());
-			return;
-		}
-	}
-
 	/**
 	 * 主たるエントリーポイント。
 	 * 
@@ -42,16 +28,20 @@ public class GenerateTodayDiary {
 		final File yearDir = new File(dir, yyyy);
 		if (yearDir.exists() == false) {
 			if (yearDir.mkdirs() == false) {
-				System.out.println("ディレクトリを作成できません:" + yearDir.getCanonicalPath());
+				System.err.println("ディレクトリを作成できません:" + yearDir.getCanonicalPath());
 				return;
 			}
 		}
 
+		// ファイル名は igyyMMdd.html.src.md 形式。
 		final String yymmdd = new SimpleDateFormat("yyMMdd").format(today);
 		final File file = new File(yearDir, "ig" + yymmdd + ".html.src.md");
 		if (file.exists()) {
+			// すでに本日の日記ファイルは存在します。処理中断します。
 			return;
 		}
+
+		// 日記ファイルの新規作成に移ります。
 
 		final List<String> lines = new ArrayList<String>();
 		lines.add("## ここに日記のタイトル");
@@ -66,8 +56,9 @@ public class GenerateTodayDiary {
 		lines.add("System.out.println(\"Hello world\");");
 		lines.add("```");
 
+		// 日記ファイルを新規作成します。
 		FileUtils.writeLines(file, lines);
-		System.out.println("New diary md file is created.");
+		System.out.println("diary md file created: " + file.getAbsolutePath());
 	}
 
 	/**
@@ -77,6 +68,14 @@ public class GenerateTodayDiary {
 	 * @throws IOException
 	 */
 	public static void main(String[] args) throws IOException {
-		new GenerateTodayDiary().process();
+		File dir = new File(".");
+		dir = dir.getCanonicalFile();
+
+		if (dir.getName().equals("diary")) {
+			new GenerateTodayDiary().processDir(dir);
+		} else {
+			System.out.println("期待とは違うディレクトリ:" + dir.getName());
+			return;
+		}
 	}
 }
