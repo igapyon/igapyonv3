@@ -4,7 +4,7 @@
 	<groupId>jp.igapyon.diary.v3</groupId>
 	<artifactId>IgapyonV3</artifactId>
 	<packaging>jar</packaging>
-	<version>1.0-SNAPSHOT</version>
+	<version>1.0.0</version>
 	<name>IgapyonV3</name>
 	<url>https://igapyon.github.io/igapyon-maven2</url>
 
