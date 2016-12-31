@@ -58,7 +58,7 @@
 		<jar destfile="${project.main.jar}">
 			<zipfileset dir="bin" includes="**/*" excludes="test/**" />
 			<!-- source -->
-			<zipfileset dir="src" includes="**/*" prefix="src" />
+			<zipfileset dir="src/main/java/" includes="**/*" prefix="src" />
 		</jar>
 	</target>
 
@@ -80,7 +80,7 @@
 					<include name="*.jar" />
 				</fileset>
 			</classpath>
-			<src path="src/" />
+			<src path="src/main/java/" />
 			<include name="**/*.java" />
 		</javac>
 	</target>
