@@ -18,8 +18,6 @@ import org.apache.commons.lang3.StringUtils;
  */
 public class ConvertHatenaSeparatedText2SrcMd {
 	public void processDir(final File dir) throws IOException {
-		System.err.println("Convert HatenaText to .html.src.md");
-
 		final File[] files = dir.listFiles();
 		if (files == null) {
 			return;
@@ -187,7 +185,7 @@ public class ConvertHatenaSeparatedText2SrcMd {
 
 		final String destString = FileUtils.readFileToString(file, "UTF-8");
 		if (origString.equals(destString) == false) {
-			System.err.println("file updated: " + file.getAbsolutePath());
+			System.err.println("Hatena to md file: file updated: " + file.getAbsolutePath());
 		}
 	}
 }
