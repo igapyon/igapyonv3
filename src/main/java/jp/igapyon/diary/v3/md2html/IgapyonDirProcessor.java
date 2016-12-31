@@ -34,6 +34,13 @@ package jp.igapyon.diary.v3.md2html;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * md ファイルから html ファイルを生成します。
+ * 
+ * ※初期の github gh-pages 対応では、これは利用しません。
+ * 
+ * @author Toshiki Iga
+ */
 public abstract class IgapyonDirProcessor {
 	protected String fileExt = ".md";
 

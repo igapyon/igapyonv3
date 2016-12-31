@@ -43,6 +43,13 @@ import org.pegdown.VerbatimSerializer;
 import org.pegdown.ast.RootNode;
 import org.pegdown.plugins.ToHtmlSerializerPlugin;
 
+/**
+ * Igapyon's Markdown to Html converter.
+ * 
+ * ※初期の github gh-pages 対応では、これは利用しません。
+ * 
+ * @author Toshiki Iga
+ */
 public class IgapyonPegDownProcessor extends PegDownProcessor {
 	protected IgapyonPegDownTagConf tagConf = IgapyonPegDownTagConf
 			.getDefault();

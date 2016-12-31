@@ -39,6 +39,13 @@ import org.apache.tools.ant.Task;
 import jp.igapyon.diary.v3.md2html.IgapyonMd2Html;
 import jp.igapyon.diary.v3.md2html.IgapyonMd2HtmlConstants;
 
+/**
+ * Igapyon's Markdown to Html converter.
+ * 
+ * ※初期の github gh-pages 対応では、これは利用しません。
+ * 
+ * @author Toshiki Iga
+ */
 public class IgapyonMd2HtmlTask extends Task {
 	protected String source;
 	protected String target;
@@ -72,9 +79,8 @@ public class IgapyonMd2HtmlTask extends Task {
 	public void execute() throws BuildException {
 		checkAttr();
 
-		System.out.println("md2html: "
-				+ IgapyonMd2HtmlConstants.PROGRAM_DISPLAY_NAME + " ver"
-				+ IgapyonMd2HtmlConstants.VERSION);
+		System.out.println(
+				"md2html: " + IgapyonMd2HtmlConstants.PROGRAM_DISPLAY_NAME + " ver" + IgapyonMd2HtmlConstants.VERSION);
 		System.out.println("   source:[" + source + "]");
 		System.out.println("   target:[" + target + "]");
 		System.out.println("   recursivedir:" + recursivedir);

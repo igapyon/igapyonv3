@@ -12,7 +12,7 @@ import jp.igapyon.diary.v3.item.DiaryItemInfo;
 import jp.igapyon.diary.v3.item.DiaryItemInfoComparator;
 
 /**
- * .md ファイルからコンテンツ一覧を作成
+ * .md ファイルからコンテンツ一覧を作成します。
  */
 public class GenerateIndexDiaryMd {
 	private List<DiaryItemInfo> diaryItemInfoList = new ArrayList<DiaryItemInfo>();

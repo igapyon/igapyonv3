@@ -1,5 +1,10 @@
 package jp.igapyon.diary.v3.item;
 
+/**
+ * 日記アイテムの情報を蓄えるためのクラスです。
+ * 
+ * @author Toshiki Iga
+ */
 public class DiaryItemInfo {
 	private String uri;
 	private String title;

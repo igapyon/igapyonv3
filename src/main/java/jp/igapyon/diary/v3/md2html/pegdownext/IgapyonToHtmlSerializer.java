@@ -36,11 +36,17 @@ import org.pegdown.ToHtmlSerializer;
 import org.pegdown.ast.HeaderNode;
 import org.pegdown.ast.TableNode;
 
+/**
+ * Igapyon's Markdown to Html converter.
+ * 
+ * ※初期の github gh-pages 対応では、これは利用しません。
+ * 
+ * @author Toshiki Iga
+ */
 public class IgapyonToHtmlSerializer extends ToHtmlSerializer {
 	protected IgapyonPegDownTagConf tagConf;
 
-	public IgapyonToHtmlSerializer(final LinkRenderer linkRenderer,
-			final IgapyonPegDownTagConf tagConf) {
+	public IgapyonToHtmlSerializer(final LinkRenderer linkRenderer, final IgapyonPegDownTagConf tagConf) {
 		super(linkRenderer);
 		this.tagConf = tagConf;
 	}
@@ -49,45 +55,29 @@ public class IgapyonToHtmlSerializer extends ToHtmlSerializer {
 	public void visit(HeaderNode node) {
 		final String tag = "h" + node.getLevel();
 
-/**
-		if (tag.equals("h2")) {
-			printer.print('<').print(tag);
-			if (tagConf.getAttrClassValue(tag) != null) {
-				printer.print(" class=\"" + tagConf.getAttrClassValue(tag)
-						+ "\"");
-			}
-			printer.print('>');
-			visitChildren(node);
-			printer.print('<').print('/').print(tag).print('>');
-		} else if (tag.equals("h3")) {
-			printer.print('<').print(tag);
-			if (tagConf.getAttrClassValue(tag) != null) {
-				printer.print(" class=\"" + tagConf.getAttrClassValue(tag)
-						+ "\"");
-			}
-			printer.print('>');
-			visitChildren(node);
-			printer.print('<').print('/').print(tag).print('>');
-		} else if (tag.equals("h4")) {
-			printer.print('<').print(tag);
-			if (tagConf.getAttrClassValue(tag) != null) {
-				printer.print(" class=\"" + tagConf.getAttrClassValue(tag)
-						+ "\"");
-			}
-			printer.print('>');
-			visitChildren(node);
-			printer.print('<').print('/').print(tag).print('>');
-		} else {
-			// Original
-			printTag(node, "h" + node.getLevel());
-		}
-		*/
+		/**
+		 * if (tag.equals("h2")) { printer.print('<').print(tag); if
+		 * (tagConf.getAttrClassValue(tag) != null) { printer.print(" class=\""
+		 * + tagConf.getAttrClassValue(tag) + "\""); } printer.print('>');
+		 * visitChildren(node);
+		 * printer.print('<').print('/').print(tag).print('>'); } else if
+		 * (tag.equals("h3")) { printer.print('<').print(tag); if
+		 * (tagConf.getAttrClassValue(tag) != null) { printer.print(" class=\""
+		 * + tagConf.getAttrClassValue(tag) + "\""); } printer.print('>');
+		 * visitChildren(node);
+		 * printer.print('<').print('/').print(tag).print('>'); } else if
+		 * (tag.equals("h4")) { printer.print('<').print(tag); if
+		 * (tagConf.getAttrClassValue(tag) != null) { printer.print(" class=\""
+		 * + tagConf.getAttrClassValue(tag) + "\""); } printer.print('>');
+		 * visitChildren(node);
+		 * printer.print('<').print('/').print(tag).print('>'); } else { //
+		 * Original printTag(node, "h" + node.getLevel()); }
+		 */
 
 		if (tagConf.getAttrClassValue(tag) != null) {
 			printer.print('<').print(tag);
 			if (tagConf.getAttrClassValue(tag) != null) {
-				printer.print(" class=\"" + tagConf.getAttrClassValue(tag)
-						+ "\"");
+				printer.print(" class=\"" + tagConf.getAttrClassValue(tag) + "\"");
 			}
 			printer.print('>');
 			visitChildren(node);
@@ -107,14 +97,12 @@ public class IgapyonToHtmlSerializer extends ToHtmlSerializer {
 			printer.print("table");
 
 			if (tagConf.getAttrClassValue("table") != null) {
-				printer.print(" class=\"" + tagConf.getAttrClassValue("table")
-						+ "\"");
+				printer.print(" class=\"" + tagConf.getAttrClassValue("table") + "\"");
 			}
 
 			printer.print('>').indent(+2);
 			visitChildren(node);
-			printer.indent(-2).println().print('<').print('/').print("table")
-					.print('>');
+			printer.indent(-2).println().print('<').print('/').print("table").print('>');
 
 			currentTableNode = null;
 		} else {

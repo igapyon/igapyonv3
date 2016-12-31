@@ -25,15 +25,16 @@ import jp.igapyon.diary.v3.item.DiaryItemInfo;
 import jp.igapyon.diary.v3.item.DiaryItemInfoComparator;
 import jp.igapyon.diary.v3.util.SimpleTagSoupUtil;
 
+/**
+ * 既存 HTML からタイトル一覧を取得します。
+ * 
+ * 既存 HTML のタイトルが、所定の日記形式テキストから開始されていることが大前提となります。
+ * また、ディレクトリ構造が年付きの構造になっていることも重要です。（いがぴょんの日記v2 形式）
+ * 
+ * @author Toshiki Iga
+ */
 public class GenerateIndexDiaryHtml {
 	private List<DiaryItemInfo> diaryItemInfoList = new ArrayList<DiaryItemInfo>();
-
-	public static void main(String[] args) throws IOException {
-		final List<DiaryItemInfo> diaryItemInfoList = new GenerateIndexDiaryHtml().process();
-		for (DiaryItemInfo diaryItemInfo : diaryItemInfoList) {
-			System.out.println(diaryItemInfo.getUri() + ":" + diaryItemInfo.getTitle());
-		}
-	}
 
 	public List<DiaryItemInfo> process() throws IOException {
 		File dir = new File(".");
@@ -52,7 +53,7 @@ public class GenerateIndexDiaryHtml {
 		return diaryItemInfoList;
 	}
 
-public	void processDir(final File dir, String path) throws IOException {
+	public void processDir(final File dir, String path) throws IOException {
 		final File[] files = dir.listFiles();
 		if (files == null) {
 			return;

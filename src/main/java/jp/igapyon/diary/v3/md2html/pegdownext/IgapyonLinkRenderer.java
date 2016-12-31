@@ -37,6 +37,13 @@ import java.net.URLEncoder;
 import org.pegdown.LinkRenderer;
 import org.pegdown.ast.WikiLinkNode;
 
+/**
+ * Igapyon's Markdown to Html converter.
+ * 
+ * ※初期の github gh-pages 対応では、これは利用しません。
+ * 
+ * @author Toshiki Iga
+ */
 public class IgapyonLinkRenderer extends LinkRenderer {
 	/**
 	 * Override Wiki link. for [[]] style.
@@ -48,8 +55,7 @@ public class IgapyonLinkRenderer extends LinkRenderer {
 		try {
 			// Treat as Hatena keywords.
 			final String url = "http://d.hatena.ne.jp/keyword/"
-					+ URLEncoder.encode(node.getText().replace(' ', '-'),
-							"UTF-8") + "";
+					+ URLEncoder.encode(node.getText().replace(' ', '-'), "UTF-8") + "";
 			return new Rendering(url, node.getText());
 		} catch (UnsupportedEncodingException e) {
 			throw new IllegalStateException();
