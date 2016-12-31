@@ -3,6 +3,8 @@ package jp.igapyon.diary.v3.hatena;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -92,58 +94,30 @@ public class HatenaText2SrcMdConverter {
 			if (line.trim().equals("||<")) {
 				lines.set(index, "```");
 				lines.add(++index, "");
-			}
-			if (line.trim().equals(">|xml|")) {
-				lines.add(index++, "");
-				lines.set(index, "```xml");
-			}
-			if (line.trim().equals(">|html|")) {
-				lines.add(index++, "");
-				lines.set(index, "```html");
-			}
-			if (line.trim().equals(">|java|") || line.trim().equals(">|Java|")) {
-				lines.add(index++, "");
-				lines.set(index, "```java");
-			}
-			if (line.trim().equals(">|sh|")) {
-				lines.add(index++, "");
-				lines.set(index, "```sh");
-			}
-			if (line.trim().equals(">|bash|")) {
-				lines.add(index++, "");
-				lines.set(index, "```bash");
-			}
-			if (line.trim().equals(">|php|")) {
-				lines.add(index++, "");
-				lines.set(index, "```php");
-			}
-			if (line.trim().equals(">|python|")) {
-				lines.add(index++, "");
-				lines.set(index, "```python");
-			}
-			if (line.trim().equals(">|pascal|")) {
-				lines.add(index++, "");
-				lines.set(index, "```pascal");
-			}
-			if (line.trim().equals(">|groovy|")) {
-				lines.add(index++, "");
-				lines.set(index, "```groovy");
-			}
-			if (line.trim().equals(">|cpp|")) {
-				lines.add(index++, "");
-				lines.set(index, "```cpp");
-			}
-			if (line.trim().equals(">|sql|")) {
-				lines.add(index++, "");
-				lines.set(index, "```sql");
-			}
-			if (line.trim().equals(">|bat|")) {
-				lines.add(index++, "");
-				lines.set(index, "```bat");
+				continue;
 			}
 			if (line.trim().equals(">||")) {
 				lines.add(index++, "");
 				lines.set(index, "```");
+			}
+
+			{
+				// はてなリンクパターン。小さいマッチのために「?」を利用しています。
+				final Pattern pat = Pattern.compile(">\\|.*?\\|");
+				final Matcher mat = pat.matcher(line);
+
+				if (mat.find()) {
+					final String markup = mat.group();
+					String language = markup.substring(2, markup.length() - 1);
+					if (language.equals("Java")) {
+						language = "java";
+					}
+					line = mat.replaceFirst("```" + language);
+
+					lines.add(index++, "");
+					lines.set(index, line);
+					continue;
+				}
 			}
 		}
 
