@@ -14,12 +14,6 @@ import jp.igapyon.diary.v3.util.IgapyonV3Settings;
  * .src.md から .md を生成するためのクラス。
  */
 public class DiarySrcMd2MdConverter {
-	public static final String[][] DOUBLE_KEYWORDS = { { "Axis2", "https://axis.apache.org/axis2/java/core/" },
-			{ "RAD Studio", "https://www.embarcadero.com/jp/products/rad-studio" },
-			{ "Delphi", "https://www.embarcadero.com/jp/products/delphi" },
-			{ "Appmethod", "https://ja.wikipedia.org/wiki/Appmethod" },
-			{ "blancoCg", "https://github.com/igapyon/blancoCg" } };
-
 	private IgapyonV3Settings settings = null;
 
 	public DiarySrcMd2MdConverter(final IgapyonV3Settings settings) {
@@ -75,7 +69,7 @@ public class DiarySrcMd2MdConverter {
 				foundKeyword = foundKeyword.substring(2, foundKeyword.length() - 2);
 
 				boolean isReplaced = false;
-				for (String[] registeredPair : DOUBLE_KEYWORDS) {
+				for (String[] registeredPair : settings.getDoubleKeywordList()) {
 					if (registeredPair[0].compareToIgnoreCase(foundKeyword) == 0) {
 						// 最初のやつだけ置換。
 						line = line.substring(0, matDoubleKeyword.start()) + "[" + registeredPair[0] + "]("

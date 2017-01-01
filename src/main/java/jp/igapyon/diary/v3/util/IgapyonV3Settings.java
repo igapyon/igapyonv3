@@ -10,10 +10,16 @@ import java.util.List;
  * @author Toshiki Iga
  */
 public class IgapyonV3Settings {
-	private List<String[]> doubleKeywordList = new ArrayList<String[]>();
-
+	/**
+	 * TODAY! for newly diary.
+	 */
 	private Date today = null;
 
+	private List<String[]> doubleKeywordList = new ArrayList<String[]>();
+
+	/**
+	 * Default double keywords.
+	 */
 	public static final String[][] DEFAULT_DOUBLE_KEYWORDS = { { "Axis2", "https://axis.apache.org/axis2/java/core/" },
 			{ "RAD Studio", "https://www.embarcadero.com/jp/products/rad-studio" },
 			{ "Delphi", "https://www.embarcadero.com/jp/products/delphi" },
@@ -32,7 +38,7 @@ public class IgapyonV3Settings {
 		return today;
 	}
 
-	public void setDoubleKeywordList(List<String[]> doubleKeywordList) {
-		this.doubleKeywordList = doubleKeywordList;
+	public List<String[]> getDoubleKeywordList() {
+		return doubleKeywordList;
 	}
 }
