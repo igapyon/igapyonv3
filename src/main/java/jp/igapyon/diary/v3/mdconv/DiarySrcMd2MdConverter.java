@@ -12,6 +12,12 @@ import org.apache.commons.io.FileUtils;
  * .src.md から .md を生成するためのクラス。
  */
 public class DiarySrcMd2MdConverter {
+	public static final String[][] DOUBLE_KEYWORDS = { { "Axis2", "https://axis.apache.org/axis2/java/core/" },
+			{ "RAD Studio", "https://www.embarcadero.com/jp/products/rad-studio" },
+			{ "Delphi", "https://www.embarcadero.com/jp/products/delphi" },
+			{ "Appmethod", "https://ja.wikipedia.org/wiki/Appmethod" },
+			{ "blancoCg", "https://github.com/igapyon/blancoCg" } };
+
 	public void processDir(final File dir) throws IOException {
 		final File[] files = dir.listFiles();
 		if (files == null) {
@@ -27,10 +33,6 @@ public class DiarySrcMd2MdConverter {
 			}
 		}
 	}
-
-	public static final String[][] DOUBLE_KEYWORDS = { { "Axis2", "https://axis.apache.org/axis2/java/core/" },
-			{ "Appmethod", "https://ja.wikipedia.org/wiki/Appmethod" },
-			{ "blancoCg", "https://github.com/igapyon/blancoCg" } };
 
 	void processFile(final File file) throws IOException {
 		final List<String> lines = FileUtils.readLines(file, "UTF-8");
