@@ -4,10 +4,11 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.io.FileUtils;
+
+import jp.igapyon.diary.v3.util.IgapyonV3Settings;
 
 /**
  * 今日付けの日記 igyyMMdd.html.src.md ファイルが存在しなければこれを新規作成します。
@@ -15,10 +16,10 @@ import org.apache.commons.io.FileUtils;
  * @author Toshiki Iga
  */
 public class TodayDiaryGenerator {
-	private Date today = null;
+	private IgapyonV3Settings settings = null;
 
-	public TodayDiaryGenerator() {
-		today = new Date();
+	public TodayDiaryGenerator(final IgapyonV3Settings settings) {
+		this.settings = settings;
 	}
 
 	/**
@@ -29,7 +30,7 @@ public class TodayDiaryGenerator {
 	 */
 	public File getTodayDiaryFile(final File yearDir) {
 		// ファイル名は igyyMMdd.html.src.md 形式。
-		final String yymmdd = new SimpleDateFormat("yyMMdd").format(today);
+		final String yymmdd = new SimpleDateFormat("yyMMdd").format(settings.getToday());
 		return new File(yearDir, ("ig" + yymmdd + ".html.src.md"));
 	}
 
@@ -43,7 +44,7 @@ public class TodayDiaryGenerator {
 	 * @throws IOException
 	 */
 	public File getYearDir(final File rootdir) throws IOException {
-		final String yyyy = new SimpleDateFormat("yyyy").format(today);
+		final String yyyy = new SimpleDateFormat("yyyy").format(settings.getToday());
 		final File yearDir = new File(rootdir, yyyy);
 		if (yearDir.exists() == false) {
 			if (yearDir.mkdirs() == false) {
@@ -103,7 +104,8 @@ public class TodayDiaryGenerator {
 		dir = dir.getCanonicalFile();
 
 		if (dir.getName().equals("igapyonv3")) {
-			new TodayDiaryGenerator().processDir(dir);
+			final IgapyonV3Settings settings = new IgapyonV3Settings();
+			new TodayDiaryGenerator(settings).processDir(dir);
 		} else {
 			System.out.println("期待とは違うディレクトリ:" + dir.getName());
 			return;

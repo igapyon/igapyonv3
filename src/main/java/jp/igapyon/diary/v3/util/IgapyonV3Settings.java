@@ -1,10 +1,18 @@
 package jp.igapyon.diary.v3.util;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
+/**
+ * いがぴょんの日記v3 システムのための基本設定クラス。
+ * 
+ * @author Toshiki Iga
+ */
 public class IgapyonV3Settings {
 	private List<String[]> doubleKeywordList = new ArrayList<String[]>();
+
+	private Date today = null;
 
 	public static final String[][] DEFAULT_DOUBLE_KEYWORDS = { { "Axis2", "https://axis.apache.org/axis2/java/core/" },
 			{ "RAD Studio", "https://www.embarcadero.com/jp/products/rad-studio" },
@@ -13,13 +21,15 @@ public class IgapyonV3Settings {
 			{ "blancoCg", "https://github.com/igapyon/blancoCg" } };
 
 	public IgapyonV3Settings() {
+		today = new Date();
+
 		for (String[] lookup : DEFAULT_DOUBLE_KEYWORDS) {
 			doubleKeywordList.add(lookup);
 		}
 	}
 
-	public List<String[]> getDoubleKeywordList() {
-		return doubleKeywordList;
+	public Date getToday() {
+		return today;
 	}
 
 	public void setDoubleKeywordList(List<String[]> doubleKeywordList) {
