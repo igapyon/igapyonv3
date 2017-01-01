@@ -9,6 +9,8 @@ import java.util.regex.Pattern;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 
+import jp.igapyon.diary.v3.util.MdTextUtil;
+
 /**
  * 分割された「はてなテキスト」からMDファイル (.html.src.md) を生成します。
  * 
@@ -183,7 +185,7 @@ public class HatenaText2SrcMdConverter {
 				// 直リンク形式を md リンク形式に変換します。
 				// はてなリンクより先に処理の必要あります。
 				String line = lines.get(index);
-				line = HatenaTextUtil.convertSimpleUrl2MdLink(line);
+				line = MdTextUtil.convertSimpleUrl2MdLink(line);
 				lines.set(index, line);
 			}
 
