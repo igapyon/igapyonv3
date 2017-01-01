@@ -28,6 +28,9 @@ public class DiarySrcMd2MdConverter {
 		}
 	}
 
+	public static final String[][] DOUBLE_KEYWORDS = { { "Axis2", "https://axis.apache.org/axis2/java/core/" },
+			{ "blancoCg", "https://github.com/igapyon/blancoCg" } };
+
 	void processFile(final File file) throws IOException {
 		final List<String> lines = FileUtils.readLines(file, "UTF-8");
 
@@ -49,7 +52,8 @@ public class DiarySrcMd2MdConverter {
 			// System.out.println(" " + line);
 		}
 
-		for (String line : lines) {
+		for (int index = 0; index < lines.size(); index++) {
+			String line = lines.get(index);
 			// [[key]]system
 			final String DOUBLE_KEYWORD_PATTERN = "\\[\\[.*?\\]\\]";
 			final Pattern patDoubleKeyword = Pattern.compile(DOUBLE_KEYWORD_PATTERN);
@@ -58,6 +62,16 @@ public class DiarySrcMd2MdConverter {
 			if (isDoubleKeywordFound) {
 				String foundKeyword = matDoubleKeyword.group();
 				foundKeyword = foundKeyword.substring(2, foundKeyword.length() - 2);
+
+				for (String[] registeredPair : DOUBLE_KEYWORDS) {
+					if (registeredPair[0].compareToIgnoreCase(foundKeyword) == 0) {
+						// 最初のやつだけ置換。
+						line = line.substring(0, matDoubleKeyword.start()) + "[" + registeredPair[0] + "]("
+								+ registeredPair[1] + ")" + line.substring(matDoubleKeyword.end());
+						lines.set(index, line);
+					}
+				}
+
 				System.out.println("[[" + foundKeyword + "]]");
 			}
 		}
