@@ -132,7 +132,7 @@ public class HatenaText2SrcMdConverter {
 						if (language.equals("Java")) {
 							language = "java";
 						}
-						line = mat.replaceFirst("```" + language+":debugdebu");
+						line = mat.replaceFirst("```" + language);
 
 						lines.add(index++, "");
 						lines.set(index, line);
