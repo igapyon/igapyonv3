@@ -3,6 +3,8 @@ package jp.igapyon.diary.v3.mdconv;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.commons.io.FileUtils;
 
@@ -45,6 +47,19 @@ public class DiarySrcMd2MdConverter {
 				}
 			}
 			// System.out.println(" " + line);
+		}
+
+		for (String line : lines) {
+			// [[key]]system
+			final String DOUBLE_KEYWORD_PATTERN = "\\[\\[.*?\\]\\]";
+			final Pattern patDoubleKeyword = Pattern.compile(DOUBLE_KEYWORD_PATTERN);
+			final Matcher matDoubleKeyword = patDoubleKeyword.matcher(line);
+			final boolean isDoubleKeywordFound = matDoubleKeyword.find();
+			if (isDoubleKeywordFound) {
+				String foundKeyword = matDoubleKeyword.group();
+				foundKeyword = foundKeyword.substring(2, foundKeyword.length() - 2);
+				System.out.println("[[" + foundKeyword + "]]");
+			}
 		}
 
 		// TODO support template system.
