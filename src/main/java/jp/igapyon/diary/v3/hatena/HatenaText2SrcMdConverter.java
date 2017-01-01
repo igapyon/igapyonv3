@@ -54,6 +54,12 @@ public class HatenaText2SrcMdConverter {
 			}
 		}
 
+		///////////////////////////////
+		// 処理基本情報
+
+		// リスト表現
+		boolean isProcessInListing = false;
+
 		for (int index = 0; index < lines.size(); index++) {
 			{
 				String line = lines.get(index);
@@ -126,7 +132,7 @@ public class HatenaText2SrcMdConverter {
 						if (language.equals("Java")) {
 							language = "java";
 						}
-						line = mat.replaceFirst("```" + language);
+						line = mat.replaceFirst("```" + language+":debugdebu");
 
 						lines.add(index++, "");
 						lines.set(index, line);
@@ -135,54 +141,53 @@ public class HatenaText2SrcMdConverter {
 					}
 				}
 			}
-		}
 
-		// リスト表現
-		boolean isPastListing = false;
-		for (int index = 0; index < lines.size(); index++) {
-			String line = lines.get(index);
-			if (line.trim().startsWith("---")) {
-				if (isPastListing == false) {
-					isPastListing = true;
-					lines.add(index++, "");
-				}
-				line = StringUtils.replaceFirst(line, "\\---", "    * ");
-				lines.set(index, line);
-			} else if (line.trim().startsWith("--")) {
-				if (isPastListing == false) {
-					isPastListing = true;
-					lines.add(index++, "");
-				}
-				line = StringUtils.replaceFirst(line, "\\--", "  * ");
-				lines.set(index, line);
-			} else if (line.trim().startsWith("-")) {
-				if (isPastListing == false) {
-					isPastListing = true;
-					lines.add(index++, "");
-				}
-				line = StringUtils.replaceFirst(line, "\\-", "* ");
-				lines.set(index, line);
-			} else {
-				if (isPastListing) {
-					isPastListing = false;
-					lines.add(index++, "");
+			{
+				// リスト構造。
+				String line = lines.get(index);
+				if (line.trim().startsWith("---")) {
+					if (isProcessInListing == false) {
+						isProcessInListing = true;
+						lines.add(index++, "");
+					}
+					line = StringUtils.replaceFirst(line, "\\---", "    * ");
+					lines.set(index, line);
+				} else if (line.trim().startsWith("--")) {
+					if (isProcessInListing == false) {
+						isProcessInListing = true;
+						lines.add(index++, "");
+					}
+					line = StringUtils.replaceFirst(line, "\\--", "  * ");
+					lines.set(index, line);
+				} else if (line.trim().startsWith("-")) {
+					if (isProcessInListing == false) {
+						isProcessInListing = true;
+						lines.add(index++, "");
+					}
+					line = StringUtils.replaceFirst(line, "\\-", "* ");
+					lines.set(index, line);
+				} else {
+					if (isProcessInListing) {
+						isProcessInListing = false;
+						lines.add(index++, "");
+					}
 				}
 			}
-		}
 
-		// タブは２スペースに変換。
-		for (int index = 0; index < lines.size(); index++) {
-			String line = lines.get(index);
-			line = StringUtils.replaceAll(line, "\t", "  ");
-			lines.set(index, line);
-		}
+			{
+				// タブは２スペースに変換。
+				String line = lines.get(index);
+				line = StringUtils.replaceAll(line, "\t", "  ");
+				lines.set(index, line);
+			}
 
-		// 直リンク形式を md リンク形式に変換します。
-		// はてなリンクより先に処理の必要あります。
-		for (int index = 0; index < lines.size(); index++) {
-			String line = lines.get(index);
-			line = HatenaTextUtil.convertSimpleUrl2MdLink(line);
-			lines.set(index, line);
+			{
+				// 直リンク形式を md リンク形式に変換します。
+				// はてなリンクより先に処理の必要あります。
+				String line = lines.get(index);
+				line = HatenaTextUtil.convertSimpleUrl2MdLink(line);
+				lines.set(index, line);
+			}
 		}
 
 		// はてなリンク形式を md リンク形式に変換します。
