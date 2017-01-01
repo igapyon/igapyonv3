@@ -43,20 +43,24 @@ public class HatenaText2SrcMdConverter {
 		// タイトル行は別の仕組みで生成されるので、とりあえずとってしまう。
 		lines.remove(0);
 
-		for (int index = lines.size() - 1; index >= 0; index--) {
+		for (int index = 0; index < lines.size(); index++) {
 			String line = lines.get(index);
 			if (line.startsWith("*p1*") || line.startsWith("*p2*") || line.startsWith("*p3*") || line.startsWith("*p4*")
 					|| line.startsWith("*p5*")) {
-				String newLine = line;
-				newLine = StringUtils.replace(newLine, "*p1*", "## ");
-				newLine = StringUtils.replace(newLine, "*p2*", "## ");
-				newLine = StringUtils.replace(newLine, "*p3*", "## ");
-				newLine = StringUtils.replace(newLine, "*p4*", "## ");
-				newLine = StringUtils.replace(newLine, "*p5*", "## ");
+				{
+					// はてなタイトルを md のh2 に変換。
+					String newLine = line;
+					newLine = StringUtils.replace(newLine, "*p1*", "## ");
+					newLine = StringUtils.replace(newLine, "*p2*", "## ");
+					newLine = StringUtils.replace(newLine, "*p3*", "## ");
+					newLine = StringUtils.replace(newLine, "*p4*", "## ");
+					newLine = StringUtils.replace(newLine, "*p5*", "## ");
 
-				lines.set(index, "");
-				lines.add(index + 1, newLine);
-				lines.add(index + 2, "");
+					lines.set(index, "");
+					lines.add(index + 1, newLine);
+					lines.add(index + 2, "");
+					index++;
+				}
 			}
 		}
 
