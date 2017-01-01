@@ -64,6 +64,9 @@ public class DiarySrcMd2MdConverter {
 			// タブは２スペースに変換。
 			line = StringUtils.replaceAll(line, "\t", "  ");
 
+			// 直リンク形式を md リンク形式に変換します。
+			line = MdTextUtil.convertSimpleUrl2MdLink(line);
+
 			lines.set(index, line);
 		}
 
