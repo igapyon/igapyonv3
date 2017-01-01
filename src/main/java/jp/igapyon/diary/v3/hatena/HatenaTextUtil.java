@@ -51,26 +51,39 @@ public class HatenaTextUtil {
 	}
 
 	public static String convertSimpleUrl2MdLink(final String source) {
-		// はてなリンクパターン。小さいマッチのために「?」を利用しています。
-		final Pattern pat = Pattern.compile("\\[.*?\\]");
-		final Matcher mat = pat.matcher(source);
+		final String URL_PATTERN = "http(s)?://([\\w-]+\\.)+[\\w-]+(/[\\w-./?%&=]*)?";
+		// リンクパターン。小さいマッチのために「?」を利用しています。
+		final String MD_LINK_PATTERN = "(\\[.*?\\]|\\(.*?\\))";
 
-		if (mat.find()) {
-			// そこまで読み飛ばします。
-			return source.substring(0, mat.end()) + convertSimpleUrl2MdLink(source.substring(mat.end()));
-		}
+		final Pattern patMdLink = Pattern.compile(MD_LINK_PATTERN);
+		final Matcher matMdLink = patMdLink.matcher(source);
 
-		// 一致しませんでした。置換する箇所はありませんでした。
+		final Pattern patURL = Pattern.compile(URL_PATTERN);
+		final Matcher matURL = patURL.matcher(source);
 
-		// では次に、URLそものも張り付きを見つけます。
-		final Pattern simpleurlPat = Pattern.compile("http(s)?://([\\w-]+\\.)+[\\w-]+(/[\\w-./?%&=]*)?");
-		final Matcher simpleurlMat = simpleurlPat.matcher(source);
-		if (simpleurlMat.find() == false) {
-			// そぼくURLリンクも存在しません。単に与えられた文字を戻します。
+		final boolean isMdLinkFound = matMdLink.find();
+		final boolean isURLFound = matURL.find();
+
+		if (isMdLinkFound == false && isURLFound == false) {
+			// いずれも存在せず。処理せず戻します。
 			return source;
 		}
+		if (isMdLinkFound && isURLFound == false) {
+			// MDリンクのみ。リンクの終了場所まで読み飛ばしたうえで再帰処理します。
+			return source.substring(0, matMdLink.end()) + convertSimpleUrl2MdLink(source.substring(matMdLink.end()));
+		}
+		if (isMdLinkFound && isURLFound) {
+			// 両方見つかりました。それでは、どちらが先に登場するのでしょうか。
+			if (matMdLink.start() < matURL.start()) {
+				// MDリンクが先に登場しました。リンクの終了場所まで読み飛ばしたうえで再帰処理します。
+				return source.substring(0, matMdLink.end())
+						+ convertSimpleUrl2MdLink(source.substring(matMdLink.end()));
+			}
+			// 生リンクの勝ちです。
+		}
 
-		return source.substring(0, simpleurlMat.start()) + "[" + simpleurlMat.group() + "](" + simpleurlMat.group()
-				+ ")" + convertSimpleUrl2MdLink(source.substring(simpleurlMat.end()));
+		// それでは生リンクの埋め込み処理を実施します。
+		return source.substring(0, matURL.start()) + "[" + matURL.group() + "](" + matURL.group() + ")"
+				+ convertSimpleUrl2MdLink(source.substring(matURL.end()));
 	}
 }
