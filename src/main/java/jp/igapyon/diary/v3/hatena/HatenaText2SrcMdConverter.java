@@ -98,37 +98,41 @@ public class HatenaText2SrcMdConverter {
 					lines.add(index + 1, "");
 				}
 			}
-		}
-
-		// ソースコード記述の対応。
-		for (int index = 0; index < lines.size(); index++) {
-			String line = lines.get(index);
-			if (line.trim().equals("||<")) {
-				lines.set(index, "```");
-				lines.add(++index, "");
-				continue;
-			}
-			if (line.trim().equals(">||")) {
-				lines.add(index++, "");
-				lines.set(index, "```");
-			}
 
 			{
-				// はてなリンクパターン。小さいマッチのために「?」を利用しています。
-				final Pattern pat = Pattern.compile(">\\|.*?\\|");
-				final Matcher mat = pat.matcher(line);
-
-				if (mat.find()) {
-					final String markup = mat.group();
-					String language = markup.substring(2, markup.length() - 1);
-					if (language.equals("Java")) {
-						language = "java";
-					}
-					line = mat.replaceFirst("```" + language);
-
-					lines.add(index++, "");
-					lines.set(index, line);
+				// はてなコメント記法
+				String line = lines.get(index);
+				if (line.trim().equals("||<")) {
+					lines.set(index, "```");
+					lines.add(++index, "");
+					// FIXME それ以降に何があろうが、とりあえず無視しています。
 					continue;
+				}
+				if (line.trim().equals(">||")) {
+					lines.add(index++, "");
+					lines.set(index, "```");
+					// FIXME それ以降に何があろうが、とりあえず無視しています。
+					continue;
+				}
+
+				{
+					// はてなリンクパターン。小さいマッチのために「?」を利用しています。
+					final Pattern pat = Pattern.compile(">\\|.*?\\|");
+					final Matcher mat = pat.matcher(line);
+
+					if (mat.find()) {
+						final String markup = mat.group();
+						String language = markup.substring(2, markup.length() - 1);
+						if (language.equals("Java")) {
+							language = "java";
+						}
+						line = mat.replaceFirst("```" + language);
+
+						lines.add(index++, "");
+						lines.set(index, line);
+						// FIXME それ以降に何があろうが、とりあえず無視しています。
+						continue;
+					}
 				}
 			}
 		}
