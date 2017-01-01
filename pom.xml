@@ -68,6 +68,15 @@
 			<artifactId>tagsoup</artifactId>
 			<version>[1.2.1,2.0)</version>
 		</dependency>
+
+		<!-- template engine -->
+		<!-- https://mvnrepository.com/artifact/org.freemarker/freemarker -->
+		<dependency>
+			<groupId>org.freemarker</groupId>
+			<artifactId>freemarker</artifactId>
+			<version>[2.3.23,3.0)</version>
+		</dependency>
+
 	</dependencies>
 
 	<!-- ===================================== -->
