@@ -14,8 +14,6 @@ import org.apache.commons.lang3.StringUtils;
  * 
  * はてな記法の一部しかサポートできていません。
  * 
- * TODO せめてリンク埋め込みだけでもサポートしたい。
- * 
  * @author Toshiki Iga
  */
 public class HatenaText2SrcMdConverter {
@@ -188,13 +186,14 @@ public class HatenaText2SrcMdConverter {
 				line = HatenaTextUtil.convertSimpleUrl2MdLink(line);
 				lines.set(index, line);
 			}
-		}
 
-		// はてなリンク形式を md リンク形式に変換します。
-		for (int index = 0; index < lines.size(); index++) {
-			String line = lines.get(index);
-			line = HatenaTextUtil.convertHatenaLink2MdLink(line);
-			lines.set(index, line);
+			{
+				// はてなリンク形式を md リンク形式に変換します。
+				// FIXME ただし、この実装は、ここではなく、次のmdソース変換に移動する可能性が高い。
+				String line = lines.get(index);
+				line = HatenaTextUtil.convertHatenaLink2MdLink(line);
+				lines.set(index, line);
+			}
 		}
 
 		String newName = file.getName().substring(0, file.getName().length() - (".src.hatenadiary".length()))
