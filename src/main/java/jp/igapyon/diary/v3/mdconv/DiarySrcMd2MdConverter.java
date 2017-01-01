@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.List;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import jp.igapyon.diary.v3.util.IgapyonV3Settings;
 import jp.igapyon.diary.v3.util.MdTextUtil;
@@ -49,16 +50,20 @@ public class DiarySrcMd2MdConverter {
 		String day = file.getName().substring(6, 8);
 		for (String line : lines) {
 			if (firstH2Line == null) {
+				// 最初の ## からテキストを取得。
 				if (line.startsWith("## ")) {
 					firstH2Line = line.substring(3);
 				}
 			}
-			// System.out.println(" " + line);
 		}
 
 		for (int index = 0; index < lines.size(); index++) {
 			String line = lines.get(index);
 			line = MdTextUtil.convertDoubleKeyword2MdLink(line, settings);
+
+			// タブは２スペースに変換。
+			line = StringUtils.replaceAll(line, "\t", "  ");
+
 			lines.set(index, line);
 		}
 

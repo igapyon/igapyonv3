@@ -182,13 +182,6 @@ public class HatenaText2SrcMdConverter {
 			}
 
 			{
-				// タブは２スペースに変換。
-				String line = lines.get(index);
-				line = StringUtils.replaceAll(line, "\t", "  ");
-				lines.set(index, line);
-			}
-
-			{
 				// 直リンク形式を md リンク形式に変換します。
 				// はてなリンクより先に処理の必要あります。
 				String line = lines.get(index);
