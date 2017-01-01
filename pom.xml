@@ -74,7 +74,7 @@
 		<dependency>
 			<groupId>org.freemarker</groupId>
 			<artifactId>freemarker</artifactId>
-			<version>[2.3.23,3.0)</version>
+			<version>[2.3.25-incubating,3.0)</version>
 		</dependency>
 
 	</dependencies>
