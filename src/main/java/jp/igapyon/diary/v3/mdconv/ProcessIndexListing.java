@@ -8,6 +8,7 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import jp.igapyon.diary.v3.item.DiaryItemInfo;
+import jp.igapyon.diary.v3.util.IgapyonV3Settings;
 
 /**
  * 指定されたファイルの一覧部分を更新する仕組みです。
@@ -15,6 +16,12 @@ import jp.igapyon.diary.v3.item.DiaryItemInfo;
  * TODO 他のクラスに併合されるべき処理と考えます。
  */
 public class ProcessIndexListing {
+	private IgapyonV3Settings settings = null;
+
+	public ProcessIndexListing(final IgapyonV3Settings settings) {
+		this.settings = settings;
+	}
+
 	public void process(File fileTarget, final List<DiaryItemInfo> diaryItemInfoList) throws IOException {
 		fileTarget = fileTarget.getCanonicalFile();
 		if (fileTarget.getName().endsWith(".src.md") == false) {

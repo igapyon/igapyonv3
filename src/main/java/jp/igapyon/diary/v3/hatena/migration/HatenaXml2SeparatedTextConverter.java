@@ -10,6 +10,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
 import jp.igapyon.diary.v3.item.DiaryItemInfo;
+import jp.igapyon.diary.v3.util.IgapyonV3Settings;
 import jp.igapyon.util.IgapyonXmlUtil;
 
 /**
@@ -20,6 +21,12 @@ import jp.igapyon.util.IgapyonXmlUtil;
  * @author Toshiki Iga
  */
 public class HatenaXml2SeparatedTextConverter {
+	private IgapyonV3Settings settings = null;
+
+	public HatenaXml2SeparatedTextConverter(final IgapyonV3Settings settings) {
+		this.settings = settings;
+	}
+
 	public void processFile(final File sourceXml, final File targetMdDir) throws IOException {
 		String inputXmlString = FileUtils.readFileToString(sourceXml, "UTF-8");
 		inputXmlString = inputXmlString.replace('\u001c', '−');
@@ -72,6 +79,7 @@ public class HatenaXml2SeparatedTextConverter {
 	 * @throws IOException
 	 */
 	public static final void main(final String[] args) throws IOException {
-		new HatenaXml2SeparatedTextConverter().processFile(new File("/tmp/igapyon.xml"), new File("."));
+		final IgapyonV3Settings settings = new IgapyonV3Settings();
+		new HatenaXml2SeparatedTextConverter(settings).processFile(new File("/tmp/igapyon.xml"), new File("."));
 	}
 }

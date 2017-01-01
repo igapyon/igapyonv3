@@ -23,6 +23,7 @@ import org.xml.sax.SAXException;
 
 import jp.igapyon.diary.v3.item.DiaryItemInfo;
 import jp.igapyon.diary.v3.item.DiaryItemInfoComparator;
+import jp.igapyon.diary.v3.util.IgapyonV3Settings;
 import jp.igapyon.diary.v3.util.SimpleTagSoupUtil;
 
 /**
@@ -35,6 +36,12 @@ import jp.igapyon.diary.v3.util.SimpleTagSoupUtil;
  */
 public class IndexDiaryHtmlParser {
 	private List<DiaryItemInfo> diaryItemInfoList = new ArrayList<DiaryItemInfo>();
+
+	private IgapyonV3Settings settings = null;
+
+	public IndexDiaryHtmlParser(final IgapyonV3Settings settings) {
+		this.settings = settings;
+	}
 
 	public List<DiaryItemInfo> processDir(final File dir, String path) throws IOException {
 		final File[] files = dir.listFiles();

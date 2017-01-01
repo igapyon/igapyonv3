@@ -9,6 +9,7 @@ import java.util.regex.Pattern;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 
+import jp.igapyon.diary.v3.util.IgapyonV3Settings;
 import jp.igapyon.diary.v3.util.MdTextUtil;
 
 /**
@@ -19,6 +20,12 @@ import jp.igapyon.diary.v3.util.MdTextUtil;
  * @author Toshiki Iga
  */
 public class HatenaText2SrcMdConverter {
+	private IgapyonV3Settings settings = null;
+
+	public HatenaText2SrcMdConverter(final IgapyonV3Settings settings) {
+		this.settings = settings;
+	}
+
 	public void processDir(final File dir) throws IOException {
 		final File[] files = dir.listFiles();
 		if (files == null) {

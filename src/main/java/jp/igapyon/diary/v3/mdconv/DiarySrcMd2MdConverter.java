@@ -8,6 +8,8 @@ import java.util.regex.Pattern;
 
 import org.apache.commons.io.FileUtils;
 
+import jp.igapyon.diary.v3.util.IgapyonV3Settings;
+
 /**
  * .src.md から .md を生成するためのクラス。
  */
@@ -17,6 +19,12 @@ public class DiarySrcMd2MdConverter {
 			{ "Delphi", "https://www.embarcadero.com/jp/products/delphi" },
 			{ "Appmethod", "https://ja.wikipedia.org/wiki/Appmethod" },
 			{ "blancoCg", "https://github.com/igapyon/blancoCg" } };
+
+	private IgapyonV3Settings settings = null;
+
+	public DiarySrcMd2MdConverter(final IgapyonV3Settings settings) {
+		this.settings = settings;
+	}
 
 	public void processDir(final File dir) throws IOException {
 		final File[] files = dir.listFiles();
