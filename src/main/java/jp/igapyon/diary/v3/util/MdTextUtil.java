@@ -62,4 +62,32 @@ public class MdTextUtil {
 		return source.substring(0, matURL.start()) + "[" + matURL.group() + "](" + matURL.group() + ")"
 				+ convertSimpleUrl2MdLink(source.substring(matURL.end()));
 	}
+
+	public static String convertDoubleKeyword2MdLink(final String source, final IgapyonV3Settings settings) {
+
+		// [[key]]system
+		final String DOUBLE_KEYWORD_PATTERN = "\\[\\[.*?\\]\\]";
+		final Pattern patDoubleKeyword = Pattern.compile(DOUBLE_KEYWORD_PATTERN);
+		final Matcher matDoubleKeyword = patDoubleKeyword.matcher(source);
+		final boolean isDoubleKeywordFound = matDoubleKeyword.find();
+		if (isDoubleKeywordFound == false) {
+			return source;
+		}
+
+		String foundKeyword = matDoubleKeyword.group();
+		foundKeyword = foundKeyword.substring(2, foundKeyword.length() - 2);
+
+		for (String[] registeredPair : settings.getDoubleKeywordList()) {
+			if (registeredPair[0].compareToIgnoreCase(foundKeyword) == 0) {
+				// 最初のヒットのみ置換したうえで残り部分を再帰呼出し。
+				return source.substring(0, matDoubleKeyword.start()) + "[" + registeredPair[0] + "]("
+						+ registeredPair[1] + ")"
+						+ convertDoubleKeyword2MdLink(source.substring(matDoubleKeyword.end()), settings);
+			}
+		}
+
+		System.err.println("Non processed [[" + foundKeyword + "]] doubleword.");
+
+		return source;
+	}
 }

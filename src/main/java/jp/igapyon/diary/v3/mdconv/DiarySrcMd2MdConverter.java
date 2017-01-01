@@ -3,12 +3,11 @@ package jp.igapyon.diary.v3.mdconv;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.apache.commons.io.FileUtils;
 
 import jp.igapyon.diary.v3.util.IgapyonV3Settings;
+import jp.igapyon.diary.v3.util.MdTextUtil;
 
 /**
  * .src.md から .md を生成するためのクラス。
@@ -59,30 +58,8 @@ public class DiarySrcMd2MdConverter {
 
 		for (int index = 0; index < lines.size(); index++) {
 			String line = lines.get(index);
-			// [[key]]system
-			final String DOUBLE_KEYWORD_PATTERN = "\\[\\[.*?\\]\\]";
-			final Pattern patDoubleKeyword = Pattern.compile(DOUBLE_KEYWORD_PATTERN);
-			final Matcher matDoubleKeyword = patDoubleKeyword.matcher(line);
-			final boolean isDoubleKeywordFound = matDoubleKeyword.find();
-			if (isDoubleKeywordFound) {
-				String foundKeyword = matDoubleKeyword.group();
-				foundKeyword = foundKeyword.substring(2, foundKeyword.length() - 2);
-
-				boolean isReplaced = false;
-				for (String[] registeredPair : settings.getDoubleKeywordList()) {
-					if (registeredPair[0].compareToIgnoreCase(foundKeyword) == 0) {
-						// 最初のやつだけ置換。
-						line = line.substring(0, matDoubleKeyword.start()) + "[" + registeredPair[0] + "]("
-								+ registeredPair[1] + ")" + line.substring(matDoubleKeyword.end());
-						lines.set(index, line);
-						isReplaced = true;
-					}
-				}
-
-				if (isReplaced == false) {
-					System.out.println("[[" + foundKeyword + "]]");
-				}
-			}
+			line = MdTextUtil.convertDoubleKeyword2MdLink(line, settings);
+			lines.set(index, line);
 		}
 
 		// TODO support template system.
