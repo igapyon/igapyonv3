@@ -62,7 +62,7 @@ public class DiarySrcMd2MdConverter {
 			if (file.isDirectory()) {
 				processDir(file);
 			} else if (file.isFile()) {
-				if (file.getName().startsWith("ig") && file.getName().endsWith(".src.md")) {
+				if (file.getName().endsWith(".src.md")) {
 					processFile(file);
 				}
 			}
@@ -71,6 +71,8 @@ public class DiarySrcMd2MdConverter {
 
 	void processFile(final File file) throws IOException {
 		final List<String> lines = FileUtils.readLines(file, "UTF-8");
+
+		final boolean isDiary = file.getName().startsWith("ig");
 
 		String firstH2Line = null;
 		String year1 = "20";
@@ -105,25 +107,27 @@ public class DiarySrcMd2MdConverter {
 
 		// TODO support template system.
 
-		// ヘッダ追加
-		lines.add(0, year1 + year2 + "-" + month + "-" + day + " diary: " + firstH2Line);
-		lines.add(1,
-				"=====================================================================================================");
-		lines.add(2,
-				"[![いがぴょん画像(小)](https://igapyon.github.io/diary/images/iga200306s.jpg \"いがぴょん\")](https://igapyon.github.io/diary/memo/memoigapyon.html) 日記形式でつづる [いがぴょん](https://igapyon.github.io/diary/memo/memoigapyon.html)コラム ウェブページです。");
-		lines.add(3, "");
+		if (isDiary) {
+			// ヘッダ追加
+			lines.add(0, year1 + year2 + "-" + month + "-" + day + " diary: " + firstH2Line);
+			lines.add(1,
+					"=====================================================================================================");
+			lines.add(2,
+					"[![いがぴょん画像(小)](https://igapyon.github.io/diary/images/iga200306s.jpg \"いがぴょん\")](https://igapyon.github.io/diary/memo/memoigapyon.html) 日記形式でつづる [いがぴょん](https://igapyon.github.io/diary/memo/memoigapyon.html)コラム ウェブページです。");
+			lines.add(3, "");
 
-		// 本体
+			// 本体
 
-		// フッタ追加
-		lines.add("");
-		lines.add("");
-		lines.add(
-				"----------------------------------------------------------------------------------------------------");
-		lines.add("");
-		lines.add("## この日記について");
-		lines.add(
-				"[いがぴょんについて](https://igapyon.github.io/diary/memo/memoigapyon.html) / [インデックスに戻る](https://igapyon.github.io/diary/idxall.html)");
+			// フッタ追加
+			lines.add("");
+			lines.add("");
+			lines.add(
+					"----------------------------------------------------------------------------------------------------");
+			lines.add("");
+			lines.add("## この日記について");
+			lines.add(
+					"[いがぴょんについて](https://igapyon.github.io/diary/memo/memoigapyon.html) / [インデックスに戻る](https://igapyon.github.io/diary/idxall.html)");
+		}
 
 		String newName = file.getName().substring(0, file.getName().length() - (".src.md".length())) + ".md";
 		FileUtils.writeLines(new File(file.getParentFile(), newName), lines);
