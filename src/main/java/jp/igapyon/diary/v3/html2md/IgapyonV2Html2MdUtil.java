@@ -19,9 +19,16 @@ public class IgapyonV2Html2MdUtil {
 		final File file = origFile.getCanonicalFile();
 
 		String source = FileUtils.readFileToString(file, "UTF-8");
+		if (file.getName().startsWith("memo")) {
+			source = FileUtils.readFileToString(file, "Windows-31J");
+		}
 		try {
 			// Normalize
 			source = SimpleTagSoupUtil.formatHtml(source);
+
+			final File newFile = new File(file.getParentFile(),
+					file.getName().substring(0, file.getName().length() - "-orig.html".length()) + ".html.src.md");
+			System.out.println("convert from " + file.getName() + " to " + newFile.getName());
 
 			final SAXParserFactory saxFactory = SAXParserFactory.newInstance();
 			final SAXParser parser = saxFactory.newSAXParser();
@@ -30,13 +37,11 @@ public class IgapyonV2Html2MdUtil {
 
 			parser.parse(new InputSource(new StringReader(source)), htmlparser);
 
-			final File newFile = new File(file.getParentFile(),
-					file.getName().substring(0, file.getName().length() - "-orig.html".length()) + ".html.src.md");
-			System.out.println("convert from " + file.getName() + " to " + newFile.getName());
 			FileUtils.writeStringToFile(newFile, htmlparser.getMarkdownString().trim(), "UTF-8");
 		} catch (SAXException e) {
 			System.out.println("変換失敗: " + e.toString());
-			// throw new IOException(e);
+			System.out.println("Formatted html: [" + source + "]");
+			throw new IOException(e);
 		} catch (ParserConfigurationException e) {
 			throw new IOException(e);
 		}

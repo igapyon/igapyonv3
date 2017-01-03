@@ -149,7 +149,7 @@ public class IgapyonV2Html2MdParser extends DefaultHandler {
 
 	protected void fireCharacters(final String characters) {
 
-		if (characters.equals("インディックスページへ戻る")) {
+		if (characters.equals("インディックスページへ戻る") || characters.equals("日記インディックスページへ戻る")) {
 			// これ以降がようやく本体。
 			isContentBody = true;
 			return;
