@@ -35,6 +35,8 @@ package jp.igapyon.diary.v3.html2md;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
@@ -49,6 +51,8 @@ public class IgapyonV2Html2MdParser extends DefaultHandler {
 	protected StringBuilder markdownBuffer = new StringBuilder();
 
 	protected StringBuilder charactersBuffer = new StringBuilder();
+
+	protected boolean isInTitle = false;
 
 	protected boolean isInV2TdTitleMarker = false;
 
@@ -93,7 +97,13 @@ public class IgapyonV2Html2MdParser extends DefaultHandler {
 			}
 		}
 
-		if (qName.equals("address")) {
+		if (qName.equals("title")) {
+			isInTitle = true;
+		} else if (qName.equals("meta")) {
+			if (attrMap.get("name") != null && attrMap.get("name").toLowerCase().equals("description")) {
+				markdownBuffer.append("\n" + attrMap.get("content") + "\n");
+			}
+		} else if (qName.equals("address")) {
 			isContentBody = false;
 		} else if (qName.equals("a")) {
 			recentHrefString = "" + attrMap.get("href");
@@ -116,10 +126,11 @@ public class IgapyonV2Html2MdParser extends DefaultHandler {
 			charactersBuffer = new StringBuilder();
 		}
 
-		if (qName.equals("a")) {
+		if (qName.equals("title")) {
+			isInTitle = false;
+		} else if (qName.equals("a")) {
 			recentHrefString = null;
-		}
-		if (qName.equals("td")) {
+		} else if (qName.equals("td")) {
 			// tdを抜けたら、有無を言わさずoff化。
 			isInV2TdTitleMarker = false;
 		}
@@ -140,6 +151,18 @@ public class IgapyonV2Html2MdParser extends DefaultHandler {
 			// これ以降がようやく本体。
 			isContentBody = true;
 			return;
+		}
+
+		if (isInTitle) {
+			// はてなリンクパターン。小さいマッチのために「?」を利用しています。
+			final Pattern pat = Pattern.compile("日記\\: ");
+			final Matcher mat = pat.matcher(characters);
+			if (mat.find()) {
+				final String diaryTitleWithoutYMD = characters.substring(mat.end());
+				markdownBuffer.append("\n## " + diaryTitleWithoutYMD + "\n");
+			} else {
+				markdownBuffer.append("\n## " + characters + "\n");
+			}
 		}
 
 		if (isContentBody == false) {
