@@ -108,13 +108,24 @@ public class DiarySrcMd2MdConverter {
 		// TODO support template system.
 
 		if (isDiary) {
+			int lineno = 0;
+			lines.add(lineno++, "[top](https://igapyon.github.io/diary/) ");
+			lines.add(lineno++, " / [index](https://igapyon.github.io/diary/" + year1 + year2 + "/index.html) ");
+			lines.add(lineno++, " / prev ");
+			lines.add(lineno++, " / next ");
+			lines.add(lineno++, " / [target](https://igapyon.github.io/diary/" + year1 + year2 + "/ig" + year2 + month
+					+ day + ".html) ");
+			lines.add(lineno++, " / [source](https://github.com/igapyon/diary/blob/gh-pages/" + year1 + year2 + "/ig"
+					+ year2 + month + day + ".html.src.md) ");
+			lines.add(lineno++, "");
+
 			// ヘッダ追加
-			lines.add(0, year1 + year2 + "-" + month + "-" + day + " diary: " + firstH2Line);
-			lines.add(1,
+			lines.add(lineno++, year1 + year2 + "-" + month + "-" + day + " diary: " + firstH2Line);
+			lines.add(lineno++,
 					"=====================================================================================================");
-			lines.add(2,
+			lines.add(lineno++,
 					"[![いがぴょん画像(小)](https://igapyon.github.io/diary/images/iga200306s.jpg \"いがぴょん\")](https://igapyon.github.io/diary/memo/memoigapyon.html) 日記形式でつづる [いがぴょん](https://igapyon.github.io/diary/memo/memoigapyon.html)コラム ウェブページです。");
-			lines.add(3, "");
+			lines.add(lineno++, "");
 
 			// 本体
 
