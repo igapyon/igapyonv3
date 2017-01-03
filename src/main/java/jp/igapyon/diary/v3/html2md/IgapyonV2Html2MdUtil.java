@@ -17,6 +17,7 @@ import jp.igapyon.diary.v3.util.SimpleTagSoupUtil;
 public class IgapyonV2Html2MdUtil {
 	public static void convertV2Html2Md(final File origFile) throws IOException {
 		final File file = origFile.getCanonicalFile();
+
 		String source = FileUtils.readFileToString(file, "UTF-8");
 		try {
 			// Normalize
@@ -29,7 +30,8 @@ public class IgapyonV2Html2MdUtil {
 
 			parser.parse(new InputSource(new StringReader(source)), htmlparser);
 
-			final File newFile = new File(file.getParentFile(), file.getName() + ".src.md");
+			final File newFile = new File(file.getParentFile(),
+					file.getName().substring(0, file.getName().length() - "-orig.html".length()) + ".html.src.md");
 			System.out.println("convert from " + file.getName() + " to " + newFile.getName());
 			FileUtils.writeStringToFile(newFile, htmlparser.getMarkdownString().trim(), "UTF-8");
 

@@ -13,7 +13,7 @@ public class IgapyonV2Html2MdConverter {
 			if (file.isDirectory()) {
 				processDir(file);
 			} else if (file.isFile()) {
-				if (file.getName().endsWith(".html")) {
+				if (file.getName().endsWith("-orig.html")) {
 					processFile(file);
 				}
 			}
@@ -21,7 +21,6 @@ public class IgapyonV2Html2MdConverter {
 	}
 
 	void processFile(final File file) throws IOException {
-		System.out.println(file.getName());
 		IgapyonV2Html2MdUtil.convertV2Html2Md(file);
 	}
 }
