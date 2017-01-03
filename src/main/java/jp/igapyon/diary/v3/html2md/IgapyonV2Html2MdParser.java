@@ -84,7 +84,8 @@ public class IgapyonV2Html2MdParser extends DefaultHandler {
 		}
 
 		if (isContentBody) {
-			System.out.println("<" + qName + ">");
+			if (false)
+				System.out.println("<" + qName + ">");
 		}
 
 		final Map<String, String> attrMap = new HashMap<String, String>();
@@ -92,8 +93,9 @@ public class IgapyonV2Html2MdParser extends DefaultHandler {
 			attrMap.put(attributes.getQName(indexAttr), attributes.getValue(indexAttr));
 
 			if (isContentBody) {
-				System.out
-						.println("  " + attributes.getQName(indexAttr) + "=\"" + attributes.getValue(indexAttr) + "\"");
+				if (false)
+					System.out.println(
+							"  " + attributes.getQName(indexAttr) + "=\"" + attributes.getValue(indexAttr) + "\"");
 			}
 		}
 
@@ -112,7 +114,6 @@ public class IgapyonV2Html2MdParser extends DefaultHandler {
 				markdownBuffer.append("\n");
 			}
 		} else if (qName.equals("td")) {
-			// System.out.println(attrMap.get("bgcolor"));
 			if (attrMap.get("bgcolor") != null && attrMap.get("bgcolor").equals("#ff9900")) {
 				isInV2TdTitleMarker = true;
 			}
@@ -136,7 +137,8 @@ public class IgapyonV2Html2MdParser extends DefaultHandler {
 		}
 
 		if (isContentBody) {
-			System.out.println("</" + qName + ">");
+			if (false)
+				System.out.println("</" + qName + ">");
 		}
 	}
 
@@ -174,7 +176,8 @@ public class IgapyonV2Html2MdParser extends DefaultHandler {
 		}
 
 		if (recentHrefString == null) {
-			System.out.println(characters);
+			if (false)
+				System.out.println(characters);
 			markdownBuffer.append(characters);
 		} else {
 			markdownBuffer.append("[" + characters + "](" + recentHrefString + ")");

@@ -35,7 +35,8 @@ public class IgapyonV2Html2MdUtil {
 			System.out.println("convert from " + file.getName() + " to " + newFile.getName());
 			FileUtils.writeStringToFile(newFile, htmlparser.getMarkdownString().trim(), "UTF-8");
 		} catch (SAXException e) {
-			throw new IOException(e);
+			System.out.println("変換失敗: " + e.toString());
+			// throw new IOException(e);
 		} catch (ParserConfigurationException e) {
 			throw new IOException(e);
 		}
