@@ -82,7 +82,16 @@ public class IndexDiaryMdParser {
 
 		final DiaryItemInfo diaryItemInfo = new DiaryItemInfo();
 		diaryItemInfo.setUri(url);
-		diaryItemInfo.setTitle(lines.get(0));
+
+		for (int index = 0; index < lines.size(); index++) {
+			final String line = lines.get(index);
+			if (line.startsWith("===")) {
+				// 直前のものが、このテキストのタイトルです。
+				break;
+			}
+			diaryItemInfo.setTitle(line);
+
+		}
 
 		diaryItemInfoList.add(diaryItemInfo);
 	}
