@@ -37,7 +37,9 @@ public class IgapyonV2Html2MdUtil {
 
 			parser.parse(new InputSource(new StringReader(source)), htmlparser);
 
-			FileUtils.writeStringToFile(newFile, htmlparser.getMarkdownString().trim(), "UTF-8");
+			String markdownHeader = "[old-v2](" + file.getName() + ")\n\n";
+
+			FileUtils.writeStringToFile(newFile, markdownHeader + htmlparser.getMarkdownString().trim(), "UTF-8");
 		} catch (SAXException e) {
 			System.out.println("変換失敗: " + e.toString());
 			System.out.println("Formatted html: [" + source + "]");
