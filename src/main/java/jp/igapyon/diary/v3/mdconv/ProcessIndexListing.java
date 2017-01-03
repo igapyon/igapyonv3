@@ -35,12 +35,20 @@ package jp.igapyon.diary.v3.mdconv;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.commons.lang3.StringUtils;
+
+import com.rometools.rome.feed.synd.SyndEntry;
+import com.rometools.rome.feed.synd.SyndFeed;
+import com.rometools.rome.io.FeedException;
+import com.rometools.rome.io.SyndFeedInput;
+import com.rometools.rome.io.XmlReader;
 
 import jp.igapyon.diary.v3.item.DiaryItemInfo;
 import jp.igapyon.diary.v3.item.DiaryItemInfoComparator;
@@ -93,9 +101,29 @@ public class ProcessIndexListing {
 			}
 		}
 
+		String publickeyText = "";
+		try {
+			final URL atomURL = new URL("http://www.publickey1.jp/atom.xml");
+			final SyndFeed synFeed = new SyndFeedInput().build(new XmlReader(atomURL));
+
+			publickeyText += "#### [" + StringEscapeUtils.escapeXml11(synFeed.getTitle()) + "](" + synFeed.getLink()
+					+ ")\n\n";
+
+			for (Object lookup : synFeed.getEntries()) {
+				final SyndEntry entry = (SyndEntry) lookup;
+				publickeyText += "* [" + StringEscapeUtils.escapeXml11(entry.getTitle()) + "](" + entry.getLink()
+						+ ")\n";
+			}
+		} catch (IllegalArgumentException e) {
+			e.printStackTrace();
+		} catch (FeedException e) {
+			e.printStackTrace();
+		}
+
 		String target = FileUtils.readFileToString(fileTarget, "UTF-8");
 		target = StringUtils.replace(target, "{igapyon.diary.ghpages.dialylist}", wrk);
 		target = StringUtils.replace(target, "{igapyon.diary.ghpages.dialylist.recent}", wrkRecent);
+		target = StringUtils.replace(target, "{igapyon.diary.ghpages.dialylist.publickey}", publickeyText);
 		FileUtils.writeStringToFile(new File(fileTarget.getParentFile() + "/" + newName), target, "UTF-8");
 	}
 }
