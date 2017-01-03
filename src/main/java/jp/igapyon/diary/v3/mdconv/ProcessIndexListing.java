@@ -35,12 +35,14 @@ package jp.igapyon.diary.v3.mdconv;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Collections;
 import java.util.List;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import jp.igapyon.diary.v3.item.DiaryItemInfo;
+import jp.igapyon.diary.v3.item.DiaryItemInfoComparator;
 import jp.igapyon.diary.v3.util.IgapyonV3Settings;
 
 /**
@@ -78,6 +80,9 @@ public class ProcessIndexListing {
 					break;
 				}
 			}
+
+			// sort again.
+			Collections.sort(diaryItemInfoList, new DiaryItemInfoComparator());
 		}
 
 		String target = FileUtils.readFileToString(fileTarget, "UTF-8");
