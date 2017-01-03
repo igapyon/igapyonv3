@@ -35,6 +35,7 @@ package jp.igapyon.diary.v3.mdconv;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -72,17 +73,28 @@ public class ProcessIndexListing {
 		String wrkRecent = "";
 		{
 			int diaryListupCount = 15;
+
+			final List<DiaryItemInfo> recentItemInfoList = new ArrayList<DiaryItemInfo>();
+
 			for (int index = diaryItemInfoList.size() - 1; index >= 0; index--) {
 				final DiaryItemInfo itemInfo = diaryItemInfoList.get(index);
-				wrkRecent = "* [" + itemInfo.getTitle() + "](" + itemInfo.getUri() + ")\n" + wrkRecent;
 				diaryListupCount--;
+				recentItemInfoList.add(itemInfo);
 				if (diaryListupCount <= 0) {
 					break;
 				}
 			}
 
 			// sort again.
-			Collections.sort(diaryItemInfoList, new DiaryItemInfoComparator());
+			Collections.sort(recentItemInfoList, new DiaryItemInfoComparator());
+
+			for (final DiaryItemInfo itemInfo : recentItemInfoList) {
+				wrkRecent = "* [" + itemInfo.getTitle() + "](" + itemInfo.getUri() + ")\n" + wrkRecent;
+				diaryListupCount--;
+				if (diaryListupCount <= 0) {
+					break;
+				}
+			}
 		}
 
 		String target = FileUtils.readFileToString(fileTarget, "UTF-8");
