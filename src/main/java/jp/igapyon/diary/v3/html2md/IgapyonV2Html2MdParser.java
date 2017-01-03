@@ -70,8 +70,6 @@ public class IgapyonV2Html2MdParser extends DefaultHandler {
 
 	@Override
 	public void endDocument() throws SAXException {
-		System.out.println("Markdown:");
-		System.out.println(markdownBuffer.toString().trim());
 	}
 
 	@Override

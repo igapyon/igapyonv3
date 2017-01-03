@@ -65,22 +65,4 @@ public class SimpleSandbox {
 		final Template templateBase = config.getTemplate("basic");
 		templateBase.process(templateData, new OutputStreamWriter(System.out));
 	}
-
-	@Test
-	public void test2() throws Exception {
-		String source = FileUtils.readFileToString(new File("./test/data/v2html/ig100102.html"), "UTF-8");
-		try {
-			source = SimpleTagSoupUtil.formatHtml(source);
-			// System.out.println(source);
-
-			final SAXParserFactory saxFactory = SAXParserFactory.newInstance();
-			final SAXParser parser = saxFactory.newSAXParser();
-			parser.parse(new InputSource(new StringReader(source)), new IgapyonV2Html2MdParser());
-
-		} catch (SAXException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-
-	}
 }
