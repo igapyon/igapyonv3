@@ -1,5 +1,6 @@
 package jp.igapyon.diary.v3;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.Reader;
@@ -7,12 +8,21 @@ import java.io.StringReader;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
+
+import org.apache.commons.io.FileUtils;
 import org.junit.Test;
+import org.xml.sax.Attributes;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
+import org.xml.sax.helpers.DefaultHandler;
 
 import freemarker.cache.TemplateLoader;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateExceptionHandler;
+import jp.igapyon.diary.v3.util.SimpleTagSoupUtil;
 
 public class SimpleSandbox {
 	@Test
@@ -55,5 +65,98 @@ public class SimpleSandbox {
 
 		final Template templateBase = config.getTemplate("basic");
 		templateBase.process(templateData, new OutputStreamWriter(System.out));
+	}
+
+	@Test
+	public void test2() throws Exception {
+		String source = FileUtils.readFileToString(new File("./test/data/v2html/ig100102.html"), "UTF-8");
+		try {
+			source = SimpleTagSoupUtil.formatHtml(source);
+			// System.out.println(source);
+
+			final SAXParserFactory saxFactory = SAXParserFactory.newInstance();
+			final SAXParser parser = saxFactory.newSAXParser();
+			parser.parse(new InputSource(new StringReader(source)), new MyHandler());
+
+		} catch (SAXException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+
+	}
+
+	class MyHandler extends DefaultHandler {
+		protected StringBuilder markdownBuffer = new StringBuilder();
+
+		protected StringBuilder charactersBuffer = new StringBuilder();
+
+		/**
+		 * インデックスに戻る以降のところがボディ。
+		 */
+		protected boolean isContentBody = false;
+
+		@Override
+		public void startElement(String uri, String localName, String qName, Attributes attributes)
+				throws SAXException {
+			if (charactersBuffer.length() > 0) {
+				fireCharacters(charactersBuffer.toString());
+				charactersBuffer = new StringBuilder();
+			}
+
+			if (isContentBody) {
+				System.out.println("<" + qName + ">");
+			}
+
+			final Map<String, String> attrMap = new HashMap<String, String>();
+			for (int indexAttr = 0; indexAttr < attributes.getLength(); indexAttr++) {
+				attrMap.put(attributes.getQName(indexAttr), attributes.getValue(indexAttr));
+
+				if (isContentBody) {
+					System.out.println(
+							"  " + attributes.getQName(indexAttr) + "=\"" + attributes.getValue(indexAttr) + "\"");
+				}
+			}
+
+			if (qName.equals("a")) {
+				if (isContentBody) {
+					System.out.println("start anchor: " + attrMap.get("href"));
+				}
+			} else if (qName.equals("td")) {
+				// System.out.println(attrMap.get("bgcolor"));
+				if (attrMap.get("bgcolor") != null && attrMap.get("bgcolor").equals("#ff9900")) {
+					System.out.println("v2 style header");
+				}
+			}
+		}
+
+		@Override
+		public void endElement(String uri, String localName, String qName) throws SAXException {
+			if (charactersBuffer.length() > 0) {
+				fireCharacters(charactersBuffer.toString());
+				charactersBuffer = new StringBuilder();
+			}
+
+			if (isContentBody) {
+				System.out.println("</" + qName + ">");
+			}
+		}
+
+		@Override
+		public void characters(char ch[], int start, int length) throws SAXException {
+			charactersBuffer.append(new String(ch, start, length));
+		}
+
+		protected void fireCharacters(final String characters) {
+
+			if (characters.equals("インディックスページへ戻る")) {
+				// これ以降がようやく本体。
+				isContentBody = true;
+				return;
+			}
+
+			if (isContentBody) {
+				System.out.println("fire:" + characters);
+			}
+		}
 	}
 }

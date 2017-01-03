@@ -1,0 +1,110 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML lang="ja">
+<HEAD>
+<TITLE>2010/01/02 日記: 2009 年のふりかえり。JavaServer Faces (JSF) と Eclipse プラグイン開発</TITLE>
+<meta name="DESCRIPTION" content="私の 2009 年を振り返ってみると、2009 年は JSF と Eclipse プラグイン開発、そして翻訳(英-&gt;日) にたずさわった 1 年でした。">
+<meta name="KEYWORDS" content="いがぴょんの日記v2,diary,igapyon">
+<meta name="GENERATOR" content="IBM WebSphere Studio Homepage Builder Version 14.0.1.0 for Windows">
+<meta name="DATE" content="2010-09-27T20:42:51+09:00">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<LINK rel="INDEX" href="index.html">
+<LINK rel="CONTENTS" href="index.html">
+<LINK rel="stylesheet" href="../../css/table.css" type="text/css" id="_HPB_TABLE_CSS_ID_">
+</HEAD>
+<BODY bgcolor="#eeddcc"><TABLE border="0"><TBODY><TR>
+  <TD valign="top">
+    <A href="../memo/memoigapyon.html">
+      <IMG src="../images/iga200306s.jpg" border="0" ALT="いがぴょん画像(小) 2003/06">
+    </A>
+  </TD>
+  <TD valign="top">
+    <H2>2010/01/02 日記: 2009 年のふりかえり。JavaServer Faces (JSF) と Eclipse プラグイン開発</H2>
+    <P>[いがぴょんの日記v2,diary,igapyon] 私の 2009 年を振り返ってみると、2009 年は JSF と Eclipse プラグイン開発、そして翻訳(英-&gt;日) にたずさわった 1 年でした。</P>
+  </TD>
+</TR></TBODY></TABLE>
+
+<!-- adv -->
+<CENTER>
+<TABLE bgcolor="#ffff00" summary="adv">
+  <TBODY>
+    <TR>
+
+      <TD align="center">広告: <A href="http://journal.mycom.co.jp/column/ide/091/">イマドキのIDE事情: Eclipseベースの統合翻訳環境「Benten」を使ってみよう</A> <FONT color="#ff0000" size="-1">09/27</FONT><BR>
+        <FONT size="-1">たげぞうさんの手による Benten 紹介記事!</FONT></TD>
+
+    </TR>
+  </TBODY>
+</TABLE>
+</CENTER>
+<!-- adv -->
+
+
+
+
+<P> </P>
+
+<DIV align="right">
+<TABLE cellpadding="4">
+  <TBODY>
+    <TR bgcolor="#99ccff">
+      <TD><A href="../idxall.html">インディックスページへ戻る</A></TD>
+    </TR>
+  </TBODY>
+</TABLE>
+</DIV>
+
+
+
+<TABLE summary="mini title">
+  <TBODY>
+    <TR>
+      <TD bgcolor="#ff9900" valign="top"><FONT color="#ffffff" size="+1"><STRONG>2009 年のふりかえり。JavaServer Faces (JSF) と Eclipse プラグイン開発</STRONG></FONT></TD>
+    </TR>
+  </TBODY>
+</TABLE>
+<p>私の 2009 年を振り返ってみると、2009 年は JSF と Eclipse プラグイン開発、そして翻訳(英-&gt;日) にたずさわった
+1 年でした。</p>
+<table summary="mini title">
+  <tbody>
+    <tr>
+      <td bgcolor="#ff9900" valign="top"><font color="#ffffff" size="+1"><strong>JavaServer Faces (JSF)</strong></font></td>
+    </tr>
+  </tbody>
+</table>
+<p>私は、世間一般のシステム・インテグレータ (SI) 系 Java 技術者としてはめずらしく、いわゆる普通の HTML + Web 開発の経験がほとんどありませんでした。2009
+年は、その、経験が乏しかった「普通の Java + Web 開発」に初めて本格的に従事した年でした。<br>
+※なお、2010 年も、引き続き HTML + Web に従事する予定です。</p>
+<p>ただ、いまさら、<a href="http://java.sun.com/javaee/">Java EE</a> 標準には含まれない <a href="http://struts.apache.org/">Apache Struts</a> を採用するのには大いなる違和感があったので、Struts の代わりに Java EE 標準に含まれる <a href="http://java.sun.com/javaee/javaserverfaces/">JavaServer Faces (JSF)</a> ベースの Web 開発へと取り組みました。<br>
+※ああ、結果的に私は Apache Struts の経験を経ないまま JSF に従事したことになります。</p>
+<p>日本にいると理解しづらいのですが、日本の SI 開発ではいまだに良く利用されている Apache Struts ですが、Java EE には取り込まれていない
+(Java EE では Struts のかわりに JSF が採用されている) などの理由から、多くの開発は JSF へと移行してしまっている状況とのことです。</p>
+<p>特に Web + Ajax 系の海外産 OSS の多くが JSF ベースとなっている事情もあります。こういったことから、日本の SI 開発も、近いうちに
+JSF ベースへと (やむを得ず) 移行していくのであろうと考えます。そうでないと、JSF 採用プロジェクトに対して、Struts 採用プロジェクトが大きなハンデを開発生産性に負うことになるものと考えます。(Ajax
+とか考えなければ、Struts を使い続けることにデメリットは無いかも知れません)</p>
+<p>そんなところまで想定して JSF を採用したわけでも無かったのですが、結果的に JSF を採用していて大いに幸運でした。</p>
+<p>ただし、JSF について、例えば (1 つ前のバージョンである) JSF 1.4 に対応した日本語書籍が非常に少ないのも実情です。そのような中で
+JSF 開発をするのは、英語書籍を読むことができないメンバーが多いであろう 一般の日本 SI 開発では困難が多いであろうことも事実です。JSF
+2.0 がリリースされた (Java EE 6 がリリースされた) 今のタイミングをきっかけとして、日本語による JSF 書籍が充実していくことを希望します。</p>
+<table summary="mini title">
+  <tbody>
+    <tr>
+      <td bgcolor="#ff9900" valign="top"><font color="#ffffff" size="+1"><strong>Eclipse プラグイン開発</strong></font></td>
+    </tr>
+  </tbody>
+</table>
+<p>また、2009 年は本格的に <a href="http://eclipse.org/">Eclipse</a> プラグイン開発に従事した初めての年でありました。いっぱい Eclipse プラグイン開発に従事しました。とはいえ、Eclipse プラグイン開発について、熟練のレベルには、まだ遠いです…。<br>
+※Eclipse プラグイン開発だけに 5 年くらい従事しないと、とても熟練できそうにありません。API や XML の使い慣れには、純粋に従事している時間が必要だと考えます。</p>
+<table summary="mini title">
+  <tbody>
+    <tr>
+      <td bgcolor="#ff9900" valign="top"><font color="#ffffff" size="+1"><strong>英日翻訳</strong></font></td>
+    </tr>
+  </tbody>
+</table>
+<p>2008 年と同じく、一定の時間、英日翻訳に従事しました。Eclipse プラグイン開発も翻訳に関する開発であったので、2009 年は私にとっては翻訳の年であったようにも思えます。</p>
+<HR>
+<address><A HREF="../memo/memoigapyon.html">いがぴょんについて</A><BR>
+Last modified: $Date: 2010/09/27 20:42:51 $</address>
+</BODY>
+</HTML>
