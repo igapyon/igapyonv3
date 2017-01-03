@@ -13,15 +13,14 @@ import javax.xml.parsers.SAXParserFactory;
 
 import org.apache.commons.io.FileUtils;
 import org.junit.Test;
-import org.xml.sax.Attributes;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
-import org.xml.sax.helpers.DefaultHandler;
 
 import freemarker.cache.TemplateLoader;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateExceptionHandler;
+import jp.igapyon.diary.v3.html2md.IgapyonV2Html2MdParser;
 import jp.igapyon.diary.v3.util.SimpleTagSoupUtil;
 
 public class SimpleSandbox {
@@ -76,126 +75,12 @@ public class SimpleSandbox {
 
 			final SAXParserFactory saxFactory = SAXParserFactory.newInstance();
 			final SAXParser parser = saxFactory.newSAXParser();
-			parser.parse(new InputSource(new StringReader(source)), new MyHandler());
+			parser.parse(new InputSource(new StringReader(source)), new IgapyonV2Html2MdParser());
 
 		} catch (SAXException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 
-	}
-
-	class MyHandler extends DefaultHandler {
-		protected StringBuilder markdownBuffer = new StringBuilder();
-
-		protected StringBuilder charactersBuffer = new StringBuilder();
-
-		protected boolean isInV2TdTitleMarker = false;
-
-		/**
-		 * インデックスに戻る以降のところがボディ。
-		 */
-		protected boolean isContentBody = false;
-
-		protected String recentHrefString = null;
-
-		@Override
-		public void endDocument() throws SAXException {
-			System.out.println("Markdown:");
-			System.out.println(markdownBuffer.toString().trim());
-		}
-
-		@Override
-		public void startElement(String uri, String localName, String qName, Attributes attributes)
-				throws SAXException {
-			if (charactersBuffer.length() > 0) {
-				fireCharacters(charactersBuffer.toString());
-				charactersBuffer = new StringBuilder();
-			}
-
-			if (isContentBody) {
-				System.out.println("<" + qName + ">");
-			}
-
-			final Map<String, String> attrMap = new HashMap<String, String>();
-			for (int indexAttr = 0; indexAttr < attributes.getLength(); indexAttr++) {
-				attrMap.put(attributes.getQName(indexAttr), attributes.getValue(indexAttr));
-
-				if (isContentBody) {
-					System.out.println(
-							"  " + attributes.getQName(indexAttr) + "=\"" + attributes.getValue(indexAttr) + "\"");
-				}
-			}
-
-			if (qName.equals("address")) {
-				isContentBody = false;
-			} else if (qName.equals("a")) {
-				recentHrefString = "" + attrMap.get("href");
-			} else if (qName.equals("p")) {
-				if (isContentBody) {
-					markdownBuffer.append("\n");
-				}
-			} else if (qName.equals("td")) {
-				// System.out.println(attrMap.get("bgcolor"));
-				if (attrMap.get("bgcolor") != null && attrMap.get("bgcolor").equals("#ff9900")) {
-					isInV2TdTitleMarker = true;
-				}
-			}
-		}
-
-		@Override
-		public void endElement(String uri, String localName, String qName) throws SAXException {
-			if (charactersBuffer.length() > 0) {
-				fireCharacters(charactersBuffer.toString());
-				charactersBuffer = new StringBuilder();
-			}
-
-			if (qName.equals("a")) {
-				recentHrefString = null;
-			}
-			if (qName.equals("td")) {
-				// tdを抜けたら、有無を言わさずoff化。
-				isInV2TdTitleMarker = false;
-			}
-
-			if (isContentBody) {
-				System.out.println("</" + qName + ">");
-			}
-		}
-
-		@Override
-		public void characters(char ch[], int start, int length) throws SAXException {
-			charactersBuffer.append(new String(ch, start, length));
-		}
-
-		protected void fireCharacters(final String characters) {
-
-			if (characters.equals("インディックスページへ戻る")) {
-				// これ以降がようやく本体。
-				isContentBody = true;
-				return;
-			}
-
-			if (isContentBody == false) {
-				return;
-			}
-
-			if (isInV2TdTitleMarker) {
-				markdownBuffer.append("\n## ");
-			}
-
-			if (recentHrefString == null) {
-				System.out.println(characters);
-				markdownBuffer.append(characters);
-			} else {
-				markdownBuffer.append("[" + characters + "](" + recentHrefString + ")");
-			}
-
-			if (isInV2TdTitleMarker)
-
-			{
-				markdownBuffer.append("\n");
-			}
-		}
 	}
 }
