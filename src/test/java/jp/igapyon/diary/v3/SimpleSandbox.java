@@ -90,10 +90,18 @@ public class SimpleSandbox {
 
 		protected StringBuilder charactersBuffer = new StringBuilder();
 
+		protected boolean isInV2TdTitleMarker = false;
+
 		/**
 		 * インデックスに戻る以降のところがボディ。
 		 */
 		protected boolean isContentBody = false;
+
+		@Override
+		public void endDocument() throws SAXException {
+			System.out.println("Markdown:");
+			System.out.println(markdownBuffer.toString().trim());
+		}
 
 		@Override
 		public void startElement(String uri, String localName, String qName, Attributes attributes)
@@ -117,14 +125,20 @@ public class SimpleSandbox {
 				}
 			}
 
-			if (qName.equals("a")) {
+			if (qName.equals("address")) {
+				isContentBody = false;
+			} else if (qName.equals("a")) {
 				if (isContentBody) {
 					System.out.println("start anchor: " + attrMap.get("href"));
+				}
+			} else if (qName.equals("p")) {
+				if (isContentBody) {
+					markdownBuffer.append("\n");
 				}
 			} else if (qName.equals("td")) {
 				// System.out.println(attrMap.get("bgcolor"));
 				if (attrMap.get("bgcolor") != null && attrMap.get("bgcolor").equals("#ff9900")) {
-					System.out.println("v2 style header");
+					isInV2TdTitleMarker = true;
 				}
 			}
 		}
@@ -134,6 +148,11 @@ public class SimpleSandbox {
 			if (charactersBuffer.length() > 0) {
 				fireCharacters(charactersBuffer.toString());
 				charactersBuffer = new StringBuilder();
+			}
+
+			if (qName.equals("td")) {
+				// tdを抜けたら、有無を言わさずoff化。
+				isInV2TdTitleMarker = false;
 			}
 
 			if (isContentBody) {
@@ -154,8 +173,15 @@ public class SimpleSandbox {
 				return;
 			}
 
-			if (isContentBody) {
-				System.out.println("fire:" + characters);
+			if (isContentBody == false) {
+				return;
+			}
+
+			if (isInV2TdTitleMarker) {
+				markdownBuffer.append("\n## " + characters + "\n");
+			} else {
+				System.out.println(characters);
+				markdownBuffer.append(characters);
 			}
 		}
 	}
