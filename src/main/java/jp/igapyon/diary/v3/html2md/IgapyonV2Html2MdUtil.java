@@ -34,14 +34,6 @@ public class IgapyonV2Html2MdUtil {
 					file.getName().substring(0, file.getName().length() - "-orig.html".length()) + ".html.src.md");
 			System.out.println("convert from " + file.getName() + " to " + newFile.getName());
 			FileUtils.writeStringToFile(newFile, htmlparser.getMarkdownString().trim(), "UTF-8");
-
-			if (true) {
-				// コピー後に、ファイルは移動してしまいます。
-				final File targetFile = new File(file.getParentFile(),
-						new File(file.getName().substring(0, file.getName().length() - ".html".length()))
-								+ "-orig.html");
-				FileUtils.moveFile(file, targetFile);
-			}
 		} catch (SAXException e) {
 			throw new IOException(e);
 		} catch (ParserConfigurationException e) {
