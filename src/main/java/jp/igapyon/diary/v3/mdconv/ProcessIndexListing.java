@@ -36,6 +36,7 @@ package jp.igapyon.diary.v3.mdconv;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -109,10 +110,11 @@ public class ProcessIndexListing {
 			publickeyText += "#### [" + StringEscapeUtils.escapeXml11(synFeed.getTitle()) + "](" + synFeed.getLink()
 					+ ")\n\n";
 
+			final SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
 			for (Object lookup : synFeed.getEntries()) {
 				final SyndEntry entry = (SyndEntry) lookup;
-				publickeyText += "* [" + StringEscapeUtils.escapeXml11(entry.getTitle()) + "](" + entry.getLink()
-						+ ")\n";
+				publickeyText += "* [" + StringEscapeUtils.escapeXml11(entry.getTitle()) + "](" + entry.getLink() + ") "
+						+ sdf.format(entry.getUpdatedDate()) + "\n";
 			}
 		} catch (IllegalArgumentException e) {
 			e.printStackTrace();
