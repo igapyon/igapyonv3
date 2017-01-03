@@ -70,13 +70,12 @@ public class ProcessIndexListing {
 		String wrkRecent = "";
 		{
 			int diaryListupCount = 15;
-			for (DiaryItemInfo itemInfo : diaryItemInfoList) {
-				if (itemInfo.getTitle().startsWith("2016-") || itemInfo.getTitle().startsWith("2017-")) {
-					wrkRecent = "* [" + itemInfo.getTitle() + "](" + itemInfo.getUri() + ")\n" + wrkRecent;
-					diaryListupCount--;
-					if (diaryListupCount <= 0) {
-						break;
-					}
+			for (int index = diaryItemInfoList.size() - 1; index >= 0; index--) {
+				final DiaryItemInfo itemInfo = diaryItemInfoList.get(index);
+				wrkRecent = "* [" + itemInfo.getTitle() + "](" + itemInfo.getUri() + ")\n" + wrkRecent;
+				diaryListupCount--;
+				if (diaryListupCount <= 0) {
+					break;
 				}
 			}
 		}
