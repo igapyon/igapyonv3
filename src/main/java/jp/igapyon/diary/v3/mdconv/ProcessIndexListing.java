@@ -68,9 +68,16 @@ public class ProcessIndexListing {
 		}
 
 		String wrkRecent = "";
-		for (DiaryItemInfo itemInfo : diaryItemInfoList) {
-			if (itemInfo.getTitle().startsWith("2016-") || itemInfo.getTitle().startsWith("2017-")) {
-				wrkRecent = "* [" + itemInfo.getTitle() + "](" + itemInfo.getUri() + ")\n" + wrkRecent;
+		{
+			int diaryListupCount = 15;
+			for (DiaryItemInfo itemInfo : diaryItemInfoList) {
+				if (itemInfo.getTitle().startsWith("2016-") || itemInfo.getTitle().startsWith("2017-")) {
+					wrkRecent = "* [" + itemInfo.getTitle() + "](" + itemInfo.getUri() + ")\n" + wrkRecent;
+					diaryListupCount--;
+					if (diaryListupCount <= 0) {
+						break;
+					}
+				}
 			}
 		}
 
