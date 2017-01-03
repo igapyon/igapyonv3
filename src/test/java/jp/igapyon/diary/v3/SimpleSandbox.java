@@ -97,6 +97,8 @@ public class SimpleSandbox {
 		 */
 		protected boolean isContentBody = false;
 
+		protected String recentHrefString = null;
+
 		@Override
 		public void endDocument() throws SAXException {
 			System.out.println("Markdown:");
@@ -128,9 +130,7 @@ public class SimpleSandbox {
 			if (qName.equals("address")) {
 				isContentBody = false;
 			} else if (qName.equals("a")) {
-				if (isContentBody) {
-					System.out.println("start anchor: " + attrMap.get("href"));
-				}
+				recentHrefString = "" + attrMap.get("href");
 			} else if (qName.equals("p")) {
 				if (isContentBody) {
 					markdownBuffer.append("\n");
@@ -150,6 +150,9 @@ public class SimpleSandbox {
 				charactersBuffer = new StringBuilder();
 			}
 
+			if (qName.equals("a")) {
+				recentHrefString = null;
+			}
 			if (qName.equals("td")) {
 				// tdを抜けたら、有無を言わさずoff化。
 				isInV2TdTitleMarker = false;
@@ -178,10 +181,20 @@ public class SimpleSandbox {
 			}
 
 			if (isInV2TdTitleMarker) {
-				markdownBuffer.append("\n## " + characters + "\n");
-			} else {
+				markdownBuffer.append("\n## ");
+			}
+
+			if (recentHrefString == null) {
 				System.out.println(characters);
 				markdownBuffer.append(characters);
+			} else {
+				markdownBuffer.append("[" + characters + "](" + recentHrefString + ")");
+			}
+
+			if (isInV2TdTitleMarker)
+
+			{
+				markdownBuffer.append("\n");
 			}
 		}
 	}
