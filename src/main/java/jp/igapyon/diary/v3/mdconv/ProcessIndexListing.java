@@ -90,10 +90,6 @@ public class ProcessIndexListing {
 
 			for (final DiaryItemInfo itemInfo : recentItemInfoList) {
 				wrkRecent = "* [" + itemInfo.getTitle() + "](" + itemInfo.getUri() + ")\n" + wrkRecent;
-				diaryListupCount--;
-				if (diaryListupCount <= 0) {
-					break;
-				}
 			}
 		}
 
