@@ -86,7 +86,8 @@ public class IndexDiaryHtmlParser {
 				processDir(file, path + "/" + file.getName());
 			} else if (file.isFile()) {
 				if (file.getName().startsWith("ig") && file.getName().endsWith(".html")
-						&& false == file.getName().endsWith(".src.html")) {
+						&& false == file.getName().endsWith(".src.html")
+						&& false == file.getName().endsWith("-orig.html")) {
 					processFile(file, path);
 				}
 			}
