@@ -58,6 +58,8 @@ public class IgapyonV2Html2MdParser extends DefaultHandler {
 
 	protected int ulDeapth = 0;
 
+	protected int codePreDeapth = 0;
+
 	/**
 	 * インデックスに戻る以降のところがボディ。
 	 */
@@ -128,6 +130,9 @@ public class IgapyonV2Html2MdParser extends DefaultHandler {
 				}
 				markdownBuffer.append("* ");
 			}
+		} else if (qName.equals("code") || qName.equals("pre")) {
+			codePreDeapth++;
+			markdownBuffer.append("\n```\n");
 		} else if (qName.equals("td")) {
 			if (attrMap.get("bgcolor") != null && attrMap.get("bgcolor").equals("#ff9900")) {
 				isInV2TdTitleMarker = true;
@@ -160,9 +165,10 @@ public class IgapyonV2Html2MdParser extends DefaultHandler {
 					markdownBuffer.append("\n");
 				}
 			}
-		} else if (qName.equals("td"))
-
-		{
+		} else if (qName.equals("code") || qName.equals("pre")) {
+			markdownBuffer.append("\n```\n");
+			codePreDeapth--;
+		} else if (qName.equals("td")) {
 			// tdを抜けたら、有無を言わさずoff化。
 			isInV2TdTitleMarker = false;
 		}
