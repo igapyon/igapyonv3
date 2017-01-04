@@ -113,6 +113,11 @@ public class IgapyonV2Html2MdParser extends DefaultHandler {
 			if (isContentBody) {
 				markdownBuffer.append("\n");
 			}
+		} else if (qName.equals("li")) {
+			if (isContentBody) {
+				// FIXME indent
+				markdownBuffer.append("* ");
+			}
 		} else if (qName.equals("td")) {
 			if (attrMap.get("bgcolor") != null && attrMap.get("bgcolor").equals("#ff9900")) {
 				isInV2TdTitleMarker = true;
@@ -131,6 +136,14 @@ public class IgapyonV2Html2MdParser extends DefaultHandler {
 			isInTitle = false;
 		} else if (qName.equals("a")) {
 			recentHrefString = null;
+		} else if (qName.equals("p")) {
+			if (isContentBody) {
+				markdownBuffer.append("\n");
+			}
+		} else if (qName.equals("li")) {
+			if (isContentBody) {
+				markdownBuffer.append("\n");
+			}
 		} else if (qName.equals("td")) {
 			// tdを抜けたら、有無を言わさずoff化。
 			isInV2TdTitleMarker = false;
@@ -144,7 +157,15 @@ public class IgapyonV2Html2MdParser extends DefaultHandler {
 
 	@Override
 	public void characters(char ch[], int start, int length) throws SAXException {
-		charactersBuffer.append(new String(ch, start, length));
+		String text = new String(ch, start, length);
+		for (;;) {
+			if (text.endsWith("\r") || text.endsWith("\n")) {
+				text = text.substring(0, text.length() - 1);
+			} else {
+				break;
+			}
+		}
+		charactersBuffer.append(text);
 	}
 
 	protected void fireCharacters(final String characters) {
@@ -180,7 +201,12 @@ public class IgapyonV2Html2MdParser extends DefaultHandler {
 				System.out.println(characters);
 			markdownBuffer.append(characters);
 		} else {
-			markdownBuffer.append("[" + characters + "](" + recentHrefString + ")");
+			if (characters.startsWith("(")) {
+				// do nothing.
+				System.out.println("Ignore (O) link.");
+			} else {
+				markdownBuffer.append("[" + characters + "](" + recentHrefString + ")");
+			}
 		}
 
 		if (isInV2TdTitleMarker)
