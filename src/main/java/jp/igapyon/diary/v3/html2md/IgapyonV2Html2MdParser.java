@@ -120,7 +120,7 @@ public class IgapyonV2Html2MdParser extends DefaultHandler {
 		} else if (qName.equals("ul")) {
 			ulDeapth++;
 			if (isContentBody) {
-				markdownBuffer.append("\n");
+				markdownBuffer.append("\n\n");
 			}
 		} else if (qName.equals("li")) {
 			if (isContentBody) {
@@ -244,9 +244,7 @@ public class IgapyonV2Html2MdParser extends DefaultHandler {
 			}
 		}
 
-		if (isInV2TdTitleMarker)
-
-		{
+		if (isInV2TdTitleMarker) {
 			markdownBuffer.append("\n");
 		}
 	}
