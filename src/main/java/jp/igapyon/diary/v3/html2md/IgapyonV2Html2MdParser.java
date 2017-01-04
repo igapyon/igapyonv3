@@ -134,7 +134,8 @@ public class IgapyonV2Html2MdParser extends DefaultHandler {
 			codePreDeapth++;
 			markdownBuffer.append("\n```\n");
 		} else if (qName.equals("td")) {
-			if (attrMap.get("bgcolor") != null && attrMap.get("bgcolor").equals("#ff9900")) {
+			if (attrMap.get("bgcolor") != null && (attrMap.get("bgcolor").equals("#ff9900")
+					|| attrMap.get("bgcolor").equals("#44cc77") || attrMap.get("bgcolor").equals("#33cccb"))) {
 				isInV2TdTitleMarker = true;
 			}
 		}
