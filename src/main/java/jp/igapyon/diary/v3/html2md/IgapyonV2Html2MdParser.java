@@ -215,6 +215,7 @@ public class IgapyonV2Html2MdParser extends DefaultHandler {
 		}
 
 		if (recentHrefString == null) {
+			// normal string.
 			if (false)
 				System.out.println(characters);
 			markdownBuffer.append(characters);
