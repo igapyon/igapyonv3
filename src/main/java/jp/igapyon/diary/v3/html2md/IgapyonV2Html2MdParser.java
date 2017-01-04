@@ -56,6 +56,8 @@ public class IgapyonV2Html2MdParser extends DefaultHandler {
 
 	protected boolean isInV2TdTitleMarker = false;
 
+	protected int ulDeapth = 0;
+
 	/**
 	 * インデックスに戻る以降のところがボディ。
 	 */
@@ -113,9 +115,17 @@ public class IgapyonV2Html2MdParser extends DefaultHandler {
 			if (isContentBody) {
 				markdownBuffer.append("\n");
 			}
+		} else if (qName.equals("ul")) {
+			ulDeapth++;
+			if (isContentBody) {
+				markdownBuffer.append("\n");
+			}
 		} else if (qName.equals("li")) {
 			if (isContentBody) {
-				// FIXME indent
+				// indent
+				for (int index = 1; index < ulDeapth; index++) {
+					markdownBuffer.append("  ");
+				}
 				markdownBuffer.append("* ");
 			}
 		} else if (qName.equals("td")) {
@@ -140,6 +150,8 @@ public class IgapyonV2Html2MdParser extends DefaultHandler {
 			if (isContentBody) {
 				markdownBuffer.append("\n");
 			}
+		} else if (qName.equals("ul")) {
+			ulDeapth--;
 		} else if (qName.equals("li")) {
 			if (isContentBody) {
 				markdownBuffer.append("\n");
