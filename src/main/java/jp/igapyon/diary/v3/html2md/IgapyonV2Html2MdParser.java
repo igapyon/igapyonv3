@@ -234,7 +234,7 @@ public class IgapyonV2Html2MdParser extends DefaultHandler {
 			// normal string.
 			markdownBuffer.append(characters);
 		} else {
-			if (characters.startsWith("(O)")) {
+			if (characters.startsWith("(O)") || characters.startsWith("RSS")) {
 				// do nothing.
 				System.out.println("Ignore (O) link.");
 			} else {
