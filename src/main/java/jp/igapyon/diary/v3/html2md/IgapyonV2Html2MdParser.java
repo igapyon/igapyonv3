@@ -117,10 +117,10 @@ public class IgapyonV2Html2MdParser extends DefaultHandler {
 			if (isContentBody) {
 				markdownBuffer.append("\n");
 			}
-		} else if (qName.equals("ul")) {
+		} else if (qName.equals("ul") || qName.equals("ol")) {
 			ulDeapth++;
 			if (isContentBody) {
-				markdownBuffer.append("\n\n");
+				markdownBuffer.append("\n");
 			}
 		} else if (qName.equals("li")) {
 			if (isContentBody) {
@@ -157,7 +157,7 @@ public class IgapyonV2Html2MdParser extends DefaultHandler {
 			if (isContentBody) {
 				markdownBuffer.append("\n");
 			}
-		} else if (qName.equals("ul")) {
+		} else if (qName.equals("ul") || qName.equals("ol")) {
 			ulDeapth--;
 		} else if (qName.equals("li")) {
 			if (isContentBody) {
