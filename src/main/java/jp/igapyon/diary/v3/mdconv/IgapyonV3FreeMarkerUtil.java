@@ -12,10 +12,12 @@ import freemarker.template.TemplateExceptionHandler;
 
 public class IgapyonV3FreeMarkerUtil {
 	public static void main(String[] args) throws IOException {
-		IgapyonV3FreeMarkerUtil.process();
+		final Map<String, String> templateData = new HashMap<String, String>();
+		templateData.put("user", "Taro Yamada");
+		IgapyonV3FreeMarkerUtil.process(templateData);
 	}
 
-	public static void process() throws IOException {
+	public static void process(final Map<String, String> templateData) throws IOException {
 		final Configuration config = new Configuration(Configuration.VERSION_2_3_25);
 		config.setDefaultEncoding("UTF-8");
 		config.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
@@ -23,9 +25,6 @@ public class IgapyonV3FreeMarkerUtil {
 
 		// set my custom template loader.
 		config.setTemplateLoader(new IgapyonV3TemplateLoader());
-
-		final Map<String, String> templateData = new HashMap<String, String>();
-		templateData.put("user", "Taro Yamada");
 
 		final Template templateBase = config.getTemplate("basic");
 		try {
