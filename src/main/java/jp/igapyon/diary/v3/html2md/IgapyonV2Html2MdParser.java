@@ -220,7 +220,7 @@ public class IgapyonV2Html2MdParser extends DefaultHandler {
 				System.out.println(characters);
 			markdownBuffer.append(characters);
 		} else {
-			if (characters.startsWith("(")) {
+			if (characters.startsWith("(O)")) {
 				// do nothing.
 				System.out.println("Ignore (O) link.");
 			} else {
