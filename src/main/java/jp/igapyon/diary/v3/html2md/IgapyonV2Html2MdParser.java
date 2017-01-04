@@ -112,7 +112,7 @@ public class IgapyonV2Html2MdParser extends DefaultHandler {
 		} else if (qName.equals("address")) {
 			isContentBody = false;
 		} else if (qName.equals("a")) {
-			recentHrefString = "" + attrMap.get("href");
+			recentHrefString = attrMap.get("href");
 		} else if (qName.equals("p")) {
 			if (isContentBody) {
 				markdownBuffer.append("\n");
@@ -232,8 +232,6 @@ public class IgapyonV2Html2MdParser extends DefaultHandler {
 
 		if (recentHrefString == null) {
 			// normal string.
-			if (false)
-				System.out.println(characters);
 			markdownBuffer.append(characters);
 		} else {
 			if (characters.startsWith("(O)")) {
