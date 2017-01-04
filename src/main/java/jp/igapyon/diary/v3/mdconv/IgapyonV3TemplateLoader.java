@@ -15,20 +15,22 @@ public class IgapyonV3TemplateLoader implements TemplateLoader {
 	private static final String MY_TEMPLATE_STRING = "My name is ${user} desu.";
 
 	@Override
-	public Object findTemplateSource(final String name) throws IOException {
-		System.out.println("TemplateName:" + name);
+	public Object findTemplateSource(String resourceName) throws IOException {
+		System.out.println("TemplateName:" + resourceName);
 
 		// test/data/hatena/ig161227.html.src_ja_JP.md
 
 		final Pattern patLocale = Pattern.compile("[_]..[_]..\\.");
-		final Matcher matLocale = patLocale.matcher(name);
+		final Matcher matLocale = patLocale.matcher(resourceName);
 
 		if (matLocale.find()) {
 			final String locale = matLocale.group();
 			System.out.println("locale:" + locale);
+			resourceName = resourceName.substring(0, matLocale.start()) + resourceName.substring(matLocale.end() - 1);
+			System.out.println("res:" + resourceName);
 		}
 
-		final File file = new File(name);
+		final File file = new File(resourceName);
 
 		return MY_TEMPLATE_STRING;
 	}
