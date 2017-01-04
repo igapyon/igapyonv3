@@ -1,19 +1,21 @@
-package jp.igapyon.diary.v3;
+package jp.igapyon.diary.v3.mdconv;
 
+import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.junit.Test;
-
 import freemarker.template.Configuration;
 import freemarker.template.Template;
+import freemarker.template.TemplateException;
 import freemarker.template.TemplateExceptionHandler;
-import jp.igapyon.diary.v3.mdconv.IgapyonV3TemplateLoader;
 
-public class SimpleSandbox {
-	@Test
-	public void test() throws Exception {
+public class IgapyonV3FreeMarkerUtil {
+	public static void main(String[] args) throws IOException {
+		IgapyonV3FreeMarkerUtil.process();
+	}
+
+	public static void process() throws IOException {
 		final Configuration config = new Configuration(Configuration.VERSION_2_3_25);
 		config.setDefaultEncoding("UTF-8");
 		config.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
@@ -26,6 +28,10 @@ public class SimpleSandbox {
 		templateData.put("user", "Taro Yamada");
 
 		final Template templateBase = config.getTemplate("basic");
-		templateBase.process(templateData, new OutputStreamWriter(System.out));
+		try {
+			templateBase.process(templateData, new OutputStreamWriter(System.out));
+		} catch (TemplateException e) {
+			throw new IOException(e);
+		}
 	}
 }
