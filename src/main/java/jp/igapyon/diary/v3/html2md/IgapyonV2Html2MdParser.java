@@ -154,9 +154,15 @@ public class IgapyonV2Html2MdParser extends DefaultHandler {
 			ulDeapth--;
 		} else if (qName.equals("li")) {
 			if (isContentBody) {
-				markdownBuffer.append("\n");
+				if (markdownBuffer.toString().endsWith("\n") || markdownBuffer.toString().endsWith("\r")) {
+					// do nothing.
+				} else {
+					markdownBuffer.append("\n");
+				}
 			}
-		} else if (qName.equals("td")) {
+		} else if (qName.equals("td"))
+
+		{
 			// tdを抜けたら、有無を言わさずoff化。
 			isInV2TdTitleMarker = false;
 		}
