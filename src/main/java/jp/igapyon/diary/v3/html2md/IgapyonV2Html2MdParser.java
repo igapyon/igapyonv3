@@ -150,6 +150,7 @@ public class IgapyonV2Html2MdParser extends DefaultHandler {
 
 		if (qName.equals("title")) {
 			isInTitle = false;
+			markdownBuffer.append("\n");
 		} else if (qName.equals("a")) {
 			recentHrefString = null;
 		} else if (qName.equals("p")) {
@@ -172,6 +173,9 @@ public class IgapyonV2Html2MdParser extends DefaultHandler {
 		} else if (qName.equals("td")) {
 			// tdを抜けたら、有無を言わさずoff化。
 			isInV2TdTitleMarker = false;
+			if (isContentBody) {
+				markdownBuffer.append("\n");
+			}
 		}
 
 		if (isContentBody) {
@@ -202,14 +206,17 @@ public class IgapyonV2Html2MdParser extends DefaultHandler {
 		}
 
 		if (isInTitle) {
+			// consume title mark.
+			isInTitle = false;
+
 			// はてなリンクパターン。小さいマッチのために「?」を利用しています。
 			final Pattern pat = Pattern.compile("日記\\: ");
 			final Matcher mat = pat.matcher(characters);
 			if (mat.find()) {
 				final String diaryTitleWithoutYMD = characters.substring(mat.end());
-				markdownBuffer.append("\n## " + diaryTitleWithoutYMD + "\n");
+				markdownBuffer.append("\n## " + diaryTitleWithoutYMD);
 			} else {
-				markdownBuffer.append("\n## " + characters + "\n");
+				markdownBuffer.append("\n## " + characters);
 			}
 		}
 
@@ -218,6 +225,8 @@ public class IgapyonV2Html2MdParser extends DefaultHandler {
 		}
 
 		if (isInV2TdTitleMarker) {
+			// consume title mark.
+			isInV2TdTitleMarker = false;
 			markdownBuffer.append("\n## ");
 		}
 
