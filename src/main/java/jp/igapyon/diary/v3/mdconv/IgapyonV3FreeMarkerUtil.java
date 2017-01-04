@@ -26,7 +26,7 @@ public class IgapyonV3FreeMarkerUtil {
 		// set my custom template loader.
 		config.setTemplateLoader(new IgapyonV3TemplateLoader());
 
-		final Template templateBase = config.getTemplate("basic");
+		final Template templateBase = config.getTemplate("test/data/hatena/ig161227.html.src.md");
 		try {
 			templateBase.process(templateData, new OutputStreamWriter(System.out));
 		} catch (TemplateException e) {
