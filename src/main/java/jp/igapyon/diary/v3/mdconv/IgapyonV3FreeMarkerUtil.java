@@ -1,10 +1,13 @@
 package jp.igapyon.diary.v3.mdconv;
 
+import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.HashMap;
 import java.util.Map;
+
+import org.apache.commons.io.output.NullOutputStream;
 
 import freemarker.template.Configuration;
 import freemarker.template.Template;
@@ -67,7 +70,9 @@ public class IgapyonV3FreeMarkerUtil {
 
 		final Template templateBase = config.getTemplate(relativePath);
 		try {
-			templateBase.process(templateData, new OutputStreamWriter(System.out));
+			OutputStreamWriter writer = new OutputStreamWriter(new BufferedOutputStream(new NullOutputStream()),
+					"UTF-8");
+			templateBase.process(templateData, writer);
 		} catch (TemplateException e) {
 			throw new IOException(e);
 		}

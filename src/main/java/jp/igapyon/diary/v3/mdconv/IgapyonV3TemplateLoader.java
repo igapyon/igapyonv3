@@ -29,11 +29,11 @@ public class IgapyonV3TemplateLoader implements TemplateLoader {
 		final Matcher matLocale = patLocale.matcher(resourceName);
 
 		if (matLocale.find()) {
-			final String locale = matLocale.group();
-			System.out.println("locale:" + locale);
+		//	final String locale = matLocale.group();
+	//		System.out.println("locale:" + locale);
 			actualResourceName = resourceName.substring(0, matLocale.start())
 					+ resourceName.substring(matLocale.end() - 1);
-			System.out.println("res:" + actualResourceName);
+//			System.out.println("res:" + actualResourceName);
 		}
 
 		final String load = FileUtils.readFileToString(new File(actualResourceName), "UTF-8");
