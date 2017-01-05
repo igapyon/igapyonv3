@@ -54,6 +54,12 @@ public class IgapyonV3Settings {
 	 * Default double keywords.
 	 */
 	public static final String[][] DEFAULT_DOUBLE_KEYWORDS = { //
+			// igapyon's keyword
+			// FIXME TODO これは、keyword ディレクトリからの自動取り込み反映に実装変更の予定。
+			{ "Maven", "https://igapyon.github.io/diary/keyword/Maven.html" }, //
+			{ "FreeMarker", "https://igapyon.github.io/diary/keyword/FreeMarker.html" }, //
+
+			//
 
 			// blanco Framework
 			{ "blanco Framework", "https://ja.osdn.net/projects/blancofw/wiki/blancofw" },
