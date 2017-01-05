@@ -83,11 +83,11 @@ public class DiarySrcMd2MdConverter {
 			final Map<String, Object> templateData = new HashMap<String, Object>();
 			{
 				// for Ant build.xml
-//				templateData.put("encoding", "${encoding}");
+				// templateData.put("encoding", "${encoding}");
 
 				// for Maven pom.xml
 				// ${project.build.directory}
-	//			templateData.put("project", new DummyVOMvnProject());
+				// templateData.put("project", new DummyVOMvnProject());
 			}
 
 			convertedString = IgapyonV3FreeMarkerUtil.process(new File("."), file, templateData);
@@ -105,26 +105,6 @@ public class DiarySrcMd2MdConverter {
 			}
 		}
 
-		final boolean isDiary = file.getName().startsWith("ig");
-
-		String firstH2Line = null;
-		String year1 = "20";
-		String year2 = file.getName().substring(2, 4);
-		if (year2.startsWith("9")) {
-			year1 = "19";
-		}
-
-		String month = file.getName().substring(4, 6);
-		String day = file.getName().substring(6, 8);
-		for (String line : lines) {
-			if (firstH2Line == null) {
-				// 最初の ## からテキストを取得。
-				if (line.startsWith("## ")) {
-					firstH2Line = line.substring(3);
-				}
-			}
-		}
-
 		for (int index = 0; index < lines.size(); index++) {
 			String line = lines.get(index);
 			line = MdTextUtil.convertDoubleKeyword2MdLink(line, settings);
@@ -139,39 +119,6 @@ public class DiarySrcMd2MdConverter {
 		}
 
 		// TODO support template system.
-
-		if (isDiary) {
-			int lineno = 0;
-			lines.add(lineno++, "[top](https://igapyon.github.io/diary/) ");
-			lines.add(lineno++, " / [index](https://igapyon.github.io/diary/" + year1 + year2 + "/index.html) ");
-			lines.add(lineno++, " / prev ");
-			lines.add(lineno++, " / next ");
-			lines.add(lineno++, " / [target](https://igapyon.github.io/diary/" + year1 + year2 + "/ig" + year2 + month
-					+ day + ".html) ");
-			lines.add(lineno++, " / [source](https://github.com/igapyon/diary/blob/gh-pages/" + year1 + year2 + "/ig"
-					+ year2 + month + day + ".html.src.md) ");
-			lines.add(lineno++, "");
-
-			// ヘッダ追加
-			lines.add(lineno++, year1 + year2 + "-" + month + "-" + day + " diary: " + firstH2Line);
-			lines.add(lineno++,
-					"=====================================================================================================");
-			lines.add(lineno++,
-					"[![いがぴょん画像(小)](https://igapyon.github.io/diary/images/iga200306s.jpg \"いがぴょん\")](https://igapyon.github.io/diary/memo/memoigapyon.html) 日記形式でつづる [いがぴょん](https://igapyon.github.io/diary/memo/memoigapyon.html)コラム ウェブページです。");
-			lines.add(lineno++, "");
-
-			// 本体
-
-			// フッタ追加
-			lines.add("");
-			lines.add("");
-			lines.add(
-					"----------------------------------------------------------------------------------------------------");
-			lines.add("");
-			lines.add("## この日記について");
-			lines.add(
-					"[いがぴょんについて](https://igapyon.github.io/diary/memo/memoigapyon.html) / [インデックスに戻る](https://igapyon.github.io/diary/idxall.html)");
-		}
 
 		String newName = file.getName().substring(0, file.getName().length() - (".src.md".length())) + ".md";
 		FileUtils.writeLines(new File(file.getParentFile(), newName), lines);

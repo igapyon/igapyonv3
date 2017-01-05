@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -29,14 +30,67 @@ public class IgapyonV3TemplateLoader implements TemplateLoader {
 		final Matcher matLocale = patLocale.matcher(resourceName);
 
 		if (matLocale.find()) {
-		//	final String locale = matLocale.group();
-	//		System.out.println("locale:" + locale);
 			actualResourceName = resourceName.substring(0, matLocale.start())
 					+ resourceName.substring(matLocale.end() - 1);
-//			System.out.println("res:" + actualResourceName);
 		}
 
-		final String load = FileUtils.readFileToString(new File(actualResourceName), "UTF-8");
+		final File actualFile = new File(actualResourceName);
+		String load = FileUtils.readFileToString(actualFile, "UTF-8");
+
+		if (actualFile.getName().startsWith("ig")) {
+			String year1 = "20";
+			String year2 = actualFile.getName().substring(2, 4);
+			if (year2.startsWith("9")) {
+				year1 = "19";
+			}
+
+			String month = actualFile.getName().substring(4, 6);
+			String day = actualFile.getName().substring(6, 8);
+
+			final List<String> lines = FileUtils.readLines(actualFile, "UTF-8");
+			String firstH2Line = null;
+			for (String line : lines) {
+				if (firstH2Line == null) {
+					// 最初の ## からテキストを取得。
+					if (line.startsWith("## ")) {
+						firstH2Line = line.substring(3);
+					}
+				}
+			}
+
+			String header = "[top](https://igapyon.github.io/diary/) \n";
+			header += " / [index](https://igapyon.github.io/diary/" + year1 + year2 + "/index.html) \n";
+			header += " / prev \n";
+			header += " / next \n";
+			header += " / [target](https://igapyon.github.io/diary/" + year1 + year2 + "/ig" + year2 + month + day
+					+ ".html) \n";
+			header += " / [source](https://github.com/igapyon/diary/blob/gh-pages/" + year1 + year2 + "/ig" + year2
+					+ month + day + ".html.src.md) \n";
+			header += "\n";
+
+			// ヘッダ追加
+			header += (year1 + year2 + "-" + month + "-" + day + " diary: " + firstH2Line + "\n");
+			header += "=====================================================================================================\n";
+			header += "[![いがぴょん画像(小)](https://igapyon.github.io/diary/images/iga200306s.jpg \"いがぴょん\")](https://igapyon.github.io/diary/memo/memoigapyon.html) 日記形式でつづる [いがぴょん](https://igapyon.github.io/diary/memo/memoigapyon.html)コラム ウェブページです。\n";
+			header += "\n";
+
+			load = header + load;
+
+			// フッタ追加
+			String footer = "";
+			if (load.endsWith("\n") || load.endsWith("\r")) {
+				// do nothing.
+			} else {
+				footer += "\n";
+			}
+			footer += "\n";
+			footer += "----------------------------------------------------------------------------------------------------\n";
+			footer += "\n";
+			footer += "## この日記について\n";
+			footer += "[いがぴょんについて](https://igapyon.github.io/diary/memo/memoigapyon.html) / [インデックスに戻る](https://igapyon.github.io/diary/idxall.html)\n";
+
+			load += footer;
+		}
 
 		resourceMap.put(resourceName, load);
 		return resourceName;
