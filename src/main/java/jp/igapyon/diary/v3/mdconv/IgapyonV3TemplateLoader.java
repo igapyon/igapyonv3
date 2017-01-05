@@ -30,6 +30,7 @@ public class IgapyonV3TemplateLoader implements TemplateLoader {
 		final Matcher matLocale = patLocale.matcher(resourceName);
 
 		if (matLocale.find()) {
+			// ロケール記述があれば、これを除去。
 			actualResourceName = resourceName.substring(0, matLocale.start())
 					+ resourceName.substring(matLocale.end() - 1);
 		}
