@@ -82,6 +82,26 @@ public class DiarySrcMd2MdConverter {
 		}
 	}
 
+	public static String atomxml2String(final File atomXmlFile) throws IOException {
+		String indexmdText = "";
+		if (atomXmlFile.exists() == false) {
+			return "";
+		}
+
+		try {
+			final SyndFeed synFeed = new SyndFeedInput().build(new XmlReader(new FileInputStream(atomXmlFile)));
+
+			for (Object lookup : synFeed.getEntries()) {
+				final SyndEntry entry = (SyndEntry) lookup;
+				indexmdText = "* [" + StringEscapeUtils.escapeXml11(entry.getTitle()) + "](" + entry.getLink() + ")\n"
+						+ indexmdText;
+			}
+			return indexmdText;
+		} catch (FeedException e) {
+			throw new IOException(e);
+		}
+	}
+
 	void processFile(final File file) throws IOException {
 		String convertedString = null;
 		{
@@ -89,29 +109,9 @@ public class DiarySrcMd2MdConverter {
 
 			// TODO Adding igapyonv3 defined values.
 			final Map<String, Object> templateData = new HashMap<String, Object>();
-			{
 
-				String indexmdText = "";
-				try {
-					final File atomxml = new File(file.getParentFile(), "atom.xml");
-					if (atomxml.exists() == false) {
-						templateData.put("index", "");
-					} else {
-						final SyndFeed synFeed = new SyndFeedInput().build(new XmlReader(new FileInputStream(atomxml)));
-
-						for (Object lookup : synFeed.getEntries()) {
-							final SyndEntry entry = (SyndEntry) lookup;
-							indexmdText = "* [" + StringEscapeUtils.escapeXml11(entry.getTitle()) + "]("
-									+ entry.getLink() + ")\n" + indexmdText;
-						}
-						templateData.put("indexAtomXml", indexmdText);
-					}
-				} catch (IllegalArgumentException e) {
-					e.printStackTrace();
-				} catch (FeedException e) {
-					e.printStackTrace();
-				}
-			}
+			templateData.put("indexAtomXml", atomxml2String(new File(file.getParentFile(), "atom.xml")));
+			templateData.put("indexAtomRecentXml", atomxml2String(new File(file.getParentFile(), "atomRecent.xml")));
 
 			convertedString = IgapyonV3FreeMarkerUtil.process(new File("."), file, templateData);
 		}

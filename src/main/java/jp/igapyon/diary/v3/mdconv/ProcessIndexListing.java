@@ -58,6 +58,8 @@ import jp.igapyon.diary.v3.util.IgapyonV3Settings;
 /**
  * 指定されたファイルの一覧部分を更新する仕組みです。
  * 
+ * @deprecated
+ * 
  * TODO 他のクラスに併合されるべき処理と考えます。
  */
 public class ProcessIndexListing {
@@ -67,6 +69,12 @@ public class ProcessIndexListing {
 		this.settings = settings;
 	}
 
+	/**
+	 * @deprecated
+	 * @param fileTarget
+	 * @param diaryItemInfoList
+	 * @throws IOException
+	 */
 	public void process(File fileTarget, final List<DiaryItemInfo> diaryItemInfoList) throws IOException {
 		fileTarget = fileTarget.getCanonicalFile();
 		if (fileTarget.getName().endsWith(".src.md") == false) {
