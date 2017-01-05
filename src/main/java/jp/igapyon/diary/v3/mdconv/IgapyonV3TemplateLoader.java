@@ -1,9 +1,11 @@
 package jp.igapyon.diary.v3.mdconv;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,12 +14,66 @@ import java.util.regex.Pattern;
 
 import org.apache.commons.io.FileUtils;
 
+import com.rometools.rome.feed.synd.SyndEntry;
+import com.rometools.rome.feed.synd.SyndFeed;
+import com.rometools.rome.io.FeedException;
+import com.rometools.rome.io.SyndFeedInput;
+import com.rometools.rome.io.XmlReader;
+
 import freemarker.cache.TemplateLoader;
 
 public class IgapyonV3TemplateLoader implements TemplateLoader {
 	// set my custom template loader.
 
 	protected Map<String, String> resourceMap = new HashMap<String, String>();
+
+	/**
+	 * notice static!!! danger
+	 */
+	protected static List<SyndEntry> synEntryList = null;
+
+	public IgapyonV3TemplateLoader() {
+		try {
+			ensureLoadAtomXml();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void ensureLoadAtomXml() throws IOException {
+		// FIXME dot file. should be like rootdir.
+		final File atomXmlFile = new File("./atom.xml");
+		if (synEntryList == null) {
+			synEntryList = new ArrayList<SyndEntry>();
+			if (atomXmlFile.exists() == false) {
+				return;
+			}
+			try {
+				final SyndFeed synFeed = new SyndFeedInput().build(new XmlReader(new FileInputStream(atomXmlFile)));
+				for (Object lookup : synFeed.getEntries()) {
+					final SyndEntry entry = (SyndEntry) lookup;
+					synEntryList.add(entry);
+				}
+			} catch (FeedException e) {
+				throw new IOException(e);
+			}
+		}
+	}
+
+	public int findTargetAtomEntry(final String url) throws IOException {
+		if (synEntryList == null) {
+			return -1;
+		}
+
+		for (int index = 0; index < synEntryList.size(); index++) {
+			final SyndEntry entry = synEntryList.get(index);
+			if (url.equals(entry.getLink())) {
+				return index;
+			}
+		}
+
+		return -1;
+	}
 
 	/**
 	 * 与えられたリソース名にロケール文字列が含まれている場合がこれを除去します。
@@ -89,6 +145,8 @@ public class IgapyonV3TemplateLoader implements TemplateLoader {
 			return "diaryYearList";
 		}
 
+		ensureLoadAtomXml();
+
 		final File actualFile = new File(stripLocaleName(resourceName));
 		String load = FileUtils.readFileToString(actualFile, "UTF-8");
 
@@ -104,12 +162,26 @@ public class IgapyonV3TemplateLoader implements TemplateLoader {
 
 			final String firstH2Line = getFirstH2String(actualFile);
 
+			final String targetURL = "https://igapyon.github.io/diary/" + year1 + year2 + "/ig" + year2 + month + day
+					+ ".html";
+			final int entryIndex = findTargetAtomEntry(targetURL);
+
 			String header = "[top](https://igapyon.github.io/diary/) \n";
 			header += " / [index](https://igapyon.github.io/diary/" + year1 + year2 + "/index.html) \n";
-			header += " / prev \n";
-			header += " / next \n";
-			header += " / [target](https://igapyon.github.io/diary/" + year1 + year2 + "/ig" + year2 + month + day
-					+ ".html) \n";
+
+			if (entryIndex <= 0 || entryIndex > synEntryList.size() - 2) {
+				header += " / prev \n";
+			} else {
+				header += " / [prev](" + synEntryList.get(entryIndex + 1).getLink() + ") \n";
+			}
+
+			if (entryIndex <= 0) {
+				header += " / next \n";
+			} else {
+				header += " / [next](" + synEntryList.get(entryIndex - 1).getLink() + ") \n";
+			}
+
+			header += " / [target](" + targetURL + ") \n";
 			header += " / [source](https://github.com/igapyon/diary/blob/gh-pages/" + year1 + year2 + "/ig" + year2
 					+ month + day + ".html.src.md) \n";
 			header += "\n";
