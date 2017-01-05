@@ -25,7 +25,8 @@ public class DiaryIndexAtomGenerator {
 		{
 			// ファイルからファイル一覧情報を作成します。
 			System.err.println("Listing md files.");
-			final List<DiaryItemInfo> diaryItemInfoList = new IndexDiaryMdParser(settings).processDir(rootdir, "");
+			final List<DiaryItemInfo> diaryItemInfoList = new IndexDiaryMdParser(settings, "ig").processDir(rootdir,
+					"");
 			System.err.println("Listing html files.");
 			final List<DiaryItemInfo> diaryItemInfoHtmlList = new IndexDiaryHtmlParser(settings).processDir(rootdir,
 					"");
@@ -54,11 +55,6 @@ public class DiaryIndexAtomGenerator {
 			}
 		}
 
-		// new ProcessIndexListing(settings).process(new
-		// File("README.src.md"), diaryItemInfoList);
-		// new ProcessIndexListing(settings).process(new
-		// File("idxall.html.src.md"), diaryItemInfoList);
-
 		final String[] YEARS = new String[] { "1996", "1997", "1998", "2000", "2001", "2002", "2003", "2004", "2005",
 				"2006", "2007", "2008", "2009", "2010", "2011", "2012", "2013", "2014", "2015", "2016", "2017" };
 
@@ -67,7 +63,7 @@ public class DiaryIndexAtomGenerator {
 
 			// ファイルからファイル一覧情報を作成します。
 			System.err.println("Listing md files for :" + year);
-			final List<DiaryItemInfo> diaryItemInfoList = new IndexDiaryMdParser(settings)
+			final List<DiaryItemInfo> diaryItemInfoList = new IndexDiaryMdParser(settings, "ig")
 					.processDir(new File(rootdir, year), "/" + year);
 
 			System.err.println("Listing html files for :" + year);
@@ -80,6 +76,32 @@ public class DiaryIndexAtomGenerator {
 
 			SimpleRomeUtil.itemList2AtomXml(diaryItemInfoList, new File(rootdir, year + "/atom.xml"),
 					"Igapyon Diary v3 year " + year);
+		}
+
+		{
+			// memo dir
+			final List<DiaryItemInfo> diaryItemInfoList = new IndexDiaryMdParser(settings, "memo")
+					.processDir(new File(rootdir, "memo"), "/memo");
+
+			final List<DiaryItemInfo> diaryItemInfoHtmlList = new IndexDiaryHtmlParser(settings)
+					.processDir(new File(rootdir, "memo"), "/memo");
+			diaryItemInfoList.addAll(diaryItemInfoHtmlList);
+
+			Collections.sort(diaryItemInfoList, new DiaryItemInfoComparator(false));
+
+			SimpleRomeUtil.itemList2AtomXml(diaryItemInfoList, new File(rootdir, "memo" + "/atom.xml"),
+					"Igapyon Diary v3 memo");
+		}
+
+		{
+			// keyword dir
+			final List<DiaryItemInfo> diaryItemInfoList = new IndexDiaryMdParser(settings, "")
+					.processDir(new File(rootdir, "keyword"), "/keyword");
+
+			Collections.sort(diaryItemInfoList, new DiaryItemInfoComparator(false));
+
+			SimpleRomeUtil.itemList2AtomXml(diaryItemInfoList, new File(rootdir, "keyword" + "/atom.xml"),
+					"Igapyon Diary v3 keyword");
 		}
 	}
 }
