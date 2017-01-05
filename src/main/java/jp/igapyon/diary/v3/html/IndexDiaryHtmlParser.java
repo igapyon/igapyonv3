@@ -93,7 +93,7 @@ public class IndexDiaryHtmlParser {
 			}
 		}
 
-		Collections.sort(diaryItemInfoList, new DiaryItemInfoComparator());
+		Collections.sort(diaryItemInfoList, new DiaryItemInfoComparator(false));
 
 		return diaryItemInfoList;
 	}

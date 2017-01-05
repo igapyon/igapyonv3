@@ -41,8 +41,17 @@ import java.util.Comparator;
  * @author Toshiki Iga
  */
 public class DiaryItemInfoComparator implements Comparator<DiaryItemInfo> {
+	protected boolean isDesc = false;
+
+	public DiaryItemInfoComparator(final boolean isDesc) {
+		this.isDesc = isDesc;
+	}
+
 	public int compare(DiaryItemInfo itemInfo1, DiaryItemInfo itemInfo2) {
-		// TODO 年の99年対応の考慮が必要なはず。
-		return itemInfo1.getUri().compareTo(itemInfo2.getUri());
+		if (isDesc == false) {
+			return itemInfo1.getUri().compareTo(itemInfo2.getUri());
+		} else {
+			return -itemInfo1.getUri().compareTo(itemInfo2.getUri());
+		}
 	}
 }

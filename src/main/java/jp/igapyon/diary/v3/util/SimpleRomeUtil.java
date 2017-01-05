@@ -26,8 +26,7 @@ public class SimpleRomeUtil {
 
 			for (Object lookup : synFeed.getEntries()) {
 				final SyndEntry entry = (SyndEntry) lookup;
-				indexmdText = "* [" + StringEscapeUtils.escapeXml11(entry.getTitle()) + "](" + entry.getLink() + ")\n"
-						+ indexmdText;
+				indexmdText += "* [" + StringEscapeUtils.escapeXml11(entry.getTitle()) + "](" + entry.getLink() + ")\n";
 			}
 
 			return indexmdText;
@@ -40,6 +39,8 @@ public class SimpleRomeUtil {
 		String indexmdText = "";
 		try {
 			final SyndFeed synFeed = new SyndFeedInput().build(new XmlReader(atomURL));
+
+			// FIXME File 版と挙動が異なります。いつか直します。
 
 			indexmdText += "#### [" + StringEscapeUtils.escapeXml11(synFeed.getTitle()) + "](" + synFeed.getLink()
 					+ ")\n\n";
