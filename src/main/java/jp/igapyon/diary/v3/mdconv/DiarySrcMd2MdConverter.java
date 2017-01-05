@@ -33,8 +33,11 @@
 
 package jp.igapyon.diary.v3.mdconv;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.StringReader;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -72,18 +75,35 @@ public class DiarySrcMd2MdConverter {
 	}
 
 	void processFile(final File file) throws IOException {
+		String convertedString = null;
 		{
 			// FIXME
+
+			// TODO Adding igapyonv3 defined values.
 			final Map<String, Object> templateData = new HashMap<String, Object>();
 			{
-				DummyVOMvnProject obj = new DummyVOMvnProject();
-				templateData.put("project", obj);
+				// for Ant build.xml
+				templateData.put("encoding", "${encoding}");
+
+				// for Maven pom.xml
 				// ${project.build.directory}
+				templateData.put("project", new DummyVOMvnProject());
 			}
-			IgapyonV3FreeMarkerUtil.process(new File("."), file, templateData);
+
+			convertedString = IgapyonV3FreeMarkerUtil.process(new File("."), file, templateData);
 		}
 
-		final List<String> lines = FileUtils.readLines(file, "UTF-8");
+		final List<String> lines = new ArrayList<String>();
+		{
+			BufferedReader reader = new BufferedReader(new StringReader(convertedString));
+			for (;;) {
+				final String line = reader.readLine();
+				if (line == null) {
+					break;
+				}
+				lines.add(line);
+			}
+		}
 
 		final boolean isDiary = file.getName().startsWith("ig");
 

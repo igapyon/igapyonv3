@@ -1,13 +1,10 @@
 package jp.igapyon.diary.v3.mdconv;
 
-import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.IOException;
-import java.io.OutputStreamWriter;
+import java.io.StringWriter;
 import java.util.HashMap;
 import java.util.Map;
-
-import org.apache.commons.io.output.NullOutputStream;
 
 import freemarker.template.Configuration;
 import freemarker.template.Template;
@@ -21,18 +18,20 @@ public class IgapyonV3FreeMarkerUtil {
 		final Map<String, Object> templateData = new HashMap<String, Object>();
 		templateData.put("user", "Taro Yamada");
 
-		// templateData.put("project.build.directory", "wrk");
+		// for Ant build.xml
+		templateData.put("encoding", "${encoding}");
 
 		{
 			DummyVOMvnProject obj = new DummyVOMvnProject();
-			templateData.put("project", obj);
+			// for Maven pom.xml
 			// ${project.build.directory}
+			templateData.put("project", obj);
 		}
 
 		IgapyonV3FreeMarkerUtil.process(new File("."), new File("test/data/hatena/ig161227.html.src.md"), templateData);
 	}
 
-	public static void process(File rootdir, File file, final Map<String, Object> templateData) throws IOException {
+	public static String process(File rootdir, File file, final Map<String, Object> templateData) throws IOException {
 		// do canonical
 		rootdir = rootdir.getCanonicalFile();
 		file = file.getCanonicalFile();
@@ -70,9 +69,9 @@ public class IgapyonV3FreeMarkerUtil {
 
 		final Template templateBase = config.getTemplate(relativePath);
 		try {
-			OutputStreamWriter writer = new OutputStreamWriter(new BufferedOutputStream(new NullOutputStream()),
-					"UTF-8");
+			final StringWriter writer = new StringWriter();
 			templateBase.process(templateData, writer);
+			return writer.toString();
 		} catch (TemplateException e) {
 			throw new IOException(e);
 		}
