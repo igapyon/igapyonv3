@@ -102,16 +102,31 @@ public class DiarySrcMd2MdConverter {
 		}
 	}
 
+	/**
+	 * キャッシュ用オブジェクト。
+	 */
+	protected final Map<String, String> cacheAtomStringMap = new HashMap<String, String>();
+
 	void processFile(final File file) throws IOException {
 		String convertedString = null;
 		{
-			// FIXME
-
-			// TODO Adding igapyonv3 defined values.
 			final Map<String, Object> templateData = new HashMap<String, Object>();
 
-			templateData.put("indexAtomXml", atomxml2String(new File(file.getParentFile(), "atom.xml")));
-			templateData.put("indexAtomRecentXml", atomxml2String(new File(file.getParentFile(), "atomRecent.xml")));
+			// Adding igapyonv3 defined values.
+			{
+				final File atomFile = new File(file.getParentFile(), "atom.xml").getCanonicalFile();
+				if (cacheAtomStringMap.get(atomFile.getAbsolutePath()) == null) {
+					cacheAtomStringMap.put(atomFile.getAbsolutePath(), atomxml2String(atomFile));
+				}
+				templateData.put("indexAtomXml", cacheAtomStringMap.get(atomFile.getAbsolutePath()));
+			}
+			{
+				final File atomFile = new File(file.getParentFile(), "atomRecent.xml").getCanonicalFile();
+				if (cacheAtomStringMap.get(atomFile.getAbsolutePath()) == null) {
+					cacheAtomStringMap.put(atomFile.getAbsolutePath(), atomxml2String(atomFile));
+				}
+				templateData.put("indexAtomRecentXml", cacheAtomStringMap.get(atomFile.getAbsolutePath()));
+			}
 
 			convertedString = IgapyonV3FreeMarkerUtil.process(new File("."), file, templateData);
 		}
