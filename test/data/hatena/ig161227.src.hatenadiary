@@ -14,7 +14,7 @@ test data.
 							<goal>copy-dependencies</goal>
 						</goals>
 						<configuration>
-							<outputDirectory>${project.build.directory}/lib</outputDirectory>
+							<outputDirectory>${'$'}{project.build.directory}/lib</outputDirectory>
 						</configuration>
 					</execution>
 				</executions>

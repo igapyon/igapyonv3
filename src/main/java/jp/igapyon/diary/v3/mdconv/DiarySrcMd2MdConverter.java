@@ -83,11 +83,11 @@ public class DiarySrcMd2MdConverter {
 			final Map<String, Object> templateData = new HashMap<String, Object>();
 			{
 				// for Ant build.xml
-				templateData.put("encoding", "${encoding}");
+//				templateData.put("encoding", "${encoding}");
 
 				// for Maven pom.xml
 				// ${project.build.directory}
-				templateData.put("project", new DummyVOMvnProject());
+	//			templateData.put("project", new DummyVOMvnProject());
 			}
 
 			convertedString = IgapyonV3FreeMarkerUtil.process(new File("."), file, templateData);
