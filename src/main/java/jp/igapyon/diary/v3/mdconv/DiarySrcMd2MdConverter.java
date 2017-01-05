@@ -35,28 +35,20 @@ package jp.igapyon.diary.v3.mdconv;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.StringReader;
 import java.net.URL;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.commons.lang3.StringUtils;
-
-import com.rometools.rome.feed.synd.SyndEntry;
-import com.rometools.rome.feed.synd.SyndFeed;
-import com.rometools.rome.io.FeedException;
-import com.rometools.rome.io.SyndFeedInput;
-import com.rometools.rome.io.XmlReader;
 
 import jp.igapyon.diary.v3.util.IgapyonV3Settings;
 import jp.igapyon.diary.v3.util.MdTextUtil;
+import jp.igapyon.diary.v3.util.SimpleRomeUtil;
 
 /**
  * .src.md から .md を生成するためのクラス。
@@ -84,26 +76,6 @@ public class DiarySrcMd2MdConverter {
 		}
 	}
 
-	public static String atomxml2String(final File atomXmlFile) throws IOException {
-		String indexmdText = "";
-		if (atomXmlFile.exists() == false) {
-			return "";
-		}
-
-		try {
-			final SyndFeed synFeed = new SyndFeedInput().build(new XmlReader(new FileInputStream(atomXmlFile)));
-
-			for (Object lookup : synFeed.getEntries()) {
-				final SyndEntry entry = (SyndEntry) lookup;
-				indexmdText = "* [" + StringEscapeUtils.escapeXml11(entry.getTitle()) + "](" + entry.getLink() + ")\n"
-						+ indexmdText;
-			}
-			return indexmdText;
-		} catch (FeedException e) {
-			throw new IOException(e);
-		}
-	}
-
 	/**
 	 * キャッシュ用オブジェクト。
 	 */
@@ -118,42 +90,23 @@ public class DiarySrcMd2MdConverter {
 			{
 				final File atomFile = new File(file.getParentFile(), "atom.xml").getCanonicalFile();
 				if (cacheAtomStringMap.get(atomFile.getAbsolutePath()) == null) {
-					cacheAtomStringMap.put(atomFile.getAbsolutePath(), atomxml2String(atomFile));
+					cacheAtomStringMap.put(atomFile.getAbsolutePath(), SimpleRomeUtil.atomxml2String(atomFile));
 				}
 				templateData.put("indexAtomXml", cacheAtomStringMap.get(atomFile.getAbsolutePath()));
 			}
 			{
 				final File atomFile = new File(file.getParentFile(), "atomRecent.xml").getCanonicalFile();
 				if (cacheAtomStringMap.get(atomFile.getAbsolutePath()) == null) {
-					cacheAtomStringMap.put(atomFile.getAbsolutePath(), atomxml2String(atomFile));
+					cacheAtomStringMap.put(atomFile.getAbsolutePath(), SimpleRomeUtil.atomxml2String(atomFile));
 				}
 				templateData.put("indexAtomRecentXml", cacheAtomStringMap.get(atomFile.getAbsolutePath()));
 			}
 
-			// publickey
 			{
+				// publickeyAtomXml
 				if (cacheAtomStringMap.get("publickeyAtomXml") == null) {
-					String publickeyText = "";
-					try {
-						final URL atomURL = new URL("http://www.publickey1.jp/atom.xml");
-						final SyndFeed synFeed = new SyndFeedInput().build(new XmlReader(atomURL));
-
-						publickeyText += "#### [" + StringEscapeUtils.escapeXml11(synFeed.getTitle()) + "]("
-								+ synFeed.getLink() + ")\n\n";
-
-						final SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
-						for (Object lookup : synFeed.getEntries()) {
-							final SyndEntry entry = (SyndEntry) lookup;
-							publickeyText += "* [" + StringEscapeUtils.escapeXml11(entry.getTitle()) + "]("
-									+ entry.getLink() + ") " + sdf.format(entry.getUpdatedDate()) + "\n";
-						}
-					} catch (IllegalArgumentException e) {
-						e.printStackTrace();
-					} catch (FeedException e) {
-						e.printStackTrace();
-					}
-
-					cacheAtomStringMap.put("publickeyAtomXml", publickeyText);
+					final URL atomURL = new URL("http://www.publickey1.jp/atom.xml");
+					cacheAtomStringMap.put("publickeyAtomXml", SimpleRomeUtil.atomxml2String(atomURL));
 				}
 				templateData.put("publickeyAtomXml", cacheAtomStringMap.get("publickeyAtomXml"));
 			}
