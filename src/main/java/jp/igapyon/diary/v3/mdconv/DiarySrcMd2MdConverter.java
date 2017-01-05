@@ -38,6 +38,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.StringReader;
+import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -126,6 +128,34 @@ public class DiarySrcMd2MdConverter {
 					cacheAtomStringMap.put(atomFile.getAbsolutePath(), atomxml2String(atomFile));
 				}
 				templateData.put("indexAtomRecentXml", cacheAtomStringMap.get(atomFile.getAbsolutePath()));
+			}
+
+			// publickey
+			{
+				if (cacheAtomStringMap.get("publickeyAtomXml") == null) {
+					String publickeyText = "";
+					try {
+						final URL atomURL = new URL("http://www.publickey1.jp/atom.xml");
+						final SyndFeed synFeed = new SyndFeedInput().build(new XmlReader(atomURL));
+
+						publickeyText += "#### [" + StringEscapeUtils.escapeXml11(synFeed.getTitle()) + "]("
+								+ synFeed.getLink() + ")\n\n";
+
+						final SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+						for (Object lookup : synFeed.getEntries()) {
+							final SyndEntry entry = (SyndEntry) lookup;
+							publickeyText += "* [" + StringEscapeUtils.escapeXml11(entry.getTitle()) + "]("
+									+ entry.getLink() + ") " + sdf.format(entry.getUpdatedDate()) + "\n";
+						}
+					} catch (IllegalArgumentException e) {
+						e.printStackTrace();
+					} catch (FeedException e) {
+						e.printStackTrace();
+					}
+
+					cacheAtomStringMap.put("publickeyAtomXml", publickeyText);
+				}
+				templateData.put("publickeyAtomXml", cacheAtomStringMap.get("publickeyAtomXml"));
 			}
 
 			convertedString = IgapyonV3FreeMarkerUtil.process(new File("."), file, templateData);
