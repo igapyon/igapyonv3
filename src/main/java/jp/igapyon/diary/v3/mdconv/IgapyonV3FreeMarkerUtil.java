@@ -1,5 +1,6 @@
 package jp.igapyon.diary.v3.mdconv;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.HashMap;
@@ -9,6 +10,7 @@ import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
 import freemarker.template.TemplateExceptionHandler;
+import jp.igapyon.util.IgapyonFileUtil;
 
 public class IgapyonV3FreeMarkerUtil {
 
@@ -24,10 +26,16 @@ public class IgapyonV3FreeMarkerUtil {
 			// ${project.build.directory}
 		}
 
-		IgapyonV3FreeMarkerUtil.process(templateData);
+		IgapyonV3FreeMarkerUtil.process(new File("."), new File("test/data/hatena/ig161227.html.src.md"), templateData);
 	}
 
-	public static void process(final Map<String, Object> templateData) throws IOException {
+	public static void process(File rootdir, File file, final Map<String, Object> templateData) throws IOException {
+		// do canonical
+		rootdir = rootdir.getCanonicalFile();
+		file = file.getCanonicalFile();
+
+		final String relativePath = IgapyonFileUtil.getRelativePath(rootdir, file);
+
 		// newest version at this point.
 		final Configuration config = new Configuration(Configuration.VERSION_2_3_25);
 		config.setDefaultEncoding("UTF-8");
@@ -57,7 +65,7 @@ public class IgapyonV3FreeMarkerUtil {
 		// set my custom template loader.
 		config.setTemplateLoader(new IgapyonV3TemplateLoader());
 
-		final Template templateBase = config.getTemplate("test/data/hatena/ig161227.html.src.md");
+		final Template templateBase = config.getTemplate(relativePath);
 		try {
 			templateBase.process(templateData, new OutputStreamWriter(System.out));
 		} catch (TemplateException e) {

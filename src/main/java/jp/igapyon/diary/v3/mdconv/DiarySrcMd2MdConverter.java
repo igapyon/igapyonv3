@@ -35,7 +35,9 @@ package jp.igapyon.diary.v3.mdconv;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -70,6 +72,17 @@ public class DiarySrcMd2MdConverter {
 	}
 
 	void processFile(final File file) throws IOException {
+		{
+			// FIXME
+			final Map<String, Object> templateData = new HashMap<String, Object>();
+			{
+				DummyVOMvnProject obj = new DummyVOMvnProject();
+				templateData.put("project", obj);
+				// ${project.build.directory}
+			}
+			IgapyonV3FreeMarkerUtil.process(new File("."), file, templateData);
+		}
+
 		final List<String> lines = FileUtils.readLines(file, "UTF-8");
 
 		final boolean isDiary = file.getName().startsWith("ig");
