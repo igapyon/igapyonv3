@@ -35,6 +35,7 @@ package jp.igapyon.diary.v3.mdconv;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.StringReader;
 import java.util.ArrayList;
@@ -43,7 +44,14 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.commons.lang3.StringUtils;
+
+import com.rometools.rome.feed.synd.SyndEntry;
+import com.rometools.rome.feed.synd.SyndFeed;
+import com.rometools.rome.io.FeedException;
+import com.rometools.rome.io.SyndFeedInput;
+import com.rometools.rome.io.XmlReader;
 
 import jp.igapyon.diary.v3.util.IgapyonV3Settings;
 import jp.igapyon.diary.v3.util.MdTextUtil;
@@ -82,12 +90,27 @@ public class DiarySrcMd2MdConverter {
 			// TODO Adding igapyonv3 defined values.
 			final Map<String, Object> templateData = new HashMap<String, Object>();
 			{
-				// for Ant build.xml
-				// templateData.put("encoding", "${encoding}");
 
-				// for Maven pom.xml
-				// ${project.build.directory}
-				// templateData.put("project", new DummyVOMvnProject());
+				String indexmdText = "";
+				try {
+					final File atomxml = new File(file.getParentFile(), "atom.xml");
+					if (atomxml.exists() == false) {
+						templateData.put("index", "");
+					} else {
+						final SyndFeed synFeed = new SyndFeedInput().build(new XmlReader(new FileInputStream(atomxml)));
+
+						for (Object lookup : synFeed.getEntries()) {
+							final SyndEntry entry = (SyndEntry) lookup;
+							indexmdText = "* [" + StringEscapeUtils.escapeXml11(entry.getTitle()) + "]("
+									+ entry.getLink() + ")\n" + indexmdText;
+						}
+						templateData.put("indexAtomXml", indexmdText);
+					}
+				} catch (IllegalArgumentException e) {
+					e.printStackTrace();
+				} catch (FeedException e) {
+					e.printStackTrace();
+				}
 			}
 
 			convertedString = IgapyonV3FreeMarkerUtil.process(new File("."), file, templateData);
