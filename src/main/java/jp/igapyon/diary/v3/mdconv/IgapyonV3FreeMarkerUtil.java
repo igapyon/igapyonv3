@@ -19,7 +19,7 @@ public class IgapyonV3FreeMarkerUtil {
 		// templateData.put("project.build.directory", "wrk");
 
 		{
-			MyClass1 obj = new MyClass1();
+			DummyVOMvnProject obj = new DummyVOMvnProject();
 			templateData.put("project", obj);
 			// ${project.build.directory}
 		}
@@ -28,6 +28,7 @@ public class IgapyonV3FreeMarkerUtil {
 	}
 
 	public static void process(final Map<String, Object> templateData) throws IOException {
+		// newest version at this point.
 		final Configuration config = new Configuration(Configuration.VERSION_2_3_25);
 		config.setDefaultEncoding("UTF-8");
 		config.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
@@ -38,15 +39,15 @@ public class IgapyonV3FreeMarkerUtil {
 		// only for camel case not snake one.
 		config.setNamingConvention(Configuration.CAMEL_CASE_NAMING_CONVENTION);
 
-		// ???
-		config.setAPIBuiltinEnabled(false);
+		// ??? set API disable
+		config.setAPIBuiltinEnabled(true);
 
 		// only for newer one.
 		config.setClassicCompatible(false);
 
 		config.setLazyAutoImports(false);
 
-		// diary system not need localize
+		// diary system not need localize lookup
 		config.setLocalizedLookup(false);
 
 		config.setLogTemplateExceptions(false);
