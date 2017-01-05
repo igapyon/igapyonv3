@@ -136,7 +136,8 @@ public class IgapyonV3TemplateLoader implements TemplateLoader {
 				+ "/ [2000](https://igapyon.github.io/diary/2000/index.html)\n"
 				+ "/ [1998](https://igapyon.github.io/diary/1998/index.html)\n"
 				+ "/ [1997](https://igapyon.github.io/diary/1997/index.html)\n"
-				+ "/ [1996](https://igapyon.github.io/diary/1996/index.html)\n";
+				+ "/ [1996](https://igapyon.github.io/diary/1996/index.html)\n"
+				+ "/ [ALL](https://igapyon.github.io/diary/idxall.html)\n";
 	}
 
 	@Override
@@ -205,7 +206,7 @@ public class IgapyonV3TemplateLoader implements TemplateLoader {
 			footer += "----------------------------------------------------------------------------------------------------\n";
 			footer += "\n";
 			footer += "## この日記について\n";
-			footer += "[いがぴょんについて](https://igapyon.github.io/diary/memo/memoigapyon.html) / [インデックスに戻る](https://igapyon.github.io/diary/idxall.html)\n";
+			footer += "[いがぴょんについて](https://igapyon.github.io/diary/memo/memoigapyon.html) / [日記ジェネレータ](https://github.com/igapyon/igapyonv3)\n";
 
 			load += footer;
 		} else {
@@ -233,7 +234,7 @@ public class IgapyonV3TemplateLoader implements TemplateLoader {
 			footer += "----------------------------------------------------------------------------------------------------\n";
 			footer += "\n";
 			footer += "## この日記について\n";
-			footer += "[いがぴょんについて](https://igapyon.github.io/diary/memo/memoigapyon.html)\n";
+			footer += "[いがぴょんについて](https://igapyon.github.io/diary/memo/memoigapyon.html) / [日記ジェネレータ](https://github.com/igapyon/igapyonv3)\n";
 
 			load += footer;
 		}
