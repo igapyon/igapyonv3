@@ -11,17 +11,47 @@ import freemarker.template.TemplateException;
 import freemarker.template.TemplateExceptionHandler;
 
 public class IgapyonV3FreeMarkerUtil {
+
 	public static void main(String[] args) throws IOException {
-		final Map<String, String> templateData = new HashMap<String, String>();
+		final Map<String, Object> templateData = new HashMap<String, Object>();
 		templateData.put("user", "Taro Yamada");
+
+		// templateData.put("project.build.directory", "wrk");
+
+		{
+			MyClass1 obj = new MyClass1();
+			templateData.put("project", obj);
+			// ${project.build.directory}
+		}
+
 		IgapyonV3FreeMarkerUtil.process(templateData);
 	}
 
-	public static void process(final Map<String, String> templateData) throws IOException {
+	public static void process(final Map<String, Object> templateData) throws IOException {
 		final Configuration config = new Configuration(Configuration.VERSION_2_3_25);
 		config.setDefaultEncoding("UTF-8");
 		config.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
+
+		// DISABLE auto escape
+		config.setAutoEscapingPolicy(Configuration.DISABLE_AUTO_ESCAPING_POLICY);
+
+		// only for camel case not snake one.
+		config.setNamingConvention(Configuration.CAMEL_CASE_NAMING_CONVENTION);
+
+		// ???
+		config.setAPIBuiltinEnabled(false);
+
+		// only for newer one.
+		config.setClassicCompatible(false);
+
+		config.setLazyAutoImports(false);
+
+		// diary system not need localize
+		config.setLocalizedLookup(false);
+
 		config.setLogTemplateExceptions(false);
+		config.setRecognizeStandardFileExtensions(false);
+		config.setWhitespaceStripping(false);
 
 		// set my custom template loader.
 		config.setTemplateLoader(new IgapyonV3TemplateLoader());

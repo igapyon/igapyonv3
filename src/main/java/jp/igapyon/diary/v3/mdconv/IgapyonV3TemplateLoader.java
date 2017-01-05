@@ -4,45 +4,52 @@ import java.io.File;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import org.apache.commons.io.FileUtils;
 
 import freemarker.cache.TemplateLoader;
 
 public class IgapyonV3TemplateLoader implements TemplateLoader {
 	// set my custom template loader.
 
-	private static final String MY_TEMPLATE_STRING = "My name is ${user} desu.";
+	protected Map<String, String> resourceMap = new HashMap<String, String>();
 
 	@Override
-	public Object findTemplateSource(String resourceName) throws IOException {
-		System.out.println("TemplateName:" + resourceName);
+	public Object findTemplateSource(final String resourceName) throws IOException {
+		String actualResourceName = resourceName;
 
 		// test/data/hatena/ig161227.html.src_ja_JP.md
 
+		// for case below: config.setLocalizedLookup(true);
 		final Pattern patLocale = Pattern.compile("[_]..[_]..\\.");
 		final Matcher matLocale = patLocale.matcher(resourceName);
 
 		if (matLocale.find()) {
 			final String locale = matLocale.group();
 			System.out.println("locale:" + locale);
-			resourceName = resourceName.substring(0, matLocale.start()) + resourceName.substring(matLocale.end() - 1);
-			System.out.println("res:" + resourceName);
+			actualResourceName = resourceName.substring(0, matLocale.start())
+					+ resourceName.substring(matLocale.end() - 1);
+			System.out.println("res:" + actualResourceName);
 		}
 
-		final File file = new File(resourceName);
+		final String load = FileUtils.readFileToString(new File(actualResourceName), "UTF-8");
 
-		return MY_TEMPLATE_STRING;
+		resourceMap.put(resourceName, load);
+		return resourceName;
 	}
 
 	@Override
 	public Reader getReader(final Object templateSource, final String encoding) throws IOException {
-		return new StringReader(MY_TEMPLATE_STRING);
+		return new StringReader(resourceMap.get(templateSource));
 	}
 
 	@Override
 	public void closeTemplateSource(final Object templateSource) throws IOException {
-		// do nothing.
+		resourceMap.remove(templateSource);
 	}
 
 	@Override
