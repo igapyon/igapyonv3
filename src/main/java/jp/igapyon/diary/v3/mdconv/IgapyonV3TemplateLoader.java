@@ -19,10 +19,17 @@ public class IgapyonV3TemplateLoader implements TemplateLoader {
 
 	protected Map<String, String> resourceMap = new HashMap<String, String>();
 
-	@Override
-	public Object findTemplateSource(final String resourceName) throws IOException {
+	/**
+	 * 与えられたリソース名にロケール文字列が含まれている場合がこれを除去します。
+	 * 
+	 * @param resourceName
+	 * @return
+	 */
+	public static String stripLocaleName(final String resourceName) {
 		String actualResourceName = resourceName;
 
+		// 現在の設定では無効化されているが、FreeMarker はデフォルトでロケール付きで以下のように値が渡されてくる。
+		// ここからしばらくの処理は、このロケール文字列を除去するための記述に当たる。
 		// test/data/hatena/ig161227.html.src_ja_JP.md
 
 		// for case below: config.setLocalizedLookup(true);
@@ -35,7 +42,26 @@ public class IgapyonV3TemplateLoader implements TemplateLoader {
 					+ resourceName.substring(matLocale.end() - 1);
 		}
 
-		final File actualFile = new File(actualResourceName);
+		return actualResourceName;
+	}
+
+	public static String getFirstH2String(final File file) throws IOException {
+		final List<String> lines = FileUtils.readLines(file, "UTF-8");
+		String firstH2Line = null;
+		for (String line : lines) {
+			if (firstH2Line == null) {
+				// 最初の ## からテキストを取得。
+				if (line.startsWith("## ")) {
+					firstH2Line = line.substring(3);
+				}
+			}
+		}
+		return firstH2Line;
+	}
+
+	@Override
+	public Object findTemplateSource(final String resourceName) throws IOException {
+		final File actualFile = new File(stripLocaleName(resourceName));
 		String load = FileUtils.readFileToString(actualFile, "UTF-8");
 
 		if (actualFile.getName().startsWith("ig")) {
@@ -48,16 +74,7 @@ public class IgapyonV3TemplateLoader implements TemplateLoader {
 			String month = actualFile.getName().substring(4, 6);
 			String day = actualFile.getName().substring(6, 8);
 
-			final List<String> lines = FileUtils.readLines(actualFile, "UTF-8");
-			String firstH2Line = null;
-			for (String line : lines) {
-				if (firstH2Line == null) {
-					// 最初の ## からテキストを取得。
-					if (line.startsWith("## ")) {
-						firstH2Line = line.substring(3);
-					}
-				}
-			}
+			final String firstH2Line = getFirstH2String(actualFile);
 
 			String header = "[top](https://igapyon.github.io/diary/) \n";
 			header += " / [index](https://igapyon.github.io/diary/" + year1 + year2 + "/index.html) \n";
@@ -89,6 +106,34 @@ public class IgapyonV3TemplateLoader implements TemplateLoader {
 			footer += "\n";
 			footer += "## この日記について\n";
 			footer += "[いがぴょんについて](https://igapyon.github.io/diary/memo/memoigapyon.html) / [インデックスに戻る](https://igapyon.github.io/diary/idxall.html)\n";
+
+			load += footer;
+		} else {
+			final String firstH2Line = getFirstH2String(actualFile);
+
+			String header = "[top](https://igapyon.github.io/diary/) \n";
+			header += "\n";
+
+			// ヘッダ追加
+			header += (firstH2Line + "\n");
+			header += "=====================================================================================================\n";
+			header += "[![いがぴょん画像(小)](https://igapyon.github.io/diary/images/iga200306s.jpg \"いがぴょん\")](https://igapyon.github.io/diary/memo/memoigapyon.html) 日記形式でつづる [いがぴょん](https://igapyon.github.io/diary/memo/memoigapyon.html)コラム ウェブページです。\n";
+			header += "\n";
+
+			load = header + load;
+
+			// フッタ追加
+			String footer = "";
+			if (load.endsWith("\n") || load.endsWith("\r")) {
+				// do nothing.
+			} else {
+				footer += "\n";
+			}
+			footer += "\n";
+			footer += "----------------------------------------------------------------------------------------------------\n";
+			footer += "\n";
+			footer += "## この日記について\n";
+			footer += "[いがぴょんについて](https://igapyon.github.io/diary/memo/memoigapyon.html)\n";
 
 			load += footer;
 		}
