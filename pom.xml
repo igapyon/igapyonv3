@@ -3,10 +3,30 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>jp.igapyon.diary.v3</groupId>
 	<artifactId>IgapyonV3</artifactId>
+	<version>1.0.1</version>
 	<packaging>jar</packaging>
-	<version>1.0.0</version>
+
 	<name>IgapyonV3</name>
-	<url>https://igapyon.github.io/igapyon-maven2</url>
+	<description>OSS diary generator system written in Java.</description>
+	<url>https://igapyon.github.io/igapyonv3/</url>
+
+	<!-- see: http://maven.apache.org/guides/mini/guide-central-repository-upload.html -->
+	<licenses>
+		<license>
+			<name>The GNU Lesser General Public License, Version 3.0</name>
+			<url>http://www.gnu.org/licenses/lgpl-3.0.txt</url>
+			<distribution>repo</distribution>
+		</license>
+		<license>
+			<name>Apache License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+
+	<scm>
+		<url>https://github.com/igapyon/igapyonv3</url>
+	</scm>
 
 	<dependencies>
 		<!-- https://mvnrepository.com/artifact/junit/junit -->
