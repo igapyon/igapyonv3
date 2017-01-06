@@ -45,6 +45,7 @@ import java.util.Map;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 
+import jp.igapyon.diary.v3.mdconv.freemarker.IgapyonV3FreeMarkerUtil;
 import jp.igapyon.diary.v3.util.IgapyonV3Settings;
 import jp.igapyon.diary.v3.util.MdTextUtil;
 

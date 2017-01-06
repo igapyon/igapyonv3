@@ -1,4 +1,4 @@
-package jp.igapyon.diary.v3.mdconv;
+package jp.igapyon.diary.v3.mdconv.freemarker;
 
 import java.io.File;
 import java.io.FileInputStream;

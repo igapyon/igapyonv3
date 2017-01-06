@@ -1,4 +1,4 @@
-package jp.igapyon.diary.v3.mdconv;
+package jp.igapyon.diary.v3.mdconv.freemarker;
 
 import java.io.File;
 import java.io.IOException;
@@ -10,8 +10,6 @@ import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
 import freemarker.template.TemplateExceptionHandler;
-import jp.igapyon.diary.v3.mdconv.freemarker.LocalRssDirectiveModel;
-import jp.igapyon.diary.v3.mdconv.freemarker.RSSFeedDirectiveModel;
 import jp.igapyon.util.IgapyonFileUtil;
 
 public class IgapyonV3FreeMarkerUtil {
@@ -24,10 +22,10 @@ public class IgapyonV3FreeMarkerUtil {
 		templateData.put("encoding", "${encoding}");
 
 		{
-			DummyVOMvnProject obj = new DummyVOMvnProject();
+			// DummyVOMvnProject obj = new DummyVOMvnProject();
 			// for Maven pom.xml
 			// ${project.build.directory}
-			templateData.put("project", obj);
+			// templateData.put("project", obj);
 		}
 
 		IgapyonV3FreeMarkerUtil.process(new File("."), new File("test/data/hatena/ig161227.html.src.md"), templateData);

@@ -9,7 +9,7 @@ import org.junit.Test;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateExceptionHandler;
-import jp.igapyon.diary.v3.mdconv.IgapyonV3TemplateLoader;
+import jp.igapyon.diary.v3.mdconv.freemarker.IgapyonV3TemplateLoader;
 
 public class SimpleSandbox {
 	@Test
