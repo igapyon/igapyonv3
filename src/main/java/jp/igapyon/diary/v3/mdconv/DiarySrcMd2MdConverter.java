@@ -37,7 +37,6 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.StringReader;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -100,15 +99,6 @@ public class DiarySrcMd2MdConverter {
 					cacheAtomStringMap.put(atomFile.getAbsolutePath(), SimpleRomeUtil.atomxml2String(atomFile));
 				}
 				templateData.put("indexAtomRecentXml", cacheAtomStringMap.get(atomFile.getAbsolutePath()));
-			}
-
-			{
-				// publickeyAtomXml
-				if (cacheAtomStringMap.get("publickeyAtomXml") == null) {
-					final URL atomURL = new URL("http://www.publickey1.jp/atom.xml");
-					cacheAtomStringMap.put("publickeyAtomXml", SimpleRomeUtil.atomxml2String(atomURL, 8));
-				}
-				templateData.put("publickeyAtomXml", cacheAtomStringMap.get("publickeyAtomXml"));
 			}
 
 			convertedString = IgapyonV3FreeMarkerUtil.process(new File("."), file, templateData);
