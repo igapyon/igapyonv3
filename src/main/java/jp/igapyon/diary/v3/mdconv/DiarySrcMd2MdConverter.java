@@ -106,7 +106,7 @@ public class DiarySrcMd2MdConverter {
 				// publickeyAtomXml
 				if (cacheAtomStringMap.get("publickeyAtomXml") == null) {
 					final URL atomURL = new URL("http://www.publickey1.jp/atom.xml");
-					cacheAtomStringMap.put("publickeyAtomXml", SimpleRomeUtil.atomxml2String(atomURL));
+					cacheAtomStringMap.put("publickeyAtomXml", SimpleRomeUtil.atomxml2String(atomURL, 8));
 				}
 				templateData.put("publickeyAtomXml", cacheAtomStringMap.get("publickeyAtomXml"));
 			}

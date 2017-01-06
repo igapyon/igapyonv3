@@ -8,4 +8,4 @@ test data.
 http://d.hatena.ne.jp/igapyon/20161222
 -http://d.hatena.ne.jp/igapyon/20161222 リンクの説明。。。
 
-<@rssfeed url="abc" maxcount="5" />
+<@rssfeed url="http://www.publickey1.jp/atom.xml" maxcount="0" />

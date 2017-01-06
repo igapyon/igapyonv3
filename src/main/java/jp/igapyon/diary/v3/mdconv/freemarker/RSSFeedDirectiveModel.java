@@ -35,6 +35,8 @@ package jp.igapyon.diary.v3.mdconv.freemarker;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
+import java.net.URL;
+import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.commons.lang3.math.NumberUtils;
@@ -45,15 +47,18 @@ import freemarker.template.TemplateDirectiveModel;
 import freemarker.template.TemplateException;
 import freemarker.template.TemplateModel;
 import freemarker.template.TemplateModelException;
+import jp.igapyon.diary.v3.util.SimpleRomeUtil;
 
 /**
  * RSS Feed 用のディレクティブモデル
  * 
- * [rssfeed]
+ * <@rssfeed url="http://www.publickey1.jp/atom.xml" maxcount="5" />
  * 
  * @author Toshiki Iga
  */
 public class RSSFeedDirectiveModel implements TemplateDirectiveModel {
+	protected final Map<String, String> cacheAtomStringMap = new HashMap<String, String>();
+
 	public void execute(final Environment env, @SuppressWarnings("rawtypes") final Map params,
 			final TemplateModel[] loopVars, final TemplateDirectiveBody body) throws TemplateException, IOException {
 		final BufferedWriter writer = new BufferedWriter(env.getOut());
@@ -73,7 +78,14 @@ public class RSSFeedDirectiveModel implements TemplateDirectiveModel {
 			}
 		}
 
-		writer.write("My custom tag. [" + url + "," + maxcount + "]");
+		{
+			if (cacheAtomStringMap.get(url) == null) {
+				final URL atomURL = new URL(url);
+				cacheAtomStringMap.put(url, SimpleRomeUtil.atomxml2String(atomURL, maxcount));
+			}
+			writer.write(cacheAtomStringMap.get(url));
+		}
+
 		writer.flush();
 	}
 }

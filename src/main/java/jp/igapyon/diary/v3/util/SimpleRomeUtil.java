@@ -43,7 +43,7 @@ public class SimpleRomeUtil {
 		}
 	}
 
-	public static String atomxml2String(final URL atomURL) throws IOException {
+	public static String atomxml2String(final URL atomURL, final int maxcount) throws IOException {
 		String indexmdText = "";
 		try {
 			final SyndFeed synFeed = new SyndFeedInput().build(new XmlReader(atomURL));
@@ -54,7 +54,12 @@ public class SimpleRomeUtil {
 					+ ")\n\n";
 
 			final SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+			int count = 0;
 			for (Object lookup : synFeed.getEntries()) {
+				if (count++ >= maxcount) {
+					break;
+				}
+
 				final SyndEntry entry = (SyndEntry) lookup;
 				indexmdText += "* [" + StringEscapeUtils.escapeXml11(entry.getTitle()) + "](" + entry.getLink() + ") "
 						+ sdf.format(entry.getUpdatedDate()) + "\n";
