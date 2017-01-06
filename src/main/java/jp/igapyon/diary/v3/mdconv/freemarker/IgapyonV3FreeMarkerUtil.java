@@ -70,6 +70,7 @@ public class IgapyonV3FreeMarkerUtil {
 		// register custom tag.
 		config.setSharedVariable("rssfeed", new RSSFeedDirectiveModel());
 		config.setSharedVariable("localrss", new LocalRssDirectiveModel());
+		config.setSharedVariable("linkdiary", new LinkDiaryDirectiveModel());
 
 		final Template templateBase = config.getTemplate(relativePath);
 		try {
