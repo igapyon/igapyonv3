@@ -47,7 +47,6 @@ import org.apache.commons.lang3.StringUtils;
 
 import jp.igapyon.diary.v3.util.IgapyonV3Settings;
 import jp.igapyon.diary.v3.util.MdTextUtil;
-import jp.igapyon.diary.v3.util.SimpleRomeUtil;
 
 /**
  * .src.md から .md を生成するためのクラス。
@@ -81,32 +80,12 @@ public class DiarySrcMd2MdConverter {
 	protected final Map<String, String> cacheAtomStringMap = new HashMap<String, String>();
 
 	void processFile(final File file) throws IOException {
-		String convertedString = null;
-		{
-			final Map<String, Object> templateData = new HashMap<String, Object>();
-
-			// Adding igapyonv3 defined values.
-			{
-				final File atomFile = new File(file.getParentFile(), "atom.xml").getCanonicalFile();
-				if (cacheAtomStringMap.get(atomFile.getAbsolutePath()) == null) {
-					cacheAtomStringMap.put(atomFile.getAbsolutePath(), SimpleRomeUtil.atomxml2String(atomFile));
-				}
-				templateData.put("indexAtomXml", cacheAtomStringMap.get(atomFile.getAbsolutePath()));
-			}
-			{
-				final File atomFile = new File(file.getParentFile(), "atomRecent.xml").getCanonicalFile();
-				if (cacheAtomStringMap.get(atomFile.getAbsolutePath()) == null) {
-					cacheAtomStringMap.put(atomFile.getAbsolutePath(), SimpleRomeUtil.atomxml2String(atomFile));
-				}
-				templateData.put("indexAtomRecentXml", cacheAtomStringMap.get(atomFile.getAbsolutePath()));
-			}
-
-			convertedString = IgapyonV3FreeMarkerUtil.process(new File("."), file, templateData);
-		}
+		final Map<String, Object> templateData = new HashMap<String, Object>();
+		final String convertedString = IgapyonV3FreeMarkerUtil.process(new File("."), file, templateData);
 
 		final List<String> lines = new ArrayList<String>();
 		{
-			BufferedReader reader = new BufferedReader(new StringReader(convertedString));
+			final BufferedReader reader = new BufferedReader(new StringReader(convertedString));
 			for (;;) {
 				final String line = reader.readLine();
 				if (line == null) {
