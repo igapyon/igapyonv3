@@ -10,6 +10,7 @@ import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
 import freemarker.template.TemplateExceptionHandler;
+import jp.igapyon.diary.v3.mdconv.freemarker.LocalRssDirectiveModel;
 import jp.igapyon.diary.v3.mdconv.freemarker.RSSFeedDirectiveModel;
 import jp.igapyon.util.IgapyonFileUtil;
 
@@ -70,6 +71,7 @@ public class IgapyonV3FreeMarkerUtil {
 
 		// register custom tag.
 		config.setSharedVariable("rssfeed", new RSSFeedDirectiveModel());
+		config.setSharedVariable("localrss", new LocalRssDirectiveModel());
 
 		final Template templateBase = config.getTemplate(relativePath);
 		try {
