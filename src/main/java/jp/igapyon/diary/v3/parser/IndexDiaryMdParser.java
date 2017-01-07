@@ -70,8 +70,7 @@ public class IndexDiaryMdParser {
 			if (file.isDirectory()) {
 				processDir(file, path + "/" + file.getName());
 			} else if (file.isFile()) {
-				if (file.getName().startsWith(prefixName) && file.getName().endsWith(".md")
-						&& false == file.getName().endsWith(".src.md")) {
+				if (isTargetFile(file.getName())) {
 					processFile(file, path);
 				}
 			}
@@ -83,12 +82,13 @@ public class IndexDiaryMdParser {
 	void processFile(final File file, final String path) throws IOException {
 		final List<String> lines = FileUtils.readLines(file, "UTF-8");
 
-		final String url = "https://igapyon.github.io/diary" + path + "/"
-				+ file.getName().substring(0, file.getName().length() - 3);
-
 		final DiaryItemInfo diaryItemInfo = new DiaryItemInfo();
+
+		// 最終的な URL を導出します。
+		final String url = getUrl(path, file.getName());
 		diaryItemInfo.setUri(url);
 
+		// 該当コンテンツのタイトル行を取得します。
 		for (int index = 0; index < lines.size(); index++) {
 			final String line = lines.get(index);
 			if (line.startsWith("===")) {
@@ -96,9 +96,32 @@ public class IndexDiaryMdParser {
 				break;
 			}
 			diaryItemInfo.setTitle(line);
-
 		}
 
 		diaryItemInfoList.add(diaryItemInfo);
+	}
+
+	/**
+	 * 処理対象のファイルかどうかをファイル名から判定します。
+	 * 
+	 * @param fileName
+	 * @return
+	 */
+	boolean isTargetFile(final String fileName) {
+		return (fileName.startsWith(prefixName) && fileName.endsWith(".md") && false == fileName.endsWith(".src.md"));
+	}
+
+	/**
+	 * 最終的な URL を導出します。
+	 * 
+	 * ファイル名からパス名の一部を導き出します。 .md サフィックスは取り除きます。なぜなら閲覧時にはそれは見えなくなるからです。
+	 * 
+	 * @param path
+	 * @param fileName
+	 * @return
+	 */
+	String getUrl(final String path, final String fileName) {
+		return "https://igapyon.github.io/diary" + path + "/"
+				+ fileName.substring(0, fileName.length() - ".md".length());
 	}
 }
