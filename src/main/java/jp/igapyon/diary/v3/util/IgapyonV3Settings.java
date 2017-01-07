@@ -77,8 +77,8 @@ public class IgapyonV3Settings {
 	public static final String[][] DEFAULT_DOUBLE_KEYWORDS = { //
 			// igapyon's keyword
 			// FIXME TODO これは、keyword ディレクトリからの自動取り込み反映に実装変更の予定。
-			{ "Maven", "https://igapyon.github.io/diary/keyword/Maven.html" }, //
-			{ "FreeMarker", "https://igapyon.github.io/diary/keyword/FreeMarker.html" }, //
+			{ "Maven", "https://igapyon.github.io/diary/keyword/maven.html" }, //
+			{ "FreeMarker", "https://igapyon.github.io/diary/keyword/freemarker.html" }, //
 
 			//
 
