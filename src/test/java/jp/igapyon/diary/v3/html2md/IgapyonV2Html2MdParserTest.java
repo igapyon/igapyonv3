@@ -4,6 +4,8 @@ import java.io.File;
 
 import org.junit.Test;
 
+import jp.igapyon.diary.v3.migration.html2md.IgapyonV2Html2MdUtil;
+
 public class IgapyonV2Html2MdParserTest {
 
 	@Test

@@ -1,4 +1,4 @@
-package jp.igapyon.diary.v3.html2md;
+package jp.igapyon.diary.v3.migration.html2md;
 
 import java.io.File;
 import java.io.IOException;

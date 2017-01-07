@@ -31,7 +31,7 @@
  *  limitations under the License.
  */
 
-package jp.igapyon.diary.v3.html2md;
+package jp.igapyon.diary.v3.migration.html2md;
 
 import java.util.HashMap;
 import java.util.Map;

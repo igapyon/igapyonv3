@@ -31,7 +31,7 @@
  *  limitations under the License.
  */
 
-package jp.igapyon.diary.v3.hatena;
+package jp.igapyon.diary.v3.migration.hatena2md;
 
 import java.io.File;
 import java.io.IOException;

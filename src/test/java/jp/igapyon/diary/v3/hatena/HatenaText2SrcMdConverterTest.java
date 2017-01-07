@@ -5,6 +5,7 @@ import java.io.File;
 import org.junit.Test;
 
 import jp.igapyon.diary.v3.mdconv.DiarySrcMd2MdConverter;
+import jp.igapyon.diary.v3.migration.hatena2md.HatenaText2SrcMdConverter;
 import jp.igapyon.diary.v3.util.IgapyonV3Settings;
 
 public class HatenaText2SrcMdConverterTest {
