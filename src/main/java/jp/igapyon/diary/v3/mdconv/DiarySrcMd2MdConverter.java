@@ -84,7 +84,7 @@ public class DiarySrcMd2MdConverter {
 
 	void processFile(final File file) throws IOException {
 		final Map<String, Object> templateData = new HashMap<String, Object>();
-		final String convertedString = IgapyonV3FreeMarkerUtil.process(new File("."), file, templateData);
+		final String convertedString = IgapyonV3FreeMarkerUtil.process(file, templateData, settings);
 
 		final List<String> lines = new ArrayList<String>();
 		{

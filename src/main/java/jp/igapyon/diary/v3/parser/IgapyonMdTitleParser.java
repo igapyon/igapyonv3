@@ -121,7 +121,6 @@ public class IgapyonMdTitleParser {
 	 * @return
 	 */
 	String getUrl(final String path, final String fileName) {
-		return "https://igapyon.github.io/diary" + path + "/"
-				+ fileName.substring(0, fileName.length() - ".md".length());
+		return settings.getBaseurl() + path + "/" + fileName.substring(0, fileName.length() - ".md".length());
 	}
 }

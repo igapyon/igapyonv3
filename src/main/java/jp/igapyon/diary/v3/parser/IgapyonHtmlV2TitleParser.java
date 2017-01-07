@@ -75,7 +75,6 @@ public class IgapyonHtmlV2TitleParser {
 	/**
 	 * 日記エンジン用設定。現時点では利用していません。
 	 */
-	@SuppressWarnings("unused")
 	private IgapyonV3Settings settings = null;
 
 	/**
@@ -134,7 +133,7 @@ public class IgapyonHtmlV2TitleParser {
 		}
 
 		final String title = getTitleString(source);
-		final String url = "https://igapyon.github.io/diary" + path + "/" + file.getName();
+		final String url = settings.getBaseurl() + path + "/" + file.getName();
 
 		final DiaryItemInfo diaryItemInfo = new DiaryItemInfo();
 		diaryItemInfo.setUri(url);

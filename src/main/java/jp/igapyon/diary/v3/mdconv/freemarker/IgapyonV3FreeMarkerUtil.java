@@ -42,6 +42,7 @@ import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
 import freemarker.template.TemplateExceptionHandler;
+import jp.igapyon.diary.v3.util.IgapyonV3Settings;
 import jp.igapyon.util.IgapyonFileUtil;
 
 /**
@@ -59,14 +60,15 @@ public class IgapyonV3FreeMarkerUtil {
 	 * @return
 	 * @throws IOException
 	 */
-	public static String process(File rootdir, File file, final Map<String, Object> templateData) throws IOException {
+	public static String process(File file, final Map<String, Object> templateData, final IgapyonV3Settings settings)
+			throws IOException {
 		// do canonical
-		rootdir = rootdir.getCanonicalFile();
+		final File rootdir = settings.getRootdir().getCanonicalFile();
 		file = file.getCanonicalFile();
 
 		final String relativePath = IgapyonFileUtil.getRelativePath(rootdir, file);
 
-		final Configuration config = getConfiguration();
+		final Configuration config = getConfiguration(settings);
 
 		final Template templateBase = config.getTemplate(relativePath);
 		try {
@@ -83,7 +85,7 @@ public class IgapyonV3FreeMarkerUtil {
 	 * 
 	 * @return
 	 */
-	public static Configuration getConfiguration() {
+	public static Configuration getConfiguration(final IgapyonV3Settings settings) {
 		// newest version at this point.
 		final Configuration config = new Configuration(Configuration.VERSION_2_3_25);
 		config.setDefaultEncoding("UTF-8");
@@ -111,7 +113,7 @@ public class IgapyonV3FreeMarkerUtil {
 		config.setWhitespaceStripping(false);
 
 		// set my CUSTOM template loader.
-		config.setTemplateLoader(new IgapyonV3TemplateLoader());
+		config.setTemplateLoader(new IgapyonV3TemplateLoader(settings));
 
 		// register custom tag.
 		config.setSharedVariable("rssfeed", new RSSFeedDirectiveModel());

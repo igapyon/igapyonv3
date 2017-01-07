@@ -50,6 +50,11 @@ public class IgapyonV3Settings {
 	private File rootdir = new File(".");
 
 	/**
+	 * 日記のベース URL。最後のスラッシュは含まないこと。
+	 */
+	private String baseurl = "https://igapyon.github.io/diary";
+
+	/**
 	 * TODAY! for newly diary.
 	 */
 	private Date today = null;
@@ -153,5 +158,13 @@ public class IgapyonV3Settings {
 
 	public void setRootdir(File rootdir) {
 		this.rootdir = rootdir;
+	}
+
+	public String getBaseurl() {
+		return baseurl;
+	}
+
+	public void setBaseurl(String baseurl) {
+		this.baseurl = baseurl;
 	}
 }

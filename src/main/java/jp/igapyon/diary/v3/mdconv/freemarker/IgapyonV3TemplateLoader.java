@@ -54,6 +54,7 @@ import com.rometools.rome.io.SyndFeedInput;
 import com.rometools.rome.io.XmlReader;
 
 import freemarker.cache.TemplateLoader;
+import jp.igapyon.diary.v3.util.IgapyonV3Settings;
 
 /**
  * 所定の挙動をおこなうテンプロードローダーです。
@@ -63,6 +64,11 @@ import freemarker.cache.TemplateLoader;
 public class IgapyonV3TemplateLoader implements TemplateLoader {
 	// set my custom template loader.
 
+	/**
+	 * 日記エンジン用設定。
+	 */
+	private IgapyonV3Settings settings = null;
+
 	protected Map<String, String> resourceMap = new HashMap<String, String>();
 
 	/**
@@ -70,7 +76,9 @@ public class IgapyonV3TemplateLoader implements TemplateLoader {
 	 */
 	protected static List<SyndEntry> synEntryList = null;
 
-	public IgapyonV3TemplateLoader() {
+	public IgapyonV3TemplateLoader(final IgapyonV3Settings settings) {
+		this.settings = settings;
+
 		try {
 			ensureLoadAtomXml();
 		} catch (IOException e) {
@@ -201,12 +209,12 @@ public class IgapyonV3TemplateLoader implements TemplateLoader {
 
 			final String firstH2Line = getFirstH2String(actualFile);
 
-			final String targetURL = "https://igapyon.github.io/diary/" + year1 + year2 + "/ig" + year2 + month + day
+			final String targetURL = settings.getBaseurl() + "/" + year1 + year2 + "/ig" + year2 + month + day
 					+ ".html";
 			final int entryIndex = findTargetAtomEntry(targetURL);
 
-			String header = "[top](https://igapyon.github.io/diary/) \n";
-			header += " / [index](https://igapyon.github.io/diary/" + year1 + year2 + "/index.html) \n";
+			String header = "[top](" + settings.getBaseurl() + "/) \n";
+			header += " / [index](" + settings.getBaseurl() + "/" + year1 + year2 + "/index.html) \n";
 
 			if (entryIndex < 0 || entryIndex > synEntryList.size() - 2) {
 				header += " / prev \n";
@@ -228,7 +236,9 @@ public class IgapyonV3TemplateLoader implements TemplateLoader {
 			// ヘッダ追加
 			header += (year1 + year2 + "-" + month + "-" + day + " diary: " + firstH2Line + "\n");
 			header += "=====================================================================================================\n";
-			header += "[![いがぴょん画像(小)](https://igapyon.github.io/diary/images/iga200306s.jpg \"いがぴょん\")](https://igapyon.github.io/diary/memo/memoigapyon.html) 日記形式でつづる [いがぴょん](https://igapyon.github.io/diary/memo/memoigapyon.html)コラム ウェブページです。\n";
+			header += "[![いがぴょん画像(小)](" + settings.getBaseurl() + "/images/iga200306s.jpg \"いがぴょん\")]("
+					+ settings.getBaseurl() + "/memo/memoigapyon.html) 日記形式でつづる [いがぴょん](" + settings.getBaseurl()
+					+ "/memo/memoigapyon.html)コラム ウェブページです。\n";
 			header += "\n";
 
 			load = header + load;
@@ -244,19 +254,22 @@ public class IgapyonV3TemplateLoader implements TemplateLoader {
 			footer += "----------------------------------------------------------------------------------------------------\n";
 			footer += "\n";
 			footer += "## この日記について\n";
-			footer += "[いがぴょんについて](https://igapyon.github.io/diary/memo/memoigapyon.html) / [日記ジェネレータ](https://github.com/igapyon/igapyonv3)\n";
+			footer += "[いがぴょんについて](" + settings.getBaseurl()
+					+ "/memo/memoigapyon.html) / [日記ジェネレータ](https://github.com/igapyon/igapyonv3)\n";
 
 			load += footer;
 		} else {
 			final String firstH2Line = getFirstH2String(actualFile);
 
-			String header = "[top](https://igapyon.github.io/diary/) \n";
+			String header = "[top](" + settings.getBaseurl() + "/) \n";
 			header += "\n";
 
 			// ヘッダ追加
 			header += (firstH2Line + "\n");
 			header += "=====================================================================================================\n";
-			header += "[![いがぴょん画像(小)](https://igapyon.github.io/diary/images/iga200306s.jpg \"いがぴょん\")](https://igapyon.github.io/diary/memo/memoigapyon.html) 日記形式でつづる [いがぴょん](https://igapyon.github.io/diary/memo/memoigapyon.html)コラム ウェブページです。\n";
+			header += "[![いがぴょん画像(小)](" + settings.getBaseurl() + "/images/iga200306s.jpg \"いがぴょん\")]("
+					+ settings.getBaseurl() + "/memo/memoigapyon.html) 日記形式でつづる [いがぴょん](" + settings.getBaseurl()
+					+ "/memo/memoigapyon.html)コラム ウェブページです。\n";
 			header += "\n";
 
 			load = header + load;
@@ -272,7 +285,8 @@ public class IgapyonV3TemplateLoader implements TemplateLoader {
 			footer += "----------------------------------------------------------------------------------------------------\n";
 			footer += "\n";
 			footer += "## この日記について\n";
-			footer += "[いがぴょんについて](https://igapyon.github.io/diary/memo/memoigapyon.html) / [日記ジェネレータ](https://github.com/igapyon/igapyonv3)\n";
+			footer += "[いがぴょんについて](" + settings.getBaseurl()
+					+ "/memo/memoigapyon.html) / [日記ジェネレータ](https://github.com/igapyon/igapyonv3)\n";
 
 			load += footer;
 		}
