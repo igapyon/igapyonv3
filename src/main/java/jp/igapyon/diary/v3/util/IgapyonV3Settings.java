@@ -51,6 +51,16 @@ public class IgapyonV3Settings {
 	private List<String[]> doubleKeywordList = new ArrayList<String[]>();
 
 	/**
+	 * この日記の作成者。
+	 */
+	private String author = "Toshiki Iga";
+
+	/**
+	 * 日記の記述言語。
+	 */
+	private String language = "ja_JP";
+
+	/**
 	 * Default double keywords.
 	 */
 	public static final String[][] DEFAULT_DOUBLE_KEYWORDS = { //
@@ -113,5 +123,21 @@ public class IgapyonV3Settings {
 
 	public List<String[]> getDoubleKeywordList() {
 		return doubleKeywordList;
+	}
+
+	public String getAuthor() {
+		return author;
+	}
+
+	public void setAuthor(String author) {
+		this.author = author;
+	}
+
+	public String getLanguage() {
+		return language;
+	}
+
+	public void setLanguage(String language) {
+		this.language = language;
 	}
 }

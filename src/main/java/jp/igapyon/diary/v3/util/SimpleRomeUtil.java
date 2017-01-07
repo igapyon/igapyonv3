@@ -133,14 +133,13 @@ public class SimpleRomeUtil {
 	 * @throws IOException
 	 */
 	public static void itemList2AtomXml(final List<DiaryItemInfo> diaryItemInfoList, final File targetAtomFile,
-			final String title) throws IOException {
+			final String title, final IgapyonV3Settings settings) throws IOException {
 		final SyndFeed feed = new SyndFeedImpl();
 		feed.setTitle(title);
-		// FIXME should be variable.
-		feed.setAuthor("Toshiki Iga");
+		feed.setAuthor(settings.getAuthor());
 		feed.setEncoding("UTF-8");
 		feed.setGenerator("https://github.com/igapyon/igapyonv3");
-		feed.setLanguage("ja_JP");
+		feed.setLanguage(settings.getLanguage());
 		feed.setFeedType("atom_1.0");
 
 		// sort desc order
@@ -151,7 +150,7 @@ public class SimpleRomeUtil {
 			entry.setTitle(diaryItemInfo.getTitle());
 			entry.setUri(diaryItemInfo.getUri());
 			entry.setLink(diaryItemInfo.getUri());
-			entry.setAuthor("Toshiki Iga");
+			entry.setAuthor(settings.getAuthor());
 			feed.getEntries().add(entry);
 		}
 
