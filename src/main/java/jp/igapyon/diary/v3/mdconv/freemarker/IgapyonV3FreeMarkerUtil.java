@@ -71,6 +71,7 @@ public class IgapyonV3FreeMarkerUtil {
 		config.setSharedVariable("rssfeed", new RSSFeedDirectiveModel());
 		config.setSharedVariable("localrss", new LocalRssDirectiveModel());
 		config.setSharedVariable("linkdiary", new LinkDiaryDirectiveModel());
+		config.setSharedVariable("linkamazon", new LinkAmazonDirectiveModel());
 
 		final Template templateBase = config.getTemplate(relativePath);
 		try {
