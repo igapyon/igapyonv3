@@ -104,9 +104,7 @@ public class IndexDiaryHtmlParser {
 			if (file.isDirectory()) {
 				processDir(file, path + "/" + file.getName());
 			} else if (file.isFile()) {
-				if (file.getName().startsWith("ig") && file.getName().endsWith(".html")
-						&& false == file.getName().endsWith(".src.html")
-						&& false == file.getName().endsWith("-orig.html")) {
+				if (isTargetFile(file.getName())) {
 					processFile(file, path);
 				}
 			}
@@ -154,6 +152,7 @@ public class IndexDiaryHtmlParser {
 
 		{
 			// タイトル先頭部の日付形式をハイフンに変換
+			// これは、いがぴょんの日記v2 形式のものを v3 形式で利用している ISO 形式に変換する処理に当たる。
 			String titleDate = title.substring(0, 10);
 			titleDate = StringUtils.replaceChars(titleDate, "/", "-");
 			title = titleDate + title.substring(10);
@@ -166,5 +165,16 @@ public class IndexDiaryHtmlParser {
 		diaryItemInfo.setTitle(title);
 
 		diaryItemInfoList.add(diaryItemInfo);
+	}
+
+	/**
+	 * 処理対象のファイルかどうかをファイル名から判定します。
+	 * 
+	 * @param fileName
+	 * @return
+	 */
+	boolean isTargetFile(final String fileName) {
+		return (fileName.startsWith("ig") && fileName.endsWith(".html") && false == fileName.endsWith(".src.html")
+				&& false == fileName.endsWith("-orig.html"));
 	}
 }
