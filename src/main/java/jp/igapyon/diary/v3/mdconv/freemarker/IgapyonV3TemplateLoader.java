@@ -87,8 +87,7 @@ public class IgapyonV3TemplateLoader implements TemplateLoader {
 	}
 
 	public void ensureLoadAtomXml() throws IOException {
-		// FIXME dot file. should be like rootdir.
-		final File atomXmlFile = new File("./atom.xml");
+		final File atomXmlFile = new File(settings.getRootdir(), "atom.xml");
 		if (synEntryList == null) {
 			synEntryList = new ArrayList<SyndEntry>();
 			if (atomXmlFile.exists() == false) {
