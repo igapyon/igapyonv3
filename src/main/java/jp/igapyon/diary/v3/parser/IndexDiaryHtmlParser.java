@@ -65,6 +65,8 @@ import jp.igapyon.diary.v3.util.SimpleTagSoupUtil;
  * 既存 HTML のタイトルが、所定の日記形式テキストから開始されていることが大前提となります。
  * また、ディレクトリ構造が年付きの構造になっていることも重要です。（いがぴょんの日記v2 形式）
  * 
+ * XPath をもちいてタイトル要素のテキストを取得します。
+ * 
  * @author Toshiki Iga
  */
 public class IndexDiaryHtmlParser {
@@ -139,6 +141,7 @@ public class IndexDiaryHtmlParser {
 
 			final XPath xpath = XPathFactory.newInstance().newXPath();
 
+			// XPath をもちいてタイトル要素のテキストを取得します。
 			title = (String) xpath.evaluate("/html/head/title/text()", document, XPathConstants.STRING);
 		} catch (ParserConfigurationException e) {
 			throw new IOException(e);
