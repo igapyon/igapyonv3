@@ -50,7 +50,12 @@ import freemarker.template.TemplateModelException;
 /**
  * 検索エンジンへのリンク用のディレクティブモデル
  * 
+ * <@linksearch title="いがぴょん検索" word="いがぴょん" />
  * 
+ * <@linksearch title="いがぴょん検索サイト内" word="いがぴょん" site=
+ * "https://igapyon.github.io/diary/" />
+ * 
+ * <@linksearch title="いがぴょんTwitter" word="伊賀敏樹" engine="twitter" />
  * 
  * @author Toshiki Iga
  */
