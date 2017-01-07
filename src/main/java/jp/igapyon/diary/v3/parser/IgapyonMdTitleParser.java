@@ -48,7 +48,7 @@ import jp.igapyon.diary.v3.util.IgapyonV3Settings;
  * 
  * @author Toshiki Iga
  */
-public class IndexDiaryMdParser {
+public class IgapyonMdTitleParser {
 	@SuppressWarnings("unused")
 	private IgapyonV3Settings settings = null;
 
@@ -56,7 +56,7 @@ public class IndexDiaryMdParser {
 
 	private String prefixName = "ig";
 
-	public IndexDiaryMdParser(final IgapyonV3Settings settings, final String prefixName) {
+	public IgapyonMdTitleParser(final IgapyonV3Settings settings, final String prefixName) {
 		this.settings = settings;
 		this.prefixName = prefixName;
 	}

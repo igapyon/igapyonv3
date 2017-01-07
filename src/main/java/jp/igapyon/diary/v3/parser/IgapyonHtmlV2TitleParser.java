@@ -60,7 +60,7 @@ import jp.igapyon.diary.v3.util.IgapyonV3Settings;
 import jp.igapyon.diary.v3.util.SimpleTagSoupUtil;
 
 /**
- * 既存 HTML からタイトル一覧を取得します。
+ * 既存 HTML (いがぴょんの日記v2形式) からタイトル一覧を取得します。
  * 
  * 既存 HTML のタイトルが、所定の日記形式テキストから開始されていることが大前提となります。
  * また、ディレクトリ構造が年付きの構造になっていることも重要です。（いがぴょんの日記v2 形式）
@@ -69,7 +69,7 @@ import jp.igapyon.diary.v3.util.SimpleTagSoupUtil;
  * 
  * @author Toshiki Iga
  */
-public class IndexDiaryHtmlParser {
+public class IgapyonHtmlV2TitleParser {
 	private List<DiaryItemInfo> diaryItemInfoList = new ArrayList<DiaryItemInfo>();
 
 	/**
@@ -83,7 +83,7 @@ public class IndexDiaryHtmlParser {
 	 * 
 	 * @param settings
 	 */
-	public IndexDiaryHtmlParser(final IgapyonV3Settings settings) {
+	public IgapyonHtmlV2TitleParser(final IgapyonV3Settings settings) {
 		this.settings = settings;
 	}
 

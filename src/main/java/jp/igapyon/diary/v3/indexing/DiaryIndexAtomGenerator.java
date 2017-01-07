@@ -41,8 +41,8 @@ import java.util.List;
 
 import jp.igapyon.diary.v3.item.DiaryItemInfo;
 import jp.igapyon.diary.v3.item.DiaryItemInfoComparator;
-import jp.igapyon.diary.v3.parser.IndexDiaryHtmlParser;
-import jp.igapyon.diary.v3.parser.IndexDiaryMdParser;
+import jp.igapyon.diary.v3.parser.IgapyonHtmlV2TitleParser;
+import jp.igapyon.diary.v3.parser.IgapyonMdTitleParser;
 import jp.igapyon.diary.v3.util.IgapyonV3Settings;
 import jp.igapyon.diary.v3.util.SimpleRomeUtil;
 
@@ -63,10 +63,10 @@ public class DiaryIndexAtomGenerator {
 		{
 			// ファイルからファイル一覧情報を作成します。
 			System.err.println("Listing md files.");
-			final List<DiaryItemInfo> diaryItemInfoList = new IndexDiaryMdParser(settings, "ig").processDir(rootdir,
+			final List<DiaryItemInfo> diaryItemInfoList = new IgapyonMdTitleParser(settings, "ig").processDir(rootdir,
 					"");
 			System.err.println("Listing html files.");
-			final List<DiaryItemInfo> diaryItemInfoHtmlList = new IndexDiaryHtmlParser(settings).processDir(rootdir,
+			final List<DiaryItemInfo> diaryItemInfoHtmlList = new IgapyonHtmlV2TitleParser(settings).processDir(rootdir,
 					"");
 			diaryItemInfoList.addAll(diaryItemInfoHtmlList);
 
@@ -101,11 +101,11 @@ public class DiaryIndexAtomGenerator {
 
 			// ファイルからファイル一覧情報を作成します。
 			System.err.println("Listing md files for :" + year);
-			final List<DiaryItemInfo> diaryItemInfoList = new IndexDiaryMdParser(settings, "ig")
+			final List<DiaryItemInfo> diaryItemInfoList = new IgapyonMdTitleParser(settings, "ig")
 					.processDir(new File(rootdir, year), "/" + year);
 
 			System.err.println("Listing html files for :" + year);
-			final List<DiaryItemInfo> diaryItemInfoHtmlList = new IndexDiaryHtmlParser(settings)
+			final List<DiaryItemInfo> diaryItemInfoHtmlList = new IgapyonHtmlV2TitleParser(settings)
 					.processDir(new File(rootdir, year), "/" + year);
 			diaryItemInfoList.addAll(diaryItemInfoHtmlList);
 
@@ -118,10 +118,10 @@ public class DiaryIndexAtomGenerator {
 
 		{
 			// memo dir
-			final List<DiaryItemInfo> diaryItemInfoList = new IndexDiaryMdParser(settings, "memo")
+			final List<DiaryItemInfo> diaryItemInfoList = new IgapyonMdTitleParser(settings, "memo")
 					.processDir(new File(rootdir, "memo"), "/memo");
 
-			final List<DiaryItemInfo> diaryItemInfoHtmlList = new IndexDiaryHtmlParser(settings)
+			final List<DiaryItemInfo> diaryItemInfoHtmlList = new IgapyonHtmlV2TitleParser(settings)
 					.processDir(new File(rootdir, "memo"), "/memo");
 			diaryItemInfoList.addAll(diaryItemInfoHtmlList);
 
@@ -133,7 +133,7 @@ public class DiaryIndexAtomGenerator {
 
 		{
 			// keyword dir
-			final List<DiaryItemInfo> diaryItemInfoList = new IndexDiaryMdParser(settings, "")
+			final List<DiaryItemInfo> diaryItemInfoList = new IgapyonMdTitleParser(settings, "")
 					.processDir(new File(rootdir, "keyword"), "/keyword");
 
 			Collections.sort(diaryItemInfoList, new DiaryItemInfoComparator(false));
