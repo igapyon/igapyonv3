@@ -56,7 +56,7 @@ import com.rometools.rome.io.XmlReader;
 import freemarker.cache.TemplateLoader;
 
 /**
- * 
+ * 所定の挙動をおこなうテンプロードローダーです。
  * 
  * @author Toshiki Iga
  */

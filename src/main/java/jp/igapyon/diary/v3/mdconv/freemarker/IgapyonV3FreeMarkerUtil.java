@@ -36,7 +36,6 @@ package jp.igapyon.diary.v3.mdconv.freemarker;
 import java.io.File;
 import java.io.IOException;
 import java.io.StringWriter;
-import java.util.HashMap;
 import java.util.Map;
 
 import freemarker.template.Configuration;
@@ -51,24 +50,15 @@ import jp.igapyon.util.IgapyonFileUtil;
  * @author Toshiki Iga
  */
 public class IgapyonV3FreeMarkerUtil {
-
-	public static void main(String[] args) throws IOException {
-		final Map<String, Object> templateData = new HashMap<String, Object>();
-		templateData.put("user", "Taro Yamada");
-
-		// for Ant build.xml
-		templateData.put("encoding", "${encoding}");
-
-		{
-			// DummyVOMvnProject obj = new DummyVOMvnProject();
-			// for Maven pom.xml
-			// ${project.build.directory}
-			// templateData.put("project", obj);
-		}
-
-		IgapyonV3FreeMarkerUtil.process(new File("."), new File("test/data/hatena/ig161227.html.src.md"), templateData);
-	}
-
+	/**
+	 * FreeMarker を使ったテンプレート変換処理を実行します。
+	 * 
+	 * @param rootdir
+	 * @param file
+	 * @param templateData
+	 * @return
+	 * @throws IOException
+	 */
 	public static String process(File rootdir, File file, final Map<String, Object> templateData) throws IOException {
 		// do canonical
 		rootdir = rootdir.getCanonicalFile();
@@ -76,6 +66,24 @@ public class IgapyonV3FreeMarkerUtil {
 
 		final String relativePath = IgapyonFileUtil.getRelativePath(rootdir, file);
 
+		final Configuration config = getConfiguration();
+
+		final Template templateBase = config.getTemplate(relativePath);
+		try {
+			final StringWriter writer = new StringWriter();
+			templateBase.process(templateData, writer);
+			return writer.toString();
+		} catch (TemplateException e) {
+			throw new IOException(e);
+		}
+	}
+
+	/**
+	 * IgayponV3 で利用するデフォルトのコンフィグレーションを取得します。
+	 * 
+	 * @return
+	 */
+	public static Configuration getConfiguration() {
 		// newest version at this point.
 		final Configuration config = new Configuration(Configuration.VERSION_2_3_25);
 		config.setDefaultEncoding("UTF-8");
@@ -102,7 +110,7 @@ public class IgapyonV3FreeMarkerUtil {
 		config.setRecognizeStandardFileExtensions(false);
 		config.setWhitespaceStripping(false);
 
-		// set my custom template loader.
+		// set my CUSTOM template loader.
 		config.setTemplateLoader(new IgapyonV3TemplateLoader());
 
 		// register custom tag.
@@ -112,13 +120,6 @@ public class IgapyonV3FreeMarkerUtil {
 		config.setSharedVariable("linksearch", new LinkSearchDirectiveModel());
 		config.setSharedVariable("linkamazon", new LinkAmazonDirectiveModel());
 
-		final Template templateBase = config.getTemplate(relativePath);
-		try {
-			final StringWriter writer = new StringWriter();
-			templateBase.process(templateData, writer);
-			return writer.toString();
-		} catch (TemplateException e) {
-			throw new IOException(e);
-		}
+		return config;
 	}
 }
