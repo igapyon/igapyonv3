@@ -47,6 +47,8 @@ import freemarker.template.TemplateModelException;
 /**
  * Amazon コンテンツへのリンク用のディレクティブモデル
  * 
+ * <@linkamazon title="やさしく学ぶ基礎からのJDBC" dp="4839913935" />
+ * 
  * @author Toshiki Iga
  */
 public class LinkAmazonDirectiveModel implements TemplateDirectiveModel {
