@@ -74,6 +74,14 @@
 			<version>[3.5,4.0)</version>
 		</dependency>
 
+		<!-- URLCodec -->
+		<!-- https://mvnrepository.com/artifact/commons-codec/commons-codec -->
+		<dependency>
+			<groupId>commons-codec</groupId>
+			<artifactId>commons-codec</artifactId>
+			<version>[1.10,2.0)</version>
+		</dependency>
+
 		<!-- normalize html tag -->
 		<!-- https://mvnrepository.com/artifact/org.ccil.cowan.tagsoup/tagsoup -->
 		<dependency>

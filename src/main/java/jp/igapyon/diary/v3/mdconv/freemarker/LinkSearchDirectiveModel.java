@@ -37,6 +37,9 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.util.Map;
 
+import org.apache.commons.codec.EncoderException;
+import org.apache.commons.codec.net.URLCodec;
+
 import freemarker.core.Environment;
 import freemarker.template.TemplateDirectiveBody;
 import freemarker.template.TemplateDirectiveModel;
@@ -67,8 +70,19 @@ public class LinkSearchDirectiveModel implements TemplateDirectiveModel {
 		// SimpleScalar#toString()
 		final String titleString = params.get("title").toString();
 		final String wordString = params.get("word").toString();
+		String siteString = null;
+		if (params.get("site") != null) {
+			siteString = params.get("site").toString();
+		}
 
-		writer.write("[" + titleString + "](https://www.google.co.jp/#pws=0&q=" + wordString + ")");
+		final URLCodec codec = new URLCodec();
+		try {
+			writer.write("[" + titleString + "](https://www.google.co.jp/#pws=0&q="
+					+ (siteString == null ? "" : "site:" + codec.encode(siteString) + "+") + codec.encode(wordString)
+					+ ")");
+		} catch (EncoderException e) {
+			throw new IOException(e);
+		}
 
 		writer.flush();
 	}
