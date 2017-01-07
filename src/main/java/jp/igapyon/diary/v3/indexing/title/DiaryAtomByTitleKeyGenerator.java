@@ -10,6 +10,10 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.commons.codec.EncoderException;
+import org.apache.commons.codec.net.URLCodec;
+import org.apache.commons.io.FileUtils;
+
 import com.rometools.rome.feed.synd.SyndEntry;
 import com.rometools.rome.feed.synd.SyndFeed;
 import com.rometools.rome.io.FeedException;
@@ -18,10 +22,10 @@ import com.rometools.rome.io.XmlReader;
 
 import jp.igapyon.diary.v3.util.IgapyonV3Settings;
 
-public class DiaryAtomByTitleGenerator {
+public class DiaryAtomByTitleKeyGenerator {
 	private IgapyonV3Settings settings = null;
 
-	public DiaryAtomByTitleGenerator(final IgapyonV3Settings settings) {
+	public DiaryAtomByTitleKeyGenerator(final IgapyonV3Settings settings) {
 		this.settings = settings;
 	}
 
@@ -74,6 +78,43 @@ public class DiaryAtomByTitleGenerator {
 				word = word.substring(1, word.length() - 1);
 				if (keywordEntryMap.get(word) == null) {
 					System.out.println("  新規キー:" + word);
+
+					{
+						final List<String> lines = new ArrayList<String>();
+						lines.add("[index](https://igapyon.github.io/diary/keyword/index.html)");
+						lines.add("");
+						lines.add("## " + word);
+						lines.add("");
+						lines.add("[[+word+]] は、、、、です。");
+						lines.add("");
+						lines.add("### URL");
+						lines.add("");
+						lines.add("* TBD URL");
+						lines.add("");
+						lines.add("### 特徴");
+						lines.add("");
+						lines.add("* TBD URL");
+						lines.add("");
+						lines.add("### まとめ情報");
+						lines.add("");
+						lines.add("* TBD URL");
+						lines.add("* <@linksearch title=\"Search on Igapyon Diary\" word=\"" + word
+								+ "\" site=\"https://igapyon.github.io/diary/\" />");
+						lines.add("* <@linksearch title=\"Search in Google\" word=\"" + word + "\" />");
+						lines.add("* <@linksearch title=\"Search in Twitter\" word=\"" + word
+								+ "\" engine=\"twitter\" />");
+						lines.add("");
+
+						try {
+							FileUtils
+									.writeLines(
+											new File(settings.getRootdir().getCanonicalPath() + "/keyword/"
+													+ "atomTitleKey-" + new URLCodec().encode(word) + ".xml"),
+											lines, "UTF-8");
+						} catch (EncoderException e) {
+							throw new IOException(e);
+						}
+					}
 				} else {
 					System.out.println("  " + word + ", " + keywordEntryMap.get(word).getLink());
 
@@ -90,6 +131,6 @@ public class DiaryAtomByTitleGenerator {
 	public static void main(final String[] args) throws IOException {
 		IgapyonV3Settings settings = new IgapyonV3Settings();
 		settings.setRootdir(new File("../diary"));
-		new DiaryAtomByTitleGenerator(settings).process();
+		new DiaryAtomByTitleKeyGenerator(settings).process();
 	}
 }
