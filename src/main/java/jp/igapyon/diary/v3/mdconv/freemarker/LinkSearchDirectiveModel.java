@@ -34,17 +34,8 @@
 package jp.igapyon.diary.v3.mdconv.freemarker;
 
 import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.Map;
-
-import com.rometools.rome.feed.synd.SyndEntry;
-import com.rometools.rome.feed.synd.SyndFeed;
-import com.rometools.rome.io.FeedException;
-import com.rometools.rome.io.SyndFeedInput;
-import com.rometools.rome.io.XmlReader;
 
 import freemarker.core.Environment;
 import freemarker.template.TemplateDirectiveBody;
@@ -54,54 +45,30 @@ import freemarker.template.TemplateModel;
 import freemarker.template.TemplateModelException;
 
 /**
- * ローカル日記へのリンク用のディレクティブモデル
+ * 検索エンジンへのリンク用のディレクティブモデル
  * 
- * <@linkdiary date="2017-01-02" />
+ * 
  * 
  * @author Toshiki Iga
  */
-public class LinkDiaryDirectiveModel implements TemplateDirectiveModel {
-	/**
-	 * キャッシュ用オブジェクト。
-	 */
-	protected Map<String, SyndEntry> cacheAtomMap = null;
+public class LinkSearchDirectiveModel implements TemplateDirectiveModel {
 
 	public void execute(final Environment env, @SuppressWarnings("rawtypes") final Map params,
 			final TemplateModel[] loopVars, final TemplateDirectiveBody body) throws TemplateException, IOException {
 		final BufferedWriter writer = new BufferedWriter(env.getOut());
 
-		if (cacheAtomMap == null) {
-			cacheAtomMap = new HashMap<String, SyndEntry>();
-
-			try {
-				// FIXME should be rootdir
-				final SyndFeed synFeed = new SyndFeedInput()
-						.build(new XmlReader(new FileInputStream(new File("atom.xml"))));
-
-				for (Object lookup : synFeed.getEntries()) {
-					final SyndEntry entry = (SyndEntry) lookup;
-					cacheAtomMap.put(entry.getTitle().substring(0, 10), entry);
-				}
-			} catch (FeedException e) {
-				throw new IOException(e);
-			}
+		if (params.get("title") == null) {
+			throw new TemplateModelException("title param is required.");
 		}
-
-		if (params.get("date") == null) {
-			throw new TemplateModelException("date param is required.");
+		if (params.get("word") == null) {
+			throw new TemplateModelException("word param is required.");
 		}
 
 		// SimpleScalar#toString()
-		final String dateString = params.get("date").toString();
+		final String titleString = params.get("title").toString();
+		final String wordString = params.get("word").toString();
 
-		{
-			final SyndEntry entry = cacheAtomMap.get(dateString);
-			if (entry == null) {
-				writer.write("ERROR: no such [" + dateString + "] diary.");
-			} else {
-				writer.write("[" + entry.getTitle() + "](" + entry.getLink() + ")");
-			}
-		}
+		writer.write("[" + titleString + "](https://www.google.co.jp/#pws=0&q=" + wordString + ")");
 
 		writer.flush();
 	}
