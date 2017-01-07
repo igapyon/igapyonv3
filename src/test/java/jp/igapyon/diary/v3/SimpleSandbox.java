@@ -10,6 +10,7 @@ import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateExceptionHandler;
 import jp.igapyon.diary.v3.mdconv.freemarker.IgapyonV3TemplateLoader;
+import jp.igapyon.diary.v3.util.IgapyonV3Settings;
 
 public class SimpleSandbox {
 	@Test
@@ -20,7 +21,7 @@ public class SimpleSandbox {
 		config.setLogTemplateExceptions(false);
 
 		// set my custom template loader.
-		config.setTemplateLoader(new IgapyonV3TemplateLoader());
+		config.setTemplateLoader(new IgapyonV3TemplateLoader(new IgapyonV3Settings()));
 
 		final Map<String, String> templateData = new HashMap<String, String>();
 		templateData.put("user", "Taro Yamada");
