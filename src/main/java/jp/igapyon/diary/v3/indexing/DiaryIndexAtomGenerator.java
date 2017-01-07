@@ -58,23 +58,23 @@ public class DiaryIndexAtomGenerator {
 		this.settings = settings;
 	}
 
-	public void process(final File rootdir) throws IOException {
+	public void process() throws IOException {
 		// ルートディレクトリ用
 		{
 			// ファイルからファイル一覧情報を作成します。
 			System.err.println("Listing md files.");
-			final List<DiaryItemInfo> diaryItemInfoList = new IgapyonMdTitleParser(settings, "ig").processDir(rootdir,
-					"");
+			final List<DiaryItemInfo> diaryItemInfoList = new IgapyonMdTitleParser(settings, "ig")
+					.processDir(settings.getRootdir(), "");
 			System.err.println("Listing html files.");
-			final List<DiaryItemInfo> diaryItemInfoHtmlList = new IgapyonHtmlV2TitleParser(settings).processDir(rootdir,
-					"");
+			final List<DiaryItemInfo> diaryItemInfoHtmlList = new IgapyonHtmlV2TitleParser(settings)
+					.processDir(settings.getRootdir(), "");
 			diaryItemInfoList.addAll(diaryItemInfoHtmlList);
 
 			// sort them
 			Collections.sort(diaryItemInfoList, new DiaryItemInfoComparator(true));
 
-			SimpleRomeUtil.itemList2AtomXml(diaryItemInfoList, new File(rootdir, "atom.xml"), "Igapyon Diary v3 all",
-					settings);
+			SimpleRomeUtil.itemList2AtomXml(diaryItemInfoList, new File(settings.getRootdir(), "atom.xml"),
+					"Igapyon Diary v3 all", settings);
 
 			{
 				int diaryListupCount = 15;
@@ -89,7 +89,7 @@ public class DiaryIndexAtomGenerator {
 					}
 				}
 
-				SimpleRomeUtil.itemList2AtomXml(recentItemInfoList, new File(rootdir, "atomRecent.xml"),
+				SimpleRomeUtil.itemList2AtomXml(recentItemInfoList, new File(settings.getRootdir(), "atomRecent.xml"),
 						"Igapyon Diary v3 recent", settings);
 			}
 		}
@@ -103,43 +103,43 @@ public class DiaryIndexAtomGenerator {
 			// ファイルからファイル一覧情報を作成します。
 			System.err.println("Listing md files for :" + year);
 			final List<DiaryItemInfo> diaryItemInfoList = new IgapyonMdTitleParser(settings, "ig")
-					.processDir(new File(rootdir, year), "/" + year);
+					.processDir(new File(settings.getRootdir(), year), "/" + year);
 
 			System.err.println("Listing html files for :" + year);
 			final List<DiaryItemInfo> diaryItemInfoHtmlList = new IgapyonHtmlV2TitleParser(settings)
-					.processDir(new File(rootdir, year), "/" + year);
+					.processDir(new File(settings.getRootdir(), year), "/" + year);
 			diaryItemInfoList.addAll(diaryItemInfoHtmlList);
 
 			// sort them
 			Collections.sort(diaryItemInfoList, new DiaryItemInfoComparator(false));
 
-			SimpleRomeUtil.itemList2AtomXml(diaryItemInfoList, new File(rootdir, year + "/atom.xml"),
+			SimpleRomeUtil.itemList2AtomXml(diaryItemInfoList, new File(settings.getRootdir(), year + "/atom.xml"),
 					"Igapyon Diary v3 year " + year, settings);
 		}
 
 		{
 			// memo dir
 			final List<DiaryItemInfo> diaryItemInfoList = new IgapyonMdTitleParser(settings, "memo")
-					.processDir(new File(rootdir, "memo"), "/memo");
+					.processDir(new File(settings.getRootdir(), "memo"), "/memo");
 
 			final List<DiaryItemInfo> diaryItemInfoHtmlList = new IgapyonHtmlV2TitleParser(settings)
-					.processDir(new File(rootdir, "memo"), "/memo");
+					.processDir(new File(settings.getRootdir(), "memo"), "/memo");
 			diaryItemInfoList.addAll(diaryItemInfoHtmlList);
 
 			Collections.sort(diaryItemInfoList, new DiaryItemInfoComparator(false));
 
-			SimpleRomeUtil.itemList2AtomXml(diaryItemInfoList, new File(rootdir, "memo" + "/atom.xml"),
+			SimpleRomeUtil.itemList2AtomXml(diaryItemInfoList, new File(settings.getRootdir(), "memo" + "/atom.xml"),
 					"Igapyon Diary v3 memo", settings);
 		}
 
 		{
 			// keyword dir
 			final List<DiaryItemInfo> diaryItemInfoList = new IgapyonMdTitleParser(settings, "")
-					.processDir(new File(rootdir, "keyword"), "/keyword");
+					.processDir(new File(settings.getRootdir(), "keyword"), "/keyword");
 
 			Collections.sort(diaryItemInfoList, new DiaryItemInfoComparator(false));
 
-			SimpleRomeUtil.itemList2AtomXml(diaryItemInfoList, new File(rootdir, "keyword" + "/atom.xml"),
+			SimpleRomeUtil.itemList2AtomXml(diaryItemInfoList, new File(settings.getRootdir(), "keyword" + "/atom.xml"),
 					"Igapyon Diary v3 keyword", settings);
 		}
 	}
