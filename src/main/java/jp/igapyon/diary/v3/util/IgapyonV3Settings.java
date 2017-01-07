@@ -34,9 +34,17 @@
 package jp.igapyon.diary.v3.util;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import com.rometools.rome.feed.synd.SyndEntry;
+import com.rometools.rome.feed.synd.SyndFeed;
+import com.rometools.rome.io.FeedException;
+import com.rometools.rome.io.SyndFeedInput;
+import com.rometools.rome.io.XmlReader;
 
 /**
  * いがぴょんの日記v3 システムのための基本設定クラス。
@@ -76,9 +84,9 @@ public class IgapyonV3Settings {
 	 */
 	public static final String[][] DEFAULT_DOUBLE_KEYWORDS = { //
 			// igapyon's keyword
+
+			// 処理の過程で、keyword 以下のキーワードがしょっぱなに登録されます。
 			// FIXME TODO これは、keyword ディレクトリからの自動取り込み反映に実装変更の予定。
-			{ "Maven", "https://igapyon.github.io/diary/keyword/maven.html" }, //
-			{ "FreeMarker", "https://igapyon.github.io/diary/keyword/freemarker.html" }, //
 
 			//
 
@@ -91,21 +99,24 @@ public class IgapyonV3Settings {
 			{ "blancoResourceBundle", "http://www.igapyon.jp/blanco/blancoresourcebundle.html" },
 			{ "blancoMailCore", "http://www.igapyon.jp/blanco/blancomailcore.html" },
 			{ "Chrome", "https://www.google.co.jp/chrome/browser/" }, { "Selenium", "http://www.seleniumhq.org/" },
-			{ "Groovy", "http://www.groovy-lang.org/" },
-			{ "Java", "http://www.oracle.com/technetwork/java/index.html" },
+			// { "Java", "http://www.oracle.com/technetwork/java/index.html" },
 			{ "Object Pascal", "https://ja.wikipedia.org/wiki/Object_Pascal" },
-			{ "Force.com", "https://www.salesforce.com/products/platform/products/force/" },
-			{ "LLVM", "http://llvm.org/" }, { "OpenDocument", "https://ja.wikipedia.org/wiki/OpenDocument" },
+			// { "Force.com",
+			// "https://www.salesforce.com/products/platform/products/force/" },
+			// { "LLVM", "http://llvm.org/" }, { "OpenDocument",
+			// "https://ja.wikipedia.org/wiki/OpenDocument" },
 
 			// oss
-			{ "Apache", "https://www.apache.org/" }, { "Axis2", "https://axis.apache.org/axis2/java/core/" },
+			// { "Apache", "https://www.apache.org/" }, { "Axis2",
+			// "https://axis.apache.org/axis2/java/core/" },
 			{ "JExcelApi", "http://jexcelapi.sourceforge.net/" }, { "OmegaT", "http://www.omegat.org/ja/omegat.html" },
-			{ "Jersey", "https://jersey.java.net/" },
+			// { "Jersey", "https://jersey.java.net/" },
 
 			// it
 			{ "IoT", "https://ja.wikipedia.org/wiki/%E3%83%A2%E3%83%8E%E3%81%AE%E3%82%A4%E3%83%B3%E3%82%BF%E3%83%BC%E3%83%8D%E3%83%83%E3%83%88" },
 			{ "AirPrint", "https://support.apple.com/ja-jp/HT201311" }, { "Cordova", "https://cordova.apache.org/" },
-			{ "VMware", "http://www.vmware.com/jp.html" }, { "iOS", "http://www.apple.com/jp/ios/ios-10/" },
+			// { "VMware", "http://www.vmware.com/jp.html" }, { "iOS",
+			// "http://www.apple.com/jp/ios/ios-10/" },
 
 			// embarcadero
 			{ "RAD Studio", "https://www.embarcadero.com/jp/products/rad-studio" },
@@ -114,7 +125,8 @@ public class IgapyonV3Settings {
 			{ "InterBase", "https://ja.wikipedia.org/wiki/InterBase" },
 			{ "FireUI", "https://www.embarcadero.com/jp/products/rad-studio/fireui" },
 			{ "VCL", "https://ja.wikipedia.org/wiki/Visual_Component_Library" },
-			{ "C++Builder", "https://www.embarcadero.com/jp/products/cbuilder" },
+			// { "C++Builder",
+			// "https://www.embarcadero.com/jp/products/cbuilder" },
 
 			// names
 			{ "ネコバス", "http://nlab.itmedia.co.jp/nl/articles/1607/15/news147.html" },//
@@ -122,17 +134,33 @@ public class IgapyonV3Settings {
 
 	public IgapyonV3Settings() {
 		today = new Date();
-
-		for (String[] lookup : DEFAULT_DOUBLE_KEYWORDS) {
-			doubleKeywordList.add(lookup);
-		}
 	}
 
 	public Date getToday() {
 		return today;
 	}
 
-	public List<String[]> getDoubleKeywordList() {
+	public List<String[]> getDoubleKeywordList() throws IOException {
+		if (doubleKeywordList.size() == 0) {
+			// keyword ディレクトリをロード。
+			// キーワードのリストを読み込み。
+			try {
+				final File fileAtom = new File(getRootdir().getCanonicalPath() + "/keyword", "atom.xml");
+				if (fileAtom.exists()) {
+					final SyndFeed synFeed = new SyndFeedInput().build(new XmlReader(new FileInputStream(fileAtom)));
+					for (Object lookup : synFeed.getEntries()) {
+						final SyndEntry entry = (SyndEntry) lookup;
+						doubleKeywordList.add(new String[] { entry.getTitle(), entry.getLink() });
+					}
+				}
+			} catch (FeedException e) {
+				throw new IOException(e);
+			}
+
+			for (String[] lookup : DEFAULT_DOUBLE_KEYWORDS) {
+				doubleKeywordList.add(lookup);
+			}
+		}
 		return doubleKeywordList;
 	}
 

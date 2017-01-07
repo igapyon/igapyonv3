@@ -33,6 +33,7 @@
 
 package jp.igapyon.diary.v3.util;
 
+import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -96,7 +97,8 @@ public class MdTextUtil {
 				+ convertSimpleUrl2MdLink(source.substring(matURL.end()));
 	}
 
-	public static String convertDoubleKeyword2MdLink(final String source, final IgapyonV3Settings settings) {
+	public static String convertDoubleKeyword2MdLink(final String source, final IgapyonV3Settings settings)
+			throws IOException {
 
 		// [[key]]system
 		final String DOUBLE_KEYWORD_PATTERN = "\\[\\[.*?\\]\\]";
