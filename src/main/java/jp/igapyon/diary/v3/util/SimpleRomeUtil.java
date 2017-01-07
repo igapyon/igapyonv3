@@ -56,11 +56,18 @@ import jp.igapyon.diary.v3.item.DiaryItemInfo;
 import jp.igapyon.diary.v3.item.DiaryItemInfoComparator;
 
 /**
- * 
+ * Atom / RSS 読み書きを実現する ROME ライブラリのためのユーティリティクラスです。
  * 
  * @author Toshiki Iga
  */
 public class SimpleRomeUtil {
+	/**
+	 * 与えられた atom.xml ファイルを入力して Markdown テキストを取得します。
+	 * 
+	 * @param atomXmlFile
+	 * @return
+	 * @throws IOException
+	 */
 	public static String atomxml2String(final File atomXmlFile) throws IOException {
 		String indexmdText = "";
 		if (atomXmlFile.exists() == false) {
@@ -81,6 +88,14 @@ public class SimpleRomeUtil {
 		}
 	}
 
+	/**
+	 * 与えれらた URL から入手できる atom.xml ファイルを入力して、markdown テキストファイルを取得します。
+	 * 
+	 * @param atomURL
+	 * @param maxcount
+	 * @return
+	 * @throws IOException
+	 */
 	public static String atomxml2String(final URL atomURL, final int maxcount) throws IOException {
 		String indexmdText = "";
 		try {
@@ -109,6 +124,14 @@ public class SimpleRomeUtil {
 		}
 	}
 
+	/**
+	 * 与えられたアイテムリストを atom.xml ファイルに書き込みます。
+	 * 
+	 * @param diaryItemInfoList
+	 * @param targetAtomFile
+	 * @param title
+	 * @throws IOException
+	 */
 	public static void itemList2AtomXml(final List<DiaryItemInfo> diaryItemInfoList, final File targetAtomFile,
 			final String title) throws IOException {
 		final SyndFeed feed = new SyndFeedImpl();
@@ -137,6 +160,5 @@ public class SimpleRomeUtil {
 		} catch (FeedException e) {
 			throw new IOException(e);
 		}
-
 	}
 }

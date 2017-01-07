@@ -98,6 +98,14 @@ public class SimpleTagSoupUtil {
 		System.out.println("HTML正常化結果: [" + output.toString() + "]");
 	}
 
+	/**
+	 * 与えられた html ファイルを、TagSoup の能力により正規化します。
+	 * 
+	 * @param source
+	 * @return
+	 * @throws IOException
+	 * @throws SAXException
+	 */
 	public static String formatHtml(final String source) throws IOException, SAXException {
 		final XMLReader parser = new Parser();
 
