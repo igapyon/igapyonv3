@@ -69,6 +69,11 @@ public class DiaryAtomByTitleKeyGenerator {
 		this.settings = settings;
 	}
 
+	/**
+	 * 日記タイトルに新規の [キーワード] が発見されたら、それに対応するキーワードファイルを作成します。
+	 * 
+	 * @throws IOException
+	 */
 	public void generateNewKeyword() throws IOException {
 		// キーワードのリストを読み込み。
 		final Map<String, SyndEntry> keywordEntryMap = new HashMap<String, SyndEntry>();
