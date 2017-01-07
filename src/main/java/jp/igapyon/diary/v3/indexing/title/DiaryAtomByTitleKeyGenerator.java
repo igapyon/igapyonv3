@@ -93,7 +93,7 @@ public class DiaryAtomByTitleKeyGenerator {
 						lines.add("");
 						lines.add("## " + word + "");
 						lines.add("");
-						lines.add("[[+word+]] は、、、、です。");
+						lines.add("[[" + word + "]] は、、、、です。");
 						lines.add("");
 						lines.add("### URL");
 						lines.add("");
