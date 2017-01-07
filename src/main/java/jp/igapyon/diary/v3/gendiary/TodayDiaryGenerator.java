@@ -58,47 +58,13 @@ public class TodayDiaryGenerator {
 	}
 
 	/**
-	 * 本日の日記ファイルを取得します。
-	 * 
-	 * @param yearDir
-	 * @return
-	 */
-	public File getTodayDiaryFile(final File yearDir) {
-		// ファイル名は igyyMMdd.html.src.md 形式。
-		final String yymmdd = new SimpleDateFormat("yyMMdd").format(settings.getToday());
-		return new File(yearDir, ("ig" + yymmdd + ".html.src.md"));
-	}
-
-	/**
-	 * 日記システムの今日の日記のためのルートディレクトリを取得します。
-	 * 
-	 * ディレクトリが存在しない場合は新規作成します。
-	 * 
-	 * @param rootdir
-	 * @return
-	 * @throws IOException
-	 */
-	public File getYearDir(final File rootdir) throws IOException {
-		final String yyyy = new SimpleDateFormat("yyyy").format(settings.getToday());
-		final File yearDir = new File(rootdir, yyyy);
-		if (yearDir.exists() == false) {
-			if (yearDir.mkdirs() == false) {
-				throw new IOException("Fail to create 'year' dir [" + yearDir.getCanonicalPath() + "]. End process.");
-			}
-			System.err.println("New Year dir was created: " + yearDir.getAbsolutePath());
-		}
-
-		return yearDir;
-	}
-
-	/**
 	 * 主たるエントリーポイント。
 	 * 
 	 * @param rootdir
 	 * @throws IOException
 	 */
-	public void processDir(final File rootdir) throws IOException {
-		final File yearDir = getYearDir(rootdir);
+	public void processDir() throws IOException {
+		final File yearDir = getYearDir();
 
 		// ファイル名は igyyMMdd.html.src.md 形式。
 		final File file = getTodayDiaryFile(yearDir);
@@ -122,10 +88,46 @@ public class TodayDiaryGenerator {
 		lines.add("```java:Hello.java");
 		lines.add("System.out.println(\"Hello world\");");
 		lines.add("```");
+		lines.add("");
+		lines.add("<#-- copyright " + settings.getAuthor() + " -->");
 
 		// 日記ファイルを新規作成します。
 		FileUtils.writeLines(file, lines);
 		System.err.println("Today's diary md file was created: " + file.getAbsolutePath());
+	}
+
+	/**
+	 * 本日の日記ファイルを取得します。
+	 * 
+	 * @param yearDir
+	 * @return
+	 */
+	protected File getTodayDiaryFile(final File yearDir) {
+		// ファイル名は igyyMMdd.html.src.md 形式。
+		final String yymmdd = new SimpleDateFormat("yyMMdd").format(settings.getToday());
+		return new File(yearDir, ("ig" + yymmdd + ".html.src.md"));
+	}
+
+	/**
+	 * 日記システムの今日の日記のためのルートディレクトリを取得します。
+	 * 
+	 * ディレクトリが存在しない場合は新規作成します。
+	 * 
+	 * @param rootdir
+	 * @return
+	 * @throws IOException
+	 */
+	protected File getYearDir() throws IOException {
+		final String yyyy = new SimpleDateFormat("yyyy").format(settings.getToday());
+		final File yearDir = new File(settings.getRootdir(), yyyy);
+		if (yearDir.exists() == false) {
+			if (yearDir.mkdirs() == false) {
+				throw new IOException("Fail to create 'year' dir [" + yearDir.getCanonicalPath() + "]. End process.");
+			}
+			System.err.println("New Year dir was created: " + yearDir.getAbsolutePath());
+		}
+
+		return yearDir;
 	}
 
 	/**
@@ -140,7 +142,7 @@ public class TodayDiaryGenerator {
 
 		if (dir.getName().equals("igapyonv3")) {
 			final IgapyonV3Settings settings = new IgapyonV3Settings();
-			new TodayDiaryGenerator(settings).processDir(dir);
+			new TodayDiaryGenerator(settings).processDir();
 		} else {
 			System.out.println("期待とは違うディレクトリ:" + dir.getName());
 			return;

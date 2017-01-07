@@ -33,6 +33,7 @@
 
 package jp.igapyon.diary.v3.util;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -43,6 +44,11 @@ import java.util.List;
  * @author Toshiki Iga
  */
 public class IgapyonV3Settings {
+	/**
+	 * 日記のルートディレクトリ。
+	 */
+	private File rootdir = new File(".");
+
 	/**
 	 * TODAY! for newly diary.
 	 */
@@ -139,5 +145,13 @@ public class IgapyonV3Settings {
 
 	public void setLanguage(String language) {
 		this.language = language;
+	}
+
+	public File getRootdir() {
+		return rootdir;
+	}
+
+	public void setRootdir(File rootdir) {
+		this.rootdir = rootdir;
 	}
 }
