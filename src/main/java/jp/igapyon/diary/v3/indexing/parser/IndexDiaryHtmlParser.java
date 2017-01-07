@@ -31,7 +31,7 @@
  *  limitations under the License.
  */
 
-package jp.igapyon.diary.v3.html;
+package jp.igapyon.diary.v3.indexing.parser;
 
 import java.io.File;
 import java.io.IOException;
