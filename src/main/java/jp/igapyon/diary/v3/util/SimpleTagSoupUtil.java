@@ -46,6 +46,8 @@ import org.xml.sax.XMLReader;
 
 /**
  * TagSoup を利用して HTML を正常化するためのシンプルなサンプル。 TagSoup 1.1 で動作確認。
+ * 
+ * @author Toshiki Iga
  */
 public class SimpleTagSoupUtil {
 	public static void main(final String[] args) throws IOException, SAXException {

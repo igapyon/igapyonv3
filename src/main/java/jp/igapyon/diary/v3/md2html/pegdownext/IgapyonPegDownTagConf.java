@@ -36,6 +36,11 @@ package jp.igapyon.diary.v3.md2html.pegdownext;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * 
+ * 
+ * @author Toshiki Iga
+ */
 public class IgapyonPegDownTagConf {
 	protected final Map<String, IgapyonPegDownTagAttr> tagAttrMap = new HashMap<String, IgapyonPegDownTagAttr>();
 

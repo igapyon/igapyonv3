@@ -44,6 +44,8 @@ import org.apache.commons.cli.ParseException;
 
 /**
  * Functions depends on Commons CLI.
+ * 
+ * @author Toshiki Iga
  */
 public class IgapyonMd2HtmlCli {
 	public void process(final String[] args) throws IOException {

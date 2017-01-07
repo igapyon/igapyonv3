@@ -48,6 +48,7 @@ import jp.igapyon.diary.v3.md2html.pegdownext.IgapyonPegDownTagConf;
 
 /**
  * 
+ * @author Toshiki Iga
  * @deprecated tobe Apache FileUtils
  */
 public class IgapyonV3Util {

@@ -35,6 +35,11 @@ package jp.igapyon.diary.v3.md2html;
 
 import org.pegdown.Extensions;
 
+/**
+ * 
+ *
+ * @author Toshiki Iga
+ */
 public class IgapyonMd2HtmlSettings {
 	/**
 	 * if null: use CDN.

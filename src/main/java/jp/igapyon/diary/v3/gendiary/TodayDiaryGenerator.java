@@ -44,7 +44,9 @@ import org.apache.commons.io.FileUtils;
 import jp.igapyon.diary.v3.util.IgapyonV3Settings;
 
 /**
- * 今日付けの日記 igyyMMdd.html.src.md ファイルが存在しなければこれを新規作成します。
+ * 今日付けの日記ファイル igyyMMdd.html.src.md を生成するクラス。
+ * 
+ * ファイルが存在しなければこれを新規作成します。
  * 
  * @author Toshiki Iga
  */

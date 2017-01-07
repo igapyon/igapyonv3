@@ -51,6 +51,8 @@ import jp.igapyon.diary.v3.util.MdTextUtil;
 
 /**
  * .src.md から .md を生成するためのクラス。
+ * 
+ * @author Toshiki Iga
  */
 public class DiarySrcMd2MdConverter {
 	private IgapyonV3Settings settings = null;

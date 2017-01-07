@@ -53,6 +53,8 @@ import org.xml.sax.SAXException;
 
 /**
  * Basic XML static utils.
+ * 
+ * @author Toshiki Iga
  */
 public class IgapyonXmlUtil {
 	/**

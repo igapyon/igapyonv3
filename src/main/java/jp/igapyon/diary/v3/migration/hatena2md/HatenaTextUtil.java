@@ -36,6 +36,11 @@ package jp.igapyon.diary.v3.migration.hatena2md;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * 
+ * 
+ * @author Toshiki Iga
+ */
 public class HatenaTextUtil {
 	/**
 	 * はてなリンク形式を md リンク形式に変換します。

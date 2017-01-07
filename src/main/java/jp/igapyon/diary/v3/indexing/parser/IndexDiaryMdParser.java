@@ -45,6 +45,8 @@ import jp.igapyon.diary.v3.util.IgapyonV3Settings;
 
 /**
  * .md ファイルからコンテンツ一覧を作成します。
+ * 
+ * @author Toshiki Iga
  */
 public class IndexDiaryMdParser {
 	private List<DiaryItemInfo> diaryItemInfoList = new ArrayList<DiaryItemInfo>();

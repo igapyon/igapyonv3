@@ -33,6 +33,10 @@
 
 package jp.igapyon.diary.v3.md2html;
 
+/**
+ * 
+ * @author Toshiki Iga
+ */
 public class IgapyonMd2HtmlConstants {
 	public static final String PROGRAM_DISPLAY_NAME = "Igapyon Diary System v3 (igapyonv3)";
 

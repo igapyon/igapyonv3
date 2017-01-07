@@ -41,6 +41,11 @@ import org.pegdown.ast.RootNode;
 import org.pegdown.ast.SuperNode;
 import org.pegdown.ast.TextNode;
 
+/**
+ * 
+ * 
+ * @author Toshiki Iga
+ */
 public class IgapyonPegDownUtil {
 	public static HeaderNode getFistHeader(final RootNode rootNode) {
 		for (Node node : rootNode.getChildren()) {
