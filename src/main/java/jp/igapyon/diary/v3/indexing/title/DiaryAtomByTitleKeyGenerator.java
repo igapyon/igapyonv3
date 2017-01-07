@@ -113,7 +113,7 @@ public class DiaryAtomByTitleKeyGenerator {
 				String word = mat.group();
 				word = word.substring(1, word.length() - 1);
 				if (keywordEntryMap.get(word.toLowerCase()) == null) {
-					System.out.println("  新規キー:" + word);
+					System.out.println("  日記タイトルの新規のキーワードによるファイル新規作成:" + word);
 
 					try {
 						final File keywordFile = new File(settings.getRootdir().getCanonicalPath() + "/keyword/"
