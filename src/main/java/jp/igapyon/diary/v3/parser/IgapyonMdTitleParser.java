@@ -49,7 +49,6 @@ import jp.igapyon.diary.v3.util.IgapyonV3Settings;
  * @author Toshiki Iga
  */
 public class IgapyonMdTitleParser {
-	@SuppressWarnings("unused")
 	private IgapyonV3Settings settings = null;
 
 	private List<DiaryItemInfo> diaryItemInfoList = new ArrayList<DiaryItemInfo>();
