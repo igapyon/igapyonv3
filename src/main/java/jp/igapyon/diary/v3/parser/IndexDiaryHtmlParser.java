@@ -31,7 +31,7 @@
  *  limitations under the License.
  */
 
-package jp.igapyon.diary.v3.indexing.parser;
+package jp.igapyon.diary.v3.parser;
 
 import java.io.File;
 import java.io.IOException;
@@ -70,17 +70,36 @@ import jp.igapyon.diary.v3.util.SimpleTagSoupUtil;
 public class IndexDiaryHtmlParser {
 	private List<DiaryItemInfo> diaryItemInfoList = new ArrayList<DiaryItemInfo>();
 
+	/**
+	 * 日記エンジン用設定。現時点では利用していません。
+	 */
+	@SuppressWarnings("unused")
 	private IgapyonV3Settings settings = null;
 
+	/**
+	 * コンストラクタ。
+	 * 
+	 * @param settings
+	 */
 	public IndexDiaryHtmlParser(final IgapyonV3Settings settings) {
 		this.settings = settings;
 	}
 
-	public List<DiaryItemInfo> processDir(final File dir, String path) throws IOException {
+	/**
+	 * 指定ディレクトリを処理します。
+	 * 
+	 * @param dir
+	 * @param path
+	 *            /2017, /2016 など
+	 * @return
+	 * @throws IOException
+	 */
+	public List<DiaryItemInfo> processDir(final File dir, final String path) throws IOException {
 		final File[] files = dir.listFiles();
 		if (files == null) {
 			return diaryItemInfoList;
 		}
+
 		for (File file : files) {
 			if (file.isDirectory()) {
 				processDir(file, path + "/" + file.getName());
@@ -98,33 +117,39 @@ public class IndexDiaryHtmlParser {
 		return diaryItemInfoList;
 	}
 
+	/**
+	 * 各ファイルを処理します。
+	 * 
+	 * @param file
+	 * @param path
+	 *            /2017, /2016 など
+	 * @throws IOException
+	 */
 	void processFile(final File file, final String path) throws IOException {
 		String source = FileUtils.readFileToString(file, "UTF-8");
 		try {
 			source = SimpleTagSoupUtil.formatHtml(source);
-		} catch (SAXException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
+		} catch (SAXException e) {
+			throw new IOException(e);
 		}
+
 		String title = "N/A";
 		try {
 			final DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
-			DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
+			final DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
 			final Document document = documentBuilder.parse(new InputSource(new StringReader(source)));
 
 			final XPath xpath = XPathFactory.newInstance().newXPath();
 
 			title = (String) xpath.evaluate("/html/head/title/text()", document, XPathConstants.STRING);
 		} catch (ParserConfigurationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new IOException(e);
+		} catch (XPathExpressionException e) {
+			throw new IOException(e);
 		} catch (SAXException e) {
 			e.printStackTrace();
 			System.out.println("html:" + source);
-			throw new IllegalArgumentException("BREAK!");
-		} catch (XPathExpressionException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new IOException("BREAK!");
 		}
 
 		{
@@ -138,7 +163,6 @@ public class IndexDiaryHtmlParser {
 
 		final DiaryItemInfo diaryItemInfo = new DiaryItemInfo();
 		diaryItemInfo.setUri(url);
-
 		diaryItemInfo.setTitle(title);
 
 		diaryItemInfoList.add(diaryItemInfo);

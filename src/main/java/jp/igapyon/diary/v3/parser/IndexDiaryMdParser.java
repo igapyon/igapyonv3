@@ -31,7 +31,7 @@
  *  limitations under the License.
  */
 
-package jp.igapyon.diary.v3.indexing.parser;
+package jp.igapyon.diary.v3.parser;
 
 import java.io.File;
 import java.io.IOException;
@@ -49,9 +49,10 @@ import jp.igapyon.diary.v3.util.IgapyonV3Settings;
  * @author Toshiki Iga
  */
 public class IndexDiaryMdParser {
-	private List<DiaryItemInfo> diaryItemInfoList = new ArrayList<DiaryItemInfo>();
-
+	@SuppressWarnings("unused")
 	private IgapyonV3Settings settings = null;
+
+	private List<DiaryItemInfo> diaryItemInfoList = new ArrayList<DiaryItemInfo>();
 
 	private String prefixName = "ig";
 
