@@ -60,6 +60,8 @@ public class DiaryAtomByTitleKeyGenerator {
 			throw new IOException(e);
 		}
 
+		// + "atomTitleKey-" TODO???
+
 		// 各タイトルから[]ワードを抽出。
 		// これとヒットするキーワードがあれば、atomキーワード物理名.xml を keyword ディレクトリに生成
 		for (SyndEntry entry : diaryEntryList) {
@@ -79,11 +81,17 @@ public class DiaryAtomByTitleKeyGenerator {
 				if (keywordEntryMap.get(word) == null) {
 					System.out.println("  新規キー:" + word);
 
-					{
+					try {
+						final File keywordFile = new File(settings.getRootdir().getCanonicalPath() + "/keyword/"
+								+ new URLCodec().encode(word.toLowerCase()) + ".html.src.md");
+						if (keywordFile.exists()) {
+							continue;
+						}
+
 						final List<String> lines = new ArrayList<String>();
 						lines.add("[index](https://igapyon.github.io/diary/keyword/index.html)");
 						lines.add("");
-						lines.add("## " + word);
+						lines.add("## " + word + "");
 						lines.add("");
 						lines.add("[[+word+]] は、、、、です。");
 						lines.add("");
@@ -105,22 +113,15 @@ public class DiaryAtomByTitleKeyGenerator {
 								+ "\" engine=\"twitter\" />");
 						lines.add("");
 
-						try {
-							FileUtils
-									.writeLines(
-											new File(settings.getRootdir().getCanonicalPath() + "/keyword/"
-													+ "atomTitleKey-" + new URLCodec().encode(word) + ".xml"),
-											lines, "UTF-8");
-						} catch (EncoderException e) {
-							throw new IOException(e);
-						}
+						FileUtils.writeLines(keywordFile, lines);
+					} catch (EncoderException e) {
+						throw new IOException(e);
 					}
 				} else {
 					System.out.println("  " + word + ", " + keywordEntryMap.get(word).getLink());
 
 				}
 			}
-
 		}
 
 		// SimpleRomeUtil.itemList2AtomXml(diaryItemInfoList, new
