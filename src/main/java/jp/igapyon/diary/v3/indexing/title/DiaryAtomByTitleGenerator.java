@@ -59,12 +59,16 @@ public class DiaryAtomByTitleGenerator {
 		// 各タイトルから[]ワードを抽出。
 		// これとヒットするキーワードがあれば、atomキーワード物理名.xml を keyword ディレクトリに生成
 		for (SyndEntry entry : diaryEntryList) {
-			System.out.println(entry.getTitle());
-
 			final Pattern pat = Pattern.compile("\\[.*?\\]");
 			final Matcher mat = pat.matcher(entry.getTitle());
 
+			boolean isTitleWordFound = false;
 			for (; mat.find();) {
+				if (isTitleWordFound == false) {
+					System.out.println(entry.getTitle());
+				}
+				isTitleWordFound = true;
+
 				// まず、タイトルの [] を読み込み。これは、本文のダブルカッコと同じものと考えて良い。
 				String word = mat.group();
 				word = word.substring(1, word.length() - 1);
@@ -75,6 +79,7 @@ public class DiaryAtomByTitleGenerator {
 
 				}
 			}
+
 		}
 
 		// SimpleRomeUtil.itemList2AtomXml(diaryItemInfoList, new
