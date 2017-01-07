@@ -70,16 +70,28 @@ public class LinkSearchDirectiveModel implements TemplateDirectiveModel {
 		// SimpleScalar#toString()
 		final String titleString = params.get("title").toString();
 		final String wordString = params.get("word").toString();
+
 		String siteString = null;
 		if (params.get("site") != null) {
 			siteString = params.get("site").toString();
 		}
 
+		String engineString = "google";
+		if (params.get("engine") != null) {
+			engineString = params.get("engine").toString();
+		}
+
 		final URLCodec codec = new URLCodec();
 		try {
-			writer.write("[" + titleString + "](https://www.google.co.jp/#pws=0&q="
-					+ (siteString == null ? "" : "site:" + codec.encode(siteString) + "+") + codec.encode(wordString)
-					+ ")");
+			String qString = "https://www.google.co.jp/#pws=0&q="
+					+ (siteString == null ? "" : "site:" + codec.encode(siteString) + "+") + codec.encode(wordString);
+			if ("twitter".equals(engineString)) {
+				// twitter はサイト内検索はサポートしません。
+				// TODO site指定の際にエラー処理が必要か検討。
+				qString = "https://twitter.com/search?q=" + codec.encode(wordString);
+			}
+
+			writer.write("[" + titleString + "](" + qString + ")");
 		} catch (EncoderException e) {
 			throw new IOException(e);
 		}
