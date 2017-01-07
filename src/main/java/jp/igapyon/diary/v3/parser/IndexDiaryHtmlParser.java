@@ -65,7 +65,7 @@ import jp.igapyon.diary.v3.util.SimpleTagSoupUtil;
  * 既存 HTML のタイトルが、所定の日記形式テキストから開始されていることが大前提となります。
  * また、ディレクトリ構造が年付きの構造になっていることも重要です。（いがぴょんの日記v2 形式）
  * 
- * XPath をもちいてタイトル要素のテキストを取得します。
+ * 処理の過程で XPath をもちいてタイトル要素のテキストを取得します。
  * 
  * @author Toshiki Iga
  */
@@ -133,6 +133,35 @@ public class IndexDiaryHtmlParser {
 			throw new IOException(e);
 		}
 
+		final String title = getTitleString(source);
+		final String url = "https://igapyon.github.io/diary" + path + "/" + file.getName();
+
+		final DiaryItemInfo diaryItemInfo = new DiaryItemInfo();
+		diaryItemInfo.setUri(url);
+		diaryItemInfo.setTitle(title);
+
+		diaryItemInfoList.add(diaryItemInfo);
+	}
+
+	/**
+	 * 処理対象のファイルかどうかをファイル名から判定します。
+	 * 
+	 * @param fileName
+	 * @return
+	 */
+	boolean isTargetFile(final String fileName) {
+		return (fileName.startsWith("ig") && fileName.endsWith(".html") && false == fileName.endsWith(".src.html")
+				&& false == fileName.endsWith("-orig.html"));
+	}
+
+	/**
+	 * 与えられた html から title のテキストを取得します。そしてそれを v3 形式に加工します。
+	 * 
+	 * @param source
+	 * @return
+	 * @throws IOException
+	 */
+	String getTitleString(final String source) throws IOException {
 		String title = "N/A";
 		try {
 			final DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
@@ -161,23 +190,6 @@ public class IndexDiaryHtmlParser {
 			title = titleDate + title.substring(10);
 		}
 
-		final String url = "https://igapyon.github.io/diary" + path + "/" + file.getName();
-
-		final DiaryItemInfo diaryItemInfo = new DiaryItemInfo();
-		diaryItemInfo.setUri(url);
-		diaryItemInfo.setTitle(title);
-
-		diaryItemInfoList.add(diaryItemInfo);
-	}
-
-	/**
-	 * 処理対象のファイルかどうかをファイル名から判定します。
-	 * 
-	 * @param fileName
-	 * @return
-	 */
-	boolean isTargetFile(final String fileName) {
-		return (fileName.startsWith("ig") && fileName.endsWith(".html") && false == fileName.endsWith(".src.html")
-				&& false == fileName.endsWith("-orig.html"));
+		return title;
 	}
 }
