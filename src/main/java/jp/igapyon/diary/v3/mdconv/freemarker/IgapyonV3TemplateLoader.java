@@ -76,6 +76,11 @@ public class IgapyonV3TemplateLoader implements TemplateLoader {
 	 */
 	protected static List<SyndEntry> synEntryList = null;
 
+	/**
+	 * notice static!!! danger
+	 */
+	protected static List<SyndEntry> synKeywordEntryList = null;
+
 	public IgapyonV3TemplateLoader(final IgapyonV3Settings settings) {
 		this.settings = settings;
 
@@ -87,9 +92,9 @@ public class IgapyonV3TemplateLoader implements TemplateLoader {
 	}
 
 	public void ensureLoadAtomXml() throws IOException {
-		final File atomXmlFile = new File(settings.getRootdir(), "atom.xml");
 		if (synEntryList == null) {
 			synEntryList = new ArrayList<SyndEntry>();
+			final File atomXmlFile = new File(settings.getRootdir(), "atom.xml");
 			if (atomXmlFile.exists() == false) {
 				return;
 			}
@@ -98,6 +103,22 @@ public class IgapyonV3TemplateLoader implements TemplateLoader {
 				for (Object lookup : synFeed.getEntries()) {
 					final SyndEntry entry = (SyndEntry) lookup;
 					synEntryList.add(entry);
+				}
+			} catch (FeedException e) {
+				throw new IOException(e);
+			}
+		}
+		if (synKeywordEntryList == null) {
+			synKeywordEntryList = new ArrayList<SyndEntry>();
+			final File atomXmlFile = new File(settings.getRootdir(), "keyword/atom.xml");
+			if (atomXmlFile.exists() == false) {
+				return;
+			}
+			try {
+				final SyndFeed synFeed = new SyndFeedInput().build(new XmlReader(new FileInputStream(atomXmlFile)));
+				for (Object lookup : synFeed.getEntries()) {
+					final SyndEntry entry = (SyndEntry) lookup;
+					synKeywordEntryList.add(entry);
 				}
 			} catch (FeedException e) {
 				throw new IOException(e);
@@ -194,7 +215,8 @@ public class IgapyonV3TemplateLoader implements TemplateLoader {
 		ensureLoadAtomXml();
 
 		final File actualFile = new File(stripLocaleName(resourceName));
-		String load = FileUtils.readFileToString(actualFile, "UTF-8");
+		final String body = FileUtils.readFileToString(actualFile, "UTF-8");
+		String load = body;
 
 		if (actualFile.getName().startsWith("ig") && false == actualFile.getName().startsWith("iga")) {
 			String year1 = "20";
@@ -249,6 +271,56 @@ public class IgapyonV3TemplateLoader implements TemplateLoader {
 			} else {
 				footer += "\n";
 			}
+
+			{
+				final List<String> localKeywordList = new ArrayList<String>();
+
+				{
+					// タイトルに [] があればこれを記憶。
+					final Pattern pat = Pattern.compile("\\[.*?\\]");
+					final Matcher mat = pat.matcher(firstH2Line);
+
+					for (; mat.find();) {
+						// まず、タイトルの [] を読み込み。これは、本文のダブルカッコと同じものと考えて良い。
+						String word = mat.group();
+						word = word.substring(1, word.length() - 1);
+						localKeywordList.add(word);
+					}
+				}
+
+				{
+					// ボディに [[]] があればこれを記憶。
+					final Pattern pat = Pattern.compile("\\[\\[.*?\\]\\]");
+					final Matcher mat = pat.matcher(body);
+
+					for (; mat.find();) {
+						String word = mat.group();
+						word = word.substring(2, word.length() - 2);
+						localKeywordList.add(word);
+					}
+				}
+
+				if (localKeywordList.size() > 0) {
+					footer += "\n";
+					footer += "## キーワード\n";
+					footer += "\n";
+					for (String key : localKeywordList) {
+						SyndEntry existEntry = null;
+						for (SyndEntry entry : synKeywordEntryList) {
+							if (entry.getTitle().toLowerCase().equals(key.toLowerCase())) {
+								existEntry = entry;
+							}
+						}
+
+						if (existEntry == null) {
+							footer += ("* " + key + "\n");
+						} else {
+							footer += ("* [" + existEntry.getTitle() + "](" + existEntry.getLink() + ")\n");
+						}
+					}
+				}
+			}
+
 			footer += "\n";
 			footer += "----------------------------------------------------------------------------------------------------\n";
 			footer += "\n";
