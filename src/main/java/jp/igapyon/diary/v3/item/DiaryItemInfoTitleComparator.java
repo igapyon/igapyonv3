@@ -31,29 +31,27 @@
  *  limitations under the License.
  */
 
-package jp.igapyon.diary.v3.util;
+package jp.igapyon.diary.v3.item;
 
 import java.util.Comparator;
 
-import com.rometools.rome.feed.synd.SyndEntry;
-
 /**
- * ROME の SyndEntry アイテムをタイトルでソートするためのコンパレータです。
+ * 日記アイテムの情報を蓄えるクラスをタイトルでソートするためのコンパレータです。
  * 
  * @author Toshiki Iga
  */
-public class SyndEntryTitleComparator implements Comparator<SyndEntry> {
+public class DiaryItemInfoTitleComparator implements Comparator<DiaryItemInfo> {
 	protected boolean isDesc = false;
 
-	public SyndEntryTitleComparator(final boolean isDesc) {
+	public DiaryItemInfoTitleComparator(final boolean isDesc) {
 		this.isDesc = isDesc;
 	}
 
-	public int compare(final SyndEntry entry1, final SyndEntry entry2) {
+	public int compare(final DiaryItemInfo itemInfo1, final DiaryItemInfo itemInfo2) {
 		if (isDesc == false) {
-			return entry1.getTitle().toLowerCase().compareTo(entry2.getTitle().toLowerCase());
+			return -itemInfo1.getTitle().toLowerCase().compareTo(itemInfo2.getTitle().toLowerCase());
 		} else {
-			return -entry1.getTitle().toLowerCase().compareTo(entry2.getTitle().toLowerCase());
+			return itemInfo1.getTitle().toLowerCase().compareTo(itemInfo2.getTitle().toLowerCase());
 		}
 	}
 }
