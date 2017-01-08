@@ -302,9 +302,16 @@ public class IgapyonV3TemplateLoader implements TemplateLoader {
 
 				if (localKeywordList.size() > 0) {
 					footer += "\n";
-					footer += "## キーワード\n";
+					footer += "## 登場キーワード\n";
 					footer += "\n";
+					Map<String, String> processedKeywordMap = new HashMap<String, String>();
 					for (String key : localKeywordList) {
+						if (processedKeywordMap.get(key.toLowerCase()) != null) {
+							// すでに処理済み。
+							continue;
+						}
+						processedKeywordMap.put(key.toLowerCase(), "done");
+
 						SyndEntry existEntry = null;
 						for (SyndEntry entry : synKeywordEntryList) {
 							if (entry.getTitle().toLowerCase().equals(key.toLowerCase())) {
