@@ -69,6 +69,71 @@ public class DiaryAtomByTitleKeyGenerator {
 		this.settings = settings;
 	}
 
+	public void generateRssByIndex() throws IOException {
+		// キーワードのリストを読み込み。
+		final Map<String, SyndEntry> keywordEntryMap = new HashMap<String, SyndEntry>();
+		try {
+			final File fileAtom = new File(settings.getRootdir().getCanonicalPath() + "/keyword", "atom.xml");
+			if (fileAtom.exists()) {
+				final SyndFeed synFeed = new SyndFeedInput().build(new XmlReader(new FileInputStream(fileAtom)));
+				for (Object lookup : synFeed.getEntries()) {
+					final SyndEntry entry = (SyndEntry) lookup;
+					keywordEntryMap.put(entry.getTitle().toLowerCase(), entry);
+				}
+			}
+		} catch (FeedException e) {
+			throw new IOException(e);
+		}
+
+		// すべての日記のタイトルを読み込み。
+		final List<SyndEntry> diaryEntryList = new ArrayList<SyndEntry>();
+		try {
+			final File fileAtom = new File(settings.getRootdir(), "atom.xml");
+			if (fileAtom.exists()) {
+				final SyndFeed synFeed = new SyndFeedInput().build(new XmlReader(new FileInputStream(fileAtom)));
+				for (Object lookup : synFeed.getEntries()) {
+					final SyndEntry entry = (SyndEntry) lookup;
+					diaryEntryList.add(entry);
+				}
+			}
+		} catch (FeedException e) {
+			throw new IOException(e);
+		}
+
+		// + "atomTitleKey-" TODO???
+		final Map<String, List<SyndEntry>> diaryByKeywordMap = new HashMap<String, List<SyndEntry>>();
+
+		// 各タイトルから[]ワードを抽出。
+		// これとヒットするキーワードがあれば、atomキーワード物理名.xml を keyword ディレクトリに生成
+		for (SyndEntry entry : diaryEntryList) {
+			final Pattern pat = Pattern.compile("\\[.*?\\]");
+			final Matcher mat = pat.matcher(entry.getTitle());
+
+			for (; mat.find();) {
+				// まず、タイトルの [] を読み込み。これは、本文のダブルカッコと同じものと考えて良い。
+				String word = mat.group();
+				word = word.substring(1, word.length() - 1);
+				if (keywordEntryMap.get(word.toLowerCase()) == null) {
+					// 日記タイトルの新規のキーワード。さしあたり無視。
+				} else {
+					// すでに存在するキーワード
+					if (diaryByKeywordMap.get(word.toLowerCase()) == null) {
+						diaryByKeywordMap.put(word.toLowerCase(), new ArrayList<SyndEntry>());
+					}
+					diaryByKeywordMap.get(word.toLowerCase()).add(entry);
+				}
+			}
+		}
+
+		for (String key : diaryByKeywordMap.keySet()) {
+			final List<SyndEntry> entryList = diaryByKeywordMap.get(key);
+			System.out.println("key:" + key);
+			for (SyndEntry entry : entryList) {
+				System.out.println("  " + entry.getTitle());
+			}
+		}
+	}
+
 	/**
 	 * 日記タイトルに新規の [キーワード] が発見されたら、それに対応するキーワードファイルを作成します。
 	 * 
@@ -157,10 +222,7 @@ public class DiaryAtomByTitleKeyGenerator {
 						throw new IOException(e);
 					}
 				} else {
-					// すでに存在するキーワードｒ
-					// System.out.println(" " + word + ", " +
-					// keywordEntryMap.get(word).getLink());
-
+					// すでに存在するキーワード
 				}
 			}
 		}
@@ -169,6 +231,9 @@ public class DiaryAtomByTitleKeyGenerator {
 	public static void main(final String[] args) throws IOException {
 		IgapyonV3Settings settings = new IgapyonV3Settings();
 		settings.setRootdir(new File("../diary"));
-		new DiaryAtomByTitleKeyGenerator(settings).generateNewKeyword();
+		// new DiaryAtomByTitleKeyGenerator(settings).generateNewKeyword();
+
+		new DiaryAtomByTitleKeyGenerator(settings).generateRssByIndex();
+
 	}
 }
