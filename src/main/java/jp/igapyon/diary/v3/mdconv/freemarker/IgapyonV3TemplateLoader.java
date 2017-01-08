@@ -196,7 +196,7 @@ public class IgapyonV3TemplateLoader implements TemplateLoader {
 		final File actualFile = new File(stripLocaleName(resourceName));
 		String load = FileUtils.readFileToString(actualFile, "UTF-8");
 
-		if (actualFile.getName().startsWith("ig")) {
+		if (actualFile.getName().startsWith("ig") && false == actualFile.getName().startsWith("iga")) {
 			String year1 = "20";
 			String year2 = actualFile.getName().substring(2, 4);
 			if (year2.startsWith("9")) {

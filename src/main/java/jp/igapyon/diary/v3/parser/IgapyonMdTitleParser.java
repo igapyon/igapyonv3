@@ -107,6 +107,12 @@ public class IgapyonMdTitleParser {
 	 * @return
 	 */
 	boolean isTargetFile(final String fileName) {
+		if (prefixName.equals("ig")) {
+			if (fileName.startsWith("iga")) {
+				return false;
+			}
+		}
+
 		return (fileName.startsWith(prefixName) && fileName.endsWith(".md") && false == fileName.endsWith(".src.md"));
 	}
 
