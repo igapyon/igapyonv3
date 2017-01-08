@@ -47,6 +47,7 @@ import freemarker.template.TemplateDirectiveModel;
 import freemarker.template.TemplateException;
 import freemarker.template.TemplateModel;
 import freemarker.template.TemplateModelException;
+import jp.igapyon.diary.v3.util.IgapyonV3Settings;
 import jp.igapyon.diary.v3.util.SimpleRomeUtil;
 
 /**
@@ -57,7 +58,13 @@ import jp.igapyon.diary.v3.util.SimpleRomeUtil;
  * @author Toshiki Iga
  */
 public class RSSFeedDirectiveModel implements TemplateDirectiveModel {
+	private IgapyonV3Settings settings = null;
+
 	protected final Map<String, String> cacheAtomStringMap = new HashMap<String, String>();
+
+	public RSSFeedDirectiveModel(final IgapyonV3Settings settings) {
+		this.settings = settings;
+	}
 
 	public void execute(final Environment env, @SuppressWarnings("rawtypes") final Map params,
 			final TemplateModel[] loopVars, final TemplateDirectiveBody body) throws TemplateException, IOException {

@@ -52,6 +52,7 @@ import freemarker.template.TemplateDirectiveModel;
 import freemarker.template.TemplateException;
 import freemarker.template.TemplateModel;
 import freemarker.template.TemplateModelException;
+import jp.igapyon.diary.v3.util.IgapyonV3Settings;
 
 /**
  * ローカル日記へのリンク用のディレクティブモデル
@@ -61,10 +62,16 @@ import freemarker.template.TemplateModelException;
  * @author Toshiki Iga
  */
 public class LinkDiaryDirectiveModel implements TemplateDirectiveModel {
+	private IgapyonV3Settings settings = null;
+
 	/**
 	 * キャッシュ用オブジェクト。
 	 */
 	protected Map<String, SyndEntry> cacheAtomMap = null;
+
+	public LinkDiaryDirectiveModel(final IgapyonV3Settings settings) {
+		this.settings = settings;
+	}
 
 	public void execute(final Environment env, @SuppressWarnings("rawtypes") final Map params,
 			final TemplateModel[] loopVars, final TemplateDirectiveBody body) throws TemplateException, IOException {
