@@ -117,7 +117,7 @@ public class IgapyonV3FreeMarkerUtil {
 
 		// register custom tag.
 		config.setSharedVariable("rssfeed", new RSSFeedDirectiveModel());
-		config.setSharedVariable("localrss", new LocalRssDirectiveModel());
+		config.setSharedVariable("localrss", new LocalRssDirectiveModel(settings));
 		config.setSharedVariable("linkdiary", new LinkDiaryDirectiveModel());
 		config.setSharedVariable("linksearch", new LinkSearchDirectiveModel());
 		config.setSharedVariable("linkamazon", new LinkAmazonDirectiveModel());

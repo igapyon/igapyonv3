@@ -46,6 +46,7 @@ import freemarker.template.TemplateDirectiveBody;
 import freemarker.template.TemplateDirectiveModel;
 import freemarker.template.TemplateException;
 import freemarker.template.TemplateModel;
+import jp.igapyon.diary.v3.util.IgapyonV3Settings;
 import jp.igapyon.diary.v3.util.SimpleRomeUtil;
 
 /**
@@ -56,17 +57,23 @@ import jp.igapyon.diary.v3.util.SimpleRomeUtil;
  * @author Toshiki Iga
  */
 public class LocalRssDirectiveModel implements TemplateDirectiveModel {
+	private IgapyonV3Settings settings = null;
+
 	/**
 	 * キャッシュ用オブジェクト。
 	 */
 	protected final Map<String, String> cacheAtomStringMap = new HashMap<String, String>();
+
+	public LocalRssDirectiveModel(final IgapyonV3Settings settings) {
+		this.settings = settings;
+	}
 
 	public void execute(final Environment env, @SuppressWarnings("rawtypes") final Map params,
 			final TemplateModel[] loopVars, final TemplateDirectiveBody body) throws TemplateException, IOException {
 		final BufferedWriter writer = new BufferedWriter(env.getOut());
 
 		final String sourceName = env.getMainTemplate().getSourceName();
-		final File sourceDir = new File(sourceName).getCanonicalFile().getParentFile();
+		final File sourceDir = new File(settings.getRootdir(), sourceName).getCanonicalFile().getParentFile();
 
 		String filename = "atom.xml";
 
