@@ -280,6 +280,17 @@ public class IgapyonV3TemplateLoader implements TemplateLoader {
 			} else {
 				footer += "\n";
 			}
+
+			{
+				// keyword の場合の特殊処理。
+				final File sourceDir = new File(settings.getRootdir(), resourceName).getCanonicalFile().getParentFile();
+				if (sourceDir.getName().equals("keyword")) {
+					footer += "### 日記\n";
+					footer += "\n";
+					footer += "<@localrss filename=\"atom/amateras.xml\" /><#-- 利用日記情報を読み込み -->";
+				}
+			}
+
 			footer += "\n";
 			footer += "----------------------------------------------------------------------------------------------------\n";
 			footer += "\n";
