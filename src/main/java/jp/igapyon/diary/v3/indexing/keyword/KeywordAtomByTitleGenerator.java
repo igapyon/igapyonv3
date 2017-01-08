@@ -137,11 +137,4 @@ public class KeywordAtomByTitleGenerator {
 			SimpleRomeUtil.entryList2AtomXml(entryList, atomFile, "key", settings);
 		}
 	}
-
-	public static void main(final String[] args) throws IOException {
-		IgapyonV3Settings settings = new IgapyonV3Settings();
-		settings.setRootdir(new File("../diary"));
-
-		new KeywordAtomByTitleGenerator(settings).process();
-	}
 }
