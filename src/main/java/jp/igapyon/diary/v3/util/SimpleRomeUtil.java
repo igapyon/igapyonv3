@@ -38,7 +38,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
-import java.util.Collections;
 import java.util.List;
 
 import org.apache.commons.lang3.StringEscapeUtils;
@@ -53,7 +52,6 @@ import com.rometools.rome.io.SyndFeedOutput;
 import com.rometools.rome.io.XmlReader;
 
 import jp.igapyon.diary.v3.item.DiaryItemInfo;
-import jp.igapyon.diary.v3.item.DiaryItemInfoComparator;
 
 /**
  * Atom / RSS 読み書きを実現する ROME ライブラリのためのユーティリティクラスです。
@@ -127,6 +125,8 @@ public class SimpleRomeUtil {
 	/**
 	 * 与えられたアイテムリストを atom.xml ファイルに書き込みます。
 	 * 
+	 * ソート済みのものを与えてください。
+	 * 
 	 * @param diaryItemInfoList
 	 * @param targetAtomFile
 	 * @param title
@@ -141,9 +141,6 @@ public class SimpleRomeUtil {
 		feed.setGenerator("https://github.com/igapyon/igapyonv3");
 		feed.setLanguage(settings.getLanguage());
 		feed.setFeedType("atom_1.0");
-
-		// sort desc order
-		Collections.sort(diaryItemInfoList, new DiaryItemInfoComparator(true));
 
 		for (DiaryItemInfo diaryItemInfo : diaryItemInfoList) {
 			final SyndEntry entry = new SyndEntryImpl();
