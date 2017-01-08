@@ -289,9 +289,10 @@ public class IgapyonV3TemplateLoader implements TemplateLoader {
 					fileName = fileName.substring(fileName.lastIndexOf("/") + 1);
 					fileName = fileName.substring(0, fileName.indexOf("."));
 
+					footer += "\n";
 					footer += "### 日記\n";
 					footer += "\n";
-					footer += "<@localrss filename=\"atom/" + fileName + ".xml\" /><#-- 利用日記情報を読み込み -->";
+					footer += "<@localrss filename=\"atom/" + fileName + ".xml\" /><#-- 利用日記情報を読み込み -->\n";
 				}
 			}
 
