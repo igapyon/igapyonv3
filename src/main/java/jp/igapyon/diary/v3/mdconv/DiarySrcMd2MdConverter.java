@@ -68,6 +68,10 @@ public class DiarySrcMd2MdConverter {
 		}
 		for (File file : files) {
 			if (file.isDirectory()) {
+				if ("target".equals(file.getName()) || "src".equals(file.getName())) {
+					// target や src は処理してはなりません。
+					continue;
+				}
 				processDir(file);
 			} else if (file.isFile()) {
 				if (file.getName().endsWith(".src.md")) {
