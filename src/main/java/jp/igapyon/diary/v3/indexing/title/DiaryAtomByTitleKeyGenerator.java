@@ -135,9 +135,13 @@ public class DiaryAtomByTitleKeyGenerator {
 				dirAtom.mkdirs();
 			}
 
-			final File atomFile = new File(dirAtom, "maven.xml");
+			final String uri = keywordEntryMap.get(key.toLowerCase()).getLink();
+			final int lastIndex = uri.lastIndexOf("/");
+			String fileName = uri.substring(lastIndex + 1);
+			fileName = fileName.substring(0, fileName.indexOf("."));
 
-			System.out.println("AAA:" + atomFile.getAbsolutePath());
+			final File atomFile = new File(dirAtom, fileName + ".xml");
+
 			SimpleRomeUtil.entryList2AtomXml(entryList, atomFile, "key", settings);
 		}
 	}
