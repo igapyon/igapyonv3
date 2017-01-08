@@ -54,6 +54,7 @@ import com.rometools.rome.io.SyndFeedInput;
 import com.rometools.rome.io.XmlReader;
 
 import jp.igapyon.diary.v3.util.IgapyonV3Settings;
+import jp.igapyon.diary.v3.util.SimpleRomeUtil;
 
 /**
  * 日記タイトルからインデックス作成???
@@ -100,7 +101,6 @@ public class DiaryAtomByTitleKeyGenerator {
 			throw new IOException(e);
 		}
 
-		// + "atomTitleKey-" TODO???
 		final Map<String, List<SyndEntry>> diaryByKeywordMap = new HashMap<String, List<SyndEntry>>();
 
 		// 各タイトルから[]ワードを抽出。
@@ -126,11 +126,19 @@ public class DiaryAtomByTitleKeyGenerator {
 		}
 
 		for (String key : diaryByKeywordMap.keySet()) {
+			// + "atomTitleKey-" TODO???
+
 			final List<SyndEntry> entryList = diaryByKeywordMap.get(key);
-			System.out.println("key:" + key);
-			for (SyndEntry entry : entryList) {
-				System.out.println("  " + entry.getTitle());
+
+			final File dirAtom = new File(settings.getRootdir().getCanonicalPath() + "/keyword/atom");
+			if (dirAtom.exists() == false) {
+				dirAtom.mkdirs();
 			}
+
+			final File atomFile = new File(dirAtom, "maven.xml");
+
+			System.out.println("AAA:" + atomFile.getAbsolutePath());
+			SimpleRomeUtil.entryList2AtomXml(entryList, atomFile, "key", settings);
 		}
 	}
 

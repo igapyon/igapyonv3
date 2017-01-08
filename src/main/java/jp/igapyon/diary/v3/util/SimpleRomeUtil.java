@@ -160,4 +160,29 @@ public class SimpleRomeUtil {
 			throw new IOException(e);
 		}
 	}
+
+	public static void entryList2AtomXml(final List<SyndEntry> diaryItemInfoList, final File targetAtomFile,
+			final String title, final IgapyonV3Settings settings) throws IOException {
+		final SyndFeed feed = new SyndFeedImpl();
+		feed.setTitle(title);
+		feed.setAuthor(settings.getAuthor());
+		feed.setEncoding("UTF-8");
+		feed.setGenerator("https://github.com/igapyon/igapyonv3");
+		feed.setLanguage(settings.getLanguage());
+		feed.setFeedType("atom_1.0");
+
+		// sort desc order
+		// TODO Collections.sort(diaryItemInfoList, new
+		// DiaryItemInfoComparator(true));
+
+		for (SyndEntry diaryItemInfo : diaryItemInfoList) {
+			feed.getEntries().add(diaryItemInfo);
+		}
+
+		try {
+			new SyndFeedOutput().output(feed, targetAtomFile);
+		} catch (FeedException e) {
+			throw new IOException(e);
+		}
+	}
 }
