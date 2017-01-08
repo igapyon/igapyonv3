@@ -31,7 +31,7 @@
  *  limitations under the License.
  */
 
-package jp.igapyon.diary.v3.indexing.title;
+package jp.igapyon.diary.v3.indexing.keyword;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -43,10 +43,6 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.apache.commons.codec.EncoderException;
-import org.apache.commons.codec.net.URLCodec;
-import org.apache.commons.io.FileUtils;
-
 import com.rometools.rome.feed.synd.SyndEntry;
 import com.rometools.rome.feed.synd.SyndFeed;
 import com.rometools.rome.io.FeedException;
@@ -54,28 +50,21 @@ import com.rometools.rome.io.SyndFeedInput;
 import com.rometools.rome.io.XmlReader;
 
 import jp.igapyon.diary.v3.util.IgapyonV3Settings;
+import jp.igapyon.diary.v3.util.SimpleRomeUtil;
 
 /**
- * 日記タイトルからキーワードファイルの作成。
- * 
- * 現状、まだ diary 側からのビルドに対応しておらず、このクラスの main からの起動が必要。
- * 日記タイトルに新規を利用した場合は、このクラスをメイン実行してください。
+ * 日記タイトルからタイトルキーワード別のインデックスを作成・更新します。
  * 
  * @author Toshiki Iga
  */
-public class DiaryAtomByTitleKeyGenerator {
+public class KeywordAtomByTitleGenerator {
 	private IgapyonV3Settings settings = null;
 
-	public DiaryAtomByTitleKeyGenerator(final IgapyonV3Settings settings) {
+	public KeywordAtomByTitleGenerator(final IgapyonV3Settings settings) {
 		this.settings = settings;
 	}
 
-	/**
-	 * 日記タイトルに新規の [キーワード] が発見されたら、それに対応するキーワードファイルを作成します。
-	 * 
-	 * @throws IOException
-	 */
-	public void generateNewKeyword() throws IOException {
+	public void process() throws IOException {
 		// キーワードのリストを読み込み。
 		final Map<String, SyndEntry> keywordEntryMap = new HashMap<String, SyndEntry>();
 		try {
@@ -106,7 +95,7 @@ public class DiaryAtomByTitleKeyGenerator {
 			throw new IOException(e);
 		}
 
-		// + "atomTitleKey-" TODO???
+		final Map<String, List<SyndEntry>> diaryByKeywordMap = new HashMap<String, List<SyndEntry>>();
 
 		// 各タイトルから[]ワードを抽出。
 		// これとヒットするキーワードがあれば、atomキーワード物理名.xml を keyword ディレクトリに生成
@@ -119,48 +108,33 @@ public class DiaryAtomByTitleKeyGenerator {
 				String word = mat.group();
 				word = word.substring(1, word.length() - 1);
 				if (keywordEntryMap.get(word.toLowerCase()) == null) {
-					System.out.println("  日記タイトルの新規のキーワードによるファイル新規作成:" + word);
-
-					try {
-						final File keywordFile = new File(settings.getRootdir().getCanonicalPath() + "/keyword/"
-								+ new URLCodec().encode(word.toLowerCase()) + ".html.src.md");
-						if (keywordFile.exists()) {
-							continue;
-						}
-
-						final List<String> lines = new ArrayList<String>();
-						lines.add("[index](https://igapyon.github.io/diary/keyword/index.html)");
-						lines.add("");
-						lines.add("## " + word + "");
-						lines.add("");
-						lines.add("[[" + word + "]] は、、、、です。");
-						lines.add("");
-						lines.add("### URL");
-						lines.add("");
-						lines.add("* TBD URL");
-						lines.add("");
-						lines.add("### 特徴");
-						lines.add("");
-						lines.add("* TBD URL");
-						lines.add("");
-						lines.add("### まとめ情報");
-						lines.add("");
-						lines.add("* TBD URL");
-						lines.add("* <@linksearch title=\"Search on Igapyon Diary\" word=\"" + word
-								+ "\" site=\"https://igapyon.github.io/diary/\" />");
-						lines.add("* <@linksearch title=\"Search in Google\" word=\"" + word + "\" />");
-						lines.add("* <@linksearch title=\"Search in Twitter\" word=\"" + word
-								+ "\" engine=\"twitter\" />");
-						lines.add("");
-
-						FileUtils.writeLines(keywordFile, lines);
-					} catch (EncoderException e) {
-						throw new IOException(e);
-					}
+					// 日記タイトルの新規のキーワード。さしあたり無視。
 				} else {
 					// すでに存在するキーワード
+					if (diaryByKeywordMap.get(word.toLowerCase()) == null) {
+						diaryByKeywordMap.put(word.toLowerCase(), new ArrayList<SyndEntry>());
+					}
+					diaryByKeywordMap.get(word.toLowerCase()).add(entry);
 				}
 			}
+		}
+
+		for (String key : diaryByKeywordMap.keySet()) {
+			final List<SyndEntry> entryList = diaryByKeywordMap.get(key);
+
+			final File dirAtom = new File(settings.getRootdir().getCanonicalPath() + "/keyword/atom");
+			if (dirAtom.exists() == false) {
+				dirAtom.mkdirs();
+			}
+
+			final String uri = keywordEntryMap.get(key.toLowerCase()).getLink();
+			final int lastIndex = uri.lastIndexOf("/");
+			String fileName = uri.substring(lastIndex + 1);
+			fileName = fileName.substring(0, fileName.indexOf("."));
+
+			final File atomFile = new File(dirAtom, fileName + ".xml");
+
+			SimpleRomeUtil.entryList2AtomXml(entryList, atomFile, "key", settings);
 		}
 	}
 
@@ -168,6 +142,6 @@ public class DiaryAtomByTitleKeyGenerator {
 		IgapyonV3Settings settings = new IgapyonV3Settings();
 		settings.setRootdir(new File("../diary"));
 
-		new DiaryAtomByTitleKeyGenerator(settings).generateNewKeyword();
+		new KeywordAtomByTitleGenerator(settings).process();
 	}
 }
