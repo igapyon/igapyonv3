@@ -68,6 +68,8 @@ public class DiarySrcMd2MdConverter {
 		}
 		for (File file : files) {
 			if (file.isDirectory()) {
+				// FIXME 根っこレベルの target および srcのみ除外する必要があります。
+				// 現状の記載では、サブディレクトリすら除外してしまい、これはまずいです。
 				if ("target".equals(file.getName()) || "src".equals(file.getName())) {
 					// target や src は処理してはなりません。
 					continue;
