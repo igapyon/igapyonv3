@@ -285,9 +285,13 @@ public class IgapyonV3TemplateLoader implements TemplateLoader {
 				// keyword の場合の特殊処理。
 				final File sourceDir = new File(settings.getRootdir(), resourceName).getCanonicalFile().getParentFile();
 				if (sourceDir.getName().equals("keyword")) {
+					String fileName = resourceName;
+					fileName = fileName.substring(fileName.lastIndexOf("/") + 1);
+					fileName = fileName.substring(0, fileName.indexOf("."));
+
 					footer += "### 日記\n";
 					footer += "\n";
-					footer += "<@localrss filename=\"atom/amateras.xml\" /><#-- 利用日記情報を読み込み -->";
+					footer += "<@localrss filename=\"atom/" + fileName + ".xml\" /><#-- 利用日記情報を読み込み -->";
 				}
 			}
 
