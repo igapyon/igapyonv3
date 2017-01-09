@@ -99,7 +99,8 @@ public class LinkSearchDirectiveModel implements TemplateDirectiveModel {
 			if ("twitter".equals(engineString)) {
 				// twitter はサイト内検索はサポートしません。
 				// TODO site指定の際にエラー処理が必要か検討。
-				qString = "https://twitter.com/search?q=" + codec.encode(wordString);
+				qString = "https://twitter.com/search?q="
+						+ codec.encode(wordString.indexOf(' ') < 0 ? "#" + wordString : wordString);
 			}
 
 			writer.write("[" + titleString + "](" + qString + ")");
