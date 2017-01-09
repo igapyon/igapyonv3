@@ -31,30 +31,41 @@
  *  limitations under the License.
  */
 
-package jp.igapyon.util;
+package jp.igapyon.diary.v3.util;
 
 import java.io.File;
 import java.io.IOException;
 
 /**
- * 
+ * ディレクトリ処理のためのユーティリティを蓄えます。
  * 
  * @author Toshiki Iga
  */
-public class IgapyonFileUtil {
-	public static String getRelativePath(File rootdir, File file) throws IOException {
-		// do canonical
-		rootdir = rootdir.getCanonicalFile();
-		file = file.getCanonicalFile();
-		if (file.getPath().indexOf(rootdir.getPath()) < 0) {
-			throw new IOException("ディレクトリ相関関係エラー:rootdir=" + rootdir.getPath() + ",file=" + file.getPath());
+public class SimpleDirUtil {
+	/**
+	 * 与えられたファイルの、基準ディレクトリからの相対パスを文字列で取得します。
+	 * 
+	 * 先頭は / や ￥ を含まないものとします。
+	 * 
+	 * @param baseDir
+	 * @param file
+	 * @return
+	 * @throws IOException
+	 */
+	public static String getRelativePath(final File baseDir, final File file) throws IOException {
+		final String baseDirStr = baseDir.getCanonicalPath();
+		final String targetFileStr = file.getCanonicalPath();
+		if (targetFileStr.startsWith(baseDirStr) == false) {
+			throw new IOException("SimpleDirUtil#getRelativePath: file[" + targetFileStr + "] must under of baseDir["
+					+ baseDirStr + "].");
 		}
 
-		String relativePath = file.getPath().substring(rootdir.getPath().length());
-		if (relativePath.startsWith("/")) {
-			relativePath = relativePath.substring(1);
+		String targetRelFileStr = targetFileStr.substring(baseDirStr.length());
+		if (targetRelFileStr.startsWith("/") || targetRelFileStr.startsWith("\\")) {
+			// 先頭が / や ￥ で開始される場合はこれを取り去ります。
+			targetRelFileStr = targetRelFileStr.substring(1);
 		}
 
-		return relativePath;
+		return targetRelFileStr;
 	}
 }

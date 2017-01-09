@@ -43,7 +43,7 @@ import freemarker.template.Template;
 import freemarker.template.TemplateException;
 import freemarker.template.TemplateExceptionHandler;
 import jp.igapyon.diary.v3.util.IgapyonV3Settings;
-import jp.igapyon.util.IgapyonFileUtil;
+import jp.igapyon.diary.v3.util.SimpleDirUtil;
 
 /**
  * FreeMarker 用のユーティリティクラス。
@@ -66,7 +66,7 @@ public class IgapyonV3FreeMarkerUtil {
 		final File rootdir = settings.getRootdir().getCanonicalFile();
 		file = file.getCanonicalFile();
 
-		final String relativePath = IgapyonFileUtil.getRelativePath(rootdir, file);
+		final String relativePath = SimpleDirUtil.getRelativePath(rootdir, file);
 
 		final Configuration config = getConfiguration(settings);
 
