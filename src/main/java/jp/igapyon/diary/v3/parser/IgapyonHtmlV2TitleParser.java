@@ -156,6 +156,8 @@ public class IgapyonHtmlV2TitleParser {
 	/**
 	 * 与えられた html から title のテキストを取得します。そしてそれを v3 形式に加工します。
 	 * 
+	 * XPath をもちいて、ソースからタイトルを取得します。このソースはあらかじめ xml 妥当になっている必要があります。
+	 * 
 	 * @param source
 	 * @return
 	 * @throws IOException

@@ -57,7 +57,7 @@ import freemarker.cache.TemplateLoader;
 import jp.igapyon.diary.v3.util.IgapyonV3Settings;
 
 /**
- * 所定の挙動をおこなうテンプロードローダーです。
+ * igapyonv3 向けの所定の挙動をおこなうテンプロードローダーです。
  * 
  * @author Toshiki Iga
  */
@@ -91,6 +91,11 @@ public class IgapyonV3TemplateLoader implements TemplateLoader {
 		}
 	}
 
+	/**
+	 * 処理の過程で必要になる各種 atom ファイルをロード済みかどうか念押し確認します。
+	 * 
+	 * @throws IOException
+	 */
 	public void ensureLoadAtomXml() throws IOException {
 		if (synEntryList == null) {
 			synEntryList = new ArrayList<SyndEntry>();
