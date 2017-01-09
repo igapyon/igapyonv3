@@ -156,6 +156,8 @@ public class IgapyonHtmlV2TitleParser {
 	/**
 	 * 与えられた html から title のテキストを取得します。そしてそれを v3 形式に加工します。
 	 * 
+	 * XPath をもちいて、ソースからタイトルを取得します。このソースはあらかじめ xml 妥当になっている必要があります。
+	 * 
 	 * @param source
 	 * @return
 	 * @throws IOException
@@ -184,7 +186,7 @@ public class IgapyonHtmlV2TitleParser {
 		{
 			// タイトル先頭部の日付形式をハイフンに変換
 			// これは、いがぴょんの日記v2 形式のものを v3 形式で利用している ISO 形式に変換する処理に当たる。
-			String titleDate = title.substring(0, 10);
+			String titleDate = title.substring(0, Integer.max(10, title.length()));
 			titleDate = StringUtils.replaceChars(titleDate, "/", "-");
 			title = titleDate + title.substring(10);
 		}

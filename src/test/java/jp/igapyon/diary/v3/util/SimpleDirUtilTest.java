@@ -31,41 +31,34 @@
  *  limitations under the License.
  */
 
-package jp.igapyon.diary.v3.item;
+package jp.igapyon.diary.v3.util;
 
-/**
- * 日記アイテムの情報を蓄えるためのクラスです。
- * 
- * こちらを中心に処理をします。場合により Atom ファイルと入出力にも利用されます。
- * 
- * @author Toshiki Iga
- */
-public class DiaryItemInfo {
-	private String uri;
-	private String title;
-	private String body;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
-	public String getBody() {
-		return body;
-	}
+import java.io.File;
+import java.io.IOException;
 
-	public void setBody(String body) {
-		this.body = body;
-	}
+import org.junit.Test;
 
-	public String getUri() {
-		return uri;
-	}
+public class SimpleDirUtilTest {
+	@Test
+	public void testGetRelativePath() throws Exception {
+		assertEquals("", SimpleDirUtil.getRelativePath(new File("."), new File(".")));
+		assertEquals("", SimpleDirUtil.getRelativePath(new File("/"), new File("/")));
+		assertEquals("", SimpleDirUtil.getRelativePath(new File("/test"), new File("/test")));
+		assertEquals("", SimpleDirUtil.getRelativePath(new File("/test/"), new File("/test")));
+		assertEquals("", SimpleDirUtil.getRelativePath(new File("/test"), new File("/test/")));
+		assertEquals("a", SimpleDirUtil.getRelativePath(new File("/test"), new File("/test/a")));
+		assertEquals("a", SimpleDirUtil.getRelativePath(new File("/test/"), new File("/test/a")));
+		assertEquals("a", SimpleDirUtil.getRelativePath(new File("/test/"), new File("/test/a/")));
+		assertEquals("a/b/c", SimpleDirUtil.getRelativePath(new File("/test"), new File("/test/a/b/c")));
 
-	public void setUri(String uri) {
-		this.uri = uri;
-	}
-
-	public String getTitle() {
-		return title;
-	}
-
-	public void setTitle(String title) {
-		this.title = title;
+		try {
+			assertEquals("a", SimpleDirUtil.getRelativePath(new File("/testtest/"), new File("/test/a/")));
+			fail("never");
+		} catch (IOException e) {
+			// OK
+		}
 	}
 }

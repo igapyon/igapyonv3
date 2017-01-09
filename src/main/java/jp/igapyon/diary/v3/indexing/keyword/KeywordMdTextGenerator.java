@@ -133,19 +133,18 @@ public class KeywordMdTextGenerator {
 						lines.add("");
 						lines.add("## " + word + "");
 						lines.add("");
-						lines.add("[[" + word + "]] は、、、、です。");
+						lines.add("[[" + word + "]] は、、、、です。※未執筆。");
 						lines.add("");
 						lines.add("### URL");
 						lines.add("");
-						lines.add("* TBD URL");
+						lines.add("* TBD <@linksearch title=\"Search in Google\" word=\"" + word + "\" />");
 						lines.add("");
 						lines.add("### 特徴");
 						lines.add("");
-						lines.add("* TBD URL");
+						lines.add("* TBD <@linksearch title=\"Search in Google\" word=\"" + word + "\" />");
 						lines.add("");
-						lines.add("### まとめ情報");
+						lines.add("### 検索");
 						lines.add("");
-						lines.add("* TBD URL");
 						lines.add("* <@linksearch title=\"Search on Igapyon Diary\" word=\"" + word
 								+ "\" site=\"https://igapyon.github.io/diary/\" />");
 						lines.add("* <@linksearch title=\"Search in Google\" word=\"" + word + "\" />");
@@ -164,9 +163,17 @@ public class KeywordMdTextGenerator {
 		}
 	}
 
+	/**
+	 * 当面は、ここを直接指定して起動します。
+	 * 
+	 * @param args
+	 * @throws IOException
+	 */
 	public static void main(final String[] args) throws IOException {
-		IgapyonV3Settings settings = new IgapyonV3Settings();
-		settings.setRootdir(new File("../diary"));
+		final IgapyonV3Settings settings = new IgapyonV3Settings();
+
+		// FIXME カレントディレクトリをルートディレクトリと仮定しています。
+		settings.setRootdir(new File("."));
 
 		new KeywordMdTextGenerator(settings).generateNewKeyword();
 	}

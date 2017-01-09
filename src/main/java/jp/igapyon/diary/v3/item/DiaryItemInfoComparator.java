@@ -38,6 +38,8 @@ import java.util.Comparator;
 /**
  * 日記アイテムの情報を蓄えるためのクラスをソートするためのコンパレータです。
  * 
+ * URI をもとにソートされます。
+ * 
  * @author Toshiki Iga
  */
 public class DiaryItemInfoComparator implements Comparator<DiaryItemInfo> {

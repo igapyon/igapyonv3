@@ -48,14 +48,22 @@ import org.apache.commons.lang3.StringUtils;
 import jp.igapyon.diary.v3.mdconv.freemarker.IgapyonV3FreeMarkerUtil;
 import jp.igapyon.diary.v3.util.IgapyonV3Settings;
 import jp.igapyon.diary.v3.util.MdTextUtil;
+import jp.igapyon.diary.v3.util.SimpleDirUtil;
 
 /**
- * .src.md から .md を生成するためのクラス。
+ * ソースのマークダウンファイル `.src.md` から ターゲットのマークダウンファイル `.md` を生成するためのクラスです。
+ * 
+ * 多くの場合、`.html.src.md` から ターゲットの `.html.md` を生成します。
  * 
  * @author Toshiki Iga
  */
 public class DiarySrcMd2MdConverter {
 	private IgapyonV3Settings settings = null;
+
+	/**
+	 * キャッシュ用オブジェクト。
+	 */
+	protected final Map<String, String> cacheAtomStringMap = new HashMap<String, String>();
 
 	public DiarySrcMd2MdConverter(final IgapyonV3Settings settings) {
 		this.settings = settings;
@@ -66,8 +74,15 @@ public class DiarySrcMd2MdConverter {
 		if (files == null) {
 			return;
 		}
+
 		for (File file : files) {
 			if (file.isDirectory()) {
+				// 根っこレベルの target および srcのみ除外する必要があります。
+				final String dirName = SimpleDirUtil.getRelativePath(settings.getRootdir(), file);
+				if ("target".equals(dirName) || "src".equals(dirName)) {
+					// target や src は処理してはなりません。
+					continue;
+				}
 				processDir(file);
 			} else if (file.isFile()) {
 				if (file.getName().endsWith(".src.md")) {
@@ -77,15 +92,13 @@ public class DiarySrcMd2MdConverter {
 		}
 	}
 
-	/**
-	 * キャッシュ用オブジェクト。
-	 */
-	protected final Map<String, String> cacheAtomStringMap = new HashMap<String, String>();
-
 	void processFile(final File file) throws IOException {
 		final Map<String, Object> templateData = new HashMap<String, Object>();
+
+		// テンプレート適用処理を実施します。
 		final String convertedString = IgapyonV3FreeMarkerUtil.process(file, templateData, settings);
 
+		// 行データとして改めて読み込みます。
 		final List<String> lines = new ArrayList<String>();
 		{
 			final BufferedReader reader = new BufferedReader(new StringReader(convertedString));
@@ -110,8 +123,6 @@ public class DiarySrcMd2MdConverter {
 
 			lines.set(index, line);
 		}
-
-		// TODO support template system.
 
 		String newName = file.getName().substring(0, file.getName().length() - (".src.md".length())) + ".md";
 		FileUtils.writeLines(new File(file.getParentFile(), newName), lines);

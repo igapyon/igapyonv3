@@ -81,9 +81,9 @@ public class LinkDiaryDirectiveModel implements TemplateDirectiveModel {
 			cacheAtomMap = new HashMap<String, SyndEntry>();
 
 			try {
-				// FIXME should be rootdir
+				// ルート直下の atom.xml を利用します。
 				final SyndFeed synFeed = new SyndFeedInput()
-						.build(new XmlReader(new FileInputStream(new File("atom.xml"))));
+						.build(new XmlReader(new FileInputStream(new File(settings.getRootdir(), "atom.xml"))));
 
 				for (Object lookup : synFeed.getEntries()) {
 					final SyndEntry entry = (SyndEntry) lookup;
