@@ -48,6 +48,7 @@ import org.apache.commons.lang3.StringUtils;
 import jp.igapyon.diary.v3.mdconv.freemarker.IgapyonV3FreeMarkerUtil;
 import jp.igapyon.diary.v3.util.IgapyonV3Settings;
 import jp.igapyon.diary.v3.util.MdTextUtil;
+import jp.igapyon.diary.v3.util.SimpleDirUtil;
 
 /**
  * .src.md から .md を生成するためのクラス。
@@ -68,10 +69,9 @@ public class DiarySrcMd2MdConverter {
 		}
 		for (File file : files) {
 			if (file.isDirectory()) {
-				// FIXME 根っこレベルの target および srcのみ除外する必要があります。
-				// 現状の記載では、サブディレクトリすら除外してしまい、これはまずいです。
-				// FIXME そもそも、rootdirからの相対パスを取得するユーティリティルーチンが必要。
-				if ("target".equals(file.getName()) || "src".equals(file.getName())) {
+				// 根っこレベルの target および srcのみ除外する必要があります。
+				final String dirName = SimpleDirUtil.getRelativePath(settings.getRootdir(), file);
+				if ("target".equals(dirName) || "src".equals(dirName)) {
 					// target や src は処理してはなりません。
 					continue;
 				}
