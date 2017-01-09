@@ -14,9 +14,12 @@ public class SimpleDirUtilTest {
 		assertEquals("", SimpleDirUtil.getRelativePath(new File("."), new File(".")));
 		assertEquals("", SimpleDirUtil.getRelativePath(new File("/"), new File("/")));
 		assertEquals("", SimpleDirUtil.getRelativePath(new File("/test"), new File("/test")));
+		assertEquals("", SimpleDirUtil.getRelativePath(new File("/test/"), new File("/test")));
+		assertEquals("", SimpleDirUtil.getRelativePath(new File("/test"), new File("/test/")));
 		assertEquals("a", SimpleDirUtil.getRelativePath(new File("/test"), new File("/test/a")));
 		assertEquals("a", SimpleDirUtil.getRelativePath(new File("/test/"), new File("/test/a")));
 		assertEquals("a", SimpleDirUtil.getRelativePath(new File("/test/"), new File("/test/a/")));
+		assertEquals("a/b/c", SimpleDirUtil.getRelativePath(new File("/test"), new File("/test/a/b/c")));
 
 		try {
 			assertEquals("a", SimpleDirUtil.getRelativePath(new File("/testtest/"), new File("/test/a/")));
