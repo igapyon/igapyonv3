@@ -36,6 +36,8 @@ package jp.igapyon.diary.v3.item;
 /**
  * 日記アイテムの情報を蓄えるためのクラスです。
  * 
+ * こちらを中心に処理をします。場合により Atom ファイルと入出力にも利用されます。
+ * 
  * @author Toshiki Iga
  */
 public class DiaryItemInfo {

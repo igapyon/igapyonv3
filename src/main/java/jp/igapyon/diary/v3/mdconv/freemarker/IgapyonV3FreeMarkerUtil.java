@@ -83,6 +83,8 @@ public class IgapyonV3FreeMarkerUtil {
 	/**
 	 * IgayponV3 で利用するデフォルトのコンフィグレーションを取得します。
 	 * 
+	 * デフォルトからは、いくつか重要な変更が行われています。詳しくはソースコードを参照してください。
+	 * 
 	 * @return
 	 */
 	public static Configuration getConfiguration(final IgapyonV3Settings settings) {
