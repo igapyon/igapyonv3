@@ -61,4 +61,8 @@ public class IgapyonV2Html2MdConverter {
 	void processFile(final File file) throws IOException {
 		IgapyonV2Html2MdUtil.convertV2Html2Md(file);
 	}
+
+	public static void main(final String[] args) throws IOException {
+		new IgapyonV2Html2MdConverter().processDir(new File("../diary/memo"));
+	}
 }
