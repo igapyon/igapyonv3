@@ -86,11 +86,23 @@ public class SimpleDirUtil {
 		return new File(settings.getRootdir(), url);
 	}
 
+	/**
+	 * ファイルを url に変換します。
+	 * 
+	 * @param file
+	 * @param settings
+	 * @return
+	 * @throws IOException
+	 */
 	public static String file2Url(final File file, final IgapyonV3Settings settings) throws IOException {
 		final String relativePath = getRelativePath(settings.getRootdir(), file);
 		if (relativePath.length() == 0) {
 			return settings.getBaseurl();
 		}
-		return settings.getBaseurl() + "/" + relativePath;
+		if (relativePath.startsWith("/")) {
+			return settings.getBaseurl() + relativePath;
+		} else {
+			return settings.getBaseurl() + "/" + relativePath;
+		}
 	}
 }

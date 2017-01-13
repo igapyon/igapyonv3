@@ -66,9 +66,11 @@ public class SimpleDirUtilTest {
 	public void testUrl2File() throws Exception {
 		IgapyonV3Settings settings = new IgapyonV3Settings();
 		settings.setRootdir(new File("/tmp/aaa/"));
-		settings.setBaseurl("https://igapyon.github.io/diary/");
+		settings.setBaseurl("https://igapyon.github.io/diary");
 
 		assertEquals("/tmp/aaa",
+				SimpleDirUtil.url2File("https://igapyon.github.io/diary", settings).getCanonicalPath());
+		assertEquals("/tmp/aaa/",
 				SimpleDirUtil.url2File("https://igapyon.github.io/diary/", settings).getCanonicalPath());
 		assertEquals("/tmp/aaa/aaa",
 				SimpleDirUtil.url2File("https://igapyon.github.io/diary/aaa", settings).getCanonicalPath());
@@ -78,5 +80,21 @@ public class SimpleDirUtilTest {
 				SimpleDirUtil.url2File("https://igapyon.github.io/diary/bbb/", settings).getCanonicalPath());
 		assertEquals("/tmp/aaa/bbb.txt",
 				SimpleDirUtil.url2File("https://igapyon.github.io/diary/bbb.txt", settings).getCanonicalPath());
+	}
+
+	@Test
+	public void testFile2Url() throws Exception {
+		IgapyonV3Settings settings = new IgapyonV3Settings();
+		settings.setRootdir(new File("/tmp/aaa/"));
+		settings.setBaseurl("https://igapyon.github.io/diary");
+
+		assertEquals("https://igapyon.github.io/diary", SimpleDirUtil.file2Url(new File("/tmp/aaa"), settings));
+		assertEquals("https://igapyon.github.io/diary", SimpleDirUtil.file2Url(new File("/tmp/aaa/"), settings));
+		assertEquals("https://igapyon.github.io/diary/bbb", SimpleDirUtil.file2Url(new File("/tmp/aaa/bbb"), settings));
+		assertEquals("https://igapyon.github.io/diary/bbb",
+				SimpleDirUtil.file2Url(new File("/tmp/aaa/bbb/"), settings));
+		assertEquals("https://igapyon.github.io/diary/bbb.txt",
+				SimpleDirUtil.file2Url(new File("/tmp/aaa/bbb.txt"), settings));
+
 	}
 }
