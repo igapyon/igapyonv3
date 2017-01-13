@@ -68,4 +68,45 @@ public class SimpleDirUtil {
 
 		return targetRelFileStr;
 	}
+
+	/**
+	 * URL を File に変換します。
+	 * 
+	 * @param url
+	 * @param settings
+	 * @return
+	 * @throws IOException
+	 * @deprecated 使いドコロがあったはずと思って作成したものの、実際に適用しようとしたらフィットする箇所がない。とりあえず
+	 *             deprecated マークとする
+	 */
+	public static File url2File(String url, final IgapyonV3Settings settings) throws IOException {
+		if (url.startsWith(settings.getBaseurl()) == false) {
+			throw new IOException(
+					"SimpleDirUtil#url2File: url[" + url + "] must under of baseurl[" + settings.getBaseurl() + "].");
+		}
+		url = url.substring(settings.getBaseurl().length());
+		return new File(settings.getRootdir(), url);
+	}
+
+	/**
+	 * ファイルを url に変換します。
+	 * 
+	 * @param file
+	 * @param settings
+	 * @return
+	 * @throws IOException
+	 * @deprecated 使いドコロがあったはずと思って作成したものの、実際に適用しようとしたらフィットする箇所がない。とりあえず
+	 *             deprecated マークとする
+	 */
+	public static String file2Url(final File file, final IgapyonV3Settings settings) throws IOException {
+		final String relativePath = getRelativePath(settings.getRootdir(), file);
+		if (relativePath.length() == 0) {
+			return settings.getBaseurl();
+		}
+		if (relativePath.startsWith("/")) {
+			return settings.getBaseurl() + relativePath;
+		} else {
+			return settings.getBaseurl() + "/" + relativePath;
+		}
+	}
 }
