@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>jp.igapyon.diary.v3</groupId>
 	<artifactId>IgapyonV3</artifactId>
-	<version>1.2.2</version>
+	<version>1.2.3</version>
 	<packaging>jar</packaging>
 
 	<name>IgapyonV3</name>
