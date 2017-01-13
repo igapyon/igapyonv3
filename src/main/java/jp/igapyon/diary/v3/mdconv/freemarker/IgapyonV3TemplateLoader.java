@@ -69,6 +69,11 @@ public class IgapyonV3TemplateLoader implements TemplateLoader {
 	 */
 	private IgapyonV3Settings settings = null;
 
+	/**
+	 * ヘッダーとフッターを展開するかどうか。
+	 */
+	private boolean isExpandHeaderFooter = false;
+
 	protected Map<String, String> resourceMap = new HashMap<String, String>();
 
 	/**
@@ -81,8 +86,9 @@ public class IgapyonV3TemplateLoader implements TemplateLoader {
 	 */
 	protected static List<SyndEntry> synKeywordEntryList = null;
 
-	public IgapyonV3TemplateLoader(final IgapyonV3Settings settings) {
+	public IgapyonV3TemplateLoader(final IgapyonV3Settings settings, boolean isExpandHeaderFooter) {
 		this.settings = settings;
+		this.isExpandHeaderFooter = isExpandHeaderFooter;
 
 		try {
 			ensureLoadAtomXml();
@@ -222,6 +228,12 @@ public class IgapyonV3TemplateLoader implements TemplateLoader {
 		final File actualFile = new File(stripLocaleName(resourceName));
 		final String body = FileUtils.readFileToString(actualFile, "UTF-8");
 		String load = body;
+
+		if (isExpandHeaderFooter == false) {
+			// 加工無し出力。
+			resourceMap.put(resourceName, load);
+			return resourceName;
+		}
 
 		if (actualFile.getName().startsWith("ig") && false == actualFile.getName().startsWith("iga")) {
 			String year1 = "20";

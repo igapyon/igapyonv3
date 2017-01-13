@@ -68,7 +68,7 @@ public class IgapyonV3FreeMarkerUtil {
 
 		final String relativePath = SimpleDirUtil.getRelativePath(rootdir, file);
 
-		final Configuration config = getConfiguration(settings);
+		final Configuration config = getConfiguration(settings, true);
 
 		final Template templateBase = config.getTemplate(relativePath);
 		try {
@@ -87,7 +87,7 @@ public class IgapyonV3FreeMarkerUtil {
 	 * 
 	 * @return
 	 */
-	public static Configuration getConfiguration(final IgapyonV3Settings settings) {
+	public static Configuration getConfiguration(final IgapyonV3Settings settings, final boolean isExpandHeaderFooter) {
 		// newest version at this point.
 		final Configuration config = new Configuration(Configuration.VERSION_2_3_25);
 		config.setDefaultEncoding("UTF-8");
@@ -115,7 +115,7 @@ public class IgapyonV3FreeMarkerUtil {
 		config.setWhitespaceStripping(false);
 
 		// set my CUSTOM template loader.
-		config.setTemplateLoader(new IgapyonV3TemplateLoader(settings));
+		config.setTemplateLoader(new IgapyonV3TemplateLoader(settings, isExpandHeaderFooter));
 
 		// register custom tag.
 		config.setSharedVariable("include", new IncludeDirectiveModel(settings));
