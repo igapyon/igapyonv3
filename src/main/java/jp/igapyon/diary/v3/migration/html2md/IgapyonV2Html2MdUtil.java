@@ -57,9 +57,6 @@ public class IgapyonV2Html2MdUtil {
 		final File file = origFile.getCanonicalFile();
 
 		String source = FileUtils.readFileToString(file, "UTF-8");
-		if (file.getName().startsWith("memo")) {
-			source = FileUtils.readFileToString(file, "Windows-31J");
-		}
 		try {
 			// Normalize
 			source = SimpleTagSoupUtil.formatHtml(source);
