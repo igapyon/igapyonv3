@@ -100,7 +100,7 @@ public class LocalRssDirectiveModel implements TemplateDirectiveModel {
 			final File atomFile = new File(sourceDir, filename).getCanonicalFile();
 			if (cacheAtomStringMap.get(atomFile.getAbsolutePath()) == null) {
 				// FIXME maxcount impl
-				cacheAtomStringMap.put(atomFile.getAbsolutePath(), SimpleRomeUtil.atomxml2String(atomFile));
+				cacheAtomStringMap.put(atomFile.getAbsolutePath(), SimpleRomeUtil.atomxml2String(atomFile, settings));
 			}
 			writer.write(cacheAtomStringMap.get(atomFile.getAbsolutePath()));
 		}
