@@ -133,6 +133,21 @@ public class IgapyonV2Html2MdParser extends DefaultHandler {
 		} else if (qName.equals("code") || qName.equals("pre")) {
 			codePreDeapth++;
 			markdownBuffer.append("\n```\n");
+		} else if (qName.equals("img")) {
+			if (isContentBody) {
+				String alt = attrMap.get("alt");
+				if (alt == null) {
+					alt = "N/A";
+				}
+				final String title = attrMap.get("title");
+				final String src = attrMap.get("src");
+
+				if (title == null) {
+					markdownBuffer.append("\n![" + alt + "](" + src + ")\n");
+				} else {
+					markdownBuffer.append("\n![" + alt + "](" + src + " \"" + title + "\")\n");
+				}
+			}
 		} else if (qName.equals("td")) {
 			if (attrMap.get("bgcolor") != null && (attrMap.get("bgcolor").equals("#ff9900")
 					|| attrMap.get("bgcolor").equals("#44cc77") || attrMap.get("bgcolor").equals("#33cccb"))) {

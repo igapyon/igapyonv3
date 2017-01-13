@@ -122,6 +122,7 @@ public class IgapyonV3FreeMarkerUtil {
 		config.setSharedVariable("localrss", new LocalRssDirectiveModel(settings));
 		config.setSharedVariable("linkdiary", new LinkDiaryDirectiveModel(settings));
 		config.setSharedVariable("linksearch", new LinkSearchDirectiveModel(settings));
+		config.setSharedVariable("linkshare", new LinkShareDirectiveModel(settings));
 		config.setSharedVariable("linkamazon", new LinkAmazonDirectiveModel(settings));
 
 		return config;
