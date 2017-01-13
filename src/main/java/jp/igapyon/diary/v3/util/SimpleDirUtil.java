@@ -69,10 +69,11 @@ public class SimpleDirUtil {
 		return targetRelFileStr;
 	}
 
-	public static String getRelativeUrlIfPossible(final String url, final IgapyonV3Settings settings)
-			throws IOException {
-		if (url.startsWith(settings.getBaseurl())) {
-			String relative = url.substring(settings.getBaseurl().length());
+	public static String getRelativeUrlIfPossible(final String url, final File currentDir,
+			final IgapyonV3Settings settings) throws IOException {
+		final String localurl = file2Url(currentDir, settings);
+		if (url.startsWith(localurl)) {
+			String relative = url.substring(localurl.length());
 			if (relative.length() == 0) {
 				return url;
 			}

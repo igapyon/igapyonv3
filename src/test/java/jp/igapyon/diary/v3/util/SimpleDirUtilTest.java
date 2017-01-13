@@ -104,11 +104,17 @@ public class SimpleDirUtilTest {
 		settings.setRootdir(new File("/tmp/aaa/"));
 		settings.setBaseurl("https://igapyon.github.io/diary");
 
-		assertEquals("https://igapyon.github.io/diary",
-				SimpleDirUtil.getRelativeUrlIfPossible("https://igapyon.github.io/diary", settings));
-		assertEquals("aaa", SimpleDirUtil.getRelativeUrlIfPossible("https://igapyon.github.io/diary/aaa", settings));
-		assertEquals("aaa/bbb",
-				SimpleDirUtil.getRelativeUrlIfPossible("https://igapyon.github.io/diary/aaa/bbb", settings));
-	}
+		assertEquals("https://igapyon.github.io/diary", SimpleDirUtil
+				.getRelativeUrlIfPossible("https://igapyon.github.io/diary", new File("/tmp/aaa/"), settings));
+		assertEquals("aaa", SimpleDirUtil.getRelativeUrlIfPossible("https://igapyon.github.io/diary/aaa",
+				new File("/tmp/aaa/"), settings));
+		assertEquals("aaa/bbb", SimpleDirUtil.getRelativeUrlIfPossible("https://igapyon.github.io/diary/aaa/bbb",
+				new File("/tmp/aaa/"), settings));
+
+		assertEquals("https://igapyon.github.io/diary/aaa", SimpleDirUtil.getRelativeUrlIfPossible("https://igapyon.github.io/diary/aaa",
+				new File("/tmp/aaa/aaa/"), settings));
+		assertEquals("bbb", SimpleDirUtil.getRelativeUrlIfPossible("https://igapyon.github.io/diary/aaa/bbb",
+				new File("/tmp/aaa/aaa"), settings));
+}
 
 }
