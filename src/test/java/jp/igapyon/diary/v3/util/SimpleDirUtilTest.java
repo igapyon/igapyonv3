@@ -97,4 +97,18 @@ public class SimpleDirUtilTest {
 				SimpleDirUtil.file2Url(new File("/tmp/aaa/bbb.txt"), settings));
 
 	}
+
+	@Test
+	public void testGetRelativeUrlIfPossible() throws Exception {
+		IgapyonV3Settings settings = new IgapyonV3Settings();
+		settings.setRootdir(new File("/tmp/aaa/"));
+		settings.setBaseurl("https://igapyon.github.io/diary");
+
+		assertEquals("https://igapyon.github.io/diary",
+				SimpleDirUtil.getRelativeUrlIfPossible("https://igapyon.github.io/diary", settings));
+		assertEquals("aaa", SimpleDirUtil.getRelativeUrlIfPossible("https://igapyon.github.io/diary/aaa", settings));
+		assertEquals("aaa/bbb",
+				SimpleDirUtil.getRelativeUrlIfPossible("https://igapyon.github.io/diary/aaa/bbb", settings));
+	}
+
 }

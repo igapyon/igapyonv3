@@ -69,6 +69,21 @@ public class SimpleDirUtil {
 		return targetRelFileStr;
 	}
 
+	public static String getRelativeUrlIfPossible(final String url, final IgapyonV3Settings settings)
+			throws IOException {
+		if (url.startsWith(settings.getBaseurl())) {
+			String relative = url.substring(settings.getBaseurl().length());
+			if (relative.length() == 0) {
+				return url;
+			}
+			if (relative.startsWith("/")) {
+				return relative.substring(1);
+			}
+			return relative;
+		}
+		return url;
+	}
+
 	/**
 	 * URL を File に変換します。
 	 * 
