@@ -67,18 +67,19 @@ public class LinkMapDirectiveModel implements TemplateDirectiveModel {
 		if (params.get("lon") == null) {
 			throw new TemplateModelException("lon param is required.");
 		}
-		if (params.get("word") == null) {
-			throw new TemplateModelException("word param is required.");
-		}
 
 		final String latString = params.get("lat").toString();
 		final String lonString = params.get("lon").toString();
-		final String wordString = params.get("word").toString();
+
+		String titleString = "地図で表示";
+		if (params.get("title") != null) {
+			titleString = params.get("title").toString();
+		}
 
 		String qString = "https://openstreetmap.jp/map#zoom=17&lat=" + latString + "&lon=" + lonString
 				+ "&layers=00BFF";
 
-		writer.write("[" + wordString + "](" + qString + ")");
+		writer.write("[" + titleString + "](" + qString + ")");
 
 		writer.flush();
 	}

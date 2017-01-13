@@ -51,7 +51,8 @@ import jp.igapyon.diary.v3.util.IgapyonV3Settings;
 /**
  * Twitter シェアへのリンク用のディレクティブモデル
  * 
- * <@linkshare word="テスト" url="https://igapyon.github.io/diary/" tags="igapyonv3" />
+ * <@linkshare word="テスト" url="https://igapyon.github.io/diary/" tags=
+ * "igapyonv3" />
  * 
  * @author Toshiki Iga
  */
@@ -77,6 +78,11 @@ public class LinkShareDirectiveModel implements TemplateDirectiveModel {
 		final String urlString = params.get("url").toString();
 		final String wordString = params.get("word").toString();
 
+		String titleString = "Twitterでシェア";
+		if (params.get("title") != null) {
+			titleString = params.get("title").toString();
+		}
+
 		String tagsString = "igapyon,diary";
 		if (params.get("tags") != null) {
 			tagsString = params.get("tags").toString();
@@ -92,7 +98,7 @@ public class LinkShareDirectiveModel implements TemplateDirectiveModel {
 			String qString = "https://twitter.com/intent/tweet?hashtags=" + codec.encode(tagsString) + "&text="
 					+ codec.encode(wordString) + "&url=" + codec.encode(urlString);
 
-			writer.write("[" + wordString + "](" + qString + ")");
+			writer.write("[" + titleString + "](" + qString + ")");
 		} catch (EncoderException e) {
 			throw new IOException(e);
 		}
