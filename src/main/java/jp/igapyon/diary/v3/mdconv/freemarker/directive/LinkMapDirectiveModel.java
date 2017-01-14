@@ -31,14 +31,11 @@
  *  limitations under the License.
  */
 
-package jp.igapyon.diary.v3.mdconv.freemarker;
+package jp.igapyon.diary.v3.mdconv.freemarker.directive;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.util.Map;
-
-import org.apache.commons.codec.EncoderException;
-import org.apache.commons.codec.net.URLCodec;
 
 import freemarker.core.Environment;
 import freemarker.template.TemplateDirectiveBody;
@@ -49,17 +46,14 @@ import freemarker.template.TemplateModelException;
 import jp.igapyon.diary.v3.util.IgapyonV3Settings;
 
 /**
- * Twitter シェアへのリンク用のディレクティブモデル
- * 
- * <@linkshare word="テスト" url="https://igapyon.github.io/diary/" tags=
- * "igapyonv3" />
+ * Map へのリンク用のディレクティブモデル
  * 
  * @author Toshiki Iga
  */
-public class LinkShareDirectiveModel implements TemplateDirectiveModel {
+public class LinkMapDirectiveModel implements TemplateDirectiveModel {
 	private IgapyonV3Settings settings = null;
 
-	public LinkShareDirectiveModel(final IgapyonV3Settings settings) {
+	public LinkMapDirectiveModel(final IgapyonV3Settings settings) {
 		this.settings = settings;
 	}
 
@@ -67,41 +61,25 @@ public class LinkShareDirectiveModel implements TemplateDirectiveModel {
 			final TemplateModel[] loopVars, final TemplateDirectiveBody body) throws TemplateException, IOException {
 		final BufferedWriter writer = new BufferedWriter(env.getOut());
 
-		if (params.get("url") == null) {
-			throw new TemplateModelException("url param is required.");
+		if (params.get("lat") == null) {
+			throw new TemplateModelException("lat param is required.");
 		}
-		if (params.get("word") == null) {
-			throw new TemplateModelException("word param is required.");
+		if (params.get("lon") == null) {
+			throw new TemplateModelException("lon param is required.");
 		}
 
-		// SimpleScalar#toString()
-		final String urlString = params.get("url").toString();
-		final String wordString = params.get("word").toString();
+		final String latString = params.get("lat").toString();
+		final String lonString = params.get("lon").toString();
 
-		String titleString = "Twitterでシェア";
+		String titleString = "地図で表示";
 		if (params.get("title") != null) {
 			titleString = params.get("title").toString();
 		}
 
-		String tagsString = "igapyon,diary";
-		if (params.get("tags") != null) {
-			tagsString = params.get("tags").toString();
-		}
+		String qString = "https://openstreetmap.jp/map#zoom=17&lat=" + latString + "&lon=" + lonString
+				+ "&layers=00BFF";
 
-		// String engineString = "twitter";
-		// if (params.get("engine") != null) {
-		// engineString = params.get("engine").toString();
-		// }
-
-		final URLCodec codec = new URLCodec();
-		try {
-			String qString = "https://twitter.com/intent/tweet?hashtags=" + codec.encode(tagsString) + "&text="
-					+ codec.encode(wordString) + "&url=" + codec.encode(urlString);
-
-			writer.write("[" + titleString + "](" + qString + ")");
-		} catch (EncoderException e) {
-			throw new IOException(e);
-		}
+		writer.write("[" + titleString + "](" + qString + ")");
 
 		writer.flush();
 	}

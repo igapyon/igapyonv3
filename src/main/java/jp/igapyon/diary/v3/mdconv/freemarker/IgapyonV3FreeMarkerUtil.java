@@ -42,6 +42,14 @@ import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
 import freemarker.template.TemplateExceptionHandler;
+import jp.igapyon.diary.v3.mdconv.freemarker.directive.IncludeDirectiveModel;
+import jp.igapyon.diary.v3.mdconv.freemarker.directive.LinkAmazonDirectiveModel;
+import jp.igapyon.diary.v3.mdconv.freemarker.directive.LinkDiaryDirectiveModel;
+import jp.igapyon.diary.v3.mdconv.freemarker.directive.LinkMapDirectiveModel;
+import jp.igapyon.diary.v3.mdconv.freemarker.directive.LinkSearchDirectiveModel;
+import jp.igapyon.diary.v3.mdconv.freemarker.directive.LinkShareDirectiveModel;
+import jp.igapyon.diary.v3.mdconv.freemarker.directive.LocalRssDirectiveModel;
+import jp.igapyon.diary.v3.mdconv.freemarker.directive.RSSFeedDirectiveModel;
 import jp.igapyon.diary.v3.util.IgapyonV3Settings;
 import jp.igapyon.diary.v3.util.SimpleDirUtil;
 

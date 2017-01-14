@@ -31,11 +31,20 @@
  *  limitations under the License.
  */
 
-package jp.igapyon.diary.v3.mdconv.freemarker;
+package jp.igapyon.diary.v3.mdconv.freemarker.directive;
 
 import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
+
+import com.rometools.rome.feed.synd.SyndEntry;
+import com.rometools.rome.feed.synd.SyndFeed;
+import com.rometools.rome.io.FeedException;
+import com.rometools.rome.io.SyndFeedInput;
+import com.rometools.rome.io.XmlReader;
 
 import freemarker.core.Environment;
 import freemarker.template.TemplateDirectiveBody;
@@ -46,14 +55,21 @@ import freemarker.template.TemplateModelException;
 import jp.igapyon.diary.v3.util.IgapyonV3Settings;
 
 /**
- * Map へのリンク用のディレクティブモデル
+ * ローカル日記へのリンク用のディレクティブモデル
+ * 
+ * <@linkdiary date="2017-01-02" />
  * 
  * @author Toshiki Iga
  */
-public class LinkMapDirectiveModel implements TemplateDirectiveModel {
+public class LinkDiaryDirectiveModel implements TemplateDirectiveModel {
 	private IgapyonV3Settings settings = null;
 
-	public LinkMapDirectiveModel(final IgapyonV3Settings settings) {
+	/**
+	 * キャッシュ用オブジェクト。
+	 */
+	protected Map<String, SyndEntry> cacheAtomMap = null;
+
+	public LinkDiaryDirectiveModel(final IgapyonV3Settings settings) {
 		this.settings = settings;
 	}
 
@@ -61,25 +77,38 @@ public class LinkMapDirectiveModel implements TemplateDirectiveModel {
 			final TemplateModel[] loopVars, final TemplateDirectiveBody body) throws TemplateException, IOException {
 		final BufferedWriter writer = new BufferedWriter(env.getOut());
 
-		if (params.get("lat") == null) {
-			throw new TemplateModelException("lat param is required.");
+		if (cacheAtomMap == null) {
+			cacheAtomMap = new HashMap<String, SyndEntry>();
+
+			try {
+				// ルート直下の atom.xml を利用します。
+				final SyndFeed synFeed = new SyndFeedInput()
+						.build(new XmlReader(new FileInputStream(new File(settings.getRootdir(), "atom.xml"))));
+
+				for (Object lookup : synFeed.getEntries()) {
+					final SyndEntry entry = (SyndEntry) lookup;
+					cacheAtomMap.put(entry.getTitle().substring(0, 10), entry);
+				}
+			} catch (FeedException e) {
+				throw new IOException(e);
+			}
 		}
-		if (params.get("lon") == null) {
-			throw new TemplateModelException("lon param is required.");
+
+		if (params.get("date") == null) {
+			throw new TemplateModelException("date param is required.");
 		}
 
-		final String latString = params.get("lat").toString();
-		final String lonString = params.get("lon").toString();
+		// SimpleScalar#toString()
+		final String dateString = params.get("date").toString();
 
-		String titleString = "地図で表示";
-		if (params.get("title") != null) {
-			titleString = params.get("title").toString();
+		{
+			final SyndEntry entry = cacheAtomMap.get(dateString);
+			if (entry == null) {
+				writer.write("ERROR: no such [" + dateString + "] diary.");
+			} else {
+				writer.write("[" + entry.getTitle() + "](" + entry.getLink() + ")");
+			}
 		}
-
-		String qString = "https://openstreetmap.jp/map#zoom=17&lat=" + latString + "&lon=" + lonString
-				+ "&layers=00BFF";
-
-		writer.write("[" + titleString + "](" + qString + ")");
 
 		writer.flush();
 	}

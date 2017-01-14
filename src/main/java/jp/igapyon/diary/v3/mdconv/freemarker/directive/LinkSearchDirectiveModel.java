@@ -31,7 +31,7 @@
  *  limitations under the License.
  */
 
-package jp.igapyon.diary.v3.mdconv.freemarker;
+package jp.igapyon.diary.v3.mdconv.freemarker.directive;
 
 import java.io.BufferedWriter;
 import java.io.IOException;

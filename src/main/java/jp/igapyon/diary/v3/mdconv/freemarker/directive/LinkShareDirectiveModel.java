@@ -31,34 +31,35 @@
  *  limitations under the License.
  */
 
-package jp.igapyon.diary.v3.mdconv.freemarker;
+package jp.igapyon.diary.v3.mdconv.freemarker.directive;
 
 import java.io.BufferedWriter;
-import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.commons.codec.EncoderException;
+import org.apache.commons.codec.net.URLCodec;
+
 import freemarker.core.Environment;
-import freemarker.template.Configuration;
-import freemarker.template.Template;
 import freemarker.template.TemplateDirectiveBody;
 import freemarker.template.TemplateDirectiveModel;
 import freemarker.template.TemplateException;
 import freemarker.template.TemplateModel;
 import freemarker.template.TemplateModelException;
 import jp.igapyon.diary.v3.util.IgapyonV3Settings;
-import jp.igapyon.diary.v3.util.SimpleDirUtil;
 
 /**
- * 自前include
+ * Twitter シェアへのリンク用のディレクティブモデル
+ * 
+ * <@linkshare word="テスト" url="https://igapyon.github.io/diary/" tags=
+ * "igapyonv3" />
  * 
  * @author Toshiki Iga
  */
-public class IncludeDirectiveModel implements TemplateDirectiveModel {
+public class LinkShareDirectiveModel implements TemplateDirectiveModel {
 	private IgapyonV3Settings settings = null;
 
-	public IncludeDirectiveModel(final IgapyonV3Settings settings) {
+	public LinkShareDirectiveModel(final IgapyonV3Settings settings) {
 		this.settings = settings;
 	}
 
@@ -66,32 +67,40 @@ public class IncludeDirectiveModel implements TemplateDirectiveModel {
 			final TemplateModel[] loopVars, final TemplateDirectiveBody body) throws TemplateException, IOException {
 		final BufferedWriter writer = new BufferedWriter(env.getOut());
 
-		if (params.get("file") == null) {
-			throw new TemplateModelException("file param is required.");
+		if (params.get("url") == null) {
+			throw new TemplateModelException("url param is required.");
+		}
+		if (params.get("word") == null) {
+			throw new TemplateModelException("word param is required.");
 		}
 
-		final String fileString = params.get("file").toString();
+		// SimpleScalar#toString()
+		final String urlString = params.get("url").toString();
+		final String wordString = params.get("word").toString();
 
-		final String sourceName = env.getMainTemplate().getSourceName();
-		final File sourceDir = new File(settings.getRootdir(), sourceName).getCanonicalFile().getParentFile();
-		final File targetFile = new File(sourceDir, fileString);
+		String titleString = "Twitterでシェア";
+		if (params.get("title") != null) {
+			titleString = params.get("title").toString();
+		}
 
-		{
-			final Map<String, Object> templateData = new HashMap<String, Object>();
+		String tagsString = "igapyon,diary";
+		if (params.get("tags") != null) {
+			tagsString = params.get("tags").toString();
+		}
 
-			// do canonical
-			final File rootdir = settings.getRootdir().getCanonicalFile();
+		// String engineString = "twitter";
+		// if (params.get("engine") != null) {
+		// engineString = params.get("engine").toString();
+		// }
 
-			final String relativePath = SimpleDirUtil.getRelativePath(rootdir, targetFile);
+		final URLCodec codec = new URLCodec();
+		try {
+			String qString = "https://twitter.com/intent/tweet?hashtags=" + codec.encode(tagsString) + "&text="
+					+ codec.encode(wordString) + "&url=" + codec.encode(urlString);
 
-			final Configuration config = IgapyonV3FreeMarkerUtil.getConfiguration(settings, false);
-
-			final Template templateBase = config.getTemplate(relativePath);
-			try {
-				templateBase.process(templateData, writer);
-			} catch (TemplateException e) {
-				throw new IOException(e);
-			}
+			writer.write("[" + titleString + "](" + qString + ")");
+		} catch (EncoderException e) {
+			throw new IOException(e);
 		}
 
 		writer.flush();
