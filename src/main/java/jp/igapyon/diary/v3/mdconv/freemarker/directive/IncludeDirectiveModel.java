@@ -31,45 +31,35 @@
  *  limitations under the License.
  */
 
-package jp.igapyon.diary.v3.mdconv.freemarker;
+package jp.igapyon.diary.v3.mdconv.freemarker.directive;
 
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.rometools.rome.feed.synd.SyndEntry;
-import com.rometools.rome.feed.synd.SyndFeed;
-import com.rometools.rome.io.FeedException;
-import com.rometools.rome.io.SyndFeedInput;
-import com.rometools.rome.io.XmlReader;
-
 import freemarker.core.Environment;
+import freemarker.template.Configuration;
+import freemarker.template.Template;
 import freemarker.template.TemplateDirectiveBody;
 import freemarker.template.TemplateDirectiveModel;
 import freemarker.template.TemplateException;
 import freemarker.template.TemplateModel;
 import freemarker.template.TemplateModelException;
+import jp.igapyon.diary.v3.mdconv.freemarker.IgapyonV3FreeMarkerUtil;
 import jp.igapyon.diary.v3.util.IgapyonV3Settings;
+import jp.igapyon.diary.v3.util.SimpleDirUtil;
 
 /**
- * ローカル日記へのリンク用のディレクティブモデル
- * 
- * <@linkdiary date="2017-01-02" />
+ * 自前include
  * 
  * @author Toshiki Iga
  */
-public class LinkDiaryDirectiveModel implements TemplateDirectiveModel {
+public class IncludeDirectiveModel implements TemplateDirectiveModel {
 	private IgapyonV3Settings settings = null;
 
-	/**
-	 * キャッシュ用オブジェクト。
-	 */
-	protected Map<String, SyndEntry> cacheAtomMap = null;
-
-	public LinkDiaryDirectiveModel(final IgapyonV3Settings settings) {
+	public IncludeDirectiveModel(final IgapyonV3Settings settings) {
 		this.settings = settings;
 	}
 
@@ -77,36 +67,31 @@ public class LinkDiaryDirectiveModel implements TemplateDirectiveModel {
 			final TemplateModel[] loopVars, final TemplateDirectiveBody body) throws TemplateException, IOException {
 		final BufferedWriter writer = new BufferedWriter(env.getOut());
 
-		if (cacheAtomMap == null) {
-			cacheAtomMap = new HashMap<String, SyndEntry>();
-
-			try {
-				// ルート直下の atom.xml を利用します。
-				final SyndFeed synFeed = new SyndFeedInput()
-						.build(new XmlReader(new FileInputStream(new File(settings.getRootdir(), "atom.xml"))));
-
-				for (Object lookup : synFeed.getEntries()) {
-					final SyndEntry entry = (SyndEntry) lookup;
-					cacheAtomMap.put(entry.getTitle().substring(0, 10), entry);
-				}
-			} catch (FeedException e) {
-				throw new IOException(e);
-			}
+		if (params.get("file") == null) {
+			throw new TemplateModelException("file param is required.");
 		}
 
-		if (params.get("date") == null) {
-			throw new TemplateModelException("date param is required.");
-		}
+		final String fileString = params.get("file").toString();
 
-		// SimpleScalar#toString()
-		final String dateString = params.get("date").toString();
+		final String sourceName = env.getMainTemplate().getSourceName();
+		final File sourceDir = new File(settings.getRootdir(), sourceName).getCanonicalFile().getParentFile();
+		final File targetFile = new File(sourceDir, fileString);
 
 		{
-			final SyndEntry entry = cacheAtomMap.get(dateString);
-			if (entry == null) {
-				writer.write("ERROR: no such [" + dateString + "] diary.");
-			} else {
-				writer.write("[" + entry.getTitle() + "](" + entry.getLink() + ")");
+			final Map<String, Object> templateData = new HashMap<String, Object>();
+
+			// do canonical
+			final File rootdir = settings.getRootdir().getCanonicalFile();
+
+			final String relativePath = SimpleDirUtil.getRelativePath(rootdir, targetFile);
+
+			final Configuration config = IgapyonV3FreeMarkerUtil.getConfiguration(settings, false);
+
+			final Template templateBase = config.getTemplate(relativePath);
+			try {
+				templateBase.process(templateData, writer);
+			} catch (TemplateException e) {
+				throw new IOException(e);
 			}
 		}
 
