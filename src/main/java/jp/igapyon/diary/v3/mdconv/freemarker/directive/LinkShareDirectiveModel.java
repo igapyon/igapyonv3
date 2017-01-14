@@ -31,40 +31,35 @@
  *  limitations under the License.
  */
 
-package jp.igapyon.diary.v3.mdconv.freemarker;
+package jp.igapyon.diary.v3.mdconv.freemarker.directive;
 
 import java.io.BufferedWriter;
-import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.commons.lang3.math.NumberUtils;
+import org.apache.commons.codec.EncoderException;
+import org.apache.commons.codec.net.URLCodec;
 
 import freemarker.core.Environment;
 import freemarker.template.TemplateDirectiveBody;
 import freemarker.template.TemplateDirectiveModel;
 import freemarker.template.TemplateException;
 import freemarker.template.TemplateModel;
+import freemarker.template.TemplateModelException;
 import jp.igapyon.diary.v3.util.IgapyonV3Settings;
-import jp.igapyon.diary.v3.util.SimpleRomeUtil;
 
 /**
- * RSS Feed 用のディレクティブモデル
+ * Twitter シェアへのリンク用のディレクティブモデル
  * 
- * <@localrss filename="atom.xml" />
+ * <@linkshare word="テスト" url="https://igapyon.github.io/diary/" tags=
+ * "igapyonv3" />
  * 
  * @author Toshiki Iga
  */
-public class LocalRssDirectiveModel implements TemplateDirectiveModel {
+public class LinkShareDirectiveModel implements TemplateDirectiveModel {
 	private IgapyonV3Settings settings = null;
 
-	/**
-	 * キャッシュ用オブジェクト。
-	 */
-	protected final Map<String, String> cacheAtomStringMap = new HashMap<String, String>();
-
-	public LocalRssDirectiveModel(final IgapyonV3Settings settings) {
+	public LinkShareDirectiveModel(final IgapyonV3Settings settings) {
 		this.settings = settings;
 	}
 
@@ -72,40 +67,42 @@ public class LocalRssDirectiveModel implements TemplateDirectiveModel {
 			final TemplateModel[] loopVars, final TemplateDirectiveBody body) throws TemplateException, IOException {
 		final BufferedWriter writer = new BufferedWriter(env.getOut());
 
-		final String sourceName = env.getMainTemplate().getSourceName();
-		final File sourceDir = new File(settings.getRootdir(), sourceName).getCanonicalFile().getParentFile();
-
-		String filename = "atom.xml";
-
-		if (params.get("filename") != null) {
-			// SimpleScalar#toString()
-			filename = params.get("filename").toString();
+		if (params.get("url") == null) {
+			throw new TemplateModelException("url param is required.");
+		}
+		if (params.get("word") == null) {
+			throw new TemplateModelException("word param is required.");
 		}
 
-		int maxcount = 10;
-		if (params.get("maxcount") != null) {
-			final String maxcountString = params.get("maxcount").toString();
-			if (NumberUtils.isParsable(maxcountString)) {
-				maxcount = NumberUtils.toInt(maxcountString);
-			}
+		// SimpleScalar#toString()
+		final String urlString = params.get("url").toString();
+		final String wordString = params.get("word").toString();
+
+		String titleString = "Twitterでシェア";
+		if (params.get("title") != null) {
+			titleString = params.get("title").toString();
 		}
 
-		{
-			if (cacheAtomStringMap.get(filename) == null) {
-			}
-			// writer.write(cacheAtomStringMap.get(filename));
+		String tagsString = "igapyon,diary";
+		if (params.get("tags") != null) {
+			tagsString = params.get("tags").toString();
 		}
 
-		{
-			final File atomFile = new File(sourceDir, filename).getCanonicalFile();
-			if (cacheAtomStringMap.get(atomFile.getAbsolutePath()) == null) {
-				// FIXME maxcount impl
-				cacheAtomStringMap.put(atomFile.getAbsolutePath(), SimpleRomeUtil.atomxml2String(atomFile));
-			}
-			writer.write(cacheAtomStringMap.get(atomFile.getAbsolutePath()));
+		// String engineString = "twitter";
+		// if (params.get("engine") != null) {
+		// engineString = params.get("engine").toString();
+		// }
+
+		final URLCodec codec = new URLCodec();
+		try {
+			String qString = "https://twitter.com/intent/tweet?hashtags=" + codec.encode(tagsString) + "&text="
+					+ codec.encode(wordString) + "&url=" + codec.encode(urlString);
+
+			writer.write("[" + titleString + "](" + qString + ")");
+		} catch (EncoderException e) {
+			throw new IOException(e);
 		}
 
 		writer.flush();
 	}
-
 }

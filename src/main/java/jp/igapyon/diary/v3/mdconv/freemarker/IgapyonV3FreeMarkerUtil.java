@@ -42,6 +42,14 @@ import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
 import freemarker.template.TemplateExceptionHandler;
+import jp.igapyon.diary.v3.mdconv.freemarker.directive.IncludeDirectiveModel;
+import jp.igapyon.diary.v3.mdconv.freemarker.directive.LinkAmazonDirectiveModel;
+import jp.igapyon.diary.v3.mdconv.freemarker.directive.LinkDiaryDirectiveModel;
+import jp.igapyon.diary.v3.mdconv.freemarker.directive.LinkMapDirectiveModel;
+import jp.igapyon.diary.v3.mdconv.freemarker.directive.LinkSearchDirectiveModel;
+import jp.igapyon.diary.v3.mdconv.freemarker.directive.LinkShareDirectiveModel;
+import jp.igapyon.diary.v3.mdconv.freemarker.directive.LocalRssDirectiveModel;
+import jp.igapyon.diary.v3.mdconv.freemarker.directive.RSSFeedDirectiveModel;
 import jp.igapyon.diary.v3.util.IgapyonV3Settings;
 import jp.igapyon.diary.v3.util.SimpleDirUtil;
 
@@ -68,7 +76,7 @@ public class IgapyonV3FreeMarkerUtil {
 
 		final String relativePath = SimpleDirUtil.getRelativePath(rootdir, file);
 
-		final Configuration config = getConfiguration(settings);
+		final Configuration config = getConfiguration(settings, true);
 
 		final Template templateBase = config.getTemplate(relativePath);
 		try {
@@ -87,7 +95,7 @@ public class IgapyonV3FreeMarkerUtil {
 	 * 
 	 * @return
 	 */
-	public static Configuration getConfiguration(final IgapyonV3Settings settings) {
+	public static Configuration getConfiguration(final IgapyonV3Settings settings, final boolean isExpandHeaderFooter) {
 		// newest version at this point.
 		final Configuration config = new Configuration(Configuration.VERSION_2_3_25);
 		config.setDefaultEncoding("UTF-8");
@@ -115,14 +123,16 @@ public class IgapyonV3FreeMarkerUtil {
 		config.setWhitespaceStripping(false);
 
 		// set my CUSTOM template loader.
-		config.setTemplateLoader(new IgapyonV3TemplateLoader(settings));
+		config.setTemplateLoader(new IgapyonV3TemplateLoader(settings, isExpandHeaderFooter));
 
 		// register custom tag.
+		config.setSharedVariable("include", new IncludeDirectiveModel(settings));
 		config.setSharedVariable("rssfeed", new RSSFeedDirectiveModel(settings));
 		config.setSharedVariable("localrss", new LocalRssDirectiveModel(settings));
 		config.setSharedVariable("linkdiary", new LinkDiaryDirectiveModel(settings));
 		config.setSharedVariable("linksearch", new LinkSearchDirectiveModel(settings));
 		config.setSharedVariable("linkshare", new LinkShareDirectiveModel(settings));
+		config.setSharedVariable("linkmap", new LinkMapDirectiveModel(settings));
 		config.setSharedVariable("linkamazon", new LinkAmazonDirectiveModel(settings));
 
 		return config;

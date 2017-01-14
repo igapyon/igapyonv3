@@ -13,6 +13,7 @@ http://d.hatena.ne.jp/igapyon/20161222
 * <@linksearch title="いがぴょん検索サイト内" word="いがぴょん" site="https://igapyon.github.io/diary/" />
 * <@linksearch title="いがぴょんTwitter" word="伊賀敏樹" engine="twitter" />
 * <@linkshare word="テスト" url="https://igapyon.github.io/diary/" tags="いがぴょん" />
+* <@linkmap word="mapテスト" lat="35.6722478" lon="139.7214164" />
 
 <@rssfeed url="http://www.publickey1.jp/atom.xml" maxcount="0" />
 

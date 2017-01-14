@@ -66,7 +66,8 @@ public class SimpleRomeUtil {
 	 * @return
 	 * @throws IOException
 	 */
-	public static String atomxml2String(final File atomXmlFile) throws IOException {
+	public static String atomxml2String(final File atomXmlFile, final File currentDir, final IgapyonV3Settings settings)
+			throws IOException {
 		String indexmdText = "";
 		if (atomXmlFile.exists() == false) {
 			return "";
@@ -77,7 +78,8 @@ public class SimpleRomeUtil {
 
 			for (Object lookup : synFeed.getEntries()) {
 				final SyndEntry entry = (SyndEntry) lookup;
-				indexmdText += "* [" + StringEscapeUtils.escapeXml11(entry.getTitle()) + "](" + entry.getLink() + ")\n";
+				indexmdText += "* [" + StringEscapeUtils.escapeXml11(entry.getTitle()) + "]("
+						+ SimpleDirUtil.getRelativeUrlIfPossible(entry.getLink(), currentDir, settings) + ")\n";
 			}
 
 			return indexmdText;
