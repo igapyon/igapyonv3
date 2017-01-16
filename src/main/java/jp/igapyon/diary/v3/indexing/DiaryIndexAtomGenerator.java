@@ -38,6 +38,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import jp.igapyon.diary.v3.item.DiaryItemInfo;
 import jp.igapyon.diary.v3.item.DiaryItemInfoComparator;
@@ -97,10 +99,21 @@ public class DiaryIndexAtomGenerator {
 			}
 		}
 
-		final String[] YEARS = new String[] { "1996", "1997", "1998", "2000", "2001", "2002", "2003", "2004", "2005",
-				"2006", "2007", "2008", "2009", "2010", "2011", "2012", "2013", "2014", "2015", "2016", "2017" };
+		final List<String> yearsList = new ArrayList<String>();
+		{
+			final File [] files = settings.getRootdir().listFiles();
+			final Pattern pat = Pattern.compile("^[0-9][0-9][0-9][0-9]$");
+			if (files != null) for(File file : files) {
+				if(file.isDirectory()) {
+					final Matcher mat = pat.matcher(file.getName());
+					if (mat.find()) {
+						yearsList.add(file.getName());
+					}
+				}
+			}
+		}
 
-		for (String year : YEARS) {
+		for (String year : yearsList) {
 			// 各年ディレクトリ用
 
 			// ファイルからファイル一覧情報を作成します。
