@@ -38,6 +38,7 @@ import static org.junit.Assert.fail;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 import org.junit.Test;
 
@@ -111,10 +112,33 @@ public class SimpleDirUtilTest {
 		assertEquals("aaa/bbb", SimpleDirUtil.getRelativeUrlIfPossible("https://igapyon.github.io/diary/aaa/bbb",
 				new File("/tmp/aaa/"), settings));
 
-		assertEquals("https://igapyon.github.io/diary/aaa", SimpleDirUtil.getRelativeUrlIfPossible("https://igapyon.github.io/diary/aaa",
-				new File("/tmp/aaa/aaa/"), settings));
+		assertEquals("https://igapyon.github.io/diary/aaa", SimpleDirUtil
+				.getRelativeUrlIfPossible("https://igapyon.github.io/diary/aaa", new File("/tmp/aaa/aaa/"), settings));
 		assertEquals("bbb", SimpleDirUtil.getRelativeUrlIfPossible("https://igapyon.github.io/diary/aaa/bbb",
 				new File("/tmp/aaa/aaa"), settings));
-}
+	}
+
+	@Test
+	public void test002() throws Exception {
+		SimpleDirParser parser = new SimpleDirParser() {
+			public boolean isProcessTarget(final File file) {
+				if (file.getName().startsWith(".")) {
+					return false;
+				}
+				if (file.isDirectory() && file.getName().equals("target")) {
+					return false;
+				}
+
+				if (file.getName().endsWith(".md") == false) {
+					return false;
+				}
+				return true;
+			}
+		};
+		List<File> files = parser.listFiles(new File("."), true);
+		for (File file : files) {
+			System.out.println(file.getAbsolutePath());
+		}
+	}
 
 }
