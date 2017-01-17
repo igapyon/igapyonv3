@@ -46,6 +46,7 @@ import jp.igapyon.diary.v3.item.DiaryItemInfoComparator;
 import jp.igapyon.diary.v3.parser.IgapyonHtmlV2TitleParser;
 import jp.igapyon.diary.v3.parser.IgapyonMdTitleParser;
 import jp.igapyon.diary.v3.util.IgapyonV3Settings;
+import jp.igapyon.diary.v3.util.SimpleDirParser;
 import jp.igapyon.diary.v3.util.SimpleRomeUtil;
 
 /**
@@ -99,21 +100,26 @@ public class DiaryIndexAtomGenerator {
 			}
 		}
 
-		final List<String> yearsList = new ArrayList<String>();
-		{
-			final File [] files = settings.getRootdir().listFiles();
+		final SimpleDirParser parser = new SimpleDirParser() {
 			final Pattern pat = Pattern.compile("^[0-9][0-9][0-9][0-9]$");
-			if (files != null) for(File file : files) {
-				if(file.isDirectory()) {
-					final Matcher mat = pat.matcher(file.getName());
-					if (mat.find()) {
-						yearsList.add(file.getName());
-					}
-				}
-			}
-		}
 
-		for (String year : yearsList) {
+			@Override
+			public boolean isProcessTarget(final File file) {
+				if (file.isDirectory() == false) {
+					return false;
+				}
+				final Matcher mat = pat.matcher(file.getName());
+				if (mat.find()) {
+					return true;
+				}
+
+				return false;
+			}
+		};
+		final List<File> files = parser.listFiles(settings.getRootdir(), false);
+
+		for (File file : files) {
+			final String year = file.getName();
 			// 各年ディレクトリ用
 
 			// ファイルからファイル一覧情報を作成します。

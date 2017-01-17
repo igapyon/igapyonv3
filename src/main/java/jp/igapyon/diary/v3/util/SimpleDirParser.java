@@ -30,22 +30,26 @@ public abstract class SimpleDirParser {
 			return;
 		}
 
-		for (File file : files) {
-			if (isProcessTarget(file) == false) {
-				continue;
-			}
+		try {
+			for (File file : files) {
+				if (isProcessTarget(file) == false) {
+					continue;
+				}
 
-			if (file.isDirectory()) {
-				if (isRecursive) {
-					processListDir(file, result);
-				}
-			} else if (file.isFile()) {
-				try {
+				if (file.isDirectory()) {
+					// add to list.
 					result.add(file.getCanonicalFile());
-				} catch (IOException e) {
-					throw new IllegalArgumentException(e);
+
+					if (isRecursive) {
+						processListDir(file, result);
+					}
+				} else if (file.isFile()) {
+					// add to list.
+					result.add(file.getCanonicalFile());
 				}
 			}
+		} catch (IOException e) {
+			throw new IllegalArgumentException(e);
 		}
 	}
 }
