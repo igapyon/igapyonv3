@@ -52,6 +52,8 @@ import jp.igapyon.diary.v3.util.SimpleDirParser;
 /**
  * ローカルの年リスト用のディレクティブモデル
  * 
+ * <@localyearlist />
+ * 
  * @author Toshiki Iga
  */
 public class LocalYearlistDirectiveModel implements TemplateDirectiveModel {
@@ -84,7 +86,14 @@ public class LocalYearlistDirectiveModel implements TemplateDirectiveModel {
 		};
 		final List<File> files = parser.listFiles(settings.getRootdir(), false);
 
+		boolean isFirst = true;
 		for (int index = files.size() - 1; index >= 0; index--) {
+			if (isFirst) {
+				isFirst = false;
+			} else {
+				writer.write("/ ");
+			}
+
 			final File file = files.get(index);
 			writer.write("[" + file.getName() + "](" + settings.getBaseurl() + "/" + file.getName() + "/index.html)\n");
 		}
