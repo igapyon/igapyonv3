@@ -225,7 +225,7 @@ public class IgapyonV3TemplateLoader implements TemplateLoader {
 
 		ensureLoadAtomXml();
 
-		final File actualFile = new File(stripLocaleName(resourceName));
+		final File actualFile = new File(settings.getRootdir(), stripLocaleName(resourceName));
 		final String body = FileUtils.readFileToString(actualFile, "UTF-8");
 		String load = body;
 
