@@ -326,11 +326,16 @@ public class IgapyonV3TemplateLoader implements TemplateLoader {
 			}
 
 			footer += "\n";
-			footer += "----------------------------------------------------------------------------------------------------\n";
-			footer += "\n";
-			footer += "## この日記について\n";
-			footer += "[いがぴょんについて](" + settings.getBaseurl()
-					+ "/memo/memoigapyon.html) / [日記ジェネレータ](https://github.com/igapyon/igapyonv3)\n";
+
+			{
+				final File fileTemplate = new File(settings.getRootdir(), "template-footer.md");
+				if (fileTemplate.exists()) {
+					final String template = FileUtils.readFileToString(fileTemplate, "UTF-8");
+					footer += template;
+				} else {
+					System.err.println("template-footer.md not found.:" + fileTemplate.getCanonicalPath());
+				}
+			}
 
 			load += footer;
 		} else {
