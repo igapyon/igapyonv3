@@ -79,6 +79,9 @@ public class IgapyonV3FreeMarkerUtil {
 
 		final Configuration config = getConfiguration(settings, true);
 
+		// set settings obj
+		templateData.put("settings", settings);
+
 		final Template templateBase = config.getTemplate(relativePath);
 		try {
 			final StringWriter writer = new StringWriter();
