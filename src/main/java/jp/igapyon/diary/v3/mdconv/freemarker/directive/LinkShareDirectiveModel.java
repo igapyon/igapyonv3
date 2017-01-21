@@ -70,7 +70,7 @@ public class LinkShareDirectiveModel implements TemplateDirectiveModel {
 		final BufferedWriter writer = new BufferedWriter(env.getOut());
 
 		if (params.get("url") != null) {
-			throw new IOException("url not supported");
+			throw new IOException("url not supported: " + env.getMainTemplate().getSourceName());
 		}
 
 		if (params.get("word") == null) {
