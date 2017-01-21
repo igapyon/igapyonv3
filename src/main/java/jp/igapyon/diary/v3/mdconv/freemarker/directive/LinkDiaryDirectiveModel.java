@@ -87,7 +87,7 @@ public class LinkDiaryDirectiveModel implements TemplateDirectiveModel {
 
 				for (Object lookup : synFeed.getEntries()) {
 					final SyndEntry entry = (SyndEntry) lookup;
-					cacheAtomMap.put(entry.getTitle().substring(0, 10), entry);
+					cacheAtomMap.put(entry.getTitle().substring(0, Math.min(10, entry.getTitle().length() - 1)), entry);
 				}
 			} catch (FeedException e) {
 				throw new IOException(e);

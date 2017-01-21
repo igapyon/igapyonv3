@@ -253,10 +253,23 @@ public class IgapyonV3TemplateLoader implements TemplateLoader {
 
 			// ヘッダ追加
 			header += (year1 + year2 + "-" + month + "-" + day + " diary: " + firstH2Line + "\n");
-			header += "=====================================================================================================\n";
-			header += "[![いがぴょん画像(小)](" + settings.getBaseurl() + "/images/iga200306s.jpg \"いがぴょん\")]("
-					+ settings.getBaseurl() + "/memo/memoigapyon.html) 日記形式でつづる [いがぴょん](" + settings.getBaseurl()
-					+ "/memo/memoigapyon.html)コラム ウェブページです。\n";
+
+			{
+				// TODO 一行目の展開ができていません。良い実装方法を考えましょう。
+				final File fileTemplate = new File(settings.getRootdir(), "template-header.md");
+				if (fileTemplate.exists()) {
+					final String template = FileUtils.readFileToString(fileTemplate, "UTF-8");
+					header += template;
+					if (header.endsWith("\n") == false) {
+						header += "\n";
+					}
+				} else {
+					System.err.println("template-header.md not found.:" + fileTemplate.getCanonicalPath());
+					header += "===================================\n";
+					header += "<#-- template-header.md not found. -->\n";
+				}
+			}
+
 			header += "\n";
 
 			load = header + load;
@@ -346,10 +359,23 @@ public class IgapyonV3TemplateLoader implements TemplateLoader {
 
 			// ヘッダ追加
 			header += (firstH2Line + "\n");
-			header += "=====================================================================================================\n";
-			header += "[![いがぴょん画像(小)](" + settings.getBaseurl() + "/images/iga200306s.jpg \"いがぴょん\")]("
-					+ settings.getBaseurl() + "/memo/memoigapyon.html) 日記形式でつづる [いがぴょん](" + settings.getBaseurl()
-					+ "/memo/memoigapyon.html)コラム ウェブページです。\n";
+
+			{
+				// TODO 一行目の展開ができていません。良い実装方法を考えましょう。
+				final File fileTemplate = new File(settings.getRootdir(), "template-header.md");
+				if (fileTemplate.exists()) {
+					final String template = FileUtils.readFileToString(fileTemplate, "UTF-8");
+					header += template;
+					if (header.endsWith("\n") == false) {
+						header += "\n";
+					}
+				} else {
+					System.err.println("template-header.md not found.:" + fileTemplate.getCanonicalPath());
+					header += "===================================\n";
+					header += "<#-- template-header.md not found. -->\n";
+				}
+			}
+
 			header += "\n";
 
 			load = header + load;
