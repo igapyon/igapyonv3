@@ -55,6 +55,7 @@ import com.rometools.rome.io.XmlReader;
 
 import freemarker.cache.TemplateLoader;
 import jp.igapyon.diary.v3.util.IgapyonV3Settings;
+import jp.igapyon.diary.v3.util.SimpleDirUtil;
 
 /**
  * igapyonv3 向けの所定の挙動をおこなうテンプロードローダーです。
@@ -210,12 +211,8 @@ public class IgapyonV3TemplateLoader implements TemplateLoader {
 			return resourceName;
 		}
 
-		if (actualFile.getName().startsWith("template")) {
-			// TODO そのうちに、どのように判断するのか検討。
-			// 加工無し出力。
-			resourceMap.put(resourceName, load);
-			return resourceName;
-		} else if (actualFile.getName().startsWith("ig") && false == actualFile.getName().startsWith("iga")) {
+		if (actualFile.getName().startsWith("ig") && false == actualFile.getName().startsWith("iga")) {
+			// 日記ノードの処理。
 			String year1 = "20";
 			String year2 = actualFile.getName().substring(2, 4);
 			if (year2.startsWith("9")) {
@@ -351,7 +348,9 @@ public class IgapyonV3TemplateLoader implements TemplateLoader {
 			}
 
 			load += footer;
-		} else {
+		} else if (actualFile.getName().startsWith("index") || actualFile.getName().startsWith("idxall")
+				|| actualFile.getName().startsWith("README") || actualFile.getName().startsWith("memo")
+				|| SimpleDirUtil.getRelativePath(settings.getRootdir(), actualFile).startsWith("keyword")) {
 			final String firstH2Line = getFirstH2String(actualFile);
 
 			String header = "[top](" + settings.getBaseurl() + "/) \n";
@@ -416,6 +415,11 @@ public class IgapyonV3TemplateLoader implements TemplateLoader {
 			}
 
 			load += footer;
+		} else {
+			// TODO そのうちに、どのように判断するのか検討。
+			// 加工無し出力。
+			resourceMap.put(resourceName, load);
+			return resourceName;
 		}
 
 		resourceMap.put(resourceName, load);
