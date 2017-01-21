@@ -210,7 +210,12 @@ public class IgapyonV3TemplateLoader implements TemplateLoader {
 			return resourceName;
 		}
 
-		if (actualFile.getName().startsWith("ig") && false == actualFile.getName().startsWith("iga")) {
+		if (actualFile.getName().startsWith("template")) {
+			// TODO そのうちに、どのように判断するのか検討。
+			// 加工無し出力。
+			resourceMap.put(resourceName, load);
+			return resourceName;
+		} else if (actualFile.getName().startsWith("ig") && false == actualFile.getName().startsWith("iga")) {
 			String year1 = "20";
 			String year2 = actualFile.getName().substring(2, 4);
 			if (year2.startsWith("9")) {
@@ -368,11 +373,16 @@ public class IgapyonV3TemplateLoader implements TemplateLoader {
 			}
 
 			footer += "\n";
-			footer += "----------------------------------------------------------------------------------------------------\n";
-			footer += "\n";
-			footer += "## この日記について\n";
-			footer += "[いがぴょんについて](" + settings.getBaseurl()
-					+ "/memo/memoigapyon.html) / [日記ジェネレータ](https://github.com/igapyon/igapyonv3)\n";
+
+			{
+				final File fileTemplate = new File(settings.getRootdir(), "template-footer.md");
+				if (fileTemplate.exists()) {
+					final String template = FileUtils.readFileToString(fileTemplate, "UTF-8");
+					footer += template;
+				} else {
+					System.err.println("template-footer.md not found.:" + fileTemplate.getCanonicalPath());
+				}
+			}
 
 			load += footer;
 		}
