@@ -145,8 +145,8 @@ public class KeywordMdTextGenerator {
 						lines.add("");
 						lines.add("### 検索");
 						lines.add("");
-						lines.add("* <@linksearch title=\"Search on Igapyon Diary\" word=\"" + word + "\" site=\""
-								+ settings.getBaseurl() + "/\" />");
+						lines.add("* <@linksearch title=\"Search on " + settings.getTitleEn() + "\" word=\"" + word
+								+ "\" site=\"" + settings.getBaseurl() + "/\" />");
 						lines.add("* <@linksearch title=\"Search in Google\" word=\"" + word + "\" />");
 						lines.add("* <@linksearch title=\"Search in Twitter\" word=\"" + word
 								+ "\" engine=\"twitter\" />");
