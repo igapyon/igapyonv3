@@ -91,7 +91,7 @@ public class LinkShareDirectiveModel implements TemplateDirectiveModel {
 			titleString = params.get("title").toString();
 		}
 
-		String tagsString = "igapyon,diary";
+		String tagsString = "igapyon,diary,いがぴょん";
 		if (params.get("tags") != null) {
 			tagsString = params.get("tags").toString();
 		}
