@@ -90,7 +90,7 @@ public class TodayDiaryGenerator {
 		lines.add("```");
 		lines.add("");
 		lines.add("<#-- copyright " + settings.getAuthor() + " -->");
-		lines.add("<@linkkshare word=\"本日の日記。ここに日記タイトルが入ってほしい。\"/>");
+		lines.add("<@linkshare word=\"本日の日記。ここに日記タイトルが入ってほしい。\"/>");
 
 		// 日記ファイルを新規作成します。
 		FileUtils.writeLines(file, lines);
