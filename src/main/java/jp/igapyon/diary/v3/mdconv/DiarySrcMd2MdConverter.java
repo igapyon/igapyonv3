@@ -125,6 +125,7 @@ public class DiarySrcMd2MdConverter {
 			lines.set(index, line);
 		}
 
+		// TODO .src.md から .md を取得するための共通関数がほしいです。
 		String newName = file.getName().substring(0, file.getName().length() - (".src.md".length())) + ".md";
 		FileUtils.writeLines(new File(file.getParentFile(), newName), lines);
 	}

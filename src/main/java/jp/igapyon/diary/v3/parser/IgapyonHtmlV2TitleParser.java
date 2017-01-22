@@ -173,6 +173,9 @@ public class IgapyonHtmlV2TitleParser {
 
 			// XPath をもちいてタイトル要素のテキストを取得します。
 			title = (String) xpath.evaluate("/html/head/title/text()", document, XPathConstants.STRING);
+			if (title==null) {
+				title = "<title> not found.";
+			}
 		} catch (ParserConfigurationException e) {
 			throw new IOException(e);
 		} catch (XPathExpressionException e) {

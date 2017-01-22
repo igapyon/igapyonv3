@@ -107,12 +107,12 @@ public class SimpleDirUtil {
 	/**
 	 * ファイルを url に変換します。
 	 * 
+	 * このクラスの中から呼び出しされています。
+	 * 
 	 * @param file
 	 * @param settings
 	 * @return
 	 * @throws IOException
-	 * @deprecated 使いドコロがあったはずと思って作成したものの、実際に適用しようとしたらフィットする箇所がない。とりあえず
-	 *             deprecated マークとする
 	 */
 	public static String file2Url(final File file, final IgapyonV3Settings settings) throws IOException {
 		final String relativePath = getRelativePath(settings.getRootdir(), file);

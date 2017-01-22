@@ -38,12 +38,15 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import jp.igapyon.diary.v3.item.DiaryItemInfo;
 import jp.igapyon.diary.v3.item.DiaryItemInfoComparator;
 import jp.igapyon.diary.v3.parser.IgapyonHtmlV2TitleParser;
 import jp.igapyon.diary.v3.parser.IgapyonMdTitleParser;
 import jp.igapyon.diary.v3.util.IgapyonV3Settings;
+import jp.igapyon.diary.v3.util.SimpleDirParser;
 import jp.igapyon.diary.v3.util.SimpleRomeUtil;
 
 /**
@@ -74,7 +77,7 @@ public class DiaryIndexAtomGenerator {
 			Collections.sort(diaryItemInfoList, new DiaryItemInfoComparator(true));
 
 			SimpleRomeUtil.itemList2AtomXml(diaryItemInfoList, new File(settings.getRootdir(), "atom.xml"),
-					"Igapyon Diary v3 all", settings);
+					settings.getTitleEn() + " all", settings);
 
 			{
 				int diaryListupCount = 15;
@@ -93,14 +96,30 @@ public class DiaryIndexAtomGenerator {
 				Collections.sort(diaryItemInfoList, new DiaryItemInfoComparator(true));
 
 				SimpleRomeUtil.itemList2AtomXml(recentItemInfoList, new File(settings.getRootdir(), "atomRecent.xml"),
-						"Igapyon Diary v3 recent", settings);
+						settings.getTitleEn() +	" recent", settings);
 			}
 		}
 
-		final String[] YEARS = new String[] { "1996", "1997", "1998", "2000", "2001", "2002", "2003", "2004", "2005",
-				"2006", "2007", "2008", "2009", "2010", "2011", "2012", "2013", "2014", "2015", "2016", "2017" };
+		final SimpleDirParser parser = new SimpleDirParser() {
+			final Pattern pat = Pattern.compile("^[0-9][0-9][0-9][0-9]$");
 
-		for (String year : YEARS) {
+			@Override
+			public boolean isProcessTarget(final File file) {
+				if (file.isDirectory() == false) {
+					return false;
+				}
+				final Matcher mat = pat.matcher(file.getName());
+				if (mat.find()) {
+					return true;
+				}
+
+				return false;
+			}
+		};
+		final List<File> files = parser.listFiles(settings.getRootdir(), false);
+
+		for (File file : files) {
+			final String year = file.getName();
 			// 各年ディレクトリ用
 
 			// ファイルからファイル一覧情報を作成します。
@@ -117,7 +136,7 @@ public class DiaryIndexAtomGenerator {
 			Collections.sort(diaryItemInfoList, new DiaryItemInfoComparator(true));
 
 			SimpleRomeUtil.itemList2AtomXml(diaryItemInfoList, new File(settings.getRootdir(), year + "/atom.xml"),
-					"Igapyon Diary v3 year " + year, settings);
+					settings.getTitleEn() +		" year " + year, settings);
 		}
 
 		{
@@ -132,7 +151,7 @@ public class DiaryIndexAtomGenerator {
 			Collections.sort(diaryItemInfoList, new DiaryItemInfoComparator(false));
 
 			SimpleRomeUtil.itemList2AtomXml(diaryItemInfoList, new File(settings.getRootdir(), "memo" + "/atom.xml"),
-					"Igapyon Diary v3 memo", settings);
+					settings.getTitleEn() +	" memo", settings);
 		}
 
 		{
@@ -144,7 +163,7 @@ public class DiaryIndexAtomGenerator {
 			Collections.sort(diaryItemInfoList, new DiaryItemInfoComparator(false));
 
 			SimpleRomeUtil.itemList2AtomXml(diaryItemInfoList, new File(settings.getRootdir(), "keyword" + "/atom.xml"),
-					"Igapyon Diary v3 keyword", settings);
+					settings.getTitleEn() +	" keyword", settings);
 		}
 	}
 }

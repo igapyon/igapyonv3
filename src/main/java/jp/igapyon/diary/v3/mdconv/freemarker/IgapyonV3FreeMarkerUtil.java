@@ -49,6 +49,7 @@ import jp.igapyon.diary.v3.mdconv.freemarker.directive.LinkMapDirectiveModel;
 import jp.igapyon.diary.v3.mdconv.freemarker.directive.LinkSearchDirectiveModel;
 import jp.igapyon.diary.v3.mdconv.freemarker.directive.LinkShareDirectiveModel;
 import jp.igapyon.diary.v3.mdconv.freemarker.directive.LocalRssDirectiveModel;
+import jp.igapyon.diary.v3.mdconv.freemarker.directive.LocalYearlistDirectiveModel;
 import jp.igapyon.diary.v3.mdconv.freemarker.directive.RSSFeedDirectiveModel;
 import jp.igapyon.diary.v3.util.IgapyonV3Settings;
 import jp.igapyon.diary.v3.util.SimpleDirUtil;
@@ -77,6 +78,9 @@ public class IgapyonV3FreeMarkerUtil {
 		final String relativePath = SimpleDirUtil.getRelativePath(rootdir, file);
 
 		final Configuration config = getConfiguration(settings, true);
+
+		// set settings obj
+		templateData.put("settings", settings);
 
 		final Template templateBase = config.getTemplate(relativePath);
 		try {
@@ -134,6 +138,7 @@ public class IgapyonV3FreeMarkerUtil {
 		config.setSharedVariable("linkshare", new LinkShareDirectiveModel(settings));
 		config.setSharedVariable("linkmap", new LinkMapDirectiveModel(settings));
 		config.setSharedVariable("linkamazon", new LinkAmazonDirectiveModel(settings));
+		config.setSharedVariable("localyearlist", new LocalYearlistDirectiveModel(settings));
 
 		return config;
 	}

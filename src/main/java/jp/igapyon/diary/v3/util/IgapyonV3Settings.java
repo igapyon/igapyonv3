@@ -82,6 +82,11 @@ public class IgapyonV3Settings {
 	private String language = "ja_JP";
 
 	/**
+	 * 日記のタイトル。 主に atom で利用されます。
+	 */
+	private String titleEn = "Igapyon Diary v3";
+
+	/**
 	 * Default double keywords.
 	 */
 	public static final String[][] DEFAULT_DOUBLE_KEYWORDS = { //
@@ -206,5 +211,13 @@ public class IgapyonV3Settings {
 
 	public void setBaseurl(String baseurl) {
 		this.baseurl = baseurl;
+	}
+
+	public String getTitleEn() {
+		return titleEn;
+	}
+
+	public void setTitleEn(String titleEn) {
+		this.titleEn = titleEn;
 	}
 }

@@ -55,6 +55,7 @@ import com.rometools.rome.io.XmlReader;
 
 import freemarker.cache.TemplateLoader;
 import jp.igapyon.diary.v3.util.IgapyonV3Settings;
+import jp.igapyon.diary.v3.util.SimpleDirUtil;
 
 /**
  * igapyonv3 向けの所定の挙動をおこなうテンプロードローダーです。
@@ -192,31 +193,6 @@ public class IgapyonV3TemplateLoader implements TemplateLoader {
 		return firstH2Line;
 	}
 
-	public static String getYearListMdString() {
-		return "[2017](https://igapyon.github.io/diary/2017/index.html)\n"
-				+ "/ [2016](https://igapyon.github.io/diary/2016/index.html)\n"
-				+ "/ [2015](https://igapyon.github.io/diary/2015/index.html)\n"
-				+ "/ [2014](https://igapyon.github.io/diary/2014/index.html)\n"
-				+ "/ [2013](https://igapyon.github.io/diary/2013/index.html)\n"
-				+ "/ [2012](https://igapyon.github.io/diary/2012/index.html)\n"
-				+ "/ [2011](https://igapyon.github.io/diary/2011/index.html)\n"
-				+ "/ [2010](https://igapyon.github.io/diary/2010/index.html)\n"
-				+ "/ [2009](https://igapyon.github.io/diary/2009/index.html)\n"
-				+ "/ [2008](https://igapyon.github.io/diary/2008/index.html)\n"
-				+ "/ [2007](https://igapyon.github.io/diary/2007/index.html)\n"
-				+ "/ [2006](https://igapyon.github.io/diary/2006/index.html)\n"
-				+ "/ [2005](https://igapyon.github.io/diary/2005/index.html)\n"
-				+ "/ [2004](https://igapyon.github.io/diary/2004/index.html)\n"
-				+ "/ [2003](https://igapyon.github.io/diary/2003/index.html)\n"
-				+ "/ [2002](https://igapyon.github.io/diary/2002/index.html)\n"
-				+ "/ [2001](https://igapyon.github.io/diary/2001/index.html)\n"
-				+ "/ [2000](https://igapyon.github.io/diary/2000/index.html)\n"
-				+ "/ [1998](https://igapyon.github.io/diary/1998/index.html)\n"
-				+ "/ [1997](https://igapyon.github.io/diary/1997/index.html)\n"
-				+ "/ [1996](https://igapyon.github.io/diary/1996/index.html)\n"
-				+ "/ [ALL](https://igapyon.github.io/diary/idxall.html)\n";
-	}
-
 	@Override
 	public Object findTemplateSource(final String resourceName) throws IOException {
 		if ("diaryYearList".equals(resourceName)) {
@@ -225,7 +201,7 @@ public class IgapyonV3TemplateLoader implements TemplateLoader {
 
 		ensureLoadAtomXml();
 
-		final File actualFile = new File(stripLocaleName(resourceName));
+		final File actualFile = new File(settings.getRootdir(), stripLocaleName(resourceName));
 		final String body = FileUtils.readFileToString(actualFile, "UTF-8");
 		String load = body;
 
@@ -236,6 +212,7 @@ public class IgapyonV3TemplateLoader implements TemplateLoader {
 		}
 
 		if (actualFile.getName().startsWith("ig") && false == actualFile.getName().startsWith("iga")) {
+			// 日記ノードの処理。
 			String year1 = "20";
 			String year2 = actualFile.getName().substring(2, 4);
 			if (year2.startsWith("9")) {
@@ -273,10 +250,23 @@ public class IgapyonV3TemplateLoader implements TemplateLoader {
 
 			// ヘッダ追加
 			header += (year1 + year2 + "-" + month + "-" + day + " diary: " + firstH2Line + "\n");
-			header += "=====================================================================================================\n";
-			header += "[![いがぴょん画像(小)](" + settings.getBaseurl() + "/images/iga200306s.jpg \"いがぴょん\")]("
-					+ settings.getBaseurl() + "/memo/memoigapyon.html) 日記形式でつづる [いがぴょん](" + settings.getBaseurl()
-					+ "/memo/memoigapyon.html)コラム ウェブページです。\n";
+
+			{
+				// TODO 一行目の展開ができていません。良い実装方法を考えましょう。
+				final File fileTemplate = new File(settings.getRootdir(), "template-header.md");
+				if (fileTemplate.exists()) {
+					final String template = FileUtils.readFileToString(fileTemplate, "UTF-8");
+					header += template;
+					if (header.endsWith("\n") == false) {
+						header += "\n";
+					}
+				} else {
+					System.err.println("template-header.md not found.:" + fileTemplate.getCanonicalPath());
+					header += "===================================\n";
+					header += "<#-- template-header.md not found. -->\n";
+				}
+			}
+
 			header += "\n";
 
 			load = header + load;
@@ -346,14 +336,21 @@ public class IgapyonV3TemplateLoader implements TemplateLoader {
 			}
 
 			footer += "\n";
-			footer += "----------------------------------------------------------------------------------------------------\n";
-			footer += "\n";
-			footer += "## この日記について\n";
-			footer += "[いがぴょんについて](" + settings.getBaseurl()
-					+ "/memo/memoigapyon.html) / [日記ジェネレータ](https://github.com/igapyon/igapyonv3)\n";
+
+			{
+				final File fileTemplate = new File(settings.getRootdir(), "template-footer.md");
+				if (fileTemplate.exists()) {
+					final String template = FileUtils.readFileToString(fileTemplate, "UTF-8");
+					footer += template;
+				} else {
+					System.err.println("template-footer.md not found.:" + fileTemplate.getCanonicalPath());
+				}
+			}
 
 			load += footer;
-		} else {
+		} else if (actualFile.getName().startsWith("index") || actualFile.getName().startsWith("idxall")
+				|| actualFile.getName().startsWith("README") || actualFile.getName().startsWith("memo")
+				|| SimpleDirUtil.getRelativePath(settings.getRootdir(), actualFile).startsWith("keyword")) {
 			final String firstH2Line = getFirstH2String(actualFile);
 
 			String header = "[top](" + settings.getBaseurl() + "/) \n";
@@ -361,10 +358,23 @@ public class IgapyonV3TemplateLoader implements TemplateLoader {
 
 			// ヘッダ追加
 			header += (firstH2Line + "\n");
-			header += "=====================================================================================================\n";
-			header += "[![いがぴょん画像(小)](" + settings.getBaseurl() + "/images/iga200306s.jpg \"いがぴょん\")]("
-					+ settings.getBaseurl() + "/memo/memoigapyon.html) 日記形式でつづる [いがぴょん](" + settings.getBaseurl()
-					+ "/memo/memoigapyon.html)コラム ウェブページです。\n";
+
+			{
+				// TODO 一行目の展開ができていません。良い実装方法を考えましょう。
+				final File fileTemplate = new File(settings.getRootdir(), "template-header.md");
+				if (fileTemplate.exists()) {
+					final String template = FileUtils.readFileToString(fileTemplate, "UTF-8");
+					header += template;
+					if (header.endsWith("\n") == false) {
+						header += "\n";
+					}
+				} else {
+					System.err.println("template-header.md not found.:" + fileTemplate.getCanonicalPath());
+					header += "===================================\n";
+					header += "<#-- template-header.md not found. -->\n";
+				}
+			}
+
 			header += "\n";
 
 			load = header + load;
@@ -393,13 +403,23 @@ public class IgapyonV3TemplateLoader implements TemplateLoader {
 			}
 
 			footer += "\n";
-			footer += "----------------------------------------------------------------------------------------------------\n";
-			footer += "\n";
-			footer += "## この日記について\n";
-			footer += "[いがぴょんについて](" + settings.getBaseurl()
-					+ "/memo/memoigapyon.html) / [日記ジェネレータ](https://github.com/igapyon/igapyonv3)\n";
+
+			{
+				final File fileTemplate = new File(settings.getRootdir(), "template-footer.md");
+				if (fileTemplate.exists()) {
+					final String template = FileUtils.readFileToString(fileTemplate, "UTF-8");
+					footer += template;
+				} else {
+					System.err.println("template-footer.md not found.:" + fileTemplate.getCanonicalPath());
+				}
+			}
 
 			load += footer;
+		} else {
+			// TODO そのうちに、どのように判断するのか検討。
+			// 加工無し出力。
+			resourceMap.put(resourceName, load);
+			return resourceName;
 		}
 
 		resourceMap.put(resourceName, load);
@@ -409,7 +429,7 @@ public class IgapyonV3TemplateLoader implements TemplateLoader {
 	@Override
 	public Reader getReader(final Object templateSource, final String encoding) throws IOException {
 		if ("diaryYearList".equals((String) templateSource)) {
-			return new StringReader(getYearListMdString());
+			throw new IOException("ERROR: diaryYearList is removed. use directive instead.");
 		}
 
 		return new StringReader(resourceMap.get(templateSource));
