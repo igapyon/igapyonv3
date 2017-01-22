@@ -71,15 +71,15 @@ public class LinkSearchDirectiveModel implements TemplateDirectiveModel {
 			final TemplateModel[] loopVars, final TemplateDirectiveBody body) throws TemplateException, IOException {
 		final BufferedWriter writer = new BufferedWriter(env.getOut());
 
-		if (params.get("title") == null) {
-			throw new TemplateModelException("title param is required.");
-		}
 		if (params.get("word") == null) {
 			throw new TemplateModelException("word param is required.");
 		}
 
 		// SimpleScalar#toString()
-		final String titleString = params.get("title").toString();
+		String titleString = null;
+		if (params.get("title") != null) {
+			titleString = params.get("title").toString();
+		}
 		final String wordString = params.get("word").toString();
 
 		String siteString = null;
@@ -90,6 +90,11 @@ public class LinkSearchDirectiveModel implements TemplateDirectiveModel {
 		String engineString = "google";
 		if (params.get("engine") != null) {
 			engineString = params.get("engine").toString();
+		}
+
+		if (titleString == null) {
+			// タイトル文字指定がない場合は、規定の文言を生成します。
+			titleString = "Search '" + wordString + "' in " + engineString;
 		}
 
 		final URLCodec codec = new URLCodec();
