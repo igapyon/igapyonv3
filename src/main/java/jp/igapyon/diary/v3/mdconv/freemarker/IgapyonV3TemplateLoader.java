@@ -55,6 +55,7 @@ import com.rometools.rome.io.XmlReader;
 
 import freemarker.cache.TemplateLoader;
 import jp.igapyon.diary.v3.util.IgapyonV3Settings;
+import jp.igapyon.diary.v3.util.SimpleDirUtil;
 
 /**
  * igapyonv3 向けの所定の挙動をおこなうテンプロードローダーです。
@@ -211,6 +212,7 @@ public class IgapyonV3TemplateLoader implements TemplateLoader {
 		}
 
 		if (actualFile.getName().startsWith("ig") && false == actualFile.getName().startsWith("iga")) {
+			// 日記ノードの処理。
 			String year1 = "20";
 			String year2 = actualFile.getName().substring(2, 4);
 			if (year2.startsWith("9")) {
@@ -248,10 +250,23 @@ public class IgapyonV3TemplateLoader implements TemplateLoader {
 
 			// ヘッダ追加
 			header += (year1 + year2 + "-" + month + "-" + day + " diary: " + firstH2Line + "\n");
-			header += "=====================================================================================================\n";
-			header += "[![いがぴょん画像(小)](" + settings.getBaseurl() + "/images/iga200306s.jpg \"いがぴょん\")]("
-					+ settings.getBaseurl() + "/memo/memoigapyon.html) 日記形式でつづる [いがぴょん](" + settings.getBaseurl()
-					+ "/memo/memoigapyon.html)コラム ウェブページです。\n";
+
+			{
+				// TODO 一行目の展開ができていません。良い実装方法を考えましょう。
+				final File fileTemplate = new File(settings.getRootdir(), "template-header.md");
+				if (fileTemplate.exists()) {
+					final String template = FileUtils.readFileToString(fileTemplate, "UTF-8");
+					header += template;
+					if (header.endsWith("\n") == false) {
+						header += "\n";
+					}
+				} else {
+					System.err.println("template-header.md not found.:" + fileTemplate.getCanonicalPath());
+					header += "===================================\n";
+					header += "<#-- template-header.md not found. -->\n";
+				}
+			}
+
 			header += "\n";
 
 			load = header + load;
@@ -321,14 +336,21 @@ public class IgapyonV3TemplateLoader implements TemplateLoader {
 			}
 
 			footer += "\n";
-			footer += "----------------------------------------------------------------------------------------------------\n";
-			footer += "\n";
-			footer += "## この日記について\n";
-			footer += "[いがぴょんについて](" + settings.getBaseurl()
-					+ "/memo/memoigapyon.html) / [日記ジェネレータ](https://github.com/igapyon/igapyonv3)\n";
+
+			{
+				final File fileTemplate = new File(settings.getRootdir(), "template-footer.md");
+				if (fileTemplate.exists()) {
+					final String template = FileUtils.readFileToString(fileTemplate, "UTF-8");
+					footer += template;
+				} else {
+					System.err.println("template-footer.md not found.:" + fileTemplate.getCanonicalPath());
+				}
+			}
 
 			load += footer;
-		} else {
+		} else if (actualFile.getName().startsWith("index") || actualFile.getName().startsWith("idxall")
+				|| actualFile.getName().startsWith("README") || actualFile.getName().startsWith("memo")
+				|| SimpleDirUtil.getRelativePath(settings.getRootdir(), actualFile).startsWith("keyword")) {
 			final String firstH2Line = getFirstH2String(actualFile);
 
 			String header = "[top](" + settings.getBaseurl() + "/) \n";
@@ -336,10 +358,23 @@ public class IgapyonV3TemplateLoader implements TemplateLoader {
 
 			// ヘッダ追加
 			header += (firstH2Line + "\n");
-			header += "=====================================================================================================\n";
-			header += "[![いがぴょん画像(小)](" + settings.getBaseurl() + "/images/iga200306s.jpg \"いがぴょん\")]("
-					+ settings.getBaseurl() + "/memo/memoigapyon.html) 日記形式でつづる [いがぴょん](" + settings.getBaseurl()
-					+ "/memo/memoigapyon.html)コラム ウェブページです。\n";
+
+			{
+				// TODO 一行目の展開ができていません。良い実装方法を考えましょう。
+				final File fileTemplate = new File(settings.getRootdir(), "template-header.md");
+				if (fileTemplate.exists()) {
+					final String template = FileUtils.readFileToString(fileTemplate, "UTF-8");
+					header += template;
+					if (header.endsWith("\n") == false) {
+						header += "\n";
+					}
+				} else {
+					System.err.println("template-header.md not found.:" + fileTemplate.getCanonicalPath());
+					header += "===================================\n";
+					header += "<#-- template-header.md not found. -->\n";
+				}
+			}
+
 			header += "\n";
 
 			load = header + load;
@@ -368,13 +403,23 @@ public class IgapyonV3TemplateLoader implements TemplateLoader {
 			}
 
 			footer += "\n";
-			footer += "----------------------------------------------------------------------------------------------------\n";
-			footer += "\n";
-			footer += "## この日記について\n";
-			footer += "[いがぴょんについて](" + settings.getBaseurl()
-					+ "/memo/memoigapyon.html) / [日記ジェネレータ](https://github.com/igapyon/igapyonv3)\n";
+
+			{
+				final File fileTemplate = new File(settings.getRootdir(), "template-footer.md");
+				if (fileTemplate.exists()) {
+					final String template = FileUtils.readFileToString(fileTemplate, "UTF-8");
+					footer += template;
+				} else {
+					System.err.println("template-footer.md not found.:" + fileTemplate.getCanonicalPath());
+				}
+			}
 
 			load += footer;
+		} else {
+			// TODO そのうちに、どのように判断するのか検討。
+			// 加工無し出力。
+			resourceMap.put(resourceName, load);
+			return resourceName;
 		}
 
 		resourceMap.put(resourceName, load);

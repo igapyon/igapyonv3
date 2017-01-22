@@ -77,19 +77,20 @@ public class TodayDiaryGenerator {
 		// 日記ファイルの新規作成に移ります。
 
 		final List<String> lines = new ArrayList<String>();
-		lines.add("## ここに日記のタイトル");
+		lines.add("## ここにコンテンツのタイトル");
 		lines.add("");
-		lines.add("ここに何か日記の内容。");
+		lines.add("ここに何か内容。");
 		lines.add("");
 		lines.add("* 箇条書き1");
 		lines.add("* 箇条書き2");
 		lines.add("  * 箇条書き2-1");
 		lines.add("");
-		lines.add("```java:Hello.java");
+		lines.add("```java");
 		lines.add("System.out.println(\"Hello world\");");
 		lines.add("```");
 		lines.add("");
 		lines.add("<#-- copyright " + settings.getAuthor() + " -->");
+		lines.add("<@linkshare word=\"本日の日記。ここに日記タイトルが入ってほしい。\"/>");
 
 		// 日記ファイルを新規作成します。
 		FileUtils.writeLines(file, lines);

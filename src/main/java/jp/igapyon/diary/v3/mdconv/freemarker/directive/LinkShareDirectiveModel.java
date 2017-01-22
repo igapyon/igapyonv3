@@ -34,6 +34,7 @@
 package jp.igapyon.diary.v3.mdconv.freemarker.directive;
 
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.IOException;
 import java.util.Map;
 
@@ -47,6 +48,7 @@ import freemarker.template.TemplateException;
 import freemarker.template.TemplateModel;
 import freemarker.template.TemplateModelException;
 import jp.igapyon.diary.v3.util.IgapyonV3Settings;
+import jp.igapyon.diary.v3.util.SimpleDirUtil;
 
 /**
  * Twitter シェアへのリンク用のディレクティブモデル
@@ -67,27 +69,34 @@ public class LinkShareDirectiveModel implements TemplateDirectiveModel {
 			final TemplateModel[] loopVars, final TemplateDirectiveBody body) throws TemplateException, IOException {
 		final BufferedWriter writer = new BufferedWriter(env.getOut());
 
-		if (params.get("url") == null) {
-			throw new TemplateModelException("url param is required.");
+		if (params.get("url") != null) {
+			throw new IOException("url not supported: " + env.getMainTemplate().getSourceName());
 		}
+
 		if (params.get("word") == null) {
 			throw new TemplateModelException("word param is required.");
 		}
 
+		final String sourceName = env.getMainTemplate().getSourceName();
+		String urlString = SimpleDirUtil.file2Url(new File(settings.getRootdir(), sourceName), settings);
+		if (urlString.endsWith(".html.src.md")) {
+			urlString = urlString.substring(0, urlString.length() - ".src.md".length());
+		}
+
 		// SimpleScalar#toString()
-		final String urlString = params.get("url").toString();
 		final String wordString = params.get("word").toString();
 
-		String titleString = "Twitterでシェア";
+		String titleString = "Share on Twitter";
 		if (params.get("title") != null) {
 			titleString = params.get("title").toString();
 		}
 
-		String tagsString = "igapyon,diary";
+		String tagsString = "igapyon,diary,いがぴょん";
 		if (params.get("tags") != null) {
 			tagsString = params.get("tags").toString();
 		}
 
+		// Twitter以外のシェア方法は現状ありません。
 		// String engineString = "twitter";
 		// if (params.get("engine") != null) {
 		// engineString = params.get("engine").toString();

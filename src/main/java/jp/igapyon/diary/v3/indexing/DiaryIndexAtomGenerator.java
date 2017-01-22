@@ -77,7 +77,7 @@ public class DiaryIndexAtomGenerator {
 			Collections.sort(diaryItemInfoList, new DiaryItemInfoComparator(true));
 
 			SimpleRomeUtil.itemList2AtomXml(diaryItemInfoList, new File(settings.getRootdir(), "atom.xml"),
-					"Igapyon Diary v3 all", settings);
+					settings.getTitleEn() + " all", settings);
 
 			{
 				int diaryListupCount = 15;
@@ -96,7 +96,7 @@ public class DiaryIndexAtomGenerator {
 				Collections.sort(diaryItemInfoList, new DiaryItemInfoComparator(true));
 
 				SimpleRomeUtil.itemList2AtomXml(recentItemInfoList, new File(settings.getRootdir(), "atomRecent.xml"),
-						"Igapyon Diary v3 recent", settings);
+						settings.getTitleEn() +	" recent", settings);
 			}
 		}
 
@@ -136,7 +136,7 @@ public class DiaryIndexAtomGenerator {
 			Collections.sort(diaryItemInfoList, new DiaryItemInfoComparator(true));
 
 			SimpleRomeUtil.itemList2AtomXml(diaryItemInfoList, new File(settings.getRootdir(), year + "/atom.xml"),
-					"Igapyon Diary v3 year " + year, settings);
+					settings.getTitleEn() +		" year " + year, settings);
 		}
 
 		{
@@ -151,7 +151,7 @@ public class DiaryIndexAtomGenerator {
 			Collections.sort(diaryItemInfoList, new DiaryItemInfoComparator(false));
 
 			SimpleRomeUtil.itemList2AtomXml(diaryItemInfoList, new File(settings.getRootdir(), "memo" + "/atom.xml"),
-					"Igapyon Diary v3 memo", settings);
+					settings.getTitleEn() +	" memo", settings);
 		}
 
 		{
@@ -163,7 +163,7 @@ public class DiaryIndexAtomGenerator {
 			Collections.sort(diaryItemInfoList, new DiaryItemInfoComparator(false));
 
 			SimpleRomeUtil.itemList2AtomXml(diaryItemInfoList, new File(settings.getRootdir(), "keyword" + "/atom.xml"),
-					"Igapyon Diary v3 keyword", settings);
+					settings.getTitleEn() +	" keyword", settings);
 		}
 	}
 }
