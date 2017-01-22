@@ -38,7 +38,6 @@ import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -100,20 +99,6 @@ public class IgapyonV3TemplateLoader implements TemplateLoader {
 		return actualResourceName;
 	}
 
-	public static String getFirstH2String(final File file) throws IOException {
-		final List<String> lines = FileUtils.readLines(file, "UTF-8");
-		String firstH2Line = null;
-		for (String line : lines) {
-			if (firstH2Line == null) {
-				// 最初の ## からテキストを取得。
-				if (line.startsWith("## ")) {
-					firstH2Line = line.substring(3);
-				}
-			}
-		}
-		return firstH2Line;
-	}
-
 	@Override
 	public Object findTemplateSource(final String resourceName) throws IOException {
 		if ("diaryYearList".equals(resourceName)) {
@@ -141,11 +126,6 @@ public class IgapyonV3TemplateLoader implements TemplateLoader {
 			String month = actualFile.getName().substring(4, 6);
 			String day = actualFile.getName().substring(6, 8);
 
-			final String firstH2Line = getFirstH2String(actualFile);
-
-			final String targetURL = settings.getBaseurl() + "/" + year1 + year2 + "/ig" + year2 + month + day
-					+ ".html";
-
 			String header = "[top](${settings.baseurl}/) \n";
 			header += " / [index](${settings.baseurl}/" + year1 + year2 + "/index.html) \n";
 
@@ -158,7 +138,7 @@ public class IgapyonV3TemplateLoader implements TemplateLoader {
 			header += "\n";
 
 			// ヘッダ追加
-			header += (year1 + year2 + "-" + month + "-" + day + " diary: " + firstH2Line + "\n");
+			header += (year1 + year2 + "-" + month + "-" + day + " diary: ${current.title}\n");
 
 			{
 				// TODO 固定部分より上の展開ができていません。良い実装方法を考えましょう。
@@ -206,13 +186,12 @@ public class IgapyonV3TemplateLoader implements TemplateLoader {
 		} else if (actualFile.getName().startsWith("index") || actualFile.getName().startsWith("idxall")
 				|| actualFile.getName().startsWith("README") || actualFile.getName().startsWith("memo")
 				|| SimpleDirUtil.getRelativePath(settings.getRootdir(), actualFile).startsWith("keyword")) {
-			final String firstH2Line = getFirstH2String(actualFile);
 
 			String header = "[top](${settings.baseurl}/) \n";
 			header += "\n";
 
 			// ヘッダ追加
-			header += (firstH2Line + "\n");
+			header += ("${current.title}\n");
 
 			{
 				// TODO 一行目の展開ができていません。良い実装方法を考えましょう。
