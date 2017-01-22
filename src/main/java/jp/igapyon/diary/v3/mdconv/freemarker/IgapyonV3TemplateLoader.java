@@ -113,53 +113,8 @@ public class IgapyonV3TemplateLoader implements TemplateLoader {
 
 		if (actualFile.getName().startsWith("ig") && false == actualFile.getName().startsWith("iga")) {
 			// 日記ノードの処理。
-			String year1 = "20";
-			String year2 = actualFile.getName().substring(2, 4);
-			if (year2.startsWith("9")) {
-				year1 = "19";
-			}
 
-			String month = actualFile.getName().substring(4, 6);
-			String day = actualFile.getName().substring(6, 8);
-
-			// FIXME そもそもヘッダーも <@header />
-			// FIXME とかで表現できるような気がしてきた。そして遅延展開すると変数が利用可能になる。
-
-			String header = "[top](${settings.baseurl}/) \n";
-			// FIXME index も current.index のような値がほしい。
-			header += " / [index](${settings.baseurl}/" + year1 + year2 + "/index.html) \n";
-
-			header += " / <@linkprev /> \n";
-			header += " / <@linknext /> \n";
-
-			header += " / [target](${current.url}) \n";
-			// FIXME ソースも current.sourceurl などほしい。名前は後でよく考えよう。
-			header += " / [source](https://github.com/igapyon/diary/blob/gh-pages/" + year1 + year2 + "/ig" + year2
-					+ month + day + ".html.src.md) \n";
-			header += "\n";
-
-			// ヘッダ追加
-			header += (year1 + year2 + "-" + month + "-" + day + " diary: ${current.title}\n");
-
-			{
-				// TODO 固定部分より上の展開ができていません。良い実装方法を考えましょう。
-				final File fileTemplate = new File(settings.getRootdir(), "template-header.md");
-				if (fileTemplate.exists()) {
-					final String template = FileUtils.readFileToString(fileTemplate, "UTF-8");
-					header += template;
-					if (header.endsWith("\n") == false) {
-						header += "\n";
-					}
-				} else {
-					System.err.println("template-header.md not found.:" + fileTemplate.getCanonicalPath());
-					header += "===================================\n";
-					header += "<#-- template-header.md not found. -->\n";
-				}
-			}
-
-			header += "\n";
-
-			load = header + load;
+			load = getDiaryHeaderString(actualFile.getName()) + load;
 
 			// フッタ追加
 			String footer = "";
@@ -278,5 +233,55 @@ public class IgapyonV3TemplateLoader implements TemplateLoader {
 	@Override
 	public long getLastModified(final Object templateSource) {
 		return System.currentTimeMillis();
+	}
+
+	protected String getDiaryHeaderString(final String filename) throws IOException {
+		String year1 = "20";
+		String year2 = filename.substring(2, 4);
+		if (year2.startsWith("9")) {
+			year1 = "19";
+		}
+
+		String month = filename.substring(4, 6);
+		String day = filename.substring(6, 8);
+
+		// FIXME そもそもヘッダーも <@header />
+		// FIXME とかで表現できるような気がしてきた。そして遅延展開すると変数が利用可能になる。
+
+		String header = "[top](${settings.baseurl}/) \n";
+		// FIXME index も current.index のような値がほしい。
+		header += " / [index](${settings.baseurl}/" + year1 + year2 + "/index.html) \n";
+
+		header += " / <@linkprev /> \n";
+		header += " / <@linknext /> \n";
+
+		header += " / [target](${current.url}) \n";
+		// FIXME ソースも current.sourceurl などほしい。名前は後でよく考えよう。
+		header += " / [source](https://github.com/igapyon/diary/blob/gh-pages/" + year1 + year2 + "/ig" + year2 + month
+				+ day + ".html.src.md) \n";
+		header += "\n";
+
+		// ヘッダ追加
+		header += (year1 + year2 + "-" + month + "-" + day + " diary: ${current.title}\n");
+
+		{
+			// TODO 固定部分より上の展開ができていません。良い実装方法を考えましょう。
+			final File fileTemplate = new File(settings.getRootdir(), "template-header.md");
+			if (fileTemplate.exists()) {
+				final String template = FileUtils.readFileToString(fileTemplate, "UTF-8");
+				header += template;
+				if (header.endsWith("\n") == false) {
+					header += "\n";
+				}
+			} else {
+				System.err.println("template-header.md not found.:" + fileTemplate.getCanonicalPath());
+				header += "===================================\n";
+				header += "<#-- template-header.md not found. -->\n";
+			}
+		}
+
+		header += "\n";
+
+		return header;
 	}
 }
