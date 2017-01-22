@@ -64,7 +64,7 @@ public class HeaderDirectiveModel implements TemplateDirectiveModel {
 		final BufferedWriter writer = new BufferedWriter(env.getOut());
 
 		// SimpleScalar#toString()
-		String typeString = "none";
+		String typeString = "standard";
 		if (params.get("type") != null) {
 			typeString = params.get("type").toString();
 		}
@@ -122,7 +122,7 @@ public class HeaderDirectiveModel implements TemplateDirectiveModel {
 
 			writer.write("\n");
 
-		} else if ("none".equals(typeString)) {
+		} else if ("standard".equals(typeString)) {
 			writer.write("[top](${settings.baseurl}/) \n");
 			writer.write("\n");
 
