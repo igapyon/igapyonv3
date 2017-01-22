@@ -52,6 +52,7 @@ import jp.igapyon.diary.v3.mdconv.freemarker.directive.LinkShareDirectiveModel;
 import jp.igapyon.diary.v3.mdconv.freemarker.directive.LocalRssDirectiveModel;
 import jp.igapyon.diary.v3.mdconv.freemarker.directive.LocalYearlistDirectiveModel;
 import jp.igapyon.diary.v3.mdconv.freemarker.directive.RSSFeedDirectiveModel;
+import jp.igapyon.diary.v3.util.IgapyonV3Current;
 import jp.igapyon.diary.v3.util.IgapyonV3Settings;
 import jp.igapyon.diary.v3.util.SimpleDirUtil;
 
@@ -84,6 +85,30 @@ public class IgapyonV3FreeMarkerUtil {
 		templateData.put("settings", settings);
 
 		final Template templateBase = config.getTemplate(relativePath);
+
+		try {
+			// 一旦、事前準備運動として空読み込みを実施します。
+			templateData.put("current", new IgapyonV3Current());
+
+			final StringWriter writer = new StringWriter();
+			templateBase.process(templateData, writer);
+			// System.out.println("wrk[" + writer.toString() + "]");
+
+			// ここで得られた 展開後の md ファイルを入力として、current オブジェクトへのプリセットを実施します。
+			// TODO 該当機能は未実装です。
+			// FIXME 該当機能は未実装です。
+		} catch (TemplateException e) {
+			throw new IOException(e);
+		}
+
+		final IgapyonV3Current current = new IgapyonV3Current();
+		templateData.put("current", current);
+
+		{
+			// 空読みで得られた知見を current に反映したい。
+			// FIXME not implemented. さしあたり title と url がほしい。
+		}
+
 		try {
 			final StringWriter writer = new StringWriter();
 			templateBase.process(templateData, writer);
