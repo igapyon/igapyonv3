@@ -34,11 +34,9 @@
 package jp.igapyon.diary.v3.mdconv.freemarker;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -46,12 +44,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.commons.io.FileUtils;
-
-import com.rometools.rome.feed.synd.SyndEntry;
-import com.rometools.rome.feed.synd.SyndFeed;
-import com.rometools.rome.io.FeedException;
-import com.rometools.rome.io.SyndFeedInput;
-import com.rometools.rome.io.XmlReader;
 
 import freemarker.cache.TemplateLoader;
 import jp.igapyon.diary.v3.util.IgapyonV3Settings;
@@ -77,59 +69,9 @@ public class IgapyonV3TemplateLoader implements TemplateLoader {
 
 	protected Map<String, String> resourceMap = new HashMap<String, String>();
 
-	/**
-	 * notice static!!! danger
-	 */
-	protected static List<SyndEntry> synEntryList = null;
-
 	public IgapyonV3TemplateLoader(final IgapyonV3Settings settings, boolean isExpandHeaderFooter) {
 		this.settings = settings;
 		this.isExpandHeaderFooter = isExpandHeaderFooter;
-
-		try {
-			ensureLoadAtomXml();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-
-	/**
-	 * 処理の過程で必要になる各種 atom ファイルをロード済みかどうか念押し確認します。
-	 * 
-	 * @throws IOException
-	 */
-	public void ensureLoadAtomXml() throws IOException {
-		if (synEntryList == null) {
-			synEntryList = new ArrayList<SyndEntry>();
-			final File atomXmlFile = new File(settings.getRootdir(), "atom.xml");
-			if (atomXmlFile.exists() == false) {
-				return;
-			}
-			try {
-				final SyndFeed synFeed = new SyndFeedInput().build(new XmlReader(new FileInputStream(atomXmlFile)));
-				for (Object lookup : synFeed.getEntries()) {
-					final SyndEntry entry = (SyndEntry) lookup;
-					synEntryList.add(entry);
-				}
-			} catch (FeedException e) {
-				throw new IOException(e);
-			}
-		}
-	}
-
-	public int findTargetAtomEntry(final String url) throws IOException {
-		if (synEntryList == null) {
-			return -1;
-		}
-
-		for (int index = 0; index < synEntryList.size(); index++) {
-			final SyndEntry entry = synEntryList.get(index);
-			if (url.equals(entry.getLink())) {
-				return index;
-			}
-		}
-
-		return -1;
 	}
 
 	/**
@@ -178,8 +120,6 @@ public class IgapyonV3TemplateLoader implements TemplateLoader {
 			return "diaryYearList";
 		}
 
-		ensureLoadAtomXml();
-
 		final File actualFile = new File(settings.getRootdir(), stripLocaleName(resourceName));
 		final String body = FileUtils.readFileToString(actualFile, "UTF-8");
 		String load = body;
@@ -205,7 +145,6 @@ public class IgapyonV3TemplateLoader implements TemplateLoader {
 
 			final String targetURL = settings.getBaseurl() + "/" + year1 + year2 + "/ig" + year2 + month + day
 					+ ".html";
-			final int entryIndex = findTargetAtomEntry(targetURL);
 
 			String header = "[top](" + settings.getBaseurl() + "/) \n";
 			header += " / [index](" + settings.getBaseurl() + "/" + year1 + year2 + "/index.html) \n";
