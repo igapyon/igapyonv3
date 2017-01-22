@@ -33,14 +33,37 @@
 
 package jp.igapyon.diary.v3.util;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class IgapyonV3Current {
 	private String title = "N/A";
+
+	private String url = "N/A";
+
+	private List<String> keywordList = new ArrayList<String>();
 
 	public String getTitle() {
 		return title;
 	}
 
+	public List<String> getKeywordList() {
+		return keywordList;
+	}
+
+	public void setKeywordList(List<String> keywordList) {
+		this.keywordList = keywordList;
+	}
+
 	public void setTitle(String title) {
 		this.title = title;
+	}
+
+	public String getUrl() {
+		return url;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
 	}
 }

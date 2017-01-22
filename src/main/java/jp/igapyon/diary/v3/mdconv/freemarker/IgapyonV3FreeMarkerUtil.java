@@ -39,16 +39,21 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
 import freemarker.template.TemplateExceptionHandler;
 import jp.igapyon.diary.v3.mdconv.freemarker.directive.IncludeDirectiveModel;
+import jp.igapyon.diary.v3.mdconv.freemarker.directive.KeywordlistDirectiveModel;
 import jp.igapyon.diary.v3.mdconv.freemarker.directive.LastModifiedDirectiveModel;
 import jp.igapyon.diary.v3.mdconv.freemarker.directive.LinkAmazonDirectiveModel;
 import jp.igapyon.diary.v3.mdconv.freemarker.directive.LinkDiaryDirectiveModel;
 import jp.igapyon.diary.v3.mdconv.freemarker.directive.LinkMapDirectiveModel;
+import jp.igapyon.diary.v3.mdconv.freemarker.directive.LinkNextDirectiveModel;
+import jp.igapyon.diary.v3.mdconv.freemarker.directive.LinkPrevDirectiveModel;
 import jp.igapyon.diary.v3.mdconv.freemarker.directive.LinkSearchDirectiveModel;
 import jp.igapyon.diary.v3.mdconv.freemarker.directive.LinkShareDirectiveModel;
 import jp.igapyon.diary.v3.mdconv.freemarker.directive.LocalRssDirectiveModel;
@@ -75,6 +80,7 @@ public class IgapyonV3FreeMarkerUtil {
 	 */
 	public static String process(File file, final Map<String, Object> templateData, final IgapyonV3Settings settings)
 			throws IOException {
+
 		// do canonical
 		final File rootdir = settings.getRootdir().getCanonicalFile();
 		file = file.getCanonicalFile();
@@ -99,7 +105,7 @@ public class IgapyonV3FreeMarkerUtil {
 
 			// ここで得られた 展開後の md ファイルを入力として、current オブジェクトへのプリセットを実施します。
 
-			current = buildCurrentObjectByPreParse(writer.toString());
+			current = buildCurrentObjectByPreParse(writer.toString(), templateBase.getName(), settings);
 		} catch (TemplateException e) {
 			throw new IOException(e);
 		}
@@ -116,7 +122,8 @@ public class IgapyonV3FreeMarkerUtil {
 		}
 	}
 
-	public static IgapyonV3Current buildCurrentObjectByPreParse(final String sourceString) throws IOException {
+	public static IgapyonV3Current buildCurrentObjectByPreParse(final String sourceString, final String sourceName,
+			final IgapyonV3Settings settings) throws IOException {
 		final IgapyonV3Current current = new IgapyonV3Current();
 
 		final BufferedReader reader = new BufferedReader(new StringReader(sourceString));
@@ -129,6 +136,47 @@ public class IgapyonV3FreeMarkerUtil {
 			if (line.startsWith("## ")) {
 				current.setTitle(line.substring(3));
 				break;
+			}
+		}
+
+		{
+			// final String sourceName = env.getMainTemplate().getSourceName();
+			String url = SimpleDirUtil.file2Url(new File(settings.getRootdir(), sourceName), settings);
+			{
+				// TODO共通関数化せよ。
+				// igapyonv3 特有のファイル名変化に当たります。
+				if (url.endsWith(".src.md")) {
+					url = url.substring(0, url.length() - ".src.md".length());
+				}
+			}
+			current.setUrl(url);
+		}
+
+		// こいつはキーワード抽出。
+		{
+			{
+				// タイトルに [] があればこれを記憶。
+				final Pattern pat = Pattern.compile("\\[.*?\\]");
+				final Matcher mat = pat.matcher(current.getTitle());
+
+				for (; mat.find();) {
+					// まず、タイトルの [] を読み込み。これは、本文のダブルカッコと同じものと考えて良い。
+					String word = mat.group();
+					word = word.substring(1, word.length() - 1);
+					current.getKeywordList().add(word);
+				}
+			}
+
+			{
+				// ボディに [[]] があればこれを記憶。
+				final Pattern pat = Pattern.compile("\\[\\[.*?\\]\\]");
+				final Matcher mat = pat.matcher(sourceString);
+
+				for (; mat.find();) {
+					String word = mat.group();
+					word = word.substring(2, word.length() - 2);
+					current.getKeywordList().add(word);
+				}
 			}
 		}
 
@@ -183,8 +231,11 @@ public class IgapyonV3FreeMarkerUtil {
 		config.setSharedVariable("linkshare", new LinkShareDirectiveModel(settings));
 		config.setSharedVariable("linkmap", new LinkMapDirectiveModel(settings));
 		config.setSharedVariable("linkamazon", new LinkAmazonDirectiveModel(settings));
+		config.setSharedVariable("linkprev", new LinkPrevDirectiveModel(settings));
+		config.setSharedVariable("linknext", new LinkNextDirectiveModel(settings));
 		config.setSharedVariable("localyearlist", new LocalYearlistDirectiveModel(settings));
 		config.setSharedVariable("lastmodified", new LastModifiedDirectiveModel(settings));
+		config.setSharedVariable("keywordlist", new KeywordlistDirectiveModel(settings));
 
 		return config;
 	}

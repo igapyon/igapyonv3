@@ -34,24 +34,15 @@
 package jp.igapyon.diary.v3.mdconv.freemarker;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.commons.io.FileUtils;
-
-import com.rometools.rome.feed.synd.SyndEntry;
-import com.rometools.rome.feed.synd.SyndFeed;
-import com.rometools.rome.io.FeedException;
-import com.rometools.rome.io.SyndFeedInput;
-import com.rometools.rome.io.XmlReader;
 
 import freemarker.cache.TemplateLoader;
 import jp.igapyon.diary.v3.util.IgapyonV3Settings;
@@ -77,80 +68,9 @@ public class IgapyonV3TemplateLoader implements TemplateLoader {
 
 	protected Map<String, String> resourceMap = new HashMap<String, String>();
 
-	/**
-	 * notice static!!! danger
-	 */
-	protected static List<SyndEntry> synEntryList = null;
-
-	/**
-	 * notice static!!! danger
-	 */
-	protected static List<SyndEntry> synKeywordEntryList = null;
-
 	public IgapyonV3TemplateLoader(final IgapyonV3Settings settings, boolean isExpandHeaderFooter) {
 		this.settings = settings;
 		this.isExpandHeaderFooter = isExpandHeaderFooter;
-
-		try {
-			ensureLoadAtomXml();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-
-	/**
-	 * 処理の過程で必要になる各種 atom ファイルをロード済みかどうか念押し確認します。
-	 * 
-	 * @throws IOException
-	 */
-	public void ensureLoadAtomXml() throws IOException {
-		if (synEntryList == null) {
-			synEntryList = new ArrayList<SyndEntry>();
-			final File atomXmlFile = new File(settings.getRootdir(), "atom.xml");
-			if (atomXmlFile.exists() == false) {
-				return;
-			}
-			try {
-				final SyndFeed synFeed = new SyndFeedInput().build(new XmlReader(new FileInputStream(atomXmlFile)));
-				for (Object lookup : synFeed.getEntries()) {
-					final SyndEntry entry = (SyndEntry) lookup;
-					synEntryList.add(entry);
-				}
-			} catch (FeedException e) {
-				throw new IOException(e);
-			}
-		}
-		if (synKeywordEntryList == null) {
-			synKeywordEntryList = new ArrayList<SyndEntry>();
-			final File atomXmlFile = new File(settings.getRootdir(), "keyword/atom.xml");
-			if (atomXmlFile.exists() == false) {
-				return;
-			}
-			try {
-				final SyndFeed synFeed = new SyndFeedInput().build(new XmlReader(new FileInputStream(atomXmlFile)));
-				for (Object lookup : synFeed.getEntries()) {
-					final SyndEntry entry = (SyndEntry) lookup;
-					synKeywordEntryList.add(entry);
-				}
-			} catch (FeedException e) {
-				throw new IOException(e);
-			}
-		}
-	}
-
-	public int findTargetAtomEntry(final String url) throws IOException {
-		if (synEntryList == null) {
-			return -1;
-		}
-
-		for (int index = 0; index < synEntryList.size(); index++) {
-			final SyndEntry entry = synEntryList.get(index);
-			if (url.equals(entry.getLink())) {
-				return index;
-			}
-		}
-
-		return -1;
 	}
 
 	/**
@@ -179,28 +99,8 @@ public class IgapyonV3TemplateLoader implements TemplateLoader {
 		return actualResourceName;
 	}
 
-	public static String getFirstH2String(final File file) throws IOException {
-		final List<String> lines = FileUtils.readLines(file, "UTF-8");
-		String firstH2Line = null;
-		for (String line : lines) {
-			if (firstH2Line == null) {
-				// 最初の ## からテキストを取得。
-				if (line.startsWith("## ")) {
-					firstH2Line = line.substring(3);
-				}
-			}
-		}
-		return firstH2Line;
-	}
-
 	@Override
 	public Object findTemplateSource(final String resourceName) throws IOException {
-		if ("diaryYearList".equals(resourceName)) {
-			return "diaryYearList";
-		}
-
-		ensureLoadAtomXml();
-
 		final File actualFile = new File(settings.getRootdir(), stripLocaleName(resourceName));
 		final String body = FileUtils.readFileToString(actualFile, "UTF-8");
 		String load = body;
@@ -222,37 +122,27 @@ public class IgapyonV3TemplateLoader implements TemplateLoader {
 			String month = actualFile.getName().substring(4, 6);
 			String day = actualFile.getName().substring(6, 8);
 
-			final String firstH2Line = getFirstH2String(actualFile);
+			// FIXME そもそもヘッダーも <@header />
+			// FIXME とかで表現できるような気がしてきた。そして遅延展開すると変数が利用可能になる。
 
-			final String targetURL = settings.getBaseurl() + "/" + year1 + year2 + "/ig" + year2 + month + day
-					+ ".html";
-			final int entryIndex = findTargetAtomEntry(targetURL);
+			String header = "[top](${settings.baseurl}/) \n";
+			// FIXME index も current.index のような値がほしい。
+			header += " / [index](${settings.baseurl}/" + year1 + year2 + "/index.html) \n";
 
-			String header = "[top](" + settings.getBaseurl() + "/) \n";
-			header += " / [index](" + settings.getBaseurl() + "/" + year1 + year2 + "/index.html) \n";
+			header += " / <@linkprev /> \n";
+			header += " / <@linknext /> \n";
 
-			if (entryIndex < 0 || entryIndex > synEntryList.size() - 2) {
-				header += " / prev \n";
-			} else {
-				header += " / [prev](" + synEntryList.get(entryIndex + 1).getLink() + ") \n";
-			}
-
-			if (entryIndex <= 0) {
-				header += " / next \n";
-			} else {
-				header += " / [next](" + synEntryList.get(entryIndex - 1).getLink() + ") \n";
-			}
-
-			header += " / [target](" + targetURL + ") \n";
+			header += " / [target](${current.url}) \n";
+			// FIXME ソースも current.sourceurl などほしい。名前は後でよく考えよう。
 			header += " / [source](https://github.com/igapyon/diary/blob/gh-pages/" + year1 + year2 + "/ig" + year2
 					+ month + day + ".html.src.md) \n";
 			header += "\n";
 
 			// ヘッダ追加
-			header += (year1 + year2 + "-" + month + "-" + day + " diary: " + firstH2Line + "\n");
+			header += (year1 + year2 + "-" + month + "-" + day + " diary: ${current.title}\n");
 
 			{
-				// TODO 一行目の展開ができていません。良い実装方法を考えましょう。
+				// TODO 固定部分より上の展開ができていません。良い実装方法を考えましょう。
 				final File fileTemplate = new File(settings.getRootdir(), "template-header.md");
 				if (fileTemplate.exists()) {
 					final String template = FileUtils.readFileToString(fileTemplate, "UTF-8");
@@ -279,61 +169,7 @@ public class IgapyonV3TemplateLoader implements TemplateLoader {
 				footer += "\n";
 			}
 
-			{
-				final List<String> localKeywordList = new ArrayList<String>();
-
-				{
-					// タイトルに [] があればこれを記憶。
-					final Pattern pat = Pattern.compile("\\[.*?\\]");
-					final Matcher mat = pat.matcher(firstH2Line);
-
-					for (; mat.find();) {
-						// まず、タイトルの [] を読み込み。これは、本文のダブルカッコと同じものと考えて良い。
-						String word = mat.group();
-						word = word.substring(1, word.length() - 1);
-						localKeywordList.add(word);
-					}
-				}
-
-				{
-					// ボディに [[]] があればこれを記憶。
-					final Pattern pat = Pattern.compile("\\[\\[.*?\\]\\]");
-					final Matcher mat = pat.matcher(body);
-
-					for (; mat.find();) {
-						String word = mat.group();
-						word = word.substring(2, word.length() - 2);
-						localKeywordList.add(word);
-					}
-				}
-
-				if (localKeywordList.size() > 0) {
-					footer += "\n";
-					footer += "## 登場キーワード\n";
-					footer += "\n";
-					Map<String, String> processedKeywordMap = new HashMap<String, String>();
-					for (String key : localKeywordList) {
-						if (processedKeywordMap.get(key.toLowerCase()) != null) {
-							// すでに処理済み。
-							continue;
-						}
-						processedKeywordMap.put(key.toLowerCase(), "done");
-
-						SyndEntry existEntry = null;
-						for (SyndEntry entry : synKeywordEntryList) {
-							if (entry.getTitle().toLowerCase().equals(key.toLowerCase())) {
-								existEntry = entry;
-							}
-						}
-
-						if (existEntry == null) {
-							footer += ("* " + key + "\n");
-						} else {
-							footer += ("* [" + existEntry.getTitle() + "](" + existEntry.getLink() + ")\n");
-						}
-					}
-				}
-			}
+			footer += "<@keywordlist />";
 
 			footer += "\n";
 
@@ -351,13 +187,12 @@ public class IgapyonV3TemplateLoader implements TemplateLoader {
 		} else if (actualFile.getName().startsWith("index") || actualFile.getName().startsWith("idxall")
 				|| actualFile.getName().startsWith("README") || actualFile.getName().startsWith("memo")
 				|| SimpleDirUtil.getRelativePath(settings.getRootdir(), actualFile).startsWith("keyword")) {
-			final String firstH2Line = getFirstH2String(actualFile);
 
-			String header = "[top](" + settings.getBaseurl() + "/) \n";
+			String header = "[top](${settings.baseurl}/) \n";
 			header += "\n";
 
 			// ヘッダ追加
-			header += (firstH2Line + "\n");
+			header += ("${current.title}\n");
 
 			{
 				// TODO 一行目の展開ができていません。良い実装方法を考えましょう。
