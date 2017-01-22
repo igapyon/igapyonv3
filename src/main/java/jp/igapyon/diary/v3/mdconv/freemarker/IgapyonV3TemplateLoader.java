@@ -211,6 +211,8 @@ public class IgapyonV3TemplateLoader implements TemplateLoader {
 		return System.currentTimeMillis();
 	}
 
+	//////////////////////////////////////////
+
 	protected String getStandardHeaderString() throws IOException {
 		String header = "[top](${settings.baseurl}/) \n";
 		header += "\n";
