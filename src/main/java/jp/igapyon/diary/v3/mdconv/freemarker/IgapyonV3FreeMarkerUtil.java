@@ -80,6 +80,7 @@ public class IgapyonV3FreeMarkerUtil {
 	 */
 	public static String process(File file, final Map<String, Object> templateData, final IgapyonV3Settings settings)
 			throws IOException {
+
 		// do canonical
 		final File rootdir = settings.getRootdir().getCanonicalFile();
 		file = file.getCanonicalFile();
@@ -104,7 +105,7 @@ public class IgapyonV3FreeMarkerUtil {
 
 			// ここで得られた 展開後の md ファイルを入力として、current オブジェクトへのプリセットを実施します。
 
-			current = buildCurrentObjectByPreParse(writer.toString());
+			current = buildCurrentObjectByPreParse(writer.toString(), templateBase.getName(), settings);
 		} catch (TemplateException e) {
 			throw new IOException(e);
 		}
@@ -121,7 +122,8 @@ public class IgapyonV3FreeMarkerUtil {
 		}
 	}
 
-	public static IgapyonV3Current buildCurrentObjectByPreParse(final String sourceString) throws IOException {
+	public static IgapyonV3Current buildCurrentObjectByPreParse(final String sourceString, final String sourceName,
+			final IgapyonV3Settings settings) throws IOException {
 		final IgapyonV3Current current = new IgapyonV3Current();
 
 		final BufferedReader reader = new BufferedReader(new StringReader(sourceString));
@@ -135,6 +137,19 @@ public class IgapyonV3FreeMarkerUtil {
 				current.setTitle(line.substring(3));
 				break;
 			}
+		}
+
+		{
+			// final String sourceName = env.getMainTemplate().getSourceName();
+			String url = SimpleDirUtil.file2Url(new File(settings.getRootdir(), sourceName), settings);
+			{
+				// TODO共通関数化せよ。
+				// igapyonv3 特有のファイル名変化に当たります。
+				if (url.endsWith(".src.md")) {
+					url = url.substring(0, url.length() - ".src.md".length());
+				}
+			}
+			current.setUrl(url);
 		}
 
 		// こいつはキーワード抽出。

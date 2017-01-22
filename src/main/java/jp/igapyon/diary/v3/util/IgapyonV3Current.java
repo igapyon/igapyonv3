@@ -39,6 +39,8 @@ import java.util.List;
 public class IgapyonV3Current {
 	private String title = "N/A";
 
+	private String url = "N/A";
+
 	private List<String> keywordList = new ArrayList<String>();
 
 	public String getTitle() {
@@ -55,5 +57,13 @@ public class IgapyonV3Current {
 
 	public void setTitle(String title) {
 		this.title = title;
+	}
+
+	public String getUrl() {
+		return url;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
 	}
 }
