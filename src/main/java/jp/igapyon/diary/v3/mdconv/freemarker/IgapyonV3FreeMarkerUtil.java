@@ -47,6 +47,7 @@ import freemarker.template.Template;
 import freemarker.template.TemplateException;
 import freemarker.template.TemplateExceptionHandler;
 import jp.igapyon.diary.v3.mdconv.freemarker.directive.IncludeDirectiveModel;
+import jp.igapyon.diary.v3.mdconv.freemarker.directive.KeywordlistDirectiveModel;
 import jp.igapyon.diary.v3.mdconv.freemarker.directive.LastModifiedDirectiveModel;
 import jp.igapyon.diary.v3.mdconv.freemarker.directive.LinkAmazonDirectiveModel;
 import jp.igapyon.diary.v3.mdconv.freemarker.directive.LinkDiaryDirectiveModel;
@@ -215,6 +216,7 @@ public class IgapyonV3FreeMarkerUtil {
 		config.setSharedVariable("linkamazon", new LinkAmazonDirectiveModel(settings));
 		config.setSharedVariable("localyearlist", new LocalYearlistDirectiveModel(settings));
 		config.setSharedVariable("lastmodified", new LastModifiedDirectiveModel(settings));
+		config.setSharedVariable("keywordlist", new KeywordlistDirectiveModel(settings));
 
 		return config;
 	}
