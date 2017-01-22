@@ -152,7 +152,7 @@ public class IgapyonV3TemplateLoader implements TemplateLoader {
 			header += " / <@linkprev /> \n";
 			header += " / <@linknext /> \n";
 
-			header += " / [target](" + targetURL + ") \n";
+			header += " / [target](${current.url}) \n";
 			header += " / [source](https://github.com/igapyon/diary/blob/gh-pages/" + year1 + year2 + "/ig" + year2
 					+ month + day + ".html.src.md) \n";
 			header += "\n";
@@ -161,7 +161,7 @@ public class IgapyonV3TemplateLoader implements TemplateLoader {
 			header += (year1 + year2 + "-" + month + "-" + day + " diary: " + firstH2Line + "\n");
 
 			{
-				// TODO 一行目の展開ができていません。良い実装方法を考えましょう。
+				// TODO 固定部分より上の展開ができていません。良い実装方法を考えましょう。
 				final File fileTemplate = new File(settings.getRootdir(), "template-header.md");
 				if (fileTemplate.exists()) {
 					final String template = FileUtils.readFileToString(fileTemplate, "UTF-8");
