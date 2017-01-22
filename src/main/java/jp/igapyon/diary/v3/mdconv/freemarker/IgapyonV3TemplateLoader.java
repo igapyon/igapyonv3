@@ -146,11 +146,10 @@ public class IgapyonV3TemplateLoader implements TemplateLoader {
 			final String targetURL = settings.getBaseurl() + "/" + year1 + year2 + "/ig" + year2 + month + day
 					+ ".html";
 
-			String header = "[top](" + settings.getBaseurl() + "/) \n";
-			header += " / [index](" + settings.getBaseurl() + "/" + year1 + year2 + "/index.html) \n";
+			String header = "[top](${settings.baseurl}/) \n";
+			header += " / [index](${settings.baseurl}/" + year1 + year2 + "/index.html) \n";
 
 			header += " / <@linkprev /> \n";
-
 			header += " / <@linknext /> \n";
 
 			header += " / [target](" + targetURL + ") \n";
@@ -209,7 +208,7 @@ public class IgapyonV3TemplateLoader implements TemplateLoader {
 				|| SimpleDirUtil.getRelativePath(settings.getRootdir(), actualFile).startsWith("keyword")) {
 			final String firstH2Line = getFirstH2String(actualFile);
 
-			String header = "[top](" + settings.getBaseurl() + "/) \n";
+			String header = "[top](${settings.baseurl}/) \n";
 			header += "\n";
 
 			// ヘッダ追加
