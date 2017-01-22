@@ -210,13 +210,9 @@ public class IgapyonV3TemplateLoader implements TemplateLoader {
 			String header = "[top](" + settings.getBaseurl() + "/) \n";
 			header += " / [index](" + settings.getBaseurl() + "/" + year1 + year2 + "/index.html) \n";
 
-			if (entryIndex < 0 || entryIndex > synEntryList.size() - 2) {
-				header += " / prev \n";
-			} else {
-				header += " / [prev](" + synEntryList.get(entryIndex + 1).getLink() + ") \n";
-			}
+			header += " / <@linkprev /> \n";
 
-				header += " / <@linknext /> \n";
+			header += " / <@linknext /> \n";
 
 			header += " / [target](" + targetURL + ") \n";
 			header += " / [source](https://github.com/igapyon/diary/blob/gh-pages/" + year1 + year2 + "/ig" + year2
