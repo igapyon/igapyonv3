@@ -63,7 +63,13 @@ public class HeaderDirectiveModel implements TemplateDirectiveModel {
 			final TemplateModel[] loopVars, final TemplateDirectiveBody body) throws TemplateException, IOException {
 		final BufferedWriter writer = new BufferedWriter(env.getOut());
 
-		if (true) {
+		// SimpleScalar#toString()
+		String typeString = "none";
+		if (params.get("type") != null) {
+			typeString = params.get("type").toString();
+		}
+
+		if ("diary".equals(typeString)) {
 			// type="diary"
 			// 日記ヘッダーの展開モード
 
@@ -115,6 +121,33 @@ public class HeaderDirectiveModel implements TemplateDirectiveModel {
 			}
 
 			writer.write("\n");
+
+		} else if ("none".equals(typeString)) {
+			writer.write("[top](${settings.baseurl}/) \n");
+			writer.write("\n");
+
+			// ヘッダ追加
+			writer.write("${current.title}\n");
+
+			{
+				// TODO 一行目の展開ができていません。良い実装方法を考えましょう。
+				final File fileTemplate = new File(settings.getRootdir(), "template-header.md");
+				if (fileTemplate.exists()) {
+					final String template = FileUtils.readFileToString(fileTemplate, "UTF-8");
+					writer.write(template);
+					if (template.endsWith("\n") == false) {
+						writer.write("\n");
+					}
+				} else {
+					System.err.println("template-header.md not found.:" + fileTemplate.getCanonicalPath());
+					writer.write("===================================\n");
+					writer.write("<#-- template-header.md not found. -->\n");
+				}
+			}
+
+			writer.write("\n");
+		} else {
+			throw new IOException("Non supported type: " + typeString);
 		}
 
 		writer.flush();
