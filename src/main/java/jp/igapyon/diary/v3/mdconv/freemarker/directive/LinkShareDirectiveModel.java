@@ -34,7 +34,6 @@
 package jp.igapyon.diary.v3.mdconv.freemarker.directive;
 
 import java.io.BufferedWriter;
-import java.io.File;
 import java.io.IOException;
 import java.util.Map;
 
@@ -42,13 +41,13 @@ import org.apache.commons.codec.EncoderException;
 import org.apache.commons.codec.net.URLCodec;
 
 import freemarker.core.Environment;
+import freemarker.ext.beans.StringModel;
 import freemarker.template.TemplateDirectiveBody;
 import freemarker.template.TemplateDirectiveModel;
 import freemarker.template.TemplateException;
 import freemarker.template.TemplateModel;
-import freemarker.template.TemplateModelException;
+import jp.igapyon.diary.v3.util.IgapyonV3Current;
 import jp.igapyon.diary.v3.util.IgapyonV3Settings;
-import jp.igapyon.diary.v3.util.SimpleDirUtil;
 
 /**
  * Twitter シェアへのリンク用のディレクティブモデル
@@ -69,27 +68,25 @@ public class LinkShareDirectiveModel implements TemplateDirectiveModel {
 			final TemplateModel[] loopVars, final TemplateDirectiveBody body) throws TemplateException, IOException {
 		final BufferedWriter writer = new BufferedWriter(env.getOut());
 
+		final StringModel smodel = (StringModel) env.getDataModel().get("current");
+		final IgapyonV3Current current = (IgapyonV3Current) smodel.getWrappedObject();
+
+		String urlString = current.getUrl();
 		if (params.get("url") != null) {
-			throw new IOException("url not supported: " + env.getMainTemplate().getSourceName());
+			urlString = params.get("url").toString();
 		}
 
-		if (params.get("word") == null) {
-			throw new TemplateModelException("word param is required.");
+		String wordString = current.getTitle();
+		if (params.get("word") != null) {
+			wordString = params.get("word").toString();
 		}
-
-		final String sourceName = env.getMainTemplate().getSourceName();
-		String urlString = SimpleDirUtil.file2Url(new File(settings.getRootdir(), sourceName), settings);
-		if (urlString.endsWith(".html.src.md")) {
-			urlString = urlString.substring(0, urlString.length() - ".src.md".length());
-		}
-
-		// SimpleScalar#toString()
-		final String wordString = params.get("word").toString();
 
 		String titleString = "Share on Twitter";
 		if (params.get("title") != null) {
 			titleString = params.get("title").toString();
 		}
+
+		// TODO KEYWORD
 
 		String tagsString = "igapyon,diary,いがぴょん";
 		if (params.get("tags") != null) {
