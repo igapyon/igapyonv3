@@ -82,11 +82,6 @@ public class IgapyonV3TemplateLoader implements TemplateLoader {
 	 */
 	protected static List<SyndEntry> synEntryList = null;
 
-	/**
-	 * notice static!!! danger
-	 */
-	protected static List<SyndEntry> synKeywordEntryList = null;
-
 	public IgapyonV3TemplateLoader(final IgapyonV3Settings settings, boolean isExpandHeaderFooter) {
 		this.settings = settings;
 		this.isExpandHeaderFooter = isExpandHeaderFooter;
@@ -115,22 +110,6 @@ public class IgapyonV3TemplateLoader implements TemplateLoader {
 				for (Object lookup : synFeed.getEntries()) {
 					final SyndEntry entry = (SyndEntry) lookup;
 					synEntryList.add(entry);
-				}
-			} catch (FeedException e) {
-				throw new IOException(e);
-			}
-		}
-		if (synKeywordEntryList == null) {
-			synKeywordEntryList = new ArrayList<SyndEntry>();
-			final File atomXmlFile = new File(settings.getRootdir(), "keyword/atom.xml");
-			if (atomXmlFile.exists() == false) {
-				return;
-			}
-			try {
-				final SyndFeed synFeed = new SyndFeedInput().build(new XmlReader(new FileInputStream(atomXmlFile)));
-				for (Object lookup : synFeed.getEntries()) {
-					final SyndEntry entry = (SyndEntry) lookup;
-					synKeywordEntryList.add(entry);
 				}
 			} catch (FeedException e) {
 				throw new IOException(e);
@@ -279,61 +258,7 @@ public class IgapyonV3TemplateLoader implements TemplateLoader {
 				footer += "\n";
 			}
 
-			{
-				final List<String> localKeywordList = new ArrayList<String>();
-
-				{
-					// タイトルに [] があればこれを記憶。
-					final Pattern pat = Pattern.compile("\\[.*?\\]");
-					final Matcher mat = pat.matcher(firstH2Line);
-
-					for (; mat.find();) {
-						// まず、タイトルの [] を読み込み。これは、本文のダブルカッコと同じものと考えて良い。
-						String word = mat.group();
-						word = word.substring(1, word.length() - 1);
-						localKeywordList.add(word);
-					}
-				}
-
-				{
-					// ボディに [[]] があればこれを記憶。
-					final Pattern pat = Pattern.compile("\\[\\[.*?\\]\\]");
-					final Matcher mat = pat.matcher(body);
-
-					for (; mat.find();) {
-						String word = mat.group();
-						word = word.substring(2, word.length() - 2);
-						localKeywordList.add(word);
-					}
-				}
-
-				if (localKeywordList.size() > 0) {
-					footer += "\n";
-					footer += "## 登場キーワード\n";
-					footer += "\n";
-					Map<String, String> processedKeywordMap = new HashMap<String, String>();
-					for (String key : localKeywordList) {
-						if (processedKeywordMap.get(key.toLowerCase()) != null) {
-							// すでに処理済み。
-							continue;
-						}
-						processedKeywordMap.put(key.toLowerCase(), "done");
-
-						SyndEntry existEntry = null;
-						for (SyndEntry entry : synKeywordEntryList) {
-							if (entry.getTitle().toLowerCase().equals(key.toLowerCase())) {
-								existEntry = entry;
-							}
-						}
-
-						if (existEntry == null) {
-							footer += ("* " + key + "\n");
-						} else {
-							footer += ("* [" + existEntry.getTitle() + "](" + existEntry.getLink() + ")\n");
-						}
-					}
-				}
-			}
+			footer += "<@keywordlist />";
 
 			footer += "\n";
 
