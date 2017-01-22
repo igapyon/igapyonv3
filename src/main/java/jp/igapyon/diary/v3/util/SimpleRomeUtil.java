@@ -115,7 +115,7 @@ public class SimpleRomeUtil {
 
 				final SyndEntry entry = (SyndEntry) lookup;
 				indexmdText += "* [" + StringEscapeUtils.escapeXml11(entry.getTitle()) + "](" + entry.getLink() + ") "
-						+ sdf.format(entry.getUpdatedDate()) + "\n";
+						+ (entry.getUpdatedDate() == null ? "" : sdf.format(entry.getUpdatedDate())) + "\n";
 			}
 
 			return indexmdText;
