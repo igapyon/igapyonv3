@@ -33,8 +33,10 @@
 
 package jp.igapyon.diary.v3.mdconv.freemarker;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.StringReader;
 import java.io.StringWriter;
 import java.util.Map;
 
@@ -84,6 +86,8 @@ public class IgapyonV3FreeMarkerUtil {
 		// set settings obj
 		templateData.put("settings", settings);
 
+		final IgapyonV3Current current = new IgapyonV3Current();
+
 		final Template templateBase = config.getTemplate(relativePath);
 
 		try {
@@ -92,22 +96,29 @@ public class IgapyonV3FreeMarkerUtil {
 
 			final StringWriter writer = new StringWriter();
 			templateBase.process(templateData, writer);
-			// System.out.println("wrk[" + writer.toString() + "]");
 
 			// ここで得られた 展開後の md ファイルを入力として、current オブジェクトへのプリセットを実施します。
-			// TODO 該当機能は未実装です。
-			// FIXME 該当機能は未実装です。
+
+			{
+				final BufferedReader reader = new BufferedReader(new StringReader(writer.toString()));
+				for (;;) {
+					String line = reader.readLine();
+					if (line == null) {
+						break;
+					}
+					// 最初の ## からテキストを取得。これは igapyonv3 の最大の制約です。
+					if (line.startsWith("## ")) {
+						current.setTitle(line.substring(3));
+						break;
+					}
+				}
+			}
 		} catch (TemplateException e) {
 			throw new IOException(e);
 		}
 
-		final IgapyonV3Current current = new IgapyonV3Current();
+		// 空読みで得られた知見を current に反映したい。
 		templateData.put("current", current);
-
-		{
-			// 空読みで得られた知見を current に反映したい。
-			// FIXME not implemented. さしあたり title と url がほしい。
-		}
 
 		try {
 			final StringWriter writer = new StringWriter();
