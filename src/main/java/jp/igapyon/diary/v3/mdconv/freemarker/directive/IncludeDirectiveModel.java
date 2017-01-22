@@ -44,7 +44,6 @@ import freemarker.template.Template;
 import freemarker.template.TemplateDirectiveBody;
 import freemarker.template.TemplateDirectiveModel;
 import freemarker.template.TemplateException;
-import freemarker.template.TemplateHashModel;
 import freemarker.template.TemplateModel;
 import freemarker.template.TemplateModelException;
 import jp.igapyon.diary.v3.mdconv.freemarker.IgapyonV3FreeMarkerUtil;
@@ -85,12 +84,7 @@ public class IncludeDirectiveModel implements TemplateDirectiveModel {
 
 			final Configuration config = IgapyonV3FreeMarkerUtil.getConfiguration(settings, false);
 
-			{
-				TemplateHashModel model = env.getDataModel();
-				System.out.println("TRACE: XXX: " + model.get("settings"));
-			}
-
-			// include 中は、もとのデータモデル空間と同一とみなします。
+			// include 中は、呼び出し元のデータモデル空間と同一とみなします。
 
 			final Template templateBase = config.getTemplate(relativePath);
 			try {
