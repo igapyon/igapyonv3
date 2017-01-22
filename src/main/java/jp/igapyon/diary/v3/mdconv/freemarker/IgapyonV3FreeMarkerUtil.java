@@ -83,10 +83,10 @@ public class IgapyonV3FreeMarkerUtil {
 
 		final Configuration config = getConfiguration(settings, true);
 
-		// set settings obj
+		// Pre-define value
 		templateData.put("settings", settings);
 
-		final IgapyonV3Current current = new IgapyonV3Current();
+		IgapyonV3Current current = null;
 
 		final Template templateBase = config.getTemplate(relativePath);
 
@@ -99,20 +99,7 @@ public class IgapyonV3FreeMarkerUtil {
 
 			// ここで得られた 展開後の md ファイルを入力として、current オブジェクトへのプリセットを実施します。
 
-			{
-				final BufferedReader reader = new BufferedReader(new StringReader(writer.toString()));
-				for (;;) {
-					String line = reader.readLine();
-					if (line == null) {
-						break;
-					}
-					// 最初の ## からテキストを取得。これは igapyonv3 の最大の制約です。
-					if (line.startsWith("## ")) {
-						current.setTitle(line.substring(3));
-						break;
-					}
-				}
-			}
+			current = buildCurrentObjectByPreParse(writer.toString());
 		} catch (TemplateException e) {
 			throw new IOException(e);
 		}
@@ -127,6 +114,27 @@ public class IgapyonV3FreeMarkerUtil {
 		} catch (TemplateException e) {
 			throw new IOException(e);
 		}
+	}
+
+	public static IgapyonV3Current buildCurrentObjectByPreParse(final String sourceString) throws IOException {
+		final IgapyonV3Current current = new IgapyonV3Current();
+
+		final BufferedReader reader = new BufferedReader(new StringReader(sourceString));
+		for (;;) {
+			final String line = reader.readLine();
+			if (line == null) {
+				break;
+			}
+			// 最初の ## からテキストを取得。これは igapyonv3 の最大の制約です。
+			if (line.startsWith("## ")) {
+				current.setTitle(line.substring(3));
+				break;
+			}
+		}
+
+		// TODO これ以外に、キーワードのリスト抽出とか、いろいろやりたいのだが。。。
+
+		return current;
 	}
 
 	/**
