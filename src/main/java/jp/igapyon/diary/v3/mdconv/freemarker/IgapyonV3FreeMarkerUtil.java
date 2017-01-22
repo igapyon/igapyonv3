@@ -52,6 +52,7 @@ import jp.igapyon.diary.v3.mdconv.freemarker.directive.LastModifiedDirectiveMode
 import jp.igapyon.diary.v3.mdconv.freemarker.directive.LinkAmazonDirectiveModel;
 import jp.igapyon.diary.v3.mdconv.freemarker.directive.LinkDiaryDirectiveModel;
 import jp.igapyon.diary.v3.mdconv.freemarker.directive.LinkMapDirectiveModel;
+import jp.igapyon.diary.v3.mdconv.freemarker.directive.LinkNextDirectiveModel;
 import jp.igapyon.diary.v3.mdconv.freemarker.directive.LinkSearchDirectiveModel;
 import jp.igapyon.diary.v3.mdconv.freemarker.directive.LinkShareDirectiveModel;
 import jp.igapyon.diary.v3.mdconv.freemarker.directive.LocalRssDirectiveModel;
@@ -214,6 +215,7 @@ public class IgapyonV3FreeMarkerUtil {
 		config.setSharedVariable("linkshare", new LinkShareDirectiveModel(settings));
 		config.setSharedVariable("linkmap", new LinkMapDirectiveModel(settings));
 		config.setSharedVariable("linkamazon", new LinkAmazonDirectiveModel(settings));
+		config.setSharedVariable("linknext", new LinkNextDirectiveModel(settings));
 		config.setSharedVariable("localyearlist", new LocalYearlistDirectiveModel(settings));
 		config.setSharedVariable("lastmodified", new LastModifiedDirectiveModel(settings));
 		config.setSharedVariable("keywordlist", new KeywordlistDirectiveModel(settings));
