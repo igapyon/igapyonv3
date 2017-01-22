@@ -36,8 +36,6 @@ package jp.igapyon.diary.v3.mdconv.freemarker.directive;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.IOException;
-import java.io.StringWriter;
-import java.util.HashMap;
 import java.util.Map;
 
 import freemarker.core.Environment;
@@ -46,10 +44,10 @@ import freemarker.template.Template;
 import freemarker.template.TemplateDirectiveBody;
 import freemarker.template.TemplateDirectiveModel;
 import freemarker.template.TemplateException;
+import freemarker.template.TemplateHashModel;
 import freemarker.template.TemplateModel;
 import freemarker.template.TemplateModelException;
 import jp.igapyon.diary.v3.mdconv.freemarker.IgapyonV3FreeMarkerUtil;
-import jp.igapyon.diary.v3.util.IgapyonV3Current;
 import jp.igapyon.diary.v3.util.IgapyonV3Settings;
 import jp.igapyon.diary.v3.util.SimpleDirUtil;
 
@@ -80,8 +78,6 @@ public class IncludeDirectiveModel implements TemplateDirectiveModel {
 		final File targetFile = new File(sourceDir, fileString);
 
 		{
-			final Map<String, Object> templateData = new HashMap<String, Object>();
-
 			// do canonical
 			final File rootdir = settings.getRootdir().getCanonicalFile();
 
@@ -89,27 +85,16 @@ public class IncludeDirectiveModel implements TemplateDirectiveModel {
 
 			final Configuration config = IgapyonV3FreeMarkerUtil.getConfiguration(settings, false);
 
-			// Pre-define value
-			templateData.put("settings", settings);
-
-			IgapyonV3Current current = null;
-			try {
-				// 一旦、事前準備運動として空読み込みを実施します。
-				templateData.put("current", new IgapyonV3Current());
-
-				final StringWriter buf = new StringWriter();
-				final Template templateBase = config.getTemplate(relativePath);
-				templateBase.process(templateData, buf);
-
-				// ここで得られた 展開後の md ファイルを入力として、current オブジェクトへのプリセットを実施します。
-				current = IgapyonV3FreeMarkerUtil.buildCurrentObjectByPreParse(buf.toString());
-			} catch (TemplateException e) {
-				throw new IOException(e);
+			{
+				TemplateHashModel model = env.getDataModel();
+				System.out.println("TRACE: XXX: " + model.get("settings"));
 			}
+
+			// include 中は、もとのデータモデル空間と同一とみなします。
 
 			final Template templateBase = config.getTemplate(relativePath);
 			try {
-				templateBase.process(templateData, writer);
+				templateBase.process(env.getDataModel(), writer);
 			} catch (TemplateException e) {
 				throw new IOException(e);
 			}
