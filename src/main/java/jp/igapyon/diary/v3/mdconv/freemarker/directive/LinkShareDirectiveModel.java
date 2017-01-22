@@ -86,9 +86,11 @@ public class LinkShareDirectiveModel implements TemplateDirectiveModel {
 			titleString = params.get("title").toString();
 		}
 
-		// TODO KEYWORD
-
+		// キーワードをタグに展開します。
 		String tagsString = "igapyon,diary,いがぴょん";
+		for (final String key : current.getKeywordList()) {
+			tagsString += ("," + key);
+		}
 		if (params.get("tags") != null) {
 			tagsString = params.get("tags").toString();
 		}
