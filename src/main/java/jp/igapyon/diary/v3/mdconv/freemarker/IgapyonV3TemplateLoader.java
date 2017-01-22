@@ -143,31 +143,7 @@ public class IgapyonV3TemplateLoader implements TemplateLoader {
 				|| actualFile.getName().startsWith("README") || actualFile.getName().startsWith("memo")
 				|| SimpleDirUtil.getRelativePath(settings.getRootdir(), actualFile).startsWith("keyword")) {
 
-			String header = "[top](${settings.baseurl}/) \n";
-			header += "\n";
-
-			// ヘッダ追加
-			header += ("${current.title}\n");
-
-			{
-				// TODO 一行目の展開ができていません。良い実装方法を考えましょう。
-				final File fileTemplate = new File(settings.getRootdir(), "template-header.md");
-				if (fileTemplate.exists()) {
-					final String template = FileUtils.readFileToString(fileTemplate, "UTF-8");
-					header += template;
-					if (header.endsWith("\n") == false) {
-						header += "\n";
-					}
-				} else {
-					System.err.println("template-header.md not found.:" + fileTemplate.getCanonicalPath());
-					header += "===================================\n";
-					header += "<#-- template-header.md not found. -->\n";
-				}
-			}
-
-			header += "\n";
-
-			load = header + load;
+			load = getStandardHeaderString() + load;
 
 			// フッタ追加
 			String footer = "";
@@ -235,6 +211,41 @@ public class IgapyonV3TemplateLoader implements TemplateLoader {
 		return System.currentTimeMillis();
 	}
 
+	protected String getStandardHeaderString() throws IOException {
+		String header = "[top](${settings.baseurl}/) \n";
+		header += "\n";
+
+		// ヘッダ追加
+		header += ("${current.title}\n");
+
+		{
+			// TODO 一行目の展開ができていません。良い実装方法を考えましょう。
+			final File fileTemplate = new File(settings.getRootdir(), "template-header.md");
+			if (fileTemplate.exists()) {
+				final String template = FileUtils.readFileToString(fileTemplate, "UTF-8");
+				header += template;
+				if (header.endsWith("\n") == false) {
+					header += "\n";
+				}
+			} else {
+				System.err.println("template-header.md not found.:" + fileTemplate.getCanonicalPath());
+				header += "===================================\n";
+				header += "<#-- template-header.md not found. -->\n";
+			}
+		}
+
+		header += "\n";
+
+		return header;
+	}
+
+	/**
+	 * 日記形式のヘッダー文字列を取得。
+	 * 
+	 * @param filename
+	 * @return
+	 * @throws IOException
+	 */
 	protected String getDiaryHeaderString(final String filename) throws IOException {
 		String year1 = "20";
 		String year2 = filename.substring(2, 4);
