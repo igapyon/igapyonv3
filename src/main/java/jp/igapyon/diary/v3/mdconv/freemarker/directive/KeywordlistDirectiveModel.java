@@ -34,11 +34,19 @@
 package jp.igapyon.diary.v3.mdconv.freemarker.directive;
 
 import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.rometools.rome.feed.synd.SyndEntry;
+import com.rometools.rome.feed.synd.SyndFeed;
+import com.rometools.rome.io.FeedException;
+import com.rometools.rome.io.SyndFeedInput;
+import com.rometools.rome.io.XmlReader;
 
 import freemarker.core.Environment;
 import freemarker.ext.beans.StringModel;
@@ -57,8 +65,37 @@ import jp.igapyon.diary.v3.util.IgapyonV3Settings;
 public class KeywordlistDirectiveModel implements TemplateDirectiveModel {
 	private IgapyonV3Settings settings = null;
 
+	/**
+	 * notice static!!! danger
+	 */
+	protected static List<SyndEntry> synKeywordEntryList = null;
+
 	public KeywordlistDirectiveModel(final IgapyonV3Settings settings) {
 		this.settings = settings;
+	}
+
+	/**
+	 * 処理の過程で必要になる各種 atom ファイルをロード済みかどうか念押し確認します。
+	 * 
+	 * @throws IOException
+	 */
+	public void ensureLoadAtomXml() throws IOException {
+		if (synKeywordEntryList == null) {
+			synKeywordEntryList = new ArrayList<SyndEntry>();
+			final File atomXmlFile = new File(settings.getRootdir(), "keyword/atom.xml");
+			if (atomXmlFile.exists() == false) {
+				return;
+			}
+			try {
+				final SyndFeed synFeed = new SyndFeedInput().build(new XmlReader(new FileInputStream(atomXmlFile)));
+				for (Object lookup : synFeed.getEntries()) {
+					final SyndEntry entry = (SyndEntry) lookup;
+					synKeywordEntryList.add(entry);
+				}
+			} catch (FeedException e) {
+				throw new IOException(e);
+			}
+		}
 	}
 
 	public void execute(final Environment env, @SuppressWarnings("rawtypes") final Map params,
@@ -68,15 +105,14 @@ public class KeywordlistDirectiveModel implements TemplateDirectiveModel {
 		final StringModel smodel = (StringModel) env.getDataModel().get("current");
 		final IgapyonV3Current current = (IgapyonV3Current) smodel.getWrappedObject();
 
-		
-		
-		
 		if (current.getKeywordList().size() > 0) {
-writer.write("\n");
-writer.write("## 登場キーワード\n");
-writer.write("\n");
+			ensureLoadAtomXml();
 
-Map<String, String> processedKeywordMap = new HashMap<String, String>();
+			writer.write("\n");
+			writer.write("## 登場キーワード\n");
+			writer.write("\n");
+
+			Map<String, String> processedKeywordMap = new HashMap<String, String>();
 			for (String key : current.getKeywordList()) {
 				if (processedKeywordMap.get(key.toLowerCase()) != null) {
 					// すでに処理済み。
@@ -85,21 +121,19 @@ Map<String, String> processedKeywordMap = new HashMap<String, String>();
 				processedKeywordMap.put(key.toLowerCase(), "done");
 
 				SyndEntry existEntry = null;
-				//for (SyndEntry entry : synKeywordEntryList) {
-					//if (entry.getTitle().toLowerCase().equals(key.toLowerCase())) {
-						//existEntry = entry;
-//					}
-	//			}
+				for (SyndEntry entry : synKeywordEntryList) {
+					if (entry.getTitle().toLowerCase().equals(key.toLowerCase())) {
+						existEntry = entry;
+					}
+				}
 
 				if (existEntry == null) {
-writer.write("* " + key + "\n");
+					writer.write("* " + key + "\n");
 				} else {
-		writer.write ("* [" + existEntry.getTitle() + "](" + existEntry.getLink() + ")\n");
+					writer.write("* [" + existEntry.getTitle() + "](" + existEntry.getLink() + ")\n");
 				}
 			}
 		}
-
-		
 
 		writer.flush();
 
