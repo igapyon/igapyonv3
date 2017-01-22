@@ -121,7 +121,7 @@ public class MdTextUtil {
 			}
 		}
 
-		System.err.println("Non processed [[" + foundKeyword + "]] doubleword.");
+		System.err.println("Keyword [[" + foundKeyword + "]] was skipped.");
 
 		return source;
 	}

@@ -34,31 +34,26 @@
 package jp.igapyon.diary.v3.mdconv.freemarker.directive;
 
 import java.io.BufferedWriter;
-import java.io.File;
 import java.io.IOException;
 import java.util.Map;
 
 import freemarker.core.Environment;
-import freemarker.template.Configuration;
-import freemarker.template.Template;
 import freemarker.template.TemplateDirectiveBody;
 import freemarker.template.TemplateDirectiveModel;
 import freemarker.template.TemplateException;
 import freemarker.template.TemplateModel;
 import freemarker.template.TemplateModelException;
-import jp.igapyon.diary.v3.mdconv.freemarker.IgapyonV3FreeMarkerUtil;
 import jp.igapyon.diary.v3.util.IgapyonV3Settings;
-import jp.igapyon.diary.v3.util.SimpleDirUtil;
 
 /**
- * 自前include
+ * 最終更新日を蓄えるディレクティブモデル
  * 
  * @author Toshiki Iga
  */
-public class IncludeDirectiveModel implements TemplateDirectiveModel {
+public class LastModifiedDirectiveModel implements TemplateDirectiveModel {
 	private IgapyonV3Settings settings = null;
 
-	public IncludeDirectiveModel(final IgapyonV3Settings settings) {
+	public LastModifiedDirectiveModel(final IgapyonV3Settings settings) {
 		this.settings = settings;
 	}
 
@@ -66,33 +61,14 @@ public class IncludeDirectiveModel implements TemplateDirectiveModel {
 			final TemplateModel[] loopVars, final TemplateDirectiveBody body) throws TemplateException, IOException {
 		final BufferedWriter writer = new BufferedWriter(env.getOut());
 
-		if (params.get("file") == null) {
-			throw new TemplateModelException("file param is required.");
+		if (params.get("date") == null) {
+			throw new TemplateModelException("dp param is required.");
 		}
 
-		final String fileString = params.get("file").toString();
+		// SimpleScalar#toString()
+		final String dateString = params.get("date").toString();
 
-		final String sourceName = env.getMainTemplate().getSourceName();
-		final File sourceDir = new File(settings.getRootdir(), sourceName).getCanonicalFile().getParentFile();
-		final File targetFile = new File(sourceDir, fileString);
-
-		{
-			// do canonical
-			final File rootdir = settings.getRootdir().getCanonicalFile();
-
-			final String relativePath = SimpleDirUtil.getRelativePath(rootdir, targetFile);
-
-			final Configuration config = IgapyonV3FreeMarkerUtil.getConfiguration(settings, false);
-
-			// include 中は、呼び出し元のデータモデル空間と同一とみなします。
-
-			final Template templateBase = config.getTemplate(relativePath);
-			try {
-				templateBase.process(env.getDataModel(), writer);
-			} catch (TemplateException e) {
-				throw new IOException(e);
-			}
-		}
+		writer.write("Last modified: $Date: " + dateString + " $");
 
 		writer.flush();
 	}

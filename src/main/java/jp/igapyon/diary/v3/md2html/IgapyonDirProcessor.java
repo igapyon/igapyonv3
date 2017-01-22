@@ -69,7 +69,15 @@ public abstract class IgapyonDirProcessor {
 		if (origName.contains(".") == false) {
 			return origName + newExt;
 		}
-		final String withoutExt = origName.substring(0, origName.indexOf("."));
+		if (origName.endsWith(".html.md")) {
+			// for igapyonv3
+			return origName.substring(0, origName.lastIndexOf("."));
+		}
+		if (origName.endsWith(".html.src.md")) {
+			// for igapyonv3
+			return origName.substring(0, origName.length() - ".html.src.md".length()) + ".src.html";
+		}
+		final String withoutExt = origName.substring(0, origName.lastIndexOf("."));
 		return withoutExt + newExt;
 	}
 

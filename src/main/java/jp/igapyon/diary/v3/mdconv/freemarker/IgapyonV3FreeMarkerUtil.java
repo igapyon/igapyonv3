@@ -33,8 +33,10 @@
 
 package jp.igapyon.diary.v3.mdconv.freemarker;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.StringReader;
 import java.io.StringWriter;
 import java.util.Map;
 
@@ -43,6 +45,7 @@ import freemarker.template.Template;
 import freemarker.template.TemplateException;
 import freemarker.template.TemplateExceptionHandler;
 import jp.igapyon.diary.v3.mdconv.freemarker.directive.IncludeDirectiveModel;
+import jp.igapyon.diary.v3.mdconv.freemarker.directive.LastModifiedDirectiveModel;
 import jp.igapyon.diary.v3.mdconv.freemarker.directive.LinkAmazonDirectiveModel;
 import jp.igapyon.diary.v3.mdconv.freemarker.directive.LinkDiaryDirectiveModel;
 import jp.igapyon.diary.v3.mdconv.freemarker.directive.LinkMapDirectiveModel;
@@ -51,6 +54,7 @@ import jp.igapyon.diary.v3.mdconv.freemarker.directive.LinkShareDirectiveModel;
 import jp.igapyon.diary.v3.mdconv.freemarker.directive.LocalRssDirectiveModel;
 import jp.igapyon.diary.v3.mdconv.freemarker.directive.LocalYearlistDirectiveModel;
 import jp.igapyon.diary.v3.mdconv.freemarker.directive.RSSFeedDirectiveModel;
+import jp.igapyon.diary.v3.util.IgapyonV3Current;
 import jp.igapyon.diary.v3.util.IgapyonV3Settings;
 import jp.igapyon.diary.v3.util.SimpleDirUtil;
 
@@ -79,10 +83,30 @@ public class IgapyonV3FreeMarkerUtil {
 
 		final Configuration config = getConfiguration(settings, true);
 
-		// set settings obj
+		// Pre-define value
 		templateData.put("settings", settings);
 
+		IgapyonV3Current current = null;
+
 		final Template templateBase = config.getTemplate(relativePath);
+
+		try {
+			// 一旦、事前準備運動として空読み込みを実施します。
+			templateData.put("current", new IgapyonV3Current());
+
+			final StringWriter writer = new StringWriter();
+			templateBase.process(templateData, writer);
+
+			// ここで得られた 展開後の md ファイルを入力として、current オブジェクトへのプリセットを実施します。
+
+			current = buildCurrentObjectByPreParse(writer.toString());
+		} catch (TemplateException e) {
+			throw new IOException(e);
+		}
+
+		// 空読みで得られた知見を current に反映したい。
+		templateData.put("current", current);
+
 		try {
 			final StringWriter writer = new StringWriter();
 			templateBase.process(templateData, writer);
@@ -90,6 +114,27 @@ public class IgapyonV3FreeMarkerUtil {
 		} catch (TemplateException e) {
 			throw new IOException(e);
 		}
+	}
+
+	public static IgapyonV3Current buildCurrentObjectByPreParse(final String sourceString) throws IOException {
+		final IgapyonV3Current current = new IgapyonV3Current();
+
+		final BufferedReader reader = new BufferedReader(new StringReader(sourceString));
+		for (;;) {
+			final String line = reader.readLine();
+			if (line == null) {
+				break;
+			}
+			// 最初の ## からテキストを取得。これは igapyonv3 の最大の制約です。
+			if (line.startsWith("## ")) {
+				current.setTitle(line.substring(3));
+				break;
+			}
+		}
+
+		// TODO これ以外に、キーワードのリスト抽出とか、いろいろやりたいのだが。。。
+
+		return current;
 	}
 
 	/**
@@ -139,6 +184,7 @@ public class IgapyonV3FreeMarkerUtil {
 		config.setSharedVariable("linkmap", new LinkMapDirectiveModel(settings));
 		config.setSharedVariable("linkamazon", new LinkAmazonDirectiveModel(settings));
 		config.setSharedVariable("localyearlist", new LocalYearlistDirectiveModel(settings));
+		config.setSharedVariable("lastmodified", new LastModifiedDirectiveModel(settings));
 
 		return config;
 	}
