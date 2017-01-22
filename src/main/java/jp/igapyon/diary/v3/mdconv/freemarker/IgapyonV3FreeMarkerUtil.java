@@ -39,6 +39,8 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import freemarker.template.Configuration;
 import freemarker.template.Template;
@@ -129,6 +131,34 @@ public class IgapyonV3FreeMarkerUtil {
 			if (line.startsWith("## ")) {
 				current.setTitle(line.substring(3));
 				break;
+			}
+		}
+
+		// こいつはキーワード抽出。
+		{
+			{
+				// タイトルに [] があればこれを記憶。
+				final Pattern pat = Pattern.compile("\\[.*?\\]");
+				final Matcher mat = pat.matcher(current.getTitle());
+
+				for (; mat.find();) {
+					// まず、タイトルの [] を読み込み。これは、本文のダブルカッコと同じものと考えて良い。
+					String word = mat.group();
+					word = word.substring(1, word.length() - 1);
+					current.getKeywordList().add(word);
+				}
+			}
+
+			{
+				// ボディに [[]] があればこれを記憶。
+				final Pattern pat = Pattern.compile("\\[\\[.*?\\]\\]");
+				final Matcher mat = pat.matcher(sourceString);
+
+				for (; mat.find();) {
+					String word = mat.group();
+					word = word.substring(2, word.length() - 2);
+					current.getKeywordList().add(word);
+				}
 			}
 		}
 
