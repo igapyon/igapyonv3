@@ -46,7 +46,6 @@ import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
 import freemarker.template.TemplateExceptionHandler;
-import jp.igapyon.diary.v3.mdconv.freemarker.directive.HeaderDirectiveModel;
 import jp.igapyon.diary.v3.mdconv.freemarker.directive.IncludeDirectiveModel;
 import jp.igapyon.diary.v3.mdconv.freemarker.directive.KeywordlistDirectiveModel;
 import jp.igapyon.diary.v3.mdconv.freemarker.directive.LastModifiedDirectiveModel;
@@ -237,7 +236,6 @@ public class IgapyonV3FreeMarkerUtil {
 		config.setSharedVariable("localyearlist", new LocalYearlistDirectiveModel(settings));
 		config.setSharedVariable("lastmodified", new LastModifiedDirectiveModel(settings));
 		config.setSharedVariable("keywordlist", new KeywordlistDirectiveModel(settings));
-		config.setSharedVariable("header", new HeaderDirectiveModel(settings));
 
 		return config;
 	}
