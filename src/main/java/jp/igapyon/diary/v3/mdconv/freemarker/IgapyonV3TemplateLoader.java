@@ -213,6 +213,12 @@ public class IgapyonV3TemplateLoader implements TemplateLoader {
 
 	//////////////////////////////////////////
 
+	/**
+	 * 標準的なヘッダーを取得します。
+	 * 
+	 * @return
+	 * @throws IOException
+	 */
 	protected String getStandardHeaderString() throws IOException {
 		String header = "[top](${settings.baseurl}/) \n";
 		header += "\n";
