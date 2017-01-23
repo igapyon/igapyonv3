@@ -146,8 +146,12 @@ public class IgapyonV3FreeMarkerUtil {
 			{
 				// TODO共通関数化せよ。
 				// igapyonv3 特有のファイル名変化に当たります。
-				if (url.endsWith(".src.md")) {
+				if (url.endsWith(".html.src.md")) {
 					url = url.substring(0, url.length() - ".src.md".length());
+				}
+				// README.md は index.html に読み替えます。
+				if (url.endsWith("/README.md")) {
+					url = url.substring(0, url.length() - "/README.md".length()) + "/index.html";
 				}
 			}
 			current.setUrl(url);
