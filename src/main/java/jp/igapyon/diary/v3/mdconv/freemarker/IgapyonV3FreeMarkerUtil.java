@@ -150,7 +150,7 @@ public class IgapyonV3FreeMarkerUtil {
 					url = url.substring(0, url.length() - ".src.md".length());
 				}
 				// README.md は index.html に読み替えます。
-				if (url.endsWith("/README.md")) {
+				if (url.endsWith("/README.src.md")) {
 					url = url.substring(0, url.length() - "/README.md".length()) + "/index.html";
 				}
 			}
