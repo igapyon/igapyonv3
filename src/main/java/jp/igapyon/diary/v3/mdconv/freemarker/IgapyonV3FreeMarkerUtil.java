@@ -38,6 +38,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.StringReader;
 import java.io.StringWriter;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -145,8 +146,12 @@ public class IgapyonV3FreeMarkerUtil {
 			{
 				// TODO共通関数化せよ。
 				// igapyonv3 特有のファイル名変化に当たります。
-				if (url.endsWith(".src.md")) {
+				if (url.endsWith(".html.src.md")) {
 					url = url.substring(0, url.length() - ".src.md".length());
+				}
+				// README.md は index.html に読み替えます。
+				if (url.endsWith("/README.src.md")) {
+					url = url.substring(0, url.length() - "/README.src.md".length()) + "/index.html";
 				}
 			}
 			current.setUrl(url);
@@ -176,6 +181,20 @@ public class IgapyonV3FreeMarkerUtil {
 					String word = mat.group();
 					word = word.substring(2, word.length() - 2);
 					current.getKeywordList().add(word);
+				}
+			}
+			{
+				// 重複キーワードは除去
+				final Map<String, String> mapDupCheck = new HashMap<String, String>();
+				for (int index = 0; index < current.getKeywordList().size(); index++) {
+					final String lookup = current.getKeywordList().get(index);
+					if (mapDupCheck.get(lookup.toLowerCase()) != null) {
+						// dup key
+						current.getKeywordList().remove(index);
+						index--;
+						continue;
+					}
+					mapDupCheck.put(lookup.toLowerCase(), lookup);
 				}
 			}
 		}

@@ -37,6 +37,7 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.io.FileUtils;
@@ -90,7 +91,7 @@ public class TodayDiaryGenerator {
 		lines.add("```");
 		lines.add("");
 		lines.add("<#-- copyright " + settings.getAuthor() + " -->");
-		lines.add("<@linkshare word=\"本日の日記。ここに日記タイトルが入ってほしい。\"/>");
+		lines.add("<@lastmodified date=\"" + new SimpleDateFormat("yyyy-MM-dd").format(new Date()) + "\"/>");
 
 		// 日記ファイルを新規作成します。
 		FileUtils.writeLines(file, lines);
