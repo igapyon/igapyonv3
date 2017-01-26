@@ -48,6 +48,7 @@ import freemarker.template.TemplateException;
 import freemarker.template.TemplateModel;
 import jp.igapyon.diary.v3.util.IgapyonV3Settings;
 import jp.igapyon.diary.v3.util.SimpleDirParser;
+import jp.igapyon.diary.v3.util.SimpleDirUtil;
 
 /**
  * ローカルの年リスト用のディレクティブモデル
@@ -78,7 +79,14 @@ public class LocalYearlistDirectiveModel implements TemplateDirectiveModel {
 			}
 
 			final File file = files.get(index);
-			writer.write("[" + file.getName() + "](" + settings.getBaseurl() + "/" + file.getName() + "/index.html)\n");
+
+			// get current directory
+			final String sourceName = env.getMainTemplate().getSourceName();
+			final File sourceDir = new File(settings.getRootdir(), sourceName).getCanonicalFile().getParentFile();
+
+			String url = settings.getBaseurl() + "/" + file.getName() + "/index.html";
+			url = SimpleDirUtil.getRelativeUrlIfPossible(url, sourceDir, settings);
+			writer.write("[" + file.getName() + "](" + url + ")\n");
 		}
 
 		writer.write("/ [ALL](" + settings.getBaseurl() + "/idxall.html)\n");
