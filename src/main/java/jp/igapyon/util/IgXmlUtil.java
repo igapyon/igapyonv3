@@ -56,7 +56,7 @@ import org.xml.sax.SAXException;
  * 
  * @author Toshiki Iga
  */
-public class IgapyonXmlUtil {
+public class IgXmlUtil {
 	/**
 	 * Convert XML string to Element.
 	 * 

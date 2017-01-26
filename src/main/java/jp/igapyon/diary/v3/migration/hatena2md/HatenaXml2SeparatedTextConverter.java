@@ -44,7 +44,7 @@ import org.w3c.dom.NodeList;
 
 import jp.igapyon.diary.v3.item.DiaryItemInfo;
 import jp.igapyon.diary.v3.util.IgapyonV3Settings;
-import jp.igapyon.util.IgapyonXmlUtil;
+import jp.igapyon.util.IgXmlUtil;
 
 /**
  * hatenaのエクスポートXMLから、分割されたテキストファイルを生成します。
@@ -64,7 +64,7 @@ public class HatenaXml2SeparatedTextConverter {
 		String inputXmlString = FileUtils.readFileToString(sourceXml, "UTF-8");
 		inputXmlString = inputXmlString.replace('\u001c', '−');
 		inputXmlString = inputXmlString.replace('\u001a', '?');
-		final Element rootElement = IgapyonXmlUtil.stringToElement(inputXmlString);
+		final Element rootElement = IgXmlUtil.stringToElement(inputXmlString);
 
 		final List<DiaryItemInfo> diaryItemList = parseRoot(rootElement);
 		for (DiaryItemInfo item : diaryItemList) {

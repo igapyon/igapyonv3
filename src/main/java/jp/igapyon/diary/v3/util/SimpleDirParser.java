@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import jp.igapyon.util.IgFileComparatorByName;
+
 public abstract class SimpleDirParser {
 	protected boolean isRecursive = false;
 
@@ -19,7 +21,7 @@ public abstract class SimpleDirParser {
 		processListDir(rootDir, result);
 
 		// sort it.
-		Collections.sort(result, new FileComparator());
+		Collections.sort(result, new IgFileComparatorByName());
 
 		return result;
 	}

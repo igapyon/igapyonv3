@@ -31,18 +31,18 @@
  *  limitations under the License.
  */
 
-package jp.igapyon.diary.v3.util;
+package jp.igapyon.util;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.Comparator;
 
 /**
- * ファイルをソートするためのコンパレータです。
+ * Comparator for File by full path name.
  * 
  * @author Toshiki Iga
  */
-public class FileComparator implements Comparator<File> {
+public class IgFileComparatorByName implements Comparator<File> {
 	public int compare(final File file1, final File file2) {
 		try {
 			return file1.getCanonicalPath().compareTo(file2.getCanonicalPath());
