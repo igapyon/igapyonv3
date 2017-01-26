@@ -165,19 +165,6 @@ public class SimpleDirUtil {
 			return url;
 		}
 		return movingPath;
-
-		// final String localurl = file2Url(currentDir, settings);
-		// if (url.startsWith(localurl)) {
-		// String relative = url.substring(localurl.length());
-		// if (relative.length() == 0) {
-		// return url;
-		// }
-		// if (relative.startsWith("/")) {
-		// return relative.substring(1);
-		// }
-		// return relative;
-		// }
-		// return url;
 	}
 
 	/**
