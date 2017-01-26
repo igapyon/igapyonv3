@@ -105,8 +105,8 @@ public class SimpleDirUtilTest {
 		settings.setRootdir(new File("/tmp/aaa/"));
 		settings.setBaseurl("https://igapyon.github.io/diary");
 
-		assertEquals("https://igapyon.github.io/diary", SimpleDirUtil
-				.getRelativeUrlIfPossible("https://igapyon.github.io/diary", new File("/tmp/aaa/"), settings));
+		assertEquals("https://igapyon.github.io/diary", SimpleDirUtil.getRelativeUrlIfPossible("https://igapyon.github.io/diary",
+				new File("/tmp/aaa/"), settings));
 		assertEquals("aaa", SimpleDirUtil.getRelativeUrlIfPossible("https://igapyon.github.io/diary/aaa",
 				new File("/tmp/aaa/"), settings));
 		assertEquals("aaa/bbb", SimpleDirUtil.getRelativeUrlIfPossible("https://igapyon.github.io/diary/aaa/bbb",

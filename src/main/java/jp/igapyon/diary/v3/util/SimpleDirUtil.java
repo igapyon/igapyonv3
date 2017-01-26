@@ -95,8 +95,12 @@ public class SimpleDirUtil {
 		final File fromPath = new File(fromPathString).getCanonicalFile();
 		final File toPath = new File(toPathString).getCanonicalFile();
 
-		final List<String> fromList = toPathList(fromPath);
-		final List<String> toList = toPathList(toPath);
+		return getMovingPath(fromPath, toPath);
+	}
+
+	public static String getMovingPath(File fromPath, File toPath) throws IOException {
+		final List<String> fromList = toPathList(fromPath.getCanonicalFile());
+		final List<String> toList = toPathList(toPath.getCanonicalFile());
 
 		return getMovingPath(fromList, toList);
 	}
@@ -150,18 +154,30 @@ public class SimpleDirUtil {
 
 	public static String getRelativeUrlIfPossible(final String url, final File currentDir,
 			final IgapyonV3Settings settings) throws IOException {
-		final String localurl = file2Url(currentDir, settings);
-		if (url.startsWith(localurl)) {
-			String relative = url.substring(localurl.length());
-			if (relative.length() == 0) {
-				return url;
-			}
-			if (relative.startsWith("/")) {
-				return relative.substring(1);
-			}
-			return relative;
+		if (url.startsWith(settings.getBaseurl()) == false) {
+			return url;
 		}
-		return url;
+
+		final File targetFile = url2File(url, settings);
+
+		final String movingPath = getMovingPath(currentDir, targetFile);
+		if (movingPath.length() == 0) {
+			return url;
+		}
+		return movingPath;
+
+		// final String localurl = file2Url(currentDir, settings);
+		// if (url.startsWith(localurl)) {
+		// String relative = url.substring(localurl.length());
+		// if (relative.length() == 0) {
+		// return url;
+		// }
+		// if (relative.startsWith("/")) {
+		// return relative.substring(1);
+		// }
+		// return relative;
+		// }
+		// return url;
 	}
 
 	/**
