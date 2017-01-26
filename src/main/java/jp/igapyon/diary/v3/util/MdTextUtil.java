@@ -33,6 +33,7 @@
 
 package jp.igapyon.diary.v3.util;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -97,8 +98,8 @@ public class MdTextUtil {
 				+ convertSimpleUrl2MdLink(source.substring(matURL.end()));
 	}
 
-	public static String convertDoubleKeyword2MdLink(final String source, final IgapyonV3Settings settings)
-			throws IOException {
+	public static String convertDoubleKeyword2MdLink(final String source, final File currentdir,
+			final IgapyonV3Settings settings) throws IOException {
 
 		// [[key]]system
 		final String DOUBLE_KEYWORD_PATTERN = "\\[\\[.*?\\]\\]";
@@ -116,8 +117,8 @@ public class MdTextUtil {
 			if (registeredPair[0].compareToIgnoreCase(foundKeyword) == 0) {
 				// 最初のヒットのみ置換したうえで残り部分を再帰呼出し。
 				return source.substring(0, matDoubleKeyword.start()) + "[" + registeredPair[0] + "]("
-						+ registeredPair[1] + ")"
-						+ convertDoubleKeyword2MdLink(source.substring(matDoubleKeyword.end()), settings);
+						+ SimpleDirUtil.getRelativeUrlIfPossible(registeredPair[1], currentdir, settings) + ")"
+						+ convertDoubleKeyword2MdLink(source.substring(matDoubleKeyword.end()), currentdir, settings);
 			}
 		}
 

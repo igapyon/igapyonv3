@@ -189,7 +189,7 @@ public class IgapyonHtmlV2TitleParser {
 		{
 			// タイトル先頭部の日付形式をハイフンに変換
 			// これは、いがぴょんの日記v2 形式のものを v3 形式で利用している ISO 形式に変換する処理に当たる。
-			String titleDate = title.substring(0, Integer.min(10, title.length()));
+			String titleDate = title.substring(0, Math.min(10, title.length()));
 			titleDate = StringUtils.replaceChars(titleDate, "/", "-");
 			title = titleDate + title.substring(10);
 		}

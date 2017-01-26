@@ -56,6 +56,7 @@ import freemarker.template.TemplateException;
 import freemarker.template.TemplateModel;
 import jp.igapyon.diary.v3.util.IgapyonV3Current;
 import jp.igapyon.diary.v3.util.IgapyonV3Settings;
+import jp.igapyon.diary.v3.util.SimpleDirUtil;
 
 /**
  * キーワードリスト用のディレクティブモデル
@@ -105,6 +106,10 @@ public class KeywordlistDirectiveModel implements TemplateDirectiveModel {
 		final StringModel smodel = (StringModel) env.getDataModel().get("current");
 		final IgapyonV3Current current = (IgapyonV3Current) smodel.getWrappedObject();
 
+		// get current directory
+		final String sourceName = env.getMainTemplate().getSourceName();
+		final File sourceDir = new File(settings.getRootdir(), sourceName).getCanonicalFile().getParentFile();
+
 		if (current.getKeywordList().size() > 0) {
 			ensureLoadAtomXml();
 
@@ -130,7 +135,9 @@ public class KeywordlistDirectiveModel implements TemplateDirectiveModel {
 				if (existEntry == null) {
 					writer.write("* " + key + "\n");
 				} else {
-					writer.write("* [" + existEntry.getTitle() + "](" + existEntry.getLink() + ")\n");
+					writer.write("* [" + existEntry.getTitle() + "]("
+							+ SimpleDirUtil.getRelativeUrlIfPossible(existEntry.getLink(), sourceDir, settings)
+							+ ")\n");
 				}
 			}
 		}
