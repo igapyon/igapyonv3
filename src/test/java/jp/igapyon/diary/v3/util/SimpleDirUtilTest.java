@@ -141,4 +141,12 @@ public class SimpleDirUtilTest {
 		}
 	}
 
+	@Test
+	public void testMovingPath001() throws Exception {
+		assertEquals(".", SimpleDirUtil.getMovingPath("/", "/"));
+		assertEquals("test", SimpleDirUtil.getMovingPath("/", "/test"));
+		assertEquals("test/test", SimpleDirUtil.getMovingPath("/", "/test/test"));
+		assertEquals("..", SimpleDirUtil.getMovingPath("/test", "/"));
+		assertEquals("../test2", SimpleDirUtil.getMovingPath("/test1", "/test2"));
+	}
 }

@@ -69,6 +69,14 @@ public class SimpleDirUtil {
 		return targetRelFileStr;
 	}
 
+	public static String getMovingPath(final String fromDir, final String toDir) throws IOException {
+		if (fromDir.equals(toDir)) {
+			return ".";
+		}
+		// FIXME NOT IMPLEMENTED.
+		return "/";
+	}
+
 	public static String getRelativeUrlIfPossible(final String url, final File currentDir,
 			final IgapyonV3Settings settings) throws IOException {
 		final String localurl = file2Url(currentDir, settings);
