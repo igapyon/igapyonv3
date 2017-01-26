@@ -113,7 +113,7 @@ public class DiarySrcMd2MdConverter {
 
 		for (int index = 0; index < lines.size(); index++) {
 			String line = lines.get(index);
-			line = MdTextUtil.convertDoubleKeyword2MdLink(line, settings);
+			line = MdTextUtil.convertDoubleKeyword2MdLink(line, file.getParentFile(), settings);
 
 			// タブは２スペースに変換。
 			line = StringUtils.replaceAll(line, "\t", "  ");

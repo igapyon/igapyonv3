@@ -35,6 +35,8 @@ package jp.igapyon.diary.v3.util;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * ディレクトリ処理のためのユーティリティを蓄えます。
@@ -69,20 +71,100 @@ public class SimpleDirUtil {
 		return targetRelFileStr;
 	}
 
+	public static List<String> toPathList(File file) throws IOException {
+		file = file.getCanonicalFile();
+		final List<String> result = new ArrayList<String>();
+		for (;;) {
+			if (file.getName().equals("/") || file.getName().equals("\\") || file.getName().equals(File.pathSeparator)
+					|| file.getName().equals("")) {
+				break;
+			}
+			result.add(0, file.getName());
+			file = file.getParentFile();
+		}
+		return result;
+	}
+
+	public static String getMovingPath(String fromPathString, String toPathString) throws IOException {
+		if (fromPathString.startsWith("/") == false) {
+			fromPathString = ("/" + fromPathString);
+		}
+		if (toPathString.startsWith("/") == false) {
+			toPathString = ("/" + toPathString);
+		}
+		final File fromPath = new File(fromPathString).getCanonicalFile();
+		final File toPath = new File(toPathString).getCanonicalFile();
+
+		return getMovingPath(fromPath, toPath);
+	}
+
+	public static String getMovingPath(File fromPath, File toPath) throws IOException {
+		final List<String> fromList = toPathList(fromPath.getCanonicalFile());
+		final List<String> toList = toPathList(toPath.getCanonicalFile());
+
+		return getMovingPath(fromList, toList);
+	}
+
+	public static String getMovingPath(final List<String> fromPathList, final List<String> toPathList)
+			throws IOException {
+		int level = 0;
+		for (;; level++) {
+			if (level >= toPathList.size()) {
+				// reach to end of tolist
+				String result = "";
+				for (int index = level; index < fromPathList.size(); index++) {
+					if (result.length() != 0) {
+						result += "/";
+					}
+					result += "..";
+				}
+				return result;
+			}
+
+			if (level >= fromPathList.size()) {
+				String result = "";
+				for (int index = level; index < toPathList.size(); index++) {
+					if (result.length() != 0) {
+						result += "/";
+					}
+					result += toPathList.get(index);
+				}
+				return result;
+			}
+
+			final String left = fromPathList.get(level);
+			final String right = toPathList.get(level);
+			if (left.equals(right) == false) {
+				// different
+				String result = "";
+				for (int index = level; index < fromPathList.size(); index++) {
+					if (result.length() != 0) {
+						result += "/";
+					}
+					result += "..";
+				}
+				for (int index = level; index < toPathList.size(); index++) {
+					result += "/";
+					result += toPathList.get(index);
+				}
+				return result;
+			}
+		}
+	}
+
 	public static String getRelativeUrlIfPossible(final String url, final File currentDir,
 			final IgapyonV3Settings settings) throws IOException {
-		final String localurl = file2Url(currentDir, settings);
-		if (url.startsWith(localurl)) {
-			String relative = url.substring(localurl.length());
-			if (relative.length() == 0) {
-				return url;
-			}
-			if (relative.startsWith("/")) {
-				return relative.substring(1);
-			}
-			return relative;
+		if (url.startsWith(settings.getBaseurl()) == false) {
+			return url;
 		}
-		return url;
+
+		final File targetFile = url2File(url, settings);
+
+		final String movingPath = getMovingPath(currentDir, targetFile);
+		if (movingPath.length() == 0) {
+			return url;
+		}
+		return movingPath;
 	}
 
 	/**

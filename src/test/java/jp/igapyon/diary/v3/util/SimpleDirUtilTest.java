@@ -105,8 +105,8 @@ public class SimpleDirUtilTest {
 		settings.setRootdir(new File("/tmp/aaa/"));
 		settings.setBaseurl("https://igapyon.github.io/diary");
 
-		assertEquals("https://igapyon.github.io/diary", SimpleDirUtil
-				.getRelativeUrlIfPossible("https://igapyon.github.io/diary", new File("/tmp/aaa/"), settings));
+		assertEquals("https://igapyon.github.io/diary", SimpleDirUtil.getRelativeUrlIfPossible("https://igapyon.github.io/diary",
+				new File("/tmp/aaa/"), settings));
 		assertEquals("aaa", SimpleDirUtil.getRelativeUrlIfPossible("https://igapyon.github.io/diary/aaa",
 				new File("/tmp/aaa/"), settings));
 		assertEquals("aaa/bbb", SimpleDirUtil.getRelativeUrlIfPossible("https://igapyon.github.io/diary/aaa/bbb",
@@ -141,4 +141,23 @@ public class SimpleDirUtilTest {
 		}
 	}
 
+	@Test
+	public void testPathList001() throws Exception {
+
+		final List<String> aaa = SimpleDirUtil.toPathList(new File("/a/b/c/d/e/f/g"));
+		for (String lookup : aaa) {
+			// System.out.println("dir"+lookup);
+		}
+	}
+
+	@Test
+	public void testMovingPath001() throws Exception {
+		assertEquals("", SimpleDirUtil.getMovingPath("/", "/"));
+		assertEquals("test", SimpleDirUtil.getMovingPath("/", "/test"));
+		assertEquals("test/test", SimpleDirUtil.getMovingPath("/", "/test/test"));
+		assertEquals("..", SimpleDirUtil.getMovingPath("/test", "/"));
+		assertEquals("../test2", SimpleDirUtil.getMovingPath("/test1", "/test2"));
+		assertEquals("../testC", SimpleDirUtil.getMovingPath("/testA/testB", "/testA/testC"));
+		assertEquals("../../testC/testD", SimpleDirUtil.getMovingPath("/testA/testB", "/testC/testD"));
+	}
 }
