@@ -98,11 +98,54 @@ public class SimpleDirUtil {
 		final List<String> fromList = toPathList(fromPath);
 		final List<String> toList = toPathList(toPath);
 
-		if (fromPathString.equals(toPathString)) {
-			return "";
+		return getMovingPath(fromList, toList);
+	}
+
+	public static String getMovingPath(final List<String> fromPathList, final List<String> toPathList)
+			throws IOException {
+		int level = 0;
+		for (;; level++) {
+			if (level >= toPathList.size()) {
+				// reach to end of tolist
+				String result = "";
+				for (int index = level; index < fromPathList.size(); index++) {
+					if (result.length() != 0) {
+						result += "/";
+					}
+					result += "..";
+				}
+				return result;
+			}
+
+			if (level >= fromPathList.size()) {
+				String result = "";
+				for (int index = level; index < toPathList.size(); index++) {
+					if (result.length() != 0) {
+						result += "/";
+					}
+					result += toPathList.get(index);
+				}
+				return result;
+			}
+
+			final String left = fromPathList.get(level);
+			final String right = toPathList.get(level);
+			if (left.equals(right) == false) {
+				// different
+				String result = "";
+				for (int index = level; index < fromPathList.size(); index++) {
+					if (result.length() != 0) {
+						result += "/";
+					}
+					result += "..";
+				}
+				for (int index = level; index < toPathList.size(); index++) {
+					result += "/";
+					result += toPathList.get(index);
+				}
+				return result;
+			}
 		}
-		// FIXME NOT IMPLEMENTED.
-		return "/";
 	}
 
 	public static String getRelativeUrlIfPossible(final String url, final File currentDir,

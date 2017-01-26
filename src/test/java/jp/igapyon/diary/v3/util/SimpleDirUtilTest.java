@@ -157,5 +157,7 @@ public class SimpleDirUtilTest {
 		assertEquals("test/test", SimpleDirUtil.getMovingPath("/", "/test/test"));
 		assertEquals("..", SimpleDirUtil.getMovingPath("/test", "/"));
 		assertEquals("../test2", SimpleDirUtil.getMovingPath("/test1", "/test2"));
+		assertEquals("../testC", SimpleDirUtil.getMovingPath("/testA/testB", "/testA/testC"));
+		assertEquals("../../testC/testD", SimpleDirUtil.getMovingPath("/testA/testB", "/testC/testD"));
 	}
 }
