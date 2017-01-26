@@ -142,8 +142,17 @@ public class SimpleDirUtilTest {
 	}
 
 	@Test
+	public void testPathList001() throws Exception {
+
+		final List<String> aaa = SimpleDirUtil.toPathList(new File("/a/b/c/d/e/f/g"));
+		for (String lookup : aaa) {
+			// System.out.println("dir"+lookup);
+		}
+	}
+
+	@Test
 	public void testMovingPath001() throws Exception {
-		assertEquals(".", SimpleDirUtil.getMovingPath("/", "/"));
+		assertEquals("", SimpleDirUtil.getMovingPath("/", "/"));
 		assertEquals("test", SimpleDirUtil.getMovingPath("/", "/test"));
 		assertEquals("test/test", SimpleDirUtil.getMovingPath("/", "/test/test"));
 		assertEquals("..", SimpleDirUtil.getMovingPath("/test", "/"));

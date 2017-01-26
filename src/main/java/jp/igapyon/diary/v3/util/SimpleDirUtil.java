@@ -35,6 +35,8 @@ package jp.igapyon.diary.v3.util;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * ディレクトリ処理のためのユーティリティを蓄えます。
@@ -69,9 +71,35 @@ public class SimpleDirUtil {
 		return targetRelFileStr;
 	}
 
-	public static String getMovingPath(final String fromDir, final String toDir) throws IOException {
-		if (fromDir.equals(toDir)) {
-			return ".";
+	public static List<String> toPathList(File file) throws IOException {
+		file = file.getCanonicalFile();
+		final List<String> result = new ArrayList<String>();
+		for (;;) {
+			if (file.getName().equals("/") || file.getName().equals("\\") || file.getName().equals(File.pathSeparator)
+					|| file.getName().equals("")) {
+				break;
+			}
+			result.add(0, file.getName());
+			file = file.getParentFile();
+		}
+		return result;
+	}
+
+	public static String getMovingPath(String fromPathString, String toPathString) throws IOException {
+		if (fromPathString.startsWith("/") == false) {
+			fromPathString = ("/" + fromPathString);
+		}
+		if (toPathString.startsWith("/") == false) {
+			toPathString = ("/" + toPathString);
+		}
+		final File fromPath = new File(fromPathString).getCanonicalFile();
+		final File toPath = new File(toPathString).getCanonicalFile();
+
+		final List<String> fromList = toPathList(fromPath);
+		final List<String> toList = toPathList(toPath);
+
+		if (fromPathString.equals(toPathString)) {
+			return "";
 		}
 		// FIXME NOT IMPLEMENTED.
 		return "/";
