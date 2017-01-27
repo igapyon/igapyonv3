@@ -57,6 +57,7 @@ import jp.igapyon.diary.v3.mdconv.freemarker.directive.LinkNextDirectiveModel;
 import jp.igapyon.diary.v3.mdconv.freemarker.directive.LinkPrevDirectiveModel;
 import jp.igapyon.diary.v3.mdconv.freemarker.directive.LinkSearchDirectiveModel;
 import jp.igapyon.diary.v3.mdconv.freemarker.directive.LinkShareDirectiveModel;
+import jp.igapyon.diary.v3.mdconv.freemarker.directive.LinkTopDirectiveModel;
 import jp.igapyon.diary.v3.mdconv.freemarker.directive.LocalRssDirectiveModel;
 import jp.igapyon.diary.v3.mdconv.freemarker.directive.LocalYearlistDirectiveModel;
 import jp.igapyon.diary.v3.mdconv.freemarker.directive.RSSFeedDirectiveModel;
@@ -245,6 +246,7 @@ public class IgapyonV3FreeMarkerUtil {
 		config.setSharedVariable("include", new IncludeDirectiveModel(settings));
 		config.setSharedVariable("rssfeed", new RSSFeedDirectiveModel(settings));
 		config.setSharedVariable("localrss", new LocalRssDirectiveModel(settings));
+		config.setSharedVariable("linktop", new LinkTopDirectiveModel(settings));
 		config.setSharedVariable("linkdiary", new LinkDiaryDirectiveModel(settings));
 		config.setSharedVariable("linksearch", new LinkSearchDirectiveModel(settings));
 		config.setSharedVariable("linkshare", new LinkShareDirectiveModel(settings));
