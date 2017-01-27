@@ -34,6 +34,7 @@
 package jp.igapyon.diary.v3.mdconv.freemarker.directive;
 
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.IOException;
 import java.util.Map;
 
@@ -43,6 +44,7 @@ import freemarker.template.TemplateDirectiveModel;
 import freemarker.template.TemplateException;
 import freemarker.template.TemplateModel;
 import jp.igapyon.diary.v3.util.IgapyonV3Settings;
+import jp.igapyon.diary.v3.util.SimpleDirUtil;
 
 /**
  * コンテンツトップへのリンク用のディレクティブモデル
@@ -60,7 +62,13 @@ public class LinkTopDirectiveModel implements TemplateDirectiveModel {
 			final TemplateModel[] loopVars, final TemplateDirectiveBody body) throws TemplateException, IOException {
 		final BufferedWriter writer = new BufferedWriter(env.getOut());
 
-		writer.write("[top](" + settings.getBaseurl() + "/)");
+		// get current directory
+		final String sourceName = env.getMainTemplate().getSourceName();
+		final File sourceDir = new File(settings.getRootdir(), sourceName).getCanonicalFile().getParentFile();
+
+		writer.write("[top]("
+				+ SimpleDirUtil.getRelativeUrlIfPossible(settings.getBaseurl() + "/index.html", sourceDir, settings)
+				+ "/)");
 
 		writer.flush();
 	}
