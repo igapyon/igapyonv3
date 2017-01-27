@@ -38,6 +38,8 @@ import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import jp.igapyon.util.IgStringUtil;
+
 /**
  * Markdown テキストのためのユーティリティです。
  * 
@@ -94,8 +96,11 @@ public class MdTextUtil {
 		}
 
 		// それでは生リンクの埋め込み処理を実施します。
-		return source.substring(0, matURL.start()) + "[" + matURL.group() + "](" + matURL.group() + ")"
+		String urlShow = matURL.group();
+		urlShow = IgStringUtil.abbreviateMiddle(urlShow, 32);
+		return source.substring(0, matURL.start()) + "[" + urlShow + "](" + matURL.group() + ")"
 				+ convertSimpleUrl2MdLink(source.substring(matURL.end()));
+
 	}
 
 	public static String convertDoubleKeyword2MdLink(final String source, final File currentdir,
