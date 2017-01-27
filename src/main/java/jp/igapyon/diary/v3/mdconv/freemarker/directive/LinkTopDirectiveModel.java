@@ -68,7 +68,7 @@ public class LinkTopDirectiveModel implements TemplateDirectiveModel {
 
 		writer.write("[top]("
 				+ SimpleDirUtil.getRelativeUrlIfPossible(settings.getBaseurl() + "/index.html", sourceDir, settings)
-				+ "/)");
+				+ ")");
 
 		writer.flush();
 	}
