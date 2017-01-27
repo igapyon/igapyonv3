@@ -97,7 +97,7 @@ public class MdTextUtil {
 
 		// それでは生リンクの埋め込み処理を実施します。
 		String urlShow = matURL.group();
-		urlShow = IgStringUtil.abbreviateMiddle(urlShow, 32);
+		urlShow = IgStringUtil.abbreviateMiddle(urlShow, 41);
 		return source.substring(0, matURL.start()) + "[" + urlShow + "](" + matURL.group() + ")"
 				+ convertSimpleUrl2MdLink(source.substring(matURL.end()));
 
