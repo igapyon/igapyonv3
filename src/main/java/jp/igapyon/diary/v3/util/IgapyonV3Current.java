@@ -101,4 +101,21 @@ public class IgapyonV3Current {
 		}
 		return false;
 	}
+
+	public String getDiaryTitle() {
+		if (filename.length() < 9) {
+			return "ERROR:N/A";
+		}
+
+		String year1 = "20";
+		String year2 = filename.substring(2, 4);
+		if (year2.startsWith("9")) {
+			year1 = "19";
+		}
+
+		String month = filename.substring(4, 6);
+		String day = filename.substring(6, 8);
+
+		return (year1 + year2 + "-" + month + "-" + day + " diary: " + getTitle());
+	}
 }
