@@ -220,7 +220,7 @@ public class IgapyonV3TemplateLoader implements TemplateLoader {
 	 * @throws IOException
 	 */
 	protected String getStandardHeaderString() throws IOException {
-		String header = "<@linktop /> \n";
+		String header = "<@navlist /> \n";
 		header += "\n";
 
 		// ヘッダ追加
