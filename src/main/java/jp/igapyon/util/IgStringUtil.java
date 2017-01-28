@@ -31,23 +31,32 @@
  *  limitations under the License.
  */
 
-package jp.igapyon.diary.v3.util;
+package jp.igapyon.util;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.Comparator;
+import org.apache.commons.lang3.StringUtils;
 
 /**
- * ファイルをソートするためのコンパレータです。
+ * Simple String util.
  * 
  * @author Toshiki Iga
  */
-public class FileComparator implements Comparator<File> {
-	public int compare(final File file1, final File file2) {
-		try {
-			return file1.getCanonicalPath().compareTo(file2.getCanonicalPath());
-		} catch (IOException e) {
-			return 0;
+public class IgStringUtil {
+	/**
+	 * get string with 10 and ... hardcoded StringUtils.abbreviateMiddle
+	 * 
+	 * @param message
+	 * @param maxlen
+	 * @return
+	 */
+	public static String abbreviateMiddle(final String message, final int maxlen) {
+		// hardcoded prefix length.
+		final int PRELEN = 10;
+
+		if (message.length() <= maxlen) {
+			return message;
 		}
+
+		return message.substring(0, PRELEN)
+				+ StringUtils.abbreviateMiddle(message.substring(PRELEN), "...", maxlen - PRELEN);
 	}
 }

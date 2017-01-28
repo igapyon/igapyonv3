@@ -101,16 +101,28 @@ public class LinkShareDirectiveModel implements TemplateDirectiveModel {
 		// engineString = params.get("engine").toString();
 		// }
 
+		writer.write(getOutputString(titleString, wordString, urlString, tagsString));
+
+		writer.flush();
+	}
+
+	/**
+	 * タグが変換された後の出力文字列を取得します。
+	 * 
+	 * @param sourceName
+	 * @return
+	 * @throws IOException
+	 */
+	public String getOutputString(final String titleString, final String wordString, final String urlString,
+			final String tagsString) throws IOException {
 		final URLCodec codec = new URLCodec();
 		try {
 			String qString = "https://twitter.com/intent/tweet?hashtags=" + codec.encode(tagsString) + "&text="
 					+ codec.encode(wordString) + "&url=" + codec.encode(urlString);
 
-			writer.write("[" + titleString + "](" + qString + ")");
+			return ("[" + titleString + "](" + qString + ")");
 		} catch (EncoderException e) {
 			throw new IOException(e);
 		}
-
-		writer.flush();
 	}
 }

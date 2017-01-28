@@ -34,12 +34,8 @@
 package jp.igapyon.diary.v3.mdconv.freemarker.directive;
 
 import java.io.BufferedWriter;
-import java.io.File;
 import java.io.IOException;
-import java.util.List;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import freemarker.core.Environment;
 import freemarker.template.TemplateDirectiveBody;
@@ -47,20 +43,18 @@ import freemarker.template.TemplateDirectiveModel;
 import freemarker.template.TemplateException;
 import freemarker.template.TemplateModel;
 import jp.igapyon.diary.v3.util.IgapyonV3Settings;
-import jp.igapyon.diary.v3.util.SimpleDirParser;
-import jp.igapyon.diary.v3.util.SimpleDirUtil;
 
 /**
- * ローカルの年リスト用のディレクティブモデル
+ * コンテンツトップへのリンク用のディレクティブモデル
  * 
- * <@localyearlist />
+ * これは相対化せずに絶対URLになります。
  * 
  * @author Toshiki Iga
  */
-public class LocalYearlistDirectiveModel implements TemplateDirectiveModel {
+public class LinkTargetDirectiveModel implements TemplateDirectiveModel {
 	private IgapyonV3Settings settings = null;
 
-	public LocalYearlistDirectiveModel(final IgapyonV3Settings settings) {
+	public LinkTargetDirectiveModel(final IgapyonV3Settings settings) {
 		this.settings = settings;
 	}
 
@@ -70,51 +64,33 @@ public class LocalYearlistDirectiveModel implements TemplateDirectiveModel {
 
 		// get current directory
 		final String sourceName = env.getMainTemplate().getSourceName();
-		final File sourceDir = new File(settings.getRootdir(), sourceName).getCanonicalFile().getParentFile();
 
-		final List<File> files = getLocalYearList(settings.getRootdir());
-
-		boolean isFirst = true;
-		for (int index = files.size() - 1; index >= 0; index--) {
-			if (isFirst) {
-				isFirst = false;
-			} else {
-				writer.write("/ ");
-			}
-
-			final File file = files.get(index);
-
-			String url = settings.getBaseurl() + "/" + file.getName() + "/index.html";
-			url = SimpleDirUtil.getRelativeUrlIfPossible(url, sourceDir, settings);
-			writer.write("[" + file.getName() + "](" + url + ")\n");
-		}
-
-		String url = settings.getBaseurl() + "/idxall.html";
-		url = SimpleDirUtil.getRelativeUrlIfPossible(url, sourceDir, settings);
-		writer.write("/ [ALL](" + url + ")\n");
+		writer.write(getOutputString(sourceName));
 
 		writer.flush();
 	}
 
-	public static List<File> getLocalYearList(final File rootdir) {
-		final SimpleDirParser parser = new SimpleDirParser() {
-			final Pattern pat = Pattern.compile("^[0-9][0-9][0-9][0-9]$");
+	/**
+	 * タグが変換された後の出力文字列を取得します。
+	 * 
+	 * @param sourceName
+	 * @return
+	 */
+	public String getOutputString(final String sourceName) {
+		String fileNameModified = sourceName;
+		if (fileNameModified.contains(".") == false) {
+			// do nothing
+		} else if (fileNameModified.endsWith(".html.md")) {
+			fileNameModified = fileNameModified.substring(0, fileNameModified.lastIndexOf("."));
+		} else if (fileNameModified.endsWith(".html.src.md")) {
+			// for igapyonv3
+			fileNameModified = fileNameModified.substring(0, fileNameModified.length() - ".html.src.md".length())
+					+ ".html";
+		} else if (fileNameModified.equals("README.src.md")) {
+			// FIXME
+			fileNameModified = "index.html";
+		}
 
-			@Override
-			public boolean isProcessTarget(final File file) {
-				if (file.isDirectory() == false) {
-					return false;
-				}
-				final Matcher mat = pat.matcher(file.getName());
-				if (mat.find()) {
-					// 年の形式のみ対象。
-					return true;
-				}
-
-				return false;
-			}
-		};
-
-		return parser.listFiles(rootdir, false);
+		return ("[target](" + settings.getBaseurl() + "/" + fileNameModified + ")");
 	}
 }

@@ -220,7 +220,7 @@ public class IgapyonV3TemplateLoader implements TemplateLoader {
 	 * @throws IOException
 	 */
 	protected String getStandardHeaderString() throws IOException {
-		String header = "[top](${settings.baseurl}/) \n";
+		String header = "<@linktop /> \n";
 		header += "\n";
 
 		// ヘッダ追加
@@ -267,17 +267,13 @@ public class IgapyonV3TemplateLoader implements TemplateLoader {
 		// FIXME そもそもヘッダーも <@header />
 		// FIXME とかで表現できるような気がしてきた。そして遅延展開すると変数が利用可能になる。
 
-		String header = "[top](${settings.baseurl}/) \n";
+		String header = "<@linktop /> \n";
 		// FIXME index も current.index のような値がほしい。
 		header += " / [index](${settings.baseurl}/" + year1 + year2 + "/index.html) \n";
-
 		header += " / <@linkprev /> \n";
 		header += " / <@linknext /> \n";
-
-		header += " / [target](${current.url}) \n";
-		// FIXME ソースも current.sourceurl などほしい。名前は後でよく考えよう。
-		header += " / [source](https://github.com/igapyon/diary/blob/gh-pages/" + year1 + year2 + "/ig" + year2 + month
-				+ day + ".html.src.md) \n";
+		header += " / <@linktarget /> \n";
+		header += " / <@linksource /> \n";
 		header += "\n";
 
 		// ヘッダ追加

@@ -31,55 +31,23 @@
  *  limitations under the License.
  */
 
-package jp.igapyon.diary.v3.item;
+package jp.igapyon.util;
 
-import java.util.Date;
+import java.io.File;
+import java.io.IOException;
+import java.util.Comparator;
 
 /**
- * 日記アイテムの情報を蓄えるためのクラスです。
- * 
- * こちらを中心に処理をします。場合により Atom ファイルと入出力にも利用されます。
+ * Comparator for File by full path name.
  * 
  * @author Toshiki Iga
  */
-public class DiaryItemInfo {
-	private String uri;
-	private String title;
-	private String body;
-	/**
-	 * メンバーを追加しただけ。いつか日記の最終更新日とリンクします。
-	 */
-	private Date lastModified;
-
-	public String getBody() {
-		return body;
-	}
-
-	public Date getLastModified() {
-		return lastModified;
-	}
-
-	public String getTitle() {
-		return title;
-	}
-
-	public String getUri() {
-		return uri;
-	}
-
-	public void setBody(String body) {
-		this.body = body;
-	}
-
-	public void setLastModified(Date lastModified) {
-		this.lastModified = lastModified;
-	}
-
-	public void setTitle(String title) {
-		this.title = title;
-	}
-
-	public void setUri(String uri) {
-		this.uri = uri;
+public class IgFileComparatorByName implements Comparator<File> {
+	public int compare(final File file1, final File file2) {
+		try {
+			return file1.getCanonicalPath().compareTo(file2.getCanonicalPath());
+		} catch (IOException e) {
+			return 0;
+		}
 	}
 }

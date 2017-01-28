@@ -34,6 +34,7 @@
 package jp.igapyon.diary.v3.util;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class IgapyonV3Current {
@@ -41,26 +42,39 @@ public class IgapyonV3Current {
 
 	private String url = "N/A";
 
+	/**
+	 * メンバーを追加しただけ。いつか日記の最終更新日とリンクします。
+	 */
+	private Date lastModified;
+
 	private List<String> keywordList = new ArrayList<String>();
+
+	public List<String> getKeywordList() {
+		return keywordList;
+	}
+
+	public Date getLastModified() {
+		return lastModified;
+	}
 
 	public String getTitle() {
 		return title;
 	}
 
-	public List<String> getKeywordList() {
-		return keywordList;
+	public String getUrl() {
+		return url;
 	}
 
 	public void setKeywordList(List<String> keywordList) {
 		this.keywordList = keywordList;
 	}
 
-	public void setTitle(String title) {
-		this.title = title;
+	public void setLastModified(Date lastModified) {
+		this.lastModified = lastModified;
 	}
 
-	public String getUrl() {
-		return url;
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
 	public void setUrl(String url) {
