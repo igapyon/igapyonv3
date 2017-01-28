@@ -33,5 +33,6 @@ http://d.hatena.ne.jp/igapyon/20161222
 
 <#if current.isDiary()>
 だいあり
-tigau
+<#else>
+ダイアリちがう
 </#if>
