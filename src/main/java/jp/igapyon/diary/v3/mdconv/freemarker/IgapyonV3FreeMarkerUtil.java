@@ -130,6 +130,7 @@ public class IgapyonV3FreeMarkerUtil {
 	public static IgapyonV3Current buildCurrentObjectByPreParse(final String sourceString, final String sourceName,
 			final IgapyonV3Settings settings) throws IOException {
 		final IgapyonV3Current current = new IgapyonV3Current();
+		current.setFilename(new File(sourceString).getName());
 
 		final BufferedReader reader = new BufferedReader(new StringReader(sourceString));
 		for (;;) {
