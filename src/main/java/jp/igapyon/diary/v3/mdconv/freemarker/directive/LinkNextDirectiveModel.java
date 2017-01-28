@@ -101,7 +101,10 @@ public class LinkNextDirectiveModel implements TemplateDirectiveModel {
 		if (entryIndex <= 0) {
 			return ("next");
 		} else {
-			return ("[next](" + synEntryList.get(entryIndex - 1).getLink() + ")");
+			// get current directory
+			final File sourceDir = new File(settings.getRootdir(), sourceName).getCanonicalFile().getParentFile();
+			return ("[next](" + SimpleDirUtil.getRelativeUrlIfPossible(synEntryList.get(entryIndex - 1).getLink(),
+					sourceDir, settings) + ")");
 		}
 	}
 

@@ -101,7 +101,10 @@ public class LinkPrevDirectiveModel implements TemplateDirectiveModel {
 		if (entryIndex < 0 || entryIndex > synEntryList.size() - 2) {
 			return ("prev");
 		} else {
-			return ("[prev](" + synEntryList.get(entryIndex + 1).getLink() + ")");
+			// get current directory
+			final File sourceDir = new File(settings.getRootdir(), sourceName).getCanonicalFile().getParentFile();
+			return ("[prev](" + SimpleDirUtil.getRelativeUrlIfPossible(synEntryList.get(entryIndex + 1).getLink(),
+					sourceDir, settings) + ")");
 		}
 	}
 
