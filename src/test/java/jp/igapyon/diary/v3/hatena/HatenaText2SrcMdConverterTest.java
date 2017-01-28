@@ -12,9 +12,10 @@ public class HatenaText2SrcMdConverterTest {
 
 	@Test
 	public void test() throws Exception {
-		final File rootdir = new File("./test/data/hatena/");
+		final File rootdir = new File("./test/data/");
 
 		final IgapyonV3Settings settings = new IgapyonV3Settings();
+		settings.setRootdir(rootdir);
 
 		new HatenaText2SrcMdConverter(settings).processDir(rootdir);
 
