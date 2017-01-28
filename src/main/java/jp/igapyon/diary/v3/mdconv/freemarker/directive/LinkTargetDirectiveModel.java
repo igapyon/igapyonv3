@@ -34,7 +34,6 @@
 package jp.igapyon.diary.v3.mdconv.freemarker.directive;
 
 import java.io.BufferedWriter;
-import java.io.File;
 import java.io.IOException;
 import java.util.Map;
 
@@ -65,9 +64,20 @@ public class LinkTargetDirectiveModel implements TemplateDirectiveModel {
 
 		// get current directory
 		final String sourceName = env.getMainTemplate().getSourceName();
-		final File sourceDir = new File(settings.getRootdir(), sourceName).getCanonicalFile().getParentFile();
 
-		String fileNameModified = env.getMainTemplate().getSourceName();
+		writer.write(getOutputString(sourceName));
+
+		writer.flush();
+	}
+
+	/**
+	 * タグが変換された後の出力文字列を取得します。
+	 * 
+	 * @param sourceName
+	 * @return
+	 */
+	public String getOutputString(final String sourceName) {
+		String fileNameModified = sourceName;
 		if (fileNameModified.contains(".") == false) {
 			// do nothing
 		} else if (fileNameModified.endsWith(".html.md")) {
@@ -81,8 +91,6 @@ public class LinkTargetDirectiveModel implements TemplateDirectiveModel {
 			fileNameModified = "index.html";
 		}
 
-		writer.write("[target](" + settings.getBaseurl() + "/" + fileNameModified + ")");
-
-		writer.flush();
+		return ("[target](" + settings.getBaseurl() + "/" + fileNameModified + ")");
 	}
 }
