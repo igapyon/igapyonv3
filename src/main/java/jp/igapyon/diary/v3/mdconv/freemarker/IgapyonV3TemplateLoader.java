@@ -267,12 +267,7 @@ public class IgapyonV3TemplateLoader implements TemplateLoader {
 		// FIXME そもそもヘッダーも <@header />
 		// FIXME とかで表現できるような気がしてきた。そして遅延展開すると変数が利用可能になる。
 
-		String header = "<@linktop /> \n";
-		header += " / [index](index.html) \n";
-		header += " / <@linkprev /> \n";
-		header += " / <@linknext /> \n";
-		header += " / <@linktarget /> \n";
-		header += " / <@linksource /> \n";
+		String header = "<@navlist /> \n";
 		header += "\n";
 
 		// ヘッダ追加

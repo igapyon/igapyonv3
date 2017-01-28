@@ -81,10 +81,10 @@ public class NavlistDirectiveModel implements TemplateDirectiveModel {
 		final Pattern pat = Pattern.compile("ig[0-9][0-9][0-9][0-9][0-9][0-9]\\.");
 		final Matcher mat = pat.matcher(sourceName);
 		if (mat.find()) {
-			return new LinkTopDirectiveModel(settings).getOutputString(sourceName) + " / [index](index.html) / " //
-					+ new LinkPrevDirectiveModel(settings).getOutputString(sourceName) + " / "
-					+ new LinkNextDirectiveModel(settings).getOutputString(sourceName) + " / "
-					+ new LinkTargetDirectiveModel(settings).getOutputString(sourceName) + " / "
+			return new LinkTopDirectiveModel(settings).getOutputString(sourceName) + " \n / [index](index.html) \n / " //
+					+ new LinkPrevDirectiveModel(settings).getOutputString(sourceName) + " \n / "
+					+ new LinkNextDirectiveModel(settings).getOutputString(sourceName) + " \n / "
+					+ new LinkTargetDirectiveModel(settings).getOutputString(sourceName) + " \n / "
 					+ new LinkSourceDirectiveModel(settings).getOutputString(sourceName);
 		} else {
 			return new LinkTopDirectiveModel(settings).getOutputString(sourceName) + " / "
