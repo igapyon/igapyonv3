@@ -3,4 +3,13 @@
   <title>Igapyon Diary v3 year 2017</title>
   <dc:creator>Toshiki Iga</dc:creator>
   <dc:language>ja_JP</dc:language>
+  <entry>
+    <title />
+    <link rel="alternate" href="https://igapyon.github.io/diary/2017/ig170101.html" />
+    <author>
+      <name>Toshiki Iga</name>
+    </author>
+    <id>https://igapyon.github.io/diary/2017/ig170101.html</id>
+    <dc:creator>Toshiki Iga</dc:creator>
+  </entry>
 </feed>

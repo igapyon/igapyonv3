@@ -39,6 +39,7 @@ import java.io.IOException;
 import jp.igapyon.diary.v3.gendiary.TodayDiaryGenerator;
 import jp.igapyon.diary.v3.indexing.DiaryIndexAtomGenerator;
 import jp.igapyon.diary.v3.indexing.keyword.KeywordAtomByTitleGenerator;
+import jp.igapyon.diary.v3.indexing.keyword.KeywordMdTextGenerator;
 import jp.igapyon.diary.v3.mdconv.DiarySrcMd2MdConverter;
 import jp.igapyon.diary.v3.util.IgapyonV3Settings;
 
@@ -93,8 +94,11 @@ public class DefaultProcessor {
 			new DiaryIndexAtomGenerator(settings).process();
 
 			// キーワードの atom を更新します。
-			System.err.println("Update .keyword atom.xml.");
+			System.err.println("Update keyword atom.xml.");
 			new KeywordAtomByTitleGenerator(settings).process();
+
+			System.err.println("Generate keyword md if exists.");
+			new KeywordMdTextGenerator(settings).generateNewKeyword();
 
 			// .html.src.md ファイルから .md ファイルを生成します。
 			System.err.println("Convert .html.src.md to .html.md file.");
