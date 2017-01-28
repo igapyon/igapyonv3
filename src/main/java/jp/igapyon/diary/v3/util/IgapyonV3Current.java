@@ -36,11 +36,15 @@ package jp.igapyon.diary.v3.util;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class IgapyonV3Current {
 	private String title = "N/A";
 
 	private String url = "N/A";
+
+	private String filename = "NA.na";
 
 	/**
 	 * メンバーを追加しただけ。いつか日記の最終更新日とリンクします。
@@ -79,5 +83,39 @@ public class IgapyonV3Current {
 
 	public void setUrl(String url) {
 		this.url = url;
+	}
+
+	public String getFilename() {
+		return filename;
+	}
+
+	public void setFilename(String filename) {
+		this.filename = filename;
+	}
+
+	public boolean isDiary() {
+		final Pattern pat = Pattern.compile("ig[0-9][0-9][0-9][0-9][0-9][0-9]\\.");
+		final Matcher mat = pat.matcher(filename);
+		if (mat.find()) {
+			return true;
+		}
+		return false;
+	}
+
+	public String getDiaryTitle() {
+		if (filename.length() < 9) {
+			return "ERROR:N/A";
+		}
+
+		String year1 = "20";
+		String year2 = filename.substring(2, 4);
+		if (year2.startsWith("9")) {
+			year1 = "19";
+		}
+
+		String month = filename.substring(4, 6);
+		String day = filename.substring(6, 8);
+
+		return (year1 + year2 + "-" + month + "-" + day + " diary: " + getTitle());
 	}
 }

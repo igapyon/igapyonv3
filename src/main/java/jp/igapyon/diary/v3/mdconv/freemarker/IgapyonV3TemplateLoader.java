@@ -104,6 +104,7 @@ public class IgapyonV3TemplateLoader implements TemplateLoader {
 		final File actualFile = new File(settings.getRootdir(), stripLocaleName(resourceName));
 		final String body = FileUtils.readFileToString(actualFile, "UTF-8");
 		String load = body;
+		load = load.trim() + "\n";
 
 		if (isExpandHeaderFooter == false) {
 			// 加工無し出力。
@@ -111,47 +112,12 @@ public class IgapyonV3TemplateLoader implements TemplateLoader {
 			return resourceName;
 		}
 
-		if (actualFile.getName().startsWith("ig") && false == actualFile.getName().startsWith("iga")) {
-			// 日記ノードの処理。
-
-			load = getDiaryHeaderString(actualFile.getName()) + load;
-
-			// フッタ追加
-			String footer = "";
-			if (load.endsWith("\n") || load.endsWith("\r")) {
-				// do nothing.
-			} else {
-				footer += "\n";
-			}
-
-			footer += "<@keywordlist />";
-
-			footer += "\n";
-
-			{
-				final File fileTemplate = new File(settings.getRootdir(), "template-footer.md");
-				if (fileTemplate.exists()) {
-					final String template = FileUtils.readFileToString(fileTemplate, "UTF-8");
-					footer += template;
-				} else {
-					System.err.println("template-footer.md not found.:" + fileTemplate.getCanonicalPath());
-				}
-			}
-
-			load += footer;
-		} else if (actualFile.getName().startsWith("index") || actualFile.getName().startsWith("idxall")
+		if (actualFile.getName().startsWith("ig") && false == actualFile.getName().startsWith("iga")
+				|| actualFile.getName().startsWith("index") || actualFile.getName().startsWith("idxall")
 				|| actualFile.getName().startsWith("README") || actualFile.getName().startsWith("memo")
 				|| SimpleDirUtil.getRelativePath(settings.getRootdir(), actualFile).startsWith("keyword")) {
 
 			load = getStandardHeaderString() + load;
-
-			// フッタ追加
-			String footer = "";
-			if (load.endsWith("\n") || load.endsWith("\r")) {
-				// do nothing.
-			} else {
-				footer += "\n";
-			}
 
 			{
 				// keyword の場合の特殊処理。
@@ -161,26 +127,25 @@ public class IgapyonV3TemplateLoader implements TemplateLoader {
 					fileName = fileName.substring(fileName.lastIndexOf("/") + 1);
 					fileName = fileName.substring(0, fileName.indexOf("."));
 
+					String footer = "";
 					footer += "\n";
 					footer += "### 日記\n";
 					footer += "\n";
 					footer += "<@localrss filename=\"atom/" + fileName + ".xml\" /><#-- 利用日記情報を読み込み -->\n";
+					footer += "\n";
+					load += footer;
 				}
 			}
-
-			footer += "\n";
 
 			{
 				final File fileTemplate = new File(settings.getRootdir(), "template-footer.md");
 				if (fileTemplate.exists()) {
 					final String template = FileUtils.readFileToString(fileTemplate, "UTF-8");
-					footer += template;
+					load += template;
 				} else {
 					System.err.println("template-footer.md not found.:" + fileTemplate.getCanonicalPath());
 				}
 			}
-
-			load += footer;
 		} else {
 			// TODO そのうちに、どのように判断するのか検討。
 			// 加工無し出力。
@@ -220,11 +185,7 @@ public class IgapyonV3TemplateLoader implements TemplateLoader {
 	 * @throws IOException
 	 */
 	protected String getStandardHeaderString() throws IOException {
-		String header = "<@linktop /> \n";
-		header += "\n";
-
-		// ヘッダ追加
-		header += ("${current.title}\n");
+		String header = "";
 
 		{
 			// TODO 一行目の展開ができていません。良い実装方法を考えましょう。
@@ -237,59 +198,9 @@ public class IgapyonV3TemplateLoader implements TemplateLoader {
 				}
 			} else {
 				System.err.println("template-header.md not found.:" + fileTemplate.getCanonicalPath());
-				header += "===================================\n";
-				header += "<#-- template-header.md not found. -->\n";
-			}
-		}
-
-		header += "\n";
-
-		return header;
-	}
-
-	/**
-	 * 日記形式のヘッダー文字列を取得。
-	 * 
-	 * @param filename
-	 * @return
-	 * @throws IOException
-	 */
-	protected String getDiaryHeaderString(final String filename) throws IOException {
-		String year1 = "20";
-		String year2 = filename.substring(2, 4);
-		if (year2.startsWith("9")) {
-			year1 = "19";
-		}
-
-		String month = filename.substring(4, 6);
-		String day = filename.substring(6, 8);
-
-		// FIXME そもそもヘッダーも <@header />
-		// FIXME とかで表現できるような気がしてきた。そして遅延展開すると変数が利用可能になる。
-
-		String header = "<@linktop /> \n";
-		// FIXME index も current.index のような値がほしい。
-		header += " / [index](${settings.baseurl}/" + year1 + year2 + "/index.html) \n";
-		header += " / <@linkprev /> \n";
-		header += " / <@linknext /> \n";
-		header += " / <@linktarget /> \n";
-		header += " / <@linksource /> \n";
-		header += "\n";
-
-		// ヘッダ追加
-		header += (year1 + year2 + "-" + month + "-" + day + " diary: ${current.title}\n");
-
-		{
-			// TODO 固定部分より上の展開ができていません。良い実装方法を考えましょう。
-			final File fileTemplate = new File(settings.getRootdir(), "template-header.md");
-			if (fileTemplate.exists()) {
-				final String template = FileUtils.readFileToString(fileTemplate, "UTF-8");
-				header += template;
-				if (header.endsWith("\n") == false) {
-					header += "\n";
-				}
-			} else {
-				System.err.println("template-header.md not found.:" + fileTemplate.getCanonicalPath());
+				header += "<@navlist />\n";
+				header += "\n";
+				header += "<#if current.isDiary()>${current.getDiaryTitle()}<#else>${current.title}</#if>\n";
 				header += "===================================\n";
 				header += "<#-- template-header.md not found. -->\n";
 			}

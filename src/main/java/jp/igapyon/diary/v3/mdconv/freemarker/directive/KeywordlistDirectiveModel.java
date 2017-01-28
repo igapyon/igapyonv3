@@ -113,7 +113,6 @@ public class KeywordlistDirectiveModel implements TemplateDirectiveModel {
 		if (current.getKeywordList().size() > 0) {
 			ensureLoadAtomXml();
 
-			writer.write("\n");
 			writer.write("## 登場キーワード\n");
 			writer.write("\n");
 

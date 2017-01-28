@@ -68,10 +68,13 @@ public class DiaryIndexAtomGenerator {
 			System.err.println("Listing md files.");
 			final List<DiaryItemInfo> diaryItemInfoList = new IgapyonMdTitleParser(settings, "ig")
 					.processDir(settings.getRootdir(), "");
-			System.err.println("Listing html files.");
-			final List<DiaryItemInfo> diaryItemInfoHtmlList = new IgapyonHtmlV2TitleParser(settings)
-					.processDir(settings.getRootdir(), "");
-			diaryItemInfoList.addAll(diaryItemInfoHtmlList);
+
+			// FIXME disabled html parser.
+			// System.err.println("Listing html files.");
+			// final List<DiaryItemInfo> diaryItemInfoHtmlList = new
+			// IgapyonHtmlV2TitleParser(settings)
+			// .processDir(settings.getRootdir(), "");
+			// diaryItemInfoList.addAll(diaryItemInfoHtmlList);
 
 			// sort them
 			Collections.sort(diaryItemInfoList, new DiaryItemInfoComparator(true));
@@ -96,7 +99,7 @@ public class DiaryIndexAtomGenerator {
 				Collections.sort(diaryItemInfoList, new DiaryItemInfoComparator(true));
 
 				SimpleRomeUtil.itemList2AtomXml(recentItemInfoList, new File(settings.getRootdir(), "atomRecent.xml"),
-						settings.getTitleEn() +	" recent", settings);
+						settings.getTitleEn() + " recent", settings);
 			}
 		}
 
@@ -127,16 +130,18 @@ public class DiaryIndexAtomGenerator {
 			final List<DiaryItemInfo> diaryItemInfoList = new IgapyonMdTitleParser(settings, "ig")
 					.processDir(new File(settings.getRootdir(), year), "/" + year);
 
-			System.err.println("Listing html files for :" + year);
-			final List<DiaryItemInfo> diaryItemInfoHtmlList = new IgapyonHtmlV2TitleParser(settings)
-					.processDir(new File(settings.getRootdir(), year), "/" + year);
-			diaryItemInfoList.addAll(diaryItemInfoHtmlList);
+			// FIXME disabled html parser.
+			// System.err.println("Listing html files for :" + year);
+			// final List<DiaryItemInfo> diaryItemInfoHtmlList = new
+			// IgapyonHtmlV2TitleParser(settings)
+			// .processDir(new File(settings.getRootdir(), year), "/" + year);
+			// diaryItemInfoList.addAll(diaryItemInfoHtmlList);
 
 			// sort them
 			Collections.sort(diaryItemInfoList, new DiaryItemInfoComparator(true));
 
 			SimpleRomeUtil.itemList2AtomXml(diaryItemInfoList, new File(settings.getRootdir(), year + "/atom.xml"),
-					settings.getTitleEn() +		" year " + year, settings);
+					settings.getTitleEn() + " year " + year, settings);
 		}
 
 		{
@@ -151,7 +156,7 @@ public class DiaryIndexAtomGenerator {
 			Collections.sort(diaryItemInfoList, new DiaryItemInfoComparator(false));
 
 			SimpleRomeUtil.itemList2AtomXml(diaryItemInfoList, new File(settings.getRootdir(), "memo" + "/atom.xml"),
-					settings.getTitleEn() +	" memo", settings);
+					settings.getTitleEn() + " memo", settings);
 		}
 
 		{
@@ -163,7 +168,7 @@ public class DiaryIndexAtomGenerator {
 			Collections.sort(diaryItemInfoList, new DiaryItemInfoComparator(false));
 
 			SimpleRomeUtil.itemList2AtomXml(diaryItemInfoList, new File(settings.getRootdir(), "keyword" + "/atom.xml"),
-					settings.getTitleEn() +	" keyword", settings);
+					settings.getTitleEn() + " keyword", settings);
 		}
 	}
 }

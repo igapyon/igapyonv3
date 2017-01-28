@@ -67,6 +67,9 @@ public class IgapyonMdTitleParser {
 		}
 		for (File file : files) {
 			if (file.isDirectory()) {
+				if (file.getName().equals("target") && path.equals("")) {
+					continue;
+				}
 				processDir(file, path + "/" + file.getName());
 			} else if (file.isFile()) {
 				if (isTargetFile(file.getName())) {

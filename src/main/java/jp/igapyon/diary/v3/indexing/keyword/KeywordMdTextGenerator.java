@@ -129,27 +129,24 @@ public class KeywordMdTextGenerator {
 						}
 
 						final List<String> lines = new ArrayList<String>();
-						lines.add("[index](" + settings.getBaseurl() + "/keyword/index.html)");
-						lines.add("");
 						lines.add("## " + word + "");
 						lines.add("");
 						lines.add("[[" + word + "]] は、、、、です。※未執筆。");
 						lines.add("");
 						lines.add("### URL");
 						lines.add("");
-						lines.add("* TBD <@linksearch title=\"Search in Google\" word=\"" + word + "\" />");
+						lines.add("* TBD <@linksearch word=\"" + word + "\" />");
 						lines.add("");
 						lines.add("### 特徴");
 						lines.add("");
-						lines.add("* TBD <@linksearch title=\"Search in Google\" word=\"" + word + "\" />");
+						lines.add("* TBD <@linksearch word=\"" + word + "\" />");
 						lines.add("");
 						lines.add("### 検索");
 						lines.add("");
-						lines.add("* <@linksearch title=\"Search on " + settings.getTitleEn() + "\" word=\"" + word
+						lines.add("* <@linksearch title=\"Search '" + word + "' in google in-site" + "\" word=\"" + word
 								+ "\" site=\"" + settings.getBaseurl() + "/\" />");
-						lines.add("* <@linksearch title=\"Search in Google\" word=\"" + word + "\" />");
-						lines.add("* <@linksearch title=\"Search in Twitter\" word=\"" + word
-								+ "\" engine=\"twitter\" />");
+						lines.add("* <@linksearch word=\"" + word + "\" />");
+						lines.add("* <@linksearch word=\"" + word + "\" engine=\"twitter\" />");
 						lines.add("");
 
 						FileUtils.writeLines(keywordFile, lines);

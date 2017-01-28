@@ -78,25 +78,34 @@ public class LinkPrevDirectiveModel implements TemplateDirectiveModel {
 
 		final String sourceName = env.getMainTemplate().getSourceName();
 
-		String url = SimpleDirUtil.file2Url(new File(settings.getRootdir(), sourceName), settings);
-		{
-			// TODO共通関数化、あるいは変数からurlを取得せよ。
-			if (url.endsWith(".src.md")) {
-				url = url.substring(0, url.length() - ".src.md".length());
-			}
-		}
+		writer.write(getOutputString(sourceName));
+
+		writer.flush();
+	}
+
+	/**
+	 * タグが変換された後の出力文字列を取得します。
+	 * 
+	 * @param sourceName
+	 * @return
+	 * @throws IOException
+	 */
+	public String getOutputString(final String sourceName) throws IOException {
+		String url = SimpleDirUtil.file2Url(
+				new File(settings.getRootdir(), LinkTargetDirectiveModel.getTargetFilename(sourceName)), settings);
 
 		ensureLoadAtomXml();
 
 		final int entryIndex = findTargetAtomEntry(url);
 
 		if (entryIndex < 0 || entryIndex > synEntryList.size() - 2) {
-			writer.write("prev");
+			return ("prev");
 		} else {
-			writer.write("[prev](" + synEntryList.get(entryIndex + 1).getLink() + ")");
+			// get current directory
+			final File sourceDir = new File(settings.getRootdir(), sourceName).getCanonicalFile().getParentFile();
+			return ("[prev](" + SimpleDirUtil.getRelativeUrlIfPossible(synEntryList.get(entryIndex + 1).getLink(),
+					sourceDir, settings) + ")");
 		}
-
-		writer.flush();
 	}
 
 	/**

@@ -34,42 +34,27 @@
 package jp.igapyon.diary.v3.mdconv.freemarker.directive;
 
 import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.Map;
-
-import com.rometools.rome.feed.synd.SyndEntry;
-import com.rometools.rome.feed.synd.SyndFeed;
-import com.rometools.rome.io.FeedException;
-import com.rometools.rome.io.SyndFeedInput;
-import com.rometools.rome.io.XmlReader;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import freemarker.core.Environment;
 import freemarker.template.TemplateDirectiveBody;
 import freemarker.template.TemplateDirectiveModel;
 import freemarker.template.TemplateException;
 import freemarker.template.TemplateModel;
-import freemarker.template.TemplateModelException;
 import jp.igapyon.diary.v3.util.IgapyonV3Settings;
 
 /**
- * ローカル日記へのリンク用のディレクティブモデル
- * 
- * <@linkdiary date="2017-01-02" />
+ * ナビゲーションリストへのディレクティブモデル
  * 
  * @author Toshiki Iga
  */
-public class LinkDiaryDirectiveModel implements TemplateDirectiveModel {
+public class NavlistDirectiveModel implements TemplateDirectiveModel {
 	private IgapyonV3Settings settings = null;
 
-	/**
-	 * キャッシュ用オブジェクト。
-	 */
-	protected Map<String, SyndEntry> cacheAtomMap = null;
-
-	public LinkDiaryDirectiveModel(final IgapyonV3Settings settings) {
+	public NavlistDirectiveModel(final IgapyonV3Settings settings) {
 		this.settings = settings;
 	}
 
@@ -77,43 +62,34 @@ public class LinkDiaryDirectiveModel implements TemplateDirectiveModel {
 			final TemplateModel[] loopVars, final TemplateDirectiveBody body) throws TemplateException, IOException {
 		final BufferedWriter writer = new BufferedWriter(env.getOut());
 
-		if (cacheAtomMap == null) {
-			cacheAtomMap = new HashMap<String, SyndEntry>();
+		// get current directory
+		final String sourceName = env.getMainTemplate().getSourceName();
 
-			try {
-				// ルート直下の atom.xml を利用します。
-				final SyndFeed synFeed = new SyndFeedInput()
-						.build(new XmlReader(new FileInputStream(new File(settings.getRootdir(), "atom.xml"))));
-
-				for (Object lookup : synFeed.getEntries()) {
-					final SyndEntry entry = (SyndEntry) lookup;
-					String title = entry.getTitle();
-					if (title == null || title.length() == 0) {
-						title = "N/A";
-					}
-					cacheAtomMap.put(title.substring(0, Math.min(10, title.length() - 1)), entry);
-				}
-			} catch (FeedException e) {
-				throw new IOException(e);
-			}
-		}
-
-		if (params.get("date") == null) {
-			throw new TemplateModelException("date param is required.");
-		}
-
-		// SimpleScalar#toString()
-		final String dateString = params.get("date").toString();
-
-		{
-			final SyndEntry entry = cacheAtomMap.get(dateString);
-			if (entry == null) {
-				writer.write("ERROR: no such [" + dateString + "] diary.");
-			} else {
-				writer.write("[" + entry.getTitle() + "](" + entry.getLink() + ")");
-			}
-		}
+		writer.write(getOutputString(sourceName));
 
 		writer.flush();
+	}
+
+	/**
+	 * タグが変換された後の出力文字列を取得します。
+	 * 
+	 * @param sourceName
+	 * @return
+	 * @throws IOException
+	 */
+	public String getOutputString(final String sourceName) throws IOException {
+		final Pattern pat = Pattern.compile("ig[0-9][0-9][0-9][0-9][0-9][0-9]\\.");
+		final Matcher mat = pat.matcher(sourceName);
+		if (mat.find()) {
+			return new LinkTopDirectiveModel(settings).getOutputString(sourceName) + " \n / [index](index.html) \n / " //
+					+ new LinkPrevDirectiveModel(settings).getOutputString(sourceName) + " \n / "
+					+ new LinkNextDirectiveModel(settings).getOutputString(sourceName) + " \n / "
+					+ new LinkTargetDirectiveModel(settings).getOutputString(sourceName) + " \n / "
+					+ new LinkSourceDirectiveModel(settings).getOutputString(sourceName);
+		} else {
+			return new LinkTopDirectiveModel(settings).getOutputString(sourceName) + " / [index](index.html) / "
+					+ new LinkTargetDirectiveModel(settings).getOutputString(sourceName) + " / "
+					+ new LinkSourceDirectiveModel(settings).getOutputString(sourceName);
+		}
 	}
 }

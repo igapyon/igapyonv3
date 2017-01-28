@@ -62,6 +62,7 @@ import jp.igapyon.diary.v3.mdconv.freemarker.directive.LinkTargetDirectiveModel;
 import jp.igapyon.diary.v3.mdconv.freemarker.directive.LinkTopDirectiveModel;
 import jp.igapyon.diary.v3.mdconv.freemarker.directive.LocalRssDirectiveModel;
 import jp.igapyon.diary.v3.mdconv.freemarker.directive.LocalYearlistDirectiveModel;
+import jp.igapyon.diary.v3.mdconv.freemarker.directive.NavlistDirectiveModel;
 import jp.igapyon.diary.v3.mdconv.freemarker.directive.RSSFeedDirectiveModel;
 import jp.igapyon.diary.v3.util.IgapyonV3Current;
 import jp.igapyon.diary.v3.util.IgapyonV3Settings;
@@ -129,6 +130,7 @@ public class IgapyonV3FreeMarkerUtil {
 	public static IgapyonV3Current buildCurrentObjectByPreParse(final String sourceString, final String sourceName,
 			final IgapyonV3Settings settings) throws IOException {
 		final IgapyonV3Current current = new IgapyonV3Current();
+		current.setFilename(new File(sourceName).getName());
 
 		final BufferedReader reader = new BufferedReader(new StringReader(sourceString));
 		for (;;) {
@@ -139,12 +141,12 @@ public class IgapyonV3FreeMarkerUtil {
 			// 最初の ## からテキストを取得。これは igapyonv3 の最大の制約です。
 			if (line.startsWith("## ")) {
 				current.setTitle(line.substring(3));
+				// System.err.println("title: [" + current.getTitle() + "]");
 				break;
 			}
 		}
 
 		{
-			// final String sourceName = env.getMainTemplate().getSourceName();
 			String url = SimpleDirUtil.file2Url(new File(settings.getRootdir(), sourceName), settings);
 			{
 				// TODO共通関数化せよ。
@@ -259,6 +261,7 @@ public class IgapyonV3FreeMarkerUtil {
 		config.setSharedVariable("linksource", new LinkSourceDirectiveModel(settings));
 		config.setSharedVariable("linkprev", new LinkPrevDirectiveModel(settings));
 		config.setSharedVariable("linknext", new LinkNextDirectiveModel(settings));
+		config.setSharedVariable("navlist", new NavlistDirectiveModel(settings));
 
 		// others
 		config.setSharedVariable("linkdiary", new LinkDiaryDirectiveModel(settings));
