@@ -76,7 +76,11 @@ public class LinkTargetDirectiveModel implements TemplateDirectiveModel {
 			// for igapyonv3
 			fileNameModified = fileNameModified.substring(0, fileNameModified.length() - ".html.src.md".length())
 					+ ".html";
+		} else if (fileNameModified.equals("README.src.md")) {
+			// FIXME
+			fileNameModified = "index.html";
 		}
+
 		writer.write("[target](" + settings.getBaseurl() + "/" + fileNameModified + ")");
 
 		writer.flush();
