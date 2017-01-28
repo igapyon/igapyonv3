@@ -77,6 +77,6 @@ public class LinkSourceDirectiveModel implements TemplateDirectiveModel {
 	 * @return
 	 */
 	public String getOutputString(final String sourceName) {
-		return ("[source](https://github.com/igapyon/diary/blob/gh-pages/" + sourceName + ")");
+		return ("[source](" + settings.getSourcebaseurl() + "/" + sourceName + ")");
 	}
 }

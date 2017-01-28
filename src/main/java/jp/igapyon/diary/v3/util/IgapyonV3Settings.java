@@ -67,7 +67,7 @@ public class IgapyonV3Settings {
 	/**
 	 * 日記のソースのベース URL。最後のスラッシュは含まないこと。
 	 */
-	private String basesourceurl = "https://github.com/igapyon/diary/blob/gh-pages";
+	private String sourcebaseurl = "https://github.com/igapyon/diary/blob/gh-pages";
 
 	/**
 	 * TODAY! for newly diary.
@@ -226,11 +226,11 @@ public class IgapyonV3Settings {
 		this.titleEn = titleEn;
 	}
 
-	public String getBasesourceurl() {
-		return basesourceurl;
+	public String getSourcebaseurl() {
+		return sourcebaseurl;
 	}
 
-	public void setBasesourceurl(String basesourceurl) {
-		this.basesourceurl = basesourceurl;
+	public void setSourcebaseurl(String sourcebaseurl) {
+		this.sourcebaseurl = sourcebaseurl;
 	}
 }
