@@ -50,7 +50,7 @@ public class DefaultProcessor {
 	 * @throws IOException
 	 */
 	public static void main(final String[] args) throws IOException {
-		System.out.println("Convert .src.md to .md");
+		final boolean isGenerateTodaysDiary = false;
 
 		final IgapyonV3Settings settings = new IgapyonV3Settings();
 		settings.setRootdir(new File("./test/data"));
@@ -70,9 +70,23 @@ public class DefaultProcessor {
 		}
 
 		{
-			// 今日の日記について、存在しなければ作成します。
-			System.err.println("Generate today's diary file if not exists.");
-			new TodayDiaryGenerator(settings).processDir();
+			if (isGenerateTodaysDiary) {
+				// 今日の日記について、存在しなければ作成します。
+				System.err.println("Generate today's diary file if not exists.");
+				new TodayDiaryGenerator(settings).processDir();
+			}
+
+			{
+				File dir = new File(settings.getRootdir(), "keyword");
+				if (dir.exists() == false) {
+					dir.mkdirs();
+				}
+
+				dir = new File(settings.getRootdir(), "memo");
+				if (dir.exists() == false) {
+					dir.mkdirs();
+				}
+			}
 
 			// ルートディレクトリを含む各ディレクトリ用の index用のatomファイルを生成および更新します。
 			System.err.println("Update .md atom.xml.");

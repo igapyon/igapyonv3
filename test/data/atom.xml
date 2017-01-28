@@ -4,6 +4,15 @@
   <dc:creator>Toshiki Iga</dc:creator>
   <dc:language>ja_JP</dc:language>
   <entry>
+    <title />
+    <link rel="alternate" href="https://igapyon.github.io/diary/v2html/ig100102.html" />
+    <author>
+      <name>Toshiki Iga</name>
+    </author>
+    <id>https://igapyon.github.io/diary/v2html/ig100102.html</id>
+    <dc:creator>Toshiki Iga</dc:creator>
+  </entry>
+  <entry>
     <title>[![いがぴょん画像(小) 2003/06](http://www.igapyon.jp/igapyon/image/iga200306s.jpg)](http://www.igapyon.jp) 2015/06/30 日記: Markdown 記法を Bootstrap 的な HTML に変換</title>
     <link rel="alternate" href="https://igapyon.github.io/diary/src/diary/2015/ig150630" />
     <author>
@@ -13,7 +22,7 @@
     <dc:creator>Toshiki Iga</dc:creator>
   </entry>
   <entry>
-    <title>2016-12-27 diary: [maven] Title for test</title>
+    <title />
     <link rel="alternate" href="https://igapyon.github.io/diary/hatena/ig161227.html" />
     <author>
       <name>Toshiki Iga</name>
@@ -22,7 +31,7 @@
     <dc:creator>Toshiki Iga</dc:creator>
   </entry>
   <entry>
-    <title>2016-12-26 diary: [maven] Title for test</title>
+    <title />
     <link rel="alternate" href="https://igapyon.github.io/diary/hatena/ig161226.html" />
     <author>
       <name>Toshiki Iga</name>
