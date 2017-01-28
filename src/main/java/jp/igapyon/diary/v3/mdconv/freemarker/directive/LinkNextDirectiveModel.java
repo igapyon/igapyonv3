@@ -78,25 +78,31 @@ public class LinkNextDirectiveModel implements TemplateDirectiveModel {
 
 		final String sourceName = env.getMainTemplate().getSourceName();
 
-		String url = SimpleDirUtil.file2Url(new File(settings.getRootdir(), sourceName), settings);
-		{
-			// TODO共通関数化、あるいは変数からurlを取得せよ。
-			if (url.endsWith(".src.md")) {
-				url = url.substring(0, url.length() - ".src.md".length());
-			}
-		}
+		writer.write(getOutputString(sourceName));
+
+		writer.flush();
+	}
+
+	/**
+	 * タグが変換された後の出力文字列を取得します。
+	 * 
+	 * @param sourceName
+	 * @return
+	 * @throws IOException
+	 */
+	public String getOutputString(final String sourceName) throws IOException {
+		String url = SimpleDirUtil.file2Url(
+				new File(settings.getRootdir(), LinkTargetDirectiveModel.getTargetFilename(sourceName)), settings);
 
 		ensureLoadAtomXml();
 
 		final int entryIndex = findTargetAtomEntry(url);
 
 		if (entryIndex <= 0) {
-			writer.write("next");
+			return ("next");
 		} else {
-			writer.write("[next](" + synEntryList.get(entryIndex - 1).getLink() + ")");
+			return ("[next](" + synEntryList.get(entryIndex - 1).getLink() + ")");
 		}
-
-		writer.flush();
 	}
 
 	/**

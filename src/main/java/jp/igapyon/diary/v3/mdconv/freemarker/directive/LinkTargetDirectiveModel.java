@@ -77,6 +77,16 @@ public class LinkTargetDirectiveModel implements TemplateDirectiveModel {
 	 * @return
 	 */
 	public String getOutputString(final String sourceName) {
+		return ("[target](" + settings.getBaseurl() + "/" + getTargetFilename(sourceName) + ")");
+	}
+
+	/**
+	 * ソースファイル名からターゲットファイル名へと変換します。
+	 * 
+	 * @param sourceName
+	 * @return
+	 */
+	public static String getTargetFilename(final String sourceName) {
 		String fileNameModified = sourceName;
 		if (fileNameModified.contains(".") == false) {
 			// do nothing
@@ -91,6 +101,6 @@ public class LinkTargetDirectiveModel implements TemplateDirectiveModel {
 			fileNameModified = "index.html";
 		}
 
-		return ("[target](" + settings.getBaseurl() + "/" + fileNameModified + ")");
+		return fileNameModified;
 	}
 }

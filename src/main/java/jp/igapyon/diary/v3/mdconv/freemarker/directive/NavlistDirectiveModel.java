@@ -36,6 +36,8 @@ package jp.igapyon.diary.v3.mdconv.freemarker.directive;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import freemarker.core.Environment;
 import freemarker.template.TemplateDirectiveBody;
@@ -76,8 +78,19 @@ public class NavlistDirectiveModel implements TemplateDirectiveModel {
 	 * @throws IOException
 	 */
 	public String getOutputString(final String sourceName) throws IOException {
-		return new LinkTopDirectiveModel(settings).getOutputString(sourceName) + " / "
-				+ new LinkTargetDirectiveModel(settings).getOutputString(sourceName) + " / "
-				+ new LinkSourceDirectiveModel(settings).getOutputString(sourceName);
+		final Pattern pat = Pattern.compile("ig[0-9][0-9][0-9][0-9][0-9][0-9]\\.");
+		final Matcher mat = pat.matcher(sourceName);
+		if (mat.find()) {
+			String header = new LinkTopDirectiveModel(settings).getOutputString(sourceName)
+					+ " / [index](index.html) \n";
+			header += " / <@linkprev /> \n";
+			header += " / " + new LinkNextDirectiveModel(settings).getOutputString(sourceName) + " \n";
+			header += new LinkTargetDirectiveModel(settings).getOutputString(sourceName) + " / "
+					+ new LinkSourceDirectiveModel(settings).getOutputString(sourceName);
+			return header;
+		} else
+			return new LinkTopDirectiveModel(settings).getOutputString(sourceName) + " / "
+					+ new LinkTargetDirectiveModel(settings).getOutputString(sourceName) + " / "
+					+ new LinkSourceDirectiveModel(settings).getOutputString(sourceName);
 	}
 }
