@@ -87,7 +87,7 @@ public class NavlistDirectiveModel implements TemplateDirectiveModel {
 					+ new LinkTargetDirectiveModel(settings).getOutputString(sourceName) + " \n / "
 					+ new LinkSourceDirectiveModel(settings).getOutputString(sourceName);
 		} else {
-			return new LinkTopDirectiveModel(settings).getOutputString(sourceName) + " / "
+			return new LinkTopDirectiveModel(settings).getOutputString(sourceName) + " / [index](index.html) / "
 					+ new LinkTargetDirectiveModel(settings).getOutputString(sourceName) + " / "
 					+ new LinkSourceDirectiveModel(settings).getOutputString(sourceName);
 		}
