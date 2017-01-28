@@ -114,7 +114,7 @@ public class IgapyonV3TemplateLoader implements TemplateLoader {
 		if (actualFile.getName().startsWith("ig") && false == actualFile.getName().startsWith("iga")) {
 			// 日記ノードの処理。
 
-			load = getDiaryHeaderString(actualFile.getName()) + load;
+			load = getStandardHeaderString() + load;
 
 			// フッタ追加
 			String footer = "";
@@ -224,36 +224,6 @@ public class IgapyonV3TemplateLoader implements TemplateLoader {
 
 		{
 			// TODO 一行目の展開ができていません。良い実装方法を考えましょう。
-			final File fileTemplate = new File(settings.getRootdir(), "template-header.md");
-			if (fileTemplate.exists()) {
-				final String template = FileUtils.readFileToString(fileTemplate, "UTF-8");
-				header += template;
-				if (header.endsWith("\n") == false) {
-					header += "\n";
-				}
-			} else {
-				System.err.println("template-header.md not found.:" + fileTemplate.getCanonicalPath());
-				header += "===================================\n";
-				header += "<#-- template-header.md not found. -->\n";
-			}
-		}
-
-		header += "\n";
-
-		return header;
-	}
-
-	/**
-	 * 日記形式のヘッダー文字列を取得。
-	 * 
-	 * @param filename
-	 * @return
-	 * @throws IOException
-	 */
-	protected String getDiaryHeaderString(final String filename) throws IOException {
-		String header = "";
-		{
-			// TODO 固定部分より上の展開ができていません。良い実装方法を考えましょう。
 			final File fileTemplate = new File(settings.getRootdir(), "template-header.md");
 			if (fileTemplate.exists()) {
 				final String template = FileUtils.readFileToString(fileTemplate, "UTF-8");
