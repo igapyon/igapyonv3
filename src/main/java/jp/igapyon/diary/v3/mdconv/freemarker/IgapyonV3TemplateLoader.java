@@ -220,11 +220,7 @@ public class IgapyonV3TemplateLoader implements TemplateLoader {
 	 * @throws IOException
 	 */
 	protected String getStandardHeaderString() throws IOException {
-		String header = "<@navlist /> \n";
-		header += "\n";
-
-		// ヘッダ追加
-		header += ("${current.title}\n");
+		String header = "";
 
 		{
 			// TODO 一行目の展開ができていません。良い実装方法を考えましょう。
@@ -255,24 +251,7 @@ public class IgapyonV3TemplateLoader implements TemplateLoader {
 	 * @throws IOException
 	 */
 	protected String getDiaryHeaderString(final String filename) throws IOException {
-		String year1 = "20";
-		String year2 = filename.substring(2, 4);
-		if (year2.startsWith("9")) {
-			year1 = "19";
-		}
-
-		String month = filename.substring(4, 6);
-		String day = filename.substring(6, 8);
-
-		// FIXME そもそもヘッダーも <@header />
-		// FIXME とかで表現できるような気がしてきた。そして遅延展開すると変数が利用可能になる。
-
-		String header = "<@navlist /> \n";
-		header += "\n";
-
-		// ヘッダ追加
-		header += (year1 + year2 + "-" + month + "-" + day + " diary: ${current.title}\n");
-
+		String header = "";
 		{
 			// TODO 固定部分より上の展開ができていません。良い実装方法を考えましょう。
 			final File fileTemplate = new File(settings.getRootdir(), "template-header.md");
