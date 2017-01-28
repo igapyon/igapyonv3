@@ -268,8 +268,7 @@ public class IgapyonV3TemplateLoader implements TemplateLoader {
 		// FIXME とかで表現できるような気がしてきた。そして遅延展開すると変数が利用可能になる。
 
 		String header = "<@linktop /> \n";
-		// FIXME index も current.index のような値がほしい。
-		header += " / [index](${settings.baseurl}/" + year1 + year2 + "/index.html) \n";
+		header += " / [index](index.html) \n";
 		header += " / <@linkprev /> \n";
 		header += " / <@linknext /> \n";
 		header += " / <@linktarget /> \n";
