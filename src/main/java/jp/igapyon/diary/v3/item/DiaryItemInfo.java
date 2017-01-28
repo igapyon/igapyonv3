@@ -33,6 +33,8 @@
 
 package jp.igapyon.diary.v3.item;
 
+import java.util.Date;
+
 /**
  * 日記アイテムの情報を蓄えるためのクラスです。
  * 
@@ -44,28 +46,40 @@ public class DiaryItemInfo {
 	private String uri;
 	private String title;
 	private String body;
+	/**
+	 * メンバーを追加しただけ。いつか日記の最終更新日とリンクします。
+	 */
+	private Date lastModified;
 
 	public String getBody() {
 		return body;
 	}
 
-	public void setBody(String body) {
-		this.body = body;
-	}
-
-	public String getUri() {
-		return uri;
-	}
-
-	public void setUri(String uri) {
-		this.uri = uri;
+	public Date getLastModified() {
+		return lastModified;
 	}
 
 	public String getTitle() {
 		return title;
 	}
 
+	public String getUri() {
+		return uri;
+	}
+
+	public void setBody(String body) {
+		this.body = body;
+	}
+
+	public void setLastModified(Date lastModified) {
+		this.lastModified = lastModified;
+	}
+
 	public void setTitle(String title) {
 		this.title = title;
+	}
+
+	public void setUri(String uri) {
+		this.uri = uri;
 	}
 }
