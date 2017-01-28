@@ -42,7 +42,7 @@ import org.apache.commons.lang3.StringUtils;
  */
 public class IgStringUtil {
 	/**
-	 * get string with 10 and ... hardcoded StringUtils.abbreviateMiddle
+	 * get string with 13 and ... hardcoded StringUtils.abbreviateMiddle
 	 * 
 	 * @param message
 	 * @param maxlen
@@ -50,7 +50,7 @@ public class IgStringUtil {
 	 */
 	public static String abbreviateMiddle(final String message, final int maxlen) {
 		// hardcoded prefix length.
-		final int PRELEN = 10;
+		final int PRELEN = 13;
 
 		if (message.length() <= maxlen) {
 			return message;
