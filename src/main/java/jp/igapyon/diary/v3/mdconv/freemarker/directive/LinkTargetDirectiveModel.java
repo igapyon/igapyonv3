@@ -75,8 +75,7 @@ public class LinkTargetDirectiveModel implements TemplateDirectiveModel {
 		} else if (fileNameModified.endsWith(".html.src.md")) {
 			// for igapyonv3
 			fileNameModified = fileNameModified.substring(0, fileNameModified.length() - ".html.src.md".length())
-					+ ".src.html";
-
+					+ ".html";
 		}
 		writer.write("[target](" + settings.getBaseurl() + "/" + fileNameModified + ")");
 
