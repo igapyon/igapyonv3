@@ -220,6 +220,9 @@ public class IgapyonV3TemplateLoader implements TemplateLoader {
 				}
 			} else {
 				System.err.println("template-header.md not found.:" + fileTemplate.getCanonicalPath());
+				header += "<@navlist />\n";
+				header += "\n";
+				header += "<#if current.isDiary()>${current.getDiaryTitle()}<#else>${current.title}</#if>\n";
 				header += "===================================\n";
 				header += "<#-- template-header.md not found. -->\n";
 			}
