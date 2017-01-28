@@ -74,6 +74,11 @@ public class IgapyonV3Settings {
 	 */
 	private Date today = null;
 
+	/**
+	 * verbose mode for debugging.
+	 */
+	private boolean verbose = false;
+
 	private List<String[]> doubleKeywordList = new ArrayList<String[]>();
 
 	/**
@@ -232,5 +237,13 @@ public class IgapyonV3Settings {
 
 	public void setSourcebaseurl(String sourcebaseurl) {
 		this.sourcebaseurl = sourcebaseurl;
+	}
+
+	public boolean isVerbose() {
+		return verbose;
+	}
+
+	public void setVerbose(boolean verbose) {
+		this.verbose = verbose;
 	}
 }
