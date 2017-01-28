@@ -14,7 +14,7 @@ public class SimpleSandbox {
 		result = StringUtils.abbreviateMiddle("[http://d.hatena.ne.jp/igapyon/20161222", "...", 20);
 		System.out.println(result);
 
-		System.out.println(IgStringUtil.abbreviateMiddle("[http://d.hatena.ne.jp/igapyon/20161222", 25));
+		System.out.println(IgStringUtil.abbreviateMiddle("[http://d.hatena.ne.jp/igapyon/20161222"));
 	}
 
 }

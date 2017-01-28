@@ -42,21 +42,23 @@ import org.apache.commons.lang3.StringUtils;
  */
 public class IgStringUtil {
 	/**
-	 * get string with 13 and ... hardcoded StringUtils.abbreviateMiddle
+	 * get string with 13 and 38 and ... hardcoded StringUtils.abbreviateMiddle
 	 * 
 	 * @param message
 	 * @param maxlen
 	 * @return
 	 */
-	public static String abbreviateMiddle(final String message, final int maxlen) {
+	public static String abbreviateMiddle(final String message) {
 		// hardcoded prefix length.
 		final int PRELEN = 13;
+		// hardcoded maxlen by regarding iPhone SE width.
+		final int MAXLEN = 38;
 
-		if (message.length() <= maxlen) {
+		if (message.length() <= MAXLEN) {
 			return message;
 		}
 
 		return message.substring(0, PRELEN)
-				+ StringUtils.abbreviateMiddle(message.substring(PRELEN), "...", maxlen - PRELEN);
+				+ StringUtils.abbreviateMiddle(message.substring(PRELEN), "...", MAXLEN - PRELEN);
 	}
 }
