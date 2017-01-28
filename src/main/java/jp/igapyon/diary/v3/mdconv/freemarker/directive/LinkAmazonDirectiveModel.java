@@ -76,9 +76,18 @@ public class LinkAmazonDirectiveModel implements TemplateDirectiveModel {
 		final String dpString = params.get("dp").toString();
 		final String titleString = params.get("title").toString();
 
-		writer.write(
-				"[" + titleString + "](https://www.amazon.co.jp/exec/obidos/ASIN/" + dpString + "/" + amazonKey + ")");
+		writer.write(getOutputString(titleString, dpString));
 
 		writer.flush();
+	}
+
+	/**
+	 * タグが変換された後の出力文字列を取得します。
+	 * 
+	 * @param sourceName
+	 * @return
+	 */
+	public String getOutputString(final String titleString, final String dpString) {
+		return ("[" + titleString + "](https://www.amazon.co.jp/exec/obidos/ASIN/" + dpString + "/" + amazonKey + ")");
 	}
 }
