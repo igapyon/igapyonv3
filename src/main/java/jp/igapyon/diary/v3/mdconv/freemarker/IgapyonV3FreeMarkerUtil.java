@@ -129,9 +129,6 @@ public class IgapyonV3FreeMarkerUtil {
 
 	public static IgapyonV3Current buildCurrentObjectByPreParse(final String sourceString, final String sourceName,
 			final IgapyonV3Settings settings) throws IOException {
-//		System.out.println("["+sourceString+"]");
-		
-		
 		final IgapyonV3Current current = new IgapyonV3Current();
 		current.setFilename(new File(sourceName).getName());
 
@@ -144,13 +141,12 @@ public class IgapyonV3FreeMarkerUtil {
 			// 最初の ## からテキストを取得。これは igapyonv3 の最大の制約です。
 			if (line.startsWith("## ")) {
 				current.setTitle(line.substring(3));
-				System.err.println("title: ["+current.getTitle()+"]");
+				// System.err.println("title: [" + current.getTitle() + "]");
 				break;
 			}
 		}
 
 		{
-			// final String sourceName = env.getMainTemplate().getSourceName();
 			String url = SimpleDirUtil.file2Url(new File(settings.getRootdir(), sourceName), settings);
 			{
 				// TODO共通関数化せよ。
