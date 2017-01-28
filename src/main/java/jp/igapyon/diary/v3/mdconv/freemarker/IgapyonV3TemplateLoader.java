@@ -104,6 +104,7 @@ public class IgapyonV3TemplateLoader implements TemplateLoader {
 		final File actualFile = new File(settings.getRootdir(), stripLocaleName(resourceName));
 		final String body = FileUtils.readFileToString(actualFile, "UTF-8");
 		String load = body;
+		load = load.trim() + "\n";
 
 		if (isExpandHeaderFooter == false) {
 			// 加工無し出力。
@@ -116,29 +117,15 @@ public class IgapyonV3TemplateLoader implements TemplateLoader {
 
 			load = getStandardHeaderString() + load;
 
-			// フッタ追加
-			String footer = "";
-			if (load.endsWith("\n") || load.endsWith("\r")) {
-				// do nothing.
-			} else {
-				footer += "\n";
-			}
-
-			footer += "<@keywordlist />";
-
-			footer += "\n";
-
 			{
 				final File fileTemplate = new File(settings.getRootdir(), "template-footer.md");
 				if (fileTemplate.exists()) {
 					final String template = FileUtils.readFileToString(fileTemplate, "UTF-8");
-					footer += template;
+					load += template;
 				} else {
 					System.err.println("template-footer.md not found.:" + fileTemplate.getCanonicalPath());
 				}
 			}
-
-			load += footer;
 		} else if (actualFile.getName().startsWith("index") || actualFile.getName().startsWith("idxall")
 				|| actualFile.getName().startsWith("README") || actualFile.getName().startsWith("memo")
 				|| SimpleDirUtil.getRelativePath(settings.getRootdir(), actualFile).startsWith("keyword")) {
