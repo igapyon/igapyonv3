@@ -130,10 +130,12 @@ public class DiaryIndexAtomGenerator {
 			final List<DiaryItemInfo> diaryItemInfoList = new IgapyonMdTitleParser(settings, "ig")
 					.processDir(new File(settings.getRootdir(), year), "/" + year);
 
-			System.err.println("Listing html files for :" + year);
-			final List<DiaryItemInfo> diaryItemInfoHtmlList = new IgapyonHtmlV2TitleParser(settings)
-					.processDir(new File(settings.getRootdir(), year), "/" + year);
-			diaryItemInfoList.addAll(diaryItemInfoHtmlList);
+			// FIXME disabled html parser.
+			// System.err.println("Listing html files for :" + year);
+			// final List<DiaryItemInfo> diaryItemInfoHtmlList = new
+			// IgapyonHtmlV2TitleParser(settings)
+			// .processDir(new File(settings.getRootdir(), year), "/" + year);
+			// diaryItemInfoList.addAll(diaryItemInfoHtmlList);
 
 			// sort them
 			Collections.sort(diaryItemInfoList, new DiaryItemInfoComparator(true));
