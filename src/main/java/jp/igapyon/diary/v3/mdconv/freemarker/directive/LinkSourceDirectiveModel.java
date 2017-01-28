@@ -65,9 +65,18 @@ public class LinkSourceDirectiveModel implements TemplateDirectiveModel {
 		// get current directory
 		final String sourceName = env.getMainTemplate().getSourceName();
 
-		writer.write("[source](https://github.com/igapyon/diary/blob/gh-pages/" + env.getMainTemplate().getSourceName()
-				+ ")");
+		writer.write(getOutputString(sourceName));
 
 		writer.flush();
+	}
+
+	/**
+	 * タグが変換された後の出力文字列を取得します。
+	 * 
+	 * @param sourceName
+	 * @return
+	 */
+	public String getOutputString(final String sourceName) {
+		return ("[source](https://github.com/igapyon/diary/blob/gh-pages/" + sourceName + ")");
 	}
 }

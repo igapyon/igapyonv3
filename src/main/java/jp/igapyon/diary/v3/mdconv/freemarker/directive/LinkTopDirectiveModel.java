@@ -64,12 +64,24 @@ public class LinkTopDirectiveModel implements TemplateDirectiveModel {
 
 		// get current directory
 		final String sourceName = env.getMainTemplate().getSourceName();
-		final File sourceDir = new File(settings.getRootdir(), sourceName).getCanonicalFile().getParentFile();
 
-		writer.write("[top]("
-				+ SimpleDirUtil.getRelativeUrlIfPossible(settings.getBaseurl() + "/index.html", sourceDir, settings)
-				+ ")");
+		writer.write(getOutputString(sourceName));
 
 		writer.flush();
+	}
+
+	/**
+	 * タグが変換された後の出力文字列を取得します。
+	 * 
+	 * @param sourceName
+	 * @return
+	 * @throws IOException
+	 */
+	public String getOutputString(final String sourceName) throws IOException {
+		// get current directory
+		final File sourceDir = new File(settings.getRootdir(), sourceName).getCanonicalFile().getParentFile();
+		return ("[top]("
+				+ SimpleDirUtil.getRelativeUrlIfPossible(settings.getBaseurl() + "/index.html", sourceDir, settings)
+				+ ")");
 	}
 }
