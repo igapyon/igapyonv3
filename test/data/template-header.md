@@ -1,2 +1,8 @@
 =====================================================================================================
-[![いがぴょん画像(小)](https://igapyon.github.io/diary/images/iga200306s.jpg "いがぴょん")](https://igapyon.github.io/diary/memo/memoigapyon.html) 日記形式でつづる [いがぴょん](https://igapyon.github.io/diary/memo/memoigapyon.html)コラム ウェブページです。
+[![いがぴょん画像(小)](${settings.baseurl}/images/iga200306s.jpg "いがぴょん")](${settings.baseurl}/memo/memoigapyon.html) 日記形式でつづる [いがぴょん](${settings.baseurl}/memo/memoigapyon.html)コラム ウェブページです。
+
+<#if ${current.isdiary}>
+だいあり
+</#else>
+tigau
+</#if>

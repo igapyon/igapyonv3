@@ -30,3 +30,8 @@ http://d.hatena.ne.jp/igapyon/20161222
 * <@lastmodified date="2017-01-22" />
 
 <@keywordlist />
+
+<#if current.isDiary()>
+だいあり
+tigau
+</#if>
