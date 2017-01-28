@@ -70,6 +70,9 @@ public class DiarySrcMd2MdConverter {
 	}
 
 	public void processDir(final File dir) throws IOException {
+		// System.err.println("DiarySrcMd2MdConverter#processDir(" +
+		// dir.getCanonicalPath() + ")");
+
 		final File[] files = dir.listFiles();
 		if (files == null) {
 			return;

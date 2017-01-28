@@ -70,9 +70,6 @@ public class DefaultProcessor {
 		}
 
 		{
-			// カレントディレクトリを取得のうえ正規化します。
-			final File rootdir = new File(".").getCanonicalFile();
-
 			// 今日の日記について、存在しなければ作成します。
 			System.err.println("Generate today's diary file if not exists.");
 			new TodayDiaryGenerator(settings).processDir();
@@ -87,7 +84,7 @@ public class DefaultProcessor {
 
 			// .html.src.md ファイルから .md ファイルを生成します。
 			System.err.println("Convert .html.src.md to .html.md file.");
-			new DiarySrcMd2MdConverter(settings).processDir(rootdir);
+			new DiarySrcMd2MdConverter(settings).processDir(settings.getRootdir());
 		}
 	}
 }
