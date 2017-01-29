@@ -1,4 +1,7 @@
+<#if current.isDiary()>
+<@keywordlist /></#if>
 ----------------------------------------------------------------------------------------------------
 
 ## この日記について
-[いがぴょんについて](https://igapyon.github.io/diary/memo/memoigapyon.html) / [日記ジェネレータ](https://github.com/igapyon/igapyonv3)
+
+<@linkshare /> / <@linktop /> / [Diary Generator](https://github.com/igapyon/igapyonv3)

@@ -64,6 +64,10 @@ import jp.igapyon.diary.v3.mdconv.freemarker.directive.LocalRssDirectiveModel;
 import jp.igapyon.diary.v3.mdconv.freemarker.directive.LocalYearlistDirectiveModel;
 import jp.igapyon.diary.v3.mdconv.freemarker.directive.NavlistDirectiveModel;
 import jp.igapyon.diary.v3.mdconv.freemarker.directive.RSSFeedDirectiveModel;
+import jp.igapyon.diary.v3.mdconv.freemarker.method.SetBaseurlMethodModel;
+import jp.igapyon.diary.v3.mdconv.freemarker.method.SetSourcebaseurlMethodModel;
+import jp.igapyon.diary.v3.mdconv.freemarker.method.SetVerboseMethodModel;
+import jp.igapyon.diary.v3.mdconv.freemarker.method.ShowSettingsMethodModel;
 import jp.igapyon.diary.v3.util.IgapyonV3Current;
 import jp.igapyon.diary.v3.util.IgapyonV3Settings;
 import jp.igapyon.diary.v3.util.SimpleDirUtil;
@@ -248,6 +252,11 @@ public class IgapyonV3FreeMarkerUtil {
 
 		/////////////////////////
 		// register custom tag.
+
+		config.setSharedVariable("setVerbose", new SetVerboseMethodModel(settings));
+		config.setSharedVariable("setBaseurl", new SetBaseurlMethodModel(settings));
+		config.setSharedVariable("setSourcebaseurl", new SetSourcebaseurlMethodModel(settings));
+		config.setSharedVariable("showSettings", new ShowSettingsMethodModel(settings));
 
 		// search
 		config.setSharedVariable("linksearch", new LinkSearchDirectiveModel(settings));

@@ -12,6 +12,6 @@ public class DirectiveTest {
 	public void test() throws Exception {
 		final IgapyonV3Settings settings = new IgapyonV3Settings();
 		settings.setRootdir(new File("./test/data"));
-		new DiarySrcMd2MdConverter(settings).processDir(new File("./test/data/directive/localyearlist"));
+		new DiarySrcMd2MdConverter(settings).processDir(settings.getRootdir());
 	}
 }

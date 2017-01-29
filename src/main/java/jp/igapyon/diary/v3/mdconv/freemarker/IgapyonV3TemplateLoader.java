@@ -154,6 +154,11 @@ public class IgapyonV3TemplateLoader implements TemplateLoader {
 		}
 
 		resourceMap.put(resourceName, load);
+
+		if (settings.isVerbose()) {
+			System.err.println("IgapyonV3TemplateLoader#findTemplateSource(): [" + load + "]");
+		}
+
 		return resourceName;
 	}
 
