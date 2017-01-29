@@ -65,6 +65,7 @@ import jp.igapyon.diary.v3.mdconv.freemarker.directive.LocalYearlistDirectiveMod
 import jp.igapyon.diary.v3.mdconv.freemarker.directive.NavlistDirectiveModel;
 import jp.igapyon.diary.v3.mdconv.freemarker.directive.RSSFeedDirectiveModel;
 import jp.igapyon.diary.v3.mdconv.freemarker.method.SetVerboseMethodModel;
+import jp.igapyon.diary.v3.mdconv.freemarker.method.ShowSettingsMethodModel;
 import jp.igapyon.diary.v3.util.IgapyonV3Current;
 import jp.igapyon.diary.v3.util.IgapyonV3Settings;
 import jp.igapyon.diary.v3.util.SimpleDirUtil;
@@ -251,6 +252,7 @@ public class IgapyonV3FreeMarkerUtil {
 		// register custom tag.
 
 		config.setSharedVariable("setVerbose", new SetVerboseMethodModel(settings));
+		config.setSharedVariable("showSettings", new ShowSettingsMethodModel(settings));
 
 		// search
 		config.setSharedVariable("linksearch", new LinkSearchDirectiveModel(settings));

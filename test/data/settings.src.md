@@ -2,3 +2,4 @@
 
 ${setVerbose("true")}
 
+${showSettings()}
