@@ -11,6 +11,6 @@ public class DefaultProcessorTest {
 	public void test() throws Exception {
 		final IgapyonV3Settings settings = new IgapyonV3Settings();
 		settings.setRootdir(new File("./test/data"));
-		new DefaultProcessor().process(settings);
+		new IgDiaryProcessor().process(settings);
 	}
 }

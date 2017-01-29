@@ -44,7 +44,7 @@ import jp.igapyon.diary.v3.md2html.IgapyonMd2Html;
 import jp.igapyon.diary.v3.mdconv.DiarySrcMd2MdConverter;
 import jp.igapyon.diary.v3.util.IgapyonV3Settings;
 
-public class DefaultProcessor {
+public class IgDiaryProcessor {
 	public void process(final File rootdir) throws IOException {
 		final IgapyonV3Settings settings = new IgapyonV3Settings();
 		settings.setRootdir(rootdir);
@@ -127,7 +127,7 @@ public class DefaultProcessor {
 	 */
 	public static void main(final String[] args) {
 		try {
-			new DefaultProcessor().process(new File("."));
+			new IgDiaryProcessor().process(new File("."));
 		} catch (IOException e) {
 			System.err.println("ERROR: " + e.toString());
 			e.printStackTrace();
