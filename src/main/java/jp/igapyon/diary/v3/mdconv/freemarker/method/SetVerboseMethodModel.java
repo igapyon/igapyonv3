@@ -21,6 +21,15 @@ public class SetVerboseMethodModel implements TemplateMethodModelEx {
 		}
 
 		final TemplateScalarModel arg0 = (TemplateScalarModel) argList.get(0);
-		return "Exams" + arg0.getAsString();
+		if ("true".equals(arg0.getAsString().toLowerCase()) || "yes".equals(arg0.getAsString().toLowerCase())) {
+			settings.setVerbose(true);
+		} else if ("false".equals(arg0.getAsString().toLowerCase()) || "no".equals(arg0.getAsString().toLowerCase())) {
+			settings.setVerbose(false);
+		} else {
+			return "ERROR: setVerbose: Unknown value [" + arg0.getAsString() + "].";
+		}
+
+		// result blank string
+		return "";
 	}
 }

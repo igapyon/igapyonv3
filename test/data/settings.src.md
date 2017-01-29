@@ -1,4 +1,4 @@
 これはテストです。
 
-${setVerbose('あいう')}
+${setVerbose("true")}
 
