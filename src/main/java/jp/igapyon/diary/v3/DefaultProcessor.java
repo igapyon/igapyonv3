@@ -44,9 +44,14 @@ import jp.igapyon.diary.v3.mdconv.DiarySrcMd2MdConverter;
 import jp.igapyon.diary.v3.util.IgapyonV3Settings;
 
 public class DefaultProcessor {
-	public void process(final File rootdir, final boolean isGenerateTodaysDiary) throws IOException {
+	public void process(final File rootdir) throws IOException {
 		final IgapyonV3Settings settings = new IgapyonV3Settings();
 		settings.setRootdir(rootdir);
+
+		process(settings);
+	}
+
+	public void process(final IgapyonV3Settings settings) throws IOException {
 
 		{
 			// settings.src.md first.
@@ -71,7 +76,7 @@ public class DefaultProcessor {
 		}
 
 		{
-			if (isGenerateTodaysDiary) {
+			if (settings.isGenerateTodayDiary()) {
 				// 今日の日記について、存在しなければ作成します。
 				System.err.println("Generate today's diary file if not exists.");
 				new TodayDiaryGenerator(settings).processDir();
@@ -114,7 +119,7 @@ public class DefaultProcessor {
 	 */
 	public static void main(final String[] args) {
 		try {
-			new DefaultProcessor().process(new File("."), false);
+			new DefaultProcessor().process(new File("."));
 		} catch (IOException e) {
 			System.err.println("ERROR: " + e.toString());
 			e.printStackTrace();

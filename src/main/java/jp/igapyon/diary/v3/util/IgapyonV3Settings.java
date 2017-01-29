@@ -79,6 +79,11 @@ public class IgapyonV3Settings {
 	 */
 	private boolean verbose = false;
 
+	/**
+	 * Generate today's diary or not.
+	 */
+	private boolean generateTodayDiary = true;
+
 	private List<String[]> doubleKeywordList = new ArrayList<String[]>();
 
 	/**
@@ -245,5 +250,13 @@ public class IgapyonV3Settings {
 
 	public void setVerbose(boolean verbose) {
 		this.verbose = verbose;
+	}
+
+	public boolean isGenerateTodayDiary() {
+		return generateTodayDiary;
+	}
+
+	public void setGenerateTodayDiary(boolean generateTodayDiary) {
+		this.generateTodayDiary = generateTodayDiary;
 	}
 }
