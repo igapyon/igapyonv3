@@ -4,9 +4,13 @@ import java.io.File;
 
 import org.junit.Test;
 
+import jp.igapyon.diary.v3.util.IgapyonV3Settings;
+
 public class DefaultProcessorTest {
 	@Test
 	public void test() throws Exception {
-		new DefaultProcessor().process(new File("./test/data"), false);
+		final IgapyonV3Settings settings = new IgapyonV3Settings();
+		settings.setRootdir(new File("./test/data"));
+		new IgDiaryProcessor().process(settings);
 	}
 }

@@ -64,7 +64,10 @@ import jp.igapyon.diary.v3.mdconv.freemarker.directive.LocalRssDirectiveModel;
 import jp.igapyon.diary.v3.mdconv.freemarker.directive.LocalYearlistDirectiveModel;
 import jp.igapyon.diary.v3.mdconv.freemarker.directive.NavlistDirectiveModel;
 import jp.igapyon.diary.v3.mdconv.freemarker.directive.RSSFeedDirectiveModel;
+import jp.igapyon.diary.v3.mdconv.freemarker.method.SetAuthorMethodModel;
 import jp.igapyon.diary.v3.mdconv.freemarker.method.SetBaseurlMethodModel;
+import jp.igapyon.diary.v3.mdconv.freemarker.method.SetConvertmarkdown2htmlMethodModel;
+import jp.igapyon.diary.v3.mdconv.freemarker.method.SetGeneratetodaydiaryMethodModel;
 import jp.igapyon.diary.v3.mdconv.freemarker.method.SetSourcebaseurlMethodModel;
 import jp.igapyon.diary.v3.mdconv.freemarker.method.SetVerboseMethodModel;
 import jp.igapyon.diary.v3.mdconv.freemarker.method.ShowSettingsMethodModel;
@@ -253,7 +256,11 @@ public class IgapyonV3FreeMarkerUtil {
 		/////////////////////////
 		// register custom tag.
 
+		// methos
 		config.setSharedVariable("setVerbose", new SetVerboseMethodModel(settings));
+		config.setSharedVariable("setGeneratetodaydiary", new SetGeneratetodaydiaryMethodModel(settings));
+		config.setSharedVariable("setConvertmarkdown2html", new SetConvertmarkdown2htmlMethodModel(settings));
+		config.setSharedVariable("setAuthor", new SetAuthorMethodModel(settings));
 		config.setSharedVariable("setBaseurl", new SetBaseurlMethodModel(settings));
 		config.setSharedVariable("setSourcebaseurl", new SetSourcebaseurlMethodModel(settings));
 		config.setSharedVariable("showSettings", new ShowSettingsMethodModel(settings));
