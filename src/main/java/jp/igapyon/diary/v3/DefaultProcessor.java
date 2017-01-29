@@ -48,8 +48,16 @@ public class DefaultProcessor {
 		final IgapyonV3Settings settings = new IgapyonV3Settings();
 		settings.setRootdir(new File("./test/data"));
 
-		settings.setBaseurl("https://igapyon.github.io/diary");
-		// settings.setBaseurl("http://www.igapyon.jp/igapyon/diary");
+		{
+			// settings.src.md first.
+			final File fileSettings = new File(settings.getRootdir(), "settings.src.md");
+			if (fileSettings.exists()) {
+				System.err.println("igapyonv3 setting file found. :" + fileSettings.getCanonicalPath());
+				new DiarySrcMd2MdConverter(settings).processFile(fileSettings);
+			} else {
+				System.err.println("igapyonv3 setting file not found. :" + fileSettings.getCanonicalPath());
+			}
+		}
 
 		{
 			// FIXME

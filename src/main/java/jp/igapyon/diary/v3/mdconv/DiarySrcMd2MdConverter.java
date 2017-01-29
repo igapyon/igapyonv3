@@ -95,7 +95,7 @@ public class DiarySrcMd2MdConverter {
 		}
 	}
 
-	void processFile(final File file) throws IOException {
+	public void processFile(final File file) throws IOException {
 		final Map<String, Object> templateData = new HashMap<String, Object>();
 
 		// テンプレート適用処理を実施します。
