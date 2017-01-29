@@ -24,7 +24,7 @@ public class ShowSettingsMethodModel implements TemplateMethodModelEx {
 				+ "* verbose: " + settings.isVerbose() + "\n" //
 				+ "* baseurl: " + settings.getBaseurl() + "\n" //
 				+ "* sourcebaseurl: " + settings.getSourcebaseurl() + "\n" //
-				+ "* author: " + settings.getAuthor() + "\n";
+				+ "* author: " + settings.getAuthor();
 		// NOTICE: rootdir not to be shown.
 	}
 }
