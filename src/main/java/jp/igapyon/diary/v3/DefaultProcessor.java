@@ -44,15 +44,7 @@ import jp.igapyon.diary.v3.mdconv.DiarySrcMd2MdConverter;
 import jp.igapyon.diary.v3.util.IgapyonV3Settings;
 
 public class DefaultProcessor {
-	/**
-	 * 現時点の、このプロジェクトのエントリポイント。
-	 * 
-	 * @param args
-	 * @throws IOException
-	 */
-	public static void main(final String[] args) throws IOException {
-		final boolean isGenerateTodaysDiary = false;
-
+	public void process(final boolean isGenerateTodaysDiary) throws IOException {
 		final IgapyonV3Settings settings = new IgapyonV3Settings();
 		settings.setRootdir(new File("./test/data"));
 
@@ -103,6 +95,21 @@ public class DefaultProcessor {
 			// .html.src.md ファイルから .md ファイルを生成します。
 			System.err.println("Convert .html.src.md to .html.md file.");
 			new DiarySrcMd2MdConverter(settings).processDir(settings.getRootdir());
+		}
+	}
+
+	/**
+	 * 現時点の、このプロジェクトのエントリポイント。
+	 * 
+	 * @param args
+	 * @throws IOException
+	 */
+	public static void main(final String[] args) {
+		try {
+			new DefaultProcessor().process(false);
+		} catch (IOException e) {
+			System.err.println("ERROR: " + e.toString());
+			e.printStackTrace();
 		}
 	}
 }
