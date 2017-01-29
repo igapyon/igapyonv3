@@ -20,12 +20,11 @@ public class ShowSettingsMethodModel implements TemplateMethodModelEx {
 		}
 
 		// result blank string
-		return "\n\n" + "## settings\n\n" //
+		return "" //
 				+ "* verbose: " + settings.isVerbose() + "\n" //
 				+ "* baseurl: " + settings.getBaseurl() + "\n" //
 				+ "* sourcebaseurl: " + settings.getSourcebaseurl() + "\n" //
-				+ "* author: " + settings.getAuthor() + "\n" //
-				+ "* rootdir: " + settings.getRootdir() + "\n" //
-				+ "\n";
+				+ "* author: " + settings.getAuthor() + "\n";
+		// NOTICE: rootdir not to be shown.
 	}
 }
