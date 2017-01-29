@@ -40,6 +40,7 @@ import jp.igapyon.diary.v3.gendiary.TodayDiaryGenerator;
 import jp.igapyon.diary.v3.indexing.DiaryIndexAtomGenerator;
 import jp.igapyon.diary.v3.indexing.keyword.KeywordAtomByTitleGenerator;
 import jp.igapyon.diary.v3.indexing.keyword.KeywordMdTextGenerator;
+import jp.igapyon.diary.v3.md2html.IgapyonMd2Html;
 import jp.igapyon.diary.v3.mdconv.DiarySrcMd2MdConverter;
 import jp.igapyon.diary.v3.util.IgapyonV3Settings;
 
@@ -52,7 +53,6 @@ public class DefaultProcessor {
 	}
 
 	public void process(final IgapyonV3Settings settings) throws IOException {
-
 		{
 			// settings.src.md first.
 			final File fileSettings = new File(settings.getRootdir(), "settings.src.md");
@@ -75,13 +75,13 @@ public class DefaultProcessor {
 			}
 		}
 
-		{
-			if (settings.isGenerateTodayDiary()) {
-				// 今日の日記について、存在しなければ作成します。
-				System.err.println("Generate today's diary file if not exists.");
-				new TodayDiaryGenerator(settings).processDir();
-			}
+		if (settings.isGenerateTodayDiary()) {
+			// 今日の日記について、存在しなければ作成します。
+			System.err.println("Generate today's diary file if not exists.");
+			new TodayDiaryGenerator(settings).processDir();
+		}
 
+		{
 			{
 				File dir = new File(settings.getRootdir(), "keyword");
 				if (dir.exists() == false) {
@@ -108,6 +108,14 @@ public class DefaultProcessor {
 			// .html.src.md ファイルから .md ファイルを生成します。
 			System.err.println("Convert .html.src.md to .html.md file.");
 			new DiarySrcMd2MdConverter(settings).processDir(settings.getRootdir());
+		}
+
+		if (settings.isConvertMarkdown2Html()) {
+			final File targetDir = new File(settings.getRootdir().getCanonicalPath() + "/target", "md2html");
+			if (targetDir.exists() == false) {
+				targetDir.mkdirs();
+			}
+			new IgapyonMd2Html().processDir(settings.getRootdir(), targetDir, true);
 		}
 	}
 

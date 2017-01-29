@@ -84,6 +84,11 @@ public class IgapyonV3Settings {
 	 */
 	private boolean generateTodayDiary = true;
 
+	/**
+	 * Convert markdown to html
+	 */
+	private boolean convertMarkdown2Html = false;
+
 	private List<String[]> doubleKeywordList = new ArrayList<String[]>();
 
 	/**
@@ -258,5 +263,13 @@ public class IgapyonV3Settings {
 
 	public void setGenerateTodayDiary(boolean generateTodayDiary) {
 		this.generateTodayDiary = generateTodayDiary;
+	}
+
+	public boolean isConvertMarkdown2Html() {
+		return convertMarkdown2Html;
+	}
+
+	public void setConvertMarkdown2Html(boolean convertMarkdown2Html) {
+		this.convertMarkdown2Html = convertMarkdown2Html;
 	}
 }
