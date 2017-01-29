@@ -7,27 +7,25 @@ import freemarker.template.TemplateModelException;
 import freemarker.template.TemplateScalarModel;
 import jp.igapyon.diary.v3.util.IgapyonV3Settings;
 
-public class SetVerboseMethodModel implements TemplateMethodModelEx {
+public class SetBaseurlMethodModel implements TemplateMethodModelEx {
 	private IgapyonV3Settings settings = null;
 
-	public SetVerboseMethodModel(final IgapyonV3Settings settings) {
+	public SetBaseurlMethodModel(final IgapyonV3Settings settings) {
 		this.settings = settings;
 	}
 
 	@Override
 	public Object exec(@SuppressWarnings("rawtypes") final List argList) throws TemplateModelException {
 		if (argList.size() != 1) {
-			throw new TemplateModelException("setVerbose needs 1 arg.");
+			throw new TemplateModelException("setBaseurl needs 1 arg.");
 		}
 
 		final TemplateScalarModel arg0 = (TemplateScalarModel) argList.get(0);
-		if ("true".equals(arg0.getAsString().toLowerCase()) || "yes".equals(arg0.getAsString().toLowerCase())) {
-			settings.setVerbose(true);
-		} else if ("false".equals(arg0.getAsString().toLowerCase()) || "no".equals(arg0.getAsString().toLowerCase())) {
-			settings.setVerbose(false);
-		} else {
-			return "ERROR: setVerbose: Unknown value [" + arg0.getAsString() + "].";
+		if (arg0.getAsString().endsWith("/")) {
+			return "ERROR: setBaseurl: value must not ends with '/' [" + arg0.getAsString() + "].";
 		}
+
+		settings.setBaseurl(arg0.getAsString());
 
 		// result blank string
 		return "";
