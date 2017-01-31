@@ -1,8 +1,8 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>jp.igapyon.diary.v3</groupId>
-	<artifactId>IgapyonV3</artifactId>
+	<groupId>jp.igapyon.diary</groupId>
+	<artifactId>igdiary</artifactId>
 	<version>1.3.0</version>
 	<packaging>jar</packaging>
 
@@ -126,7 +126,8 @@
 		<repository>
 			<id>deploy-repository</id>
 			<name>deployRepository</name>
-			<url>file:///${project.basedir}/../igapyon-maven2</url>
+			<!-- <url>file:///${project.basedir}/../igapyon-maven2</url> -->
+			<url>file:///tmp/igapyon-maven2</url>
 		</repository>
 	</distributionManagement>
 
