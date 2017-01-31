@@ -2,11 +2,11 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>jp.igapyon.diary</groupId>
-	<artifactId>igdiary</artifactId>
+	<artifactId>igapyonv3</artifactId>
 	<version>1.3.0</version>
 	<packaging>jar</packaging>
 
-	<name>IgapyonV3</name>
+	<name>igapyonv3</name>
 	<description>OSS diary generator system written in Java.</description>
 	<url>https://igapyon.github.io/igapyonv3/</url>
 
