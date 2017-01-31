@@ -26,7 +26,24 @@
 
 	<scm>
 		<url>https://github.com/igapyon/igapyonv3</url>
+		<connection>scm:git:git://github.com/igapyon/igapyonv3.git</connection>
+		<developerConnection>scm:git:git://github.com/igapyon/igapyonv3.git</developerConnection>
 	</scm>
+
+	<developers>
+		<developer>
+			<id>igapyon</id>
+			<name>Toshiki Iga</name>
+			<email>igapyon@gmail.com</email>
+			<url>http://www.igapyon.jp/</url>
+			<roles>
+				<role>lead</role>
+				<role>architect</role>
+				<role>developer</role>
+			</roles>
+			<timezone>-9</timezone>
+		</developer>
+	</developers>
 
 	<dependencies>
 		<!-- https://mvnrepository.com/artifact/junit/junit -->
@@ -177,6 +194,21 @@
 						<configuration>
 							<outputDirectory>${project.build.directory}/lib</outputDirectory>
 						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+			<!-- gpg -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-gpg-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>sign-artifacts</id>
+						<phase>verify</phase>
+						<goals>
+							<goal>sign</goal>
+						</goals>
 					</execution>
 				</executions>
 			</plugin>
