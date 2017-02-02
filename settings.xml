@@ -1,7 +1,7 @@
 <settings>
 	<servers>
 		<server>
-			<id>sonatype-nexus-staging</id>
+			<id>ossrh</id>
 			<username>igapyon</username>
 			<password>password</password>
 		</server>
