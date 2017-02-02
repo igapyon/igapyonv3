@@ -84,11 +84,13 @@ public class LinkNextDirectiveModel implements TemplateDirectiveModel {
 	}
 
 	/**
-	 * タグが変換された後の出力文字列を取得します。
+	 * get formatted string by tags.
 	 * 
 	 * @param sourceName
-	 * @return
+	 *            source name.
+	 * @return formatted string.
 	 * @throws IOException
+	 *             io exception occurs.
 	 */
 	public String getOutputString(final String sourceName) throws IOException {
 		String url = SimpleDirUtil.file2Url(
@@ -112,6 +114,7 @@ public class LinkNextDirectiveModel implements TemplateDirectiveModel {
 	 * 処理の過程で必要になる各種 atom ファイルをロード済みかどうか念押し確認します。
 	 * 
 	 * @throws IOException
+	 *             io exception occurs.
 	 */
 	public void ensureLoadAtomXml() throws IOException {
 		if (synEntryList == null) {

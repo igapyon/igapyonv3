@@ -52,8 +52,8 @@ import jp.igapyon.diary.v3.util.IgapyonV3Settings;
 /**
  * Twitter シェアへのリンク用のディレクティブモデル
  * 
- * <@linkshare word="テスト" url="https://igapyon.github.io/diary/" tags=
- * "igapyonv3" />
+ * &lt;@linkshare word="テスト" url="https://igapyon.github.io/diary/" tags=
+ * "igapyonv3" /&gt;
  * 
  * @author Toshiki Iga
  */
@@ -107,11 +107,19 @@ public class LinkShareDirectiveModel implements TemplateDirectiveModel {
 	}
 
 	/**
-	 * タグが変換された後の出力文字列を取得します。
+	 * get formatted string by tags.
 	 * 
-	 * @param sourceName
-	 * @return
+	 * @param titleString
+	 *            title name.
+	 * @param wordString
+	 *            string of word.
+	 * @param urlString
+	 *            url.
+	 * @param tagsString
+	 *            tags value separated by camma.
+	 * @return formatted string.
 	 * @throws IOException
+	 *             io exception occurs.
 	 */
 	public String getOutputString(final String titleString, final String wordString, final String urlString,
 			final String tagsString) throws IOException {

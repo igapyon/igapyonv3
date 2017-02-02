@@ -71,10 +71,11 @@ public class LinkSourceDirectiveModel implements TemplateDirectiveModel {
 	}
 
 	/**
-	 * タグが変換された後の出力文字列を取得します。
+	 * get formatted string by tags.
 	 * 
 	 * @param sourceName
-	 * @return
+	 *            source name.
+	 * @return formatted string.
 	 */
 	public String getOutputString(final String sourceName) {
 		return ("[source](" + settings.getSourcebaseurl() + "/" + sourceName + ")");

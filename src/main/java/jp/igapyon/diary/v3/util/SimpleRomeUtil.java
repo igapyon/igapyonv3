@@ -65,6 +65,7 @@ public class SimpleRomeUtil {
 	 * @param atomXmlFile
 	 * @return
 	 * @throws IOException
+	 *             io exception occurs.
 	 */
 	public static String atomxml2String(final File atomXmlFile, final File currentDir, final IgapyonV3Settings settings)
 			throws IOException {
@@ -95,6 +96,7 @@ public class SimpleRomeUtil {
 	 * @param maxcount
 	 * @return
 	 * @throws IOException
+	 *             io exception occurs.
 	 */
 	public static String atomxml2String(final URL atomURL, final int maxcount) throws IOException {
 		String indexmdText = "";
@@ -133,6 +135,7 @@ public class SimpleRomeUtil {
 	 * @param targetAtomFile
 	 * @param title
 	 * @throws IOException
+	 *             io exception occurs.
 	 */
 	public static void itemList2AtomXml(final List<DiaryItemInfo> diaryItemInfoList, final File targetAtomFile,
 			final String title, final IgapyonV3Settings settings) throws IOException {

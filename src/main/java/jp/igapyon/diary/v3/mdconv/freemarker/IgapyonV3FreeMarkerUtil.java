@@ -89,6 +89,7 @@ public class IgapyonV3FreeMarkerUtil {
 	 * @param templateData
 	 * @return
 	 * @throws IOException
+	 *             io exception occurs.
 	 */
 	public static String process(File file, final Map<String, Object> templateData, final IgapyonV3Settings settings)
 			throws IOException {

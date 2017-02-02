@@ -53,6 +53,7 @@ public class SimpleDirUtil {
 	 * @param file
 	 * @return
 	 * @throws IOException
+	 *             io exception occurs.
 	 */
 	public static String getRelativePath(final File baseDir, final File file) throws IOException {
 		final String baseDirStr = baseDir.getCanonicalPath();
@@ -174,6 +175,7 @@ public class SimpleDirUtil {
 	 * @param settings
 	 * @return
 	 * @throws IOException
+	 *             io exception occurs.
 	 * @deprecated 使いドコロがあったはずと思って作成したものの、実際に適用しようとしたらフィットする箇所がない。とりあえず
 	 *             deprecated マークとする
 	 */
@@ -195,6 +197,7 @@ public class SimpleDirUtil {
 	 * @param settings
 	 * @return
 	 * @throws IOException
+	 *             io exception occurs.
 	 */
 	public static String file2Url(final File file, final IgapyonV3Settings settings) throws IOException {
 		final String relativePath = getRelativePath(settings.getRootdir(), file);

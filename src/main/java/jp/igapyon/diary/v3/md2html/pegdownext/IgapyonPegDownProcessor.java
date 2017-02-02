@@ -48,8 +48,6 @@ import org.pegdown.plugins.ToHtmlSerializerPlugin;
 /**
  * Igapyon's Markdown to Html converter.
  * 
- * ※初期の github gh-pages 対応では、これは利用しません。
- * 
  * @author Toshiki Iga
  */
 public class IgapyonPegDownProcessor extends PegDownProcessor {
@@ -85,9 +83,13 @@ public class IgapyonPegDownProcessor extends PegDownProcessor {
 	 * Core of md to html.
 	 * 
 	 * @param markdownSource
+	 *            source of markdown.
 	 * @param linkRenderer
+	 *            link renderer.
 	 * @param verbatimSerializerMap
+	 *            map of serializer.
 	 * @param plugins
+	 *            list of plugins.
 	 */
 	public String markdownToHtml(char[] markdownSource, LinkRenderer linkRenderer,
 			Map<String, VerbatimSerializer> verbatimSerializerMap, List<ToHtmlSerializerPlugin> plugins) {

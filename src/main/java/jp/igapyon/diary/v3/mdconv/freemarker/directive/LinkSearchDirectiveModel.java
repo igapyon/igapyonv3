@@ -51,12 +51,12 @@ import jp.igapyon.diary.v3.util.IgapyonV3Settings;
 /**
  * 検索エンジンへのリンク用のディレクティブモデル
  * 
- * <@linksearch title="いがぴょん検索" word="いがぴょん" />
+ * &lt;@linksearch title="いがぴょん検索" word="いがぴょん" /&gt;
  * 
- * <@linksearch title="いがぴょん検索サイト内" word="いがぴょん" site=
- * "https://igapyon.github.io/diary/" />
+ * &lt;@linksearch title="いがぴょん検索サイト内" word="いがぴょん" site=
+ * "https://igapyon.github.io/diary/" /&gt;
  * 
- * <@linksearch title="いがぴょんTwitter" word="伊賀敏樹" engine="twitter" />
+ * &lt;@linksearch title="いがぴょんTwitter" word="伊賀敏樹" engine="twitter" /&gt;
  * 
  * @author Toshiki Iga
  */

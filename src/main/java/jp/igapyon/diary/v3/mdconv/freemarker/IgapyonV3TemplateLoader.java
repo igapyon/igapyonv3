@@ -188,6 +188,7 @@ public class IgapyonV3TemplateLoader implements TemplateLoader {
 	 * 
 	 * @return
 	 * @throws IOException
+	 *             io exception occurs.
 	 */
 	protected String getStandardHeaderString() throws IOException {
 		String header = "";

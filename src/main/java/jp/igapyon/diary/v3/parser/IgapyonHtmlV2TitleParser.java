@@ -94,6 +94,7 @@ public class IgapyonHtmlV2TitleParser {
 	 *            /2017, /2016 など
 	 * @return
 	 * @throws IOException
+	 *             io exception occurs.
 	 */
 	public List<DiaryItemInfo> processDir(final File dir, final String path) throws IOException {
 		final File[] files = dir.listFiles();
@@ -123,6 +124,7 @@ public class IgapyonHtmlV2TitleParser {
 	 * @param path
 	 *            /2017, /2016 など
 	 * @throws IOException
+	 *             io exception occurs.
 	 */
 	void processFile(final File file, final String path) throws IOException {
 		String source = FileUtils.readFileToString(file, "UTF-8");
@@ -161,6 +163,7 @@ public class IgapyonHtmlV2TitleParser {
 	 * @param source
 	 * @return
 	 * @throws IOException
+	 *             io exception occurs.
 	 */
 	String getTitleString(final String source) throws IOException {
 		String title = "N/A";

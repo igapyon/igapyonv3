@@ -37,16 +37,17 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * 
+ * migration tool for Hatena.
  * 
  * @author Toshiki Iga
  */
 public class HatenaTextUtil {
 	/**
-	 * はてなリンク形式を md リンク形式に変換します。
+	 * convert hatena link into markdown link.
 	 * 
 	 * @param source
-	 * @return
+	 *            input string.
+	 * @return converted markdown link.
 	 */
 	public static String convertHatenaLink2MdLink(final String source) {
 		// はてなリンクパターン。小さいマッチのために「?」を利用しています。

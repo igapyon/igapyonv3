@@ -74,6 +74,7 @@ public class KeywordMdTextGenerator {
 	 * 日記タイトルに新規の [キーワード] が発見されたら、それに対応するキーワードファイルを作成します。
 	 * 
 	 * @throws IOException
+	 *             io exception occurs.
 	 */
 	public void generateNewKeyword() throws IOException {
 		// キーワードのリストを読み込み。
@@ -165,6 +166,7 @@ public class KeywordMdTextGenerator {
 	 * 
 	 * @param args
 	 * @throws IOException
+	 *             io exception occurs.
 	 */
 	public static void main(final String[] args) throws IOException {
 		final IgapyonV3Settings settings = new IgapyonV3Settings();

@@ -44,7 +44,20 @@ import jp.igapyon.diary.v3.md2html.IgapyonMd2Html;
 import jp.igapyon.diary.v3.mdconv.DiarySrcMd2MdConverter;
 import jp.igapyon.diary.v3.util.IgapyonV3Settings;
 
+/**
+ * igapyonv3 diary processor entry point.
+ * 
+ * @author Toshiki Iga
+ */
 public class IgDiaryProcessor {
+	/**
+	 * run igapyonv3 with specified rootdir.
+	 * 
+	 * @param rootdir
+	 *            root dir of diary.
+	 * @throws IOException
+	 *             io exception occurs.
+	 */
 	public void process(final File rootdir) throws IOException {
 		final IgapyonV3Settings settings = new IgapyonV3Settings();
 		settings.setRootdir(rootdir);
@@ -52,6 +65,14 @@ public class IgDiaryProcessor {
 		process(settings);
 	}
 
+	/**
+	 * run igapyonv3 with specified settings.
+	 * 
+	 * @param settings
+	 *            igapyonv3 settings.
+	 * @throws IOException
+	 *             io exception occurs.
+	 */
 	public void process(final IgapyonV3Settings settings) throws IOException {
 		{
 			// settings.src.md first.
@@ -120,10 +141,9 @@ public class IgDiaryProcessor {
 	}
 
 	/**
-	 * 現時点の、このプロジェクトのエントリポイント。
+	 * Entry point for java command line exec.
 	 * 
 	 * @param args
-	 * @throws IOException
 	 */
 	public static void main(final String[] args) {
 		try {

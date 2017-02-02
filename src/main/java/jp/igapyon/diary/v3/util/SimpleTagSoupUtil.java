@@ -104,7 +104,9 @@ public class SimpleTagSoupUtil {
 	 * @param source
 	 * @return
 	 * @throws IOException
+	 *             io exception occurs.
 	 * @throws SAXException
+	 *             XML exception occurs.
 	 */
 	public static String formatHtml(final String source) throws IOException, SAXException {
 		final XMLReader parser = new Parser();

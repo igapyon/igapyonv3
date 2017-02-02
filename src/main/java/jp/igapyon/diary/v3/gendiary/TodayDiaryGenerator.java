@@ -63,6 +63,7 @@ public class TodayDiaryGenerator {
 	 * 
 	 * @param rootdir
 	 * @throws IOException
+	 *             io exception occurs.
 	 */
 	public void processDir() throws IOException {
 		final File yearDir = getYearDir();
@@ -118,6 +119,7 @@ public class TodayDiaryGenerator {
 	 * @param rootdir
 	 * @return
 	 * @throws IOException
+	 *             io exception occurs.
 	 */
 	protected File getYearDir() throws IOException {
 		final String yyyy = new SimpleDateFormat("yyyy").format(settings.getToday());
@@ -137,6 +139,7 @@ public class TodayDiaryGenerator {
 	 * 
 	 * @param args
 	 * @throws IOException
+	 *             io exception occurs.
 	 */
 	public static void main(String[] args) throws IOException {
 		File dir = new File(".");

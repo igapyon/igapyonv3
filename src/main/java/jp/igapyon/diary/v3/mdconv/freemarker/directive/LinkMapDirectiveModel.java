@@ -84,8 +84,13 @@ public class LinkMapDirectiveModel implements TemplateDirectiveModel {
 	/**
 	 * タグが変換された後の出力文字列を取得します。
 	 * 
-	 * @param sourceName
-	 * @return
+	 * @param titleString
+	 *            title string.
+	 * @param latString
+	 *            lat value.
+	 * @param lonString
+	 *            lon value.
+	 * @return formatted string.
 	 */
 	public String getOutputString(final String titleString, final String latString, final String lonString) {
 		String qString = "https://openstreetmap.jp/map#zoom=17&lat=" + latString + "&lon=" + lonString
