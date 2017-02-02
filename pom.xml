@@ -1,9 +1,8 @@
-<project xmlns="https://maven.apache.org/POM/4.0.0" xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="https://maven.apache.org/POM/4.0.0 https://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>jp.igapyon.diary</groupId>
 	<artifactId>igapyonv3</artifactId>
-	<version>1.3.1.6-SNAPSHOT</version>
+	<version>1.3.1.7-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
 	<name>igapyonv3</name>
@@ -26,8 +25,10 @@
 
 	<scm>
 		<url>https://github.com/igapyon/igapyonv3</url>
-		<connection>scm:git:https://github.com/igapyon/igapyonv3.git</connection>
-		<developerConnection>scm:git:https://github.com/igapyon/igapyonv3.git</developerConnection>
+		<connection>scm:git:https://github.com/igapyon/igapyonv3.git
+		</connection>
+		<developerConnection>scm:git:https://github.com/igapyon/igapyonv3.git
+		</developerConnection>
 		<tag>igapyonv3-1.3.1.2</tag>
 	</scm>
 
@@ -53,7 +54,8 @@
 		</snapshotRepository>
 		<repository>
 			<id>ossrh</id>
-			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/
+			</url>
 		</repository>
 	</distributionManagement>
 
