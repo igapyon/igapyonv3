@@ -138,6 +138,7 @@ public class TodayDiaryGenerator {
 	 * テスト用のエントリポイント。
 	 * 
 	 * @param args
+	 *            java main args.
 	 * @throws IOException
 	 *             io exception occurs.
 	 */

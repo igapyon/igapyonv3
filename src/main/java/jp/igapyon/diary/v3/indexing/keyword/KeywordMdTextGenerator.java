@@ -165,6 +165,7 @@ public class KeywordMdTextGenerator {
 	 * 当面は、ここを直接指定して起動します。
 	 * 
 	 * @param args
+	 *            java main args.
 	 * @throws IOException
 	 *             io exception occurs.
 	 */

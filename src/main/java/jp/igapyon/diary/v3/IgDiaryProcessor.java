@@ -144,6 +144,7 @@ public class IgDiaryProcessor {
 	 * Entry point for java command line exec.
 	 * 
 	 * @param args
+	 *            java main args.
 	 */
 	public static void main(final String[] args) {
 		try {

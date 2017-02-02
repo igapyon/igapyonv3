@@ -81,6 +81,7 @@ public class IgapyonHtmlV2TitleParser {
 	 * コンストラクタ。
 	 * 
 	 * @param settings
+	 *            diary settings.
 	 */
 	public IgapyonHtmlV2TitleParser(final IgapyonV3Settings settings) {
 		this.settings = settings;
@@ -90,9 +91,10 @@ public class IgapyonHtmlV2TitleParser {
 	 * 指定ディレクトリを処理します。
 	 * 
 	 * @param dir
+	 *            target directory.
 	 * @param path
-	 *            /2017, /2016 など
-	 * @return
+	 *            path from root. /2017, /2016 など
+	 * @return list of diary item.
 	 * @throws IOException
 	 *             io exception occurs.
 	 */
@@ -176,7 +178,7 @@ public class IgapyonHtmlV2TitleParser {
 
 			// XPath をもちいてタイトル要素のテキストを取得します。
 			title = (String) xpath.evaluate("/html/head/title/text()", document, XPathConstants.STRING);
-			if (title==null) {
+			if (title == null) {
 				title = "<title> not found.";
 			}
 		} catch (ParserConfigurationException e) {
