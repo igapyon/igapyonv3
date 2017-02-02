@@ -42,7 +42,7 @@ import org.pegdown.ast.SuperNode;
 import org.pegdown.ast.TextNode;
 
 /**
- * 
+ * PegDown utils
  * 
  * @author Toshiki Iga
  */
@@ -71,9 +71,11 @@ public class IgapyonPegDownUtil {
 	}
 
 	/**
+	 * getting element text.
 	 * 
 	 * @param node
-	 * @return
+	 *            xml node.
+	 * @return xml as string.
 	 */
 	public static String getElementText(final Node node) {
 		if (node instanceof AnchorLinkNode) {

@@ -43,7 +43,9 @@ import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 /**
- * いがぴょんの日記v2 コンテンツ専用の HTML から Markdown へのパーサー。
+ * for migration specific class for igapyon3.
+ * 
+ * Parser from HTML to Markdown.
  * 
  * @author Toshiki Iga
  */
@@ -61,16 +63,16 @@ public class IgapyonV2Html2MdParser extends DefaultHandler {
 	protected int codePreDeapth = 0;
 
 	/**
-	 * インデックスに戻る以降のところがボディ。
+	 * check current is in content body.
 	 */
 	protected boolean isContentBody = false;
 
 	protected String recentHrefString = null;
 
 	/**
-	 * 処理の結果得られた markdown 文字列を取得します。
+	 * get processed string as markdown.
 	 * 
-	 * @return
+	 * @return markdown string.
 	 */
 	public String getMarkdownString() {
 		return markdownBuffer.toString();
@@ -213,7 +215,6 @@ public class IgapyonV2Html2MdParser extends DefaultHandler {
 	}
 
 	protected void fireCharacters(final String characters) {
-
 		if (characters.equals("インディックスページへ戻る") || characters.equals("日記インディックスページへ戻る")) {
 			// これ以降がようやく本体。
 			isContentBody = true;

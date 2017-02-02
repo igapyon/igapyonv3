@@ -53,7 +53,7 @@ import jp.igapyon.diary.v3.util.SimpleRomeUtil;
 /**
  * RSS Feed 用のディレクティブモデル
  * 
- * <@rssfeed url="http://www.publickey1.jp/atom.xml" maxcount="5" />
+ * &lt;@rssfeed url="http://www.publickey1.jp/atom.xml" maxcount="5" /&gt;
  * 
  * @author Toshiki Iga
  */

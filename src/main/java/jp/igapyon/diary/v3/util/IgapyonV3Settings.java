@@ -65,9 +65,29 @@ public class IgapyonV3Settings {
 	private String baseurl = "https://igapyon.github.io/diary";
 
 	/**
+	 * 日記のソースのベース URL。最後のスラッシュは含まないこと。
+	 */
+	private String sourcebaseurl = "https://github.com/igapyon/diary/blob/gh-pages";
+
+	/**
 	 * TODAY! for newly diary.
 	 */
 	private Date today = null;
+
+	/**
+	 * verbose mode for debugging.
+	 */
+	private boolean verbose = false;
+
+	/**
+	 * Generate today's diary or not.
+	 */
+	private boolean generateTodayDiary = true;
+
+	/**
+	 * Convert markdown to html
+	 */
+	private boolean convertMarkdown2Html = false;
 
 	private List<String[]> doubleKeywordList = new ArrayList<String[]>();
 
@@ -219,5 +239,37 @@ public class IgapyonV3Settings {
 
 	public void setTitleEn(String titleEn) {
 		this.titleEn = titleEn;
+	}
+
+	public String getSourcebaseurl() {
+		return sourcebaseurl;
+	}
+
+	public void setSourcebaseurl(String sourcebaseurl) {
+		this.sourcebaseurl = sourcebaseurl;
+	}
+
+	public boolean isVerbose() {
+		return verbose;
+	}
+
+	public void setVerbose(boolean verbose) {
+		this.verbose = verbose;
+	}
+
+	public boolean isGenerateTodayDiary() {
+		return generateTodayDiary;
+	}
+
+	public void setGenerateTodayDiary(boolean generateTodayDiary) {
+		this.generateTodayDiary = generateTodayDiary;
+	}
+
+	public boolean isConvertMarkdown2Html() {
+		return convertMarkdown2Html;
+	}
+
+	public void setConvertMarkdown2Html(boolean convertMarkdown2Html) {
+		this.convertMarkdown2Html = convertMarkdown2Html;
 	}
 }

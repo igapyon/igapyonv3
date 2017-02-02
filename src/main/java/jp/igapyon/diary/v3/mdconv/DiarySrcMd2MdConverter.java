@@ -70,6 +70,9 @@ public class DiarySrcMd2MdConverter {
 	}
 
 	public void processDir(final File dir) throws IOException {
+		// System.err.println("DiarySrcMd2MdConverter#processDir(" +
+		// dir.getCanonicalPath() + ")");
+
 		final File[] files = dir.listFiles();
 		if (files == null) {
 			return;
@@ -92,7 +95,7 @@ public class DiarySrcMd2MdConverter {
 		}
 	}
 
-	void processFile(final File file) throws IOException {
+	public void processFile(final File file) throws IOException {
 		final Map<String, Object> templateData = new HashMap<String, Object>();
 
 		// テンプレート適用処理を実施します。
@@ -113,7 +116,7 @@ public class DiarySrcMd2MdConverter {
 
 		for (int index = 0; index < lines.size(); index++) {
 			String line = lines.get(index);
-			line = MdTextUtil.convertDoubleKeyword2MdLink(line, settings);
+			line = MdTextUtil.convertDoubleKeyword2MdLink(line, file.getParentFile(), settings);
 
 			// タブは２スペースに変換。
 			line = StringUtils.replaceAll(line, "\t", "  ");

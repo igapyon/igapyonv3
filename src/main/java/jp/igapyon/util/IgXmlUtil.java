@@ -56,13 +56,15 @@ import org.xml.sax.SAXException;
  * 
  * @author Toshiki Iga
  */
-public class IgapyonXmlUtil {
+public class IgXmlUtil {
 	/**
 	 * Convert XML string to Element.
 	 * 
 	 * @param inputXml
 	 *            XML string.
 	 * @return Element
+	 * @throws IOException
+	 *             io exception occurs.
 	 */
 	public static Element stringToElement(final String inputXml) throws IOException {
 		try {
@@ -82,6 +84,8 @@ public class IgapyonXmlUtil {
 	 * @param rootElement
 	 *            Element.
 	 * @return XML string.
+	 * @throws IOException
+	 *             io exception occurs.
 	 */
 	public static String elementToString(final Element rootElement) throws IOException {
 		try {

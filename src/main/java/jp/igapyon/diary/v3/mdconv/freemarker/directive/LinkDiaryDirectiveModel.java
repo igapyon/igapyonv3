@@ -57,7 +57,7 @@ import jp.igapyon.diary.v3.util.IgapyonV3Settings;
 /**
  * ローカル日記へのリンク用のディレクティブモデル
  * 
- * <@linkdiary date="2017-01-02" />
+ * &lt;@linkdiary date="2017-01-02" /&gt;
  * 
  * @author Toshiki Iga
  */
@@ -87,7 +87,11 @@ public class LinkDiaryDirectiveModel implements TemplateDirectiveModel {
 
 				for (Object lookup : synFeed.getEntries()) {
 					final SyndEntry entry = (SyndEntry) lookup;
-					cacheAtomMap.put(entry.getTitle().substring(0, Math.min(10, entry.getTitle().length() - 1)), entry);
+					String title = entry.getTitle();
+					if (title == null || title.length() == 0) {
+						title = "N/A";
+					}
+					cacheAtomMap.put(title.substring(0, Math.min(10, title.length() - 1)), entry);
 				}
 			} catch (FeedException e) {
 				throw new IOException(e);

@@ -76,11 +76,25 @@ public class LinkMapDirectiveModel implements TemplateDirectiveModel {
 			titleString = params.get("title").toString();
 		}
 
-		String qString = "https://openstreetmap.jp/map#zoom=17&lat=" + latString + "&lon=" + lonString
-				+ "&layers=00BFF";
-
-		writer.write("[" + titleString + "](" + qString + ")");
+		writer.write(getOutputString(titleString, latString, lonString));
 
 		writer.flush();
+	}
+
+	/**
+	 * タグが変換された後の出力文字列を取得します。
+	 * 
+	 * @param titleString
+	 *            title string.
+	 * @param latString
+	 *            lat value.
+	 * @param lonString
+	 *            lon value.
+	 * @return formatted string.
+	 */
+	public String getOutputString(final String titleString, final String latString, final String lonString) {
+		String qString = "https://openstreetmap.jp/map#zoom=17&lat=" + latString + "&lon=" + lonString
+				+ "&layers=00BFF";
+		return ("[" + titleString + "](" + qString + ")");
 	}
 }

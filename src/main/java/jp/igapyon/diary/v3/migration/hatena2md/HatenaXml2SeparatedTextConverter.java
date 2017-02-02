@@ -44,12 +44,13 @@ import org.w3c.dom.NodeList;
 
 import jp.igapyon.diary.v3.item.DiaryItemInfo;
 import jp.igapyon.diary.v3.util.IgapyonV3Settings;
-import jp.igapyon.util.IgapyonXmlUtil;
+import jp.igapyon.util.IgXmlUtil;
 
 /**
- * hatenaのエクスポートXMLから、分割されたテキストファイルを生成します。
+ * Migration tool. Convert Hatena exported XML into separated text files.
  * 
- * 基本的に、移行バッチとして一度のみ実行されることを想定します。何度も動作させる際に適切に動作するような機構は組み込まれていません。
+ * Basically, this is for migration, run at once. This has no regards for
+ * re-run.
  * 
  * @author Toshiki Iga
  */
@@ -64,7 +65,7 @@ public class HatenaXml2SeparatedTextConverter {
 		String inputXmlString = FileUtils.readFileToString(sourceXml, "UTF-8");
 		inputXmlString = inputXmlString.replace('\u001c', '−');
 		inputXmlString = inputXmlString.replace('\u001a', '?');
-		final Element rootElement = IgapyonXmlUtil.stringToElement(inputXmlString);
+		final Element rootElement = IgXmlUtil.stringToElement(inputXmlString);
 
 		final List<DiaryItemInfo> diaryItemList = parseRoot(rootElement);
 		for (DiaryItemInfo item : diaryItemList) {
@@ -106,10 +107,12 @@ public class HatenaXml2SeparatedTextConverter {
 	}
 
 	/**
-	 * エントリポイント。
+	 * Entry point for this class.
 	 * 
 	 * @param args
+	 *            args.
 	 * @throws IOException
+	 *             io exception occurs.
 	 */
 	public static final void main(final String[] args) throws IOException {
 		final IgapyonV3Settings settings = new IgapyonV3Settings();

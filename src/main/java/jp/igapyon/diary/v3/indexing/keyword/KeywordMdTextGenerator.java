@@ -74,6 +74,7 @@ public class KeywordMdTextGenerator {
 	 * 日記タイトルに新規の [キーワード] が発見されたら、それに対応するキーワードファイルを作成します。
 	 * 
 	 * @throws IOException
+	 *             io exception occurs.
 	 */
 	public void generateNewKeyword() throws IOException {
 		// キーワードのリストを読み込み。
@@ -129,27 +130,24 @@ public class KeywordMdTextGenerator {
 						}
 
 						final List<String> lines = new ArrayList<String>();
-						lines.add("[index](" + settings.getBaseurl() + "/keyword/index.html)");
-						lines.add("");
 						lines.add("## " + word + "");
 						lines.add("");
 						lines.add("[[" + word + "]] は、、、、です。※未執筆。");
 						lines.add("");
 						lines.add("### URL");
 						lines.add("");
-						lines.add("* TBD <@linksearch title=\"Search in Google\" word=\"" + word + "\" />");
+						lines.add("* TBD <@linksearch word=\"" + word + "\" />");
 						lines.add("");
 						lines.add("### 特徴");
 						lines.add("");
-						lines.add("* TBD <@linksearch title=\"Search in Google\" word=\"" + word + "\" />");
+						lines.add("* TBD <@linksearch word=\"" + word + "\" />");
 						lines.add("");
 						lines.add("### 検索");
 						lines.add("");
-						lines.add("* <@linksearch title=\"Search on " + settings.getTitleEn() + "\" word=\"" + word
+						lines.add("* <@linksearch title=\"Search '" + word + "' in google in-site" + "\" word=\"" + word
 								+ "\" site=\"" + settings.getBaseurl() + "/\" />");
-						lines.add("* <@linksearch title=\"Search in Google\" word=\"" + word + "\" />");
-						lines.add("* <@linksearch title=\"Search in Twitter\" word=\"" + word
-								+ "\" engine=\"twitter\" />");
+						lines.add("* <@linksearch word=\"" + word + "\" />");
+						lines.add("* <@linksearch word=\"" + word + "\" engine=\"twitter\" />");
 						lines.add("");
 
 						FileUtils.writeLines(keywordFile, lines);
@@ -167,7 +165,9 @@ public class KeywordMdTextGenerator {
 	 * 当面は、ここを直接指定して起動します。
 	 * 
 	 * @param args
+	 *            java main args.
 	 * @throws IOException
+	 *             io exception occurs.
 	 */
 	public static void main(final String[] args) throws IOException {
 		final IgapyonV3Settings settings = new IgapyonV3Settings();

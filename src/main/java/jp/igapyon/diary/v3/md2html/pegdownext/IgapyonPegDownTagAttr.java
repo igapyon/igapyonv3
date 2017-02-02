@@ -34,13 +34,13 @@
 package jp.igapyon.diary.v3.md2html.pegdownext;
 
 /**
- * 
+ * tag attr
  * 
  * @author Toshiki Iga
  */
 public class IgapyonPegDownTagAttr {
 	/**
-	 * <tag class="value" />
+	 * shows &lt;tag class="value" /&gt;
 	 * 
 	 * ex: [alert alert-warning]
 	 */

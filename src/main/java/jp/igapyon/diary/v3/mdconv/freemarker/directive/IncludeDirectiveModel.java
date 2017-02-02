@@ -36,7 +36,6 @@ package jp.igapyon.diary.v3.mdconv.freemarker.directive;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.Map;
 
 import freemarker.core.Environment;
@@ -78,8 +77,6 @@ public class IncludeDirectiveModel implements TemplateDirectiveModel {
 		final File targetFile = new File(sourceDir, fileString);
 
 		{
-			final Map<String, Object> templateData = new HashMap<String, Object>();
-
 			// do canonical
 			final File rootdir = settings.getRootdir().getCanonicalFile();
 
@@ -87,9 +84,11 @@ public class IncludeDirectiveModel implements TemplateDirectiveModel {
 
 			final Configuration config = IgapyonV3FreeMarkerUtil.getConfiguration(settings, false);
 
+			// include 中は、呼び出し元のデータモデル空間と同一とみなします。
+
 			final Template templateBase = config.getTemplate(relativePath);
 			try {
-				templateBase.process(templateData, writer);
+				templateBase.process(env.getDataModel(), writer);
 			} catch (TemplateException e) {
 				throw new IOException(e);
 			}

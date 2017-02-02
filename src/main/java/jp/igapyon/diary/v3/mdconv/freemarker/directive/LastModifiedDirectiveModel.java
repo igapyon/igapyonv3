@@ -31,23 +31,45 @@
  *  limitations under the License.
  */
 
-package jp.igapyon.diary.v3.util;
+package jp.igapyon.diary.v3.mdconv.freemarker.directive;
 
-import java.io.File;
+import java.io.BufferedWriter;
 import java.io.IOException;
-import java.util.Comparator;
+import java.util.Map;
+
+import freemarker.core.Environment;
+import freemarker.template.TemplateDirectiveBody;
+import freemarker.template.TemplateDirectiveModel;
+import freemarker.template.TemplateException;
+import freemarker.template.TemplateModel;
+import freemarker.template.TemplateModelException;
+import jp.igapyon.diary.v3.util.IgapyonV3Settings;
 
 /**
- * ファイルをソートするためのコンパレータです。
+ * 最終更新日を蓄えるディレクティブモデル
  * 
  * @author Toshiki Iga
  */
-public class FileComparator implements Comparator<File> {
-	public int compare(final File file1, final File file2) {
-		try {
-			return file1.getCanonicalPath().compareTo(file2.getCanonicalPath());
-		} catch (IOException e) {
-			return 0;
+public class LastModifiedDirectiveModel implements TemplateDirectiveModel {
+	private IgapyonV3Settings settings = null;
+
+	public LastModifiedDirectiveModel(final IgapyonV3Settings settings) {
+		this.settings = settings;
+	}
+
+	public void execute(final Environment env, @SuppressWarnings("rawtypes") final Map params,
+			final TemplateModel[] loopVars, final TemplateDirectiveBody body) throws TemplateException, IOException {
+		final BufferedWriter writer = new BufferedWriter(env.getOut());
+
+		if (params.get("date") == null) {
+			throw new TemplateModelException("dp param is required.");
 		}
+
+		// SimpleScalar#toString()
+		final String dateString = params.get("date").toString();
+
+		writer.write("Last modified: $Date: " + dateString + " $");
+
+		writer.flush();
 	}
 }

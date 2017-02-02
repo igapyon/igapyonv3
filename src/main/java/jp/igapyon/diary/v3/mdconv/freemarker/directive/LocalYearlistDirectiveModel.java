@@ -48,11 +48,12 @@ import freemarker.template.TemplateException;
 import freemarker.template.TemplateModel;
 import jp.igapyon.diary.v3.util.IgapyonV3Settings;
 import jp.igapyon.diary.v3.util.SimpleDirParser;
+import jp.igapyon.diary.v3.util.SimpleDirUtil;
 
 /**
  * ローカルの年リスト用のディレクティブモデル
  * 
- * <@localyearlist />
+ * &lt;@localyearlist /&gt;
  * 
  * @author Toshiki Iga
  */
@@ -67,6 +68,10 @@ public class LocalYearlistDirectiveModel implements TemplateDirectiveModel {
 			final TemplateModel[] loopVars, final TemplateDirectiveBody body) throws TemplateException, IOException {
 		final BufferedWriter writer = new BufferedWriter(env.getOut());
 
+		// get current directory
+		final String sourceName = env.getMainTemplate().getSourceName();
+		final File sourceDir = new File(settings.getRootdir(), sourceName).getCanonicalFile().getParentFile();
+
 		final List<File> files = getLocalYearList(settings.getRootdir());
 
 		boolean isFirst = true;
@@ -78,10 +83,15 @@ public class LocalYearlistDirectiveModel implements TemplateDirectiveModel {
 			}
 
 			final File file = files.get(index);
-			writer.write("[" + file.getName() + "](" + settings.getBaseurl() + "/" + file.getName() + "/index.html)\n");
+
+			String url = settings.getBaseurl() + "/" + file.getName() + "/index.html";
+			url = SimpleDirUtil.getRelativeUrlIfPossible(url, sourceDir, settings);
+			writer.write("[" + file.getName() + "](" + url + ")\n");
 		}
 
-		writer.write("/ [ALL](" + settings.getBaseurl() + "/idxall.html)\n");
+		String url = settings.getBaseurl() + "/idxall.html";
+		url = SimpleDirUtil.getRelativeUrlIfPossible(url, sourceDir, settings);
+		writer.write("/ [ALL](" + url + ")\n");
 
 		writer.flush();
 	}

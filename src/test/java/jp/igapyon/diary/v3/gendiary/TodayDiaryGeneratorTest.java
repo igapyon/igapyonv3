@@ -14,6 +14,7 @@ public class TodayDiaryGeneratorTest {
 			testDir.mkdirs();
 
 		final IgapyonV3Settings settings = new IgapyonV3Settings();
+		settings.setRootdir(testDir);
 		if (false)
 			new TodayDiaryGenerator(settings).processDir();
 	}

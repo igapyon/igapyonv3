@@ -67,6 +67,9 @@ public class IgapyonMdTitleParser {
 		}
 		for (File file : files) {
 			if (file.isDirectory()) {
+				if (file.getName().equals("target") && path.equals("")) {
+					continue;
+				}
 				processDir(file, path + "/" + file.getName());
 			} else if (file.isFile()) {
 				if (isTargetFile(file.getName())) {
@@ -87,14 +90,25 @@ public class IgapyonMdTitleParser {
 		final String url = getUrl(path, file.getName());
 		diaryItemInfo.setUri(url);
 
+		String pastLine = "";
+
 		// 該当コンテンツのタイトル行を取得します。
 		for (int index = 0; index < lines.size(); index++) {
 			final String line = lines.get(index);
+			if (line.trim().length() > 0) {
+				pastLine = line;
+			}
 			if (line.startsWith("===")) {
 				// 直前のものが、このテキストのタイトルです。
 				break;
 			}
-			diaryItemInfo.setTitle(line);
+
+			// 最初の ## からテキストを取得。これは igapyonv3 の最大の制約です。
+			if (line.startsWith("## ")) {
+				pastLine = line.substring(3);
+			}
+
+			diaryItemInfo.setTitle(pastLine);
 		}
 
 		diaryItemInfoList.add(diaryItemInfo);
@@ -102,6 +116,8 @@ public class IgapyonMdTitleParser {
 
 	/**
 	 * 処理対象のファイルかどうかをファイル名から判定します。
+	 * 
+	 * FIXME このしょりは、改善すべき。
 	 * 
 	 * @param fileName
 	 * @return
