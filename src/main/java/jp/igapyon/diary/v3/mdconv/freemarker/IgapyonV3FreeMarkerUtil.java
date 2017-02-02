@@ -84,11 +84,15 @@ public class IgapyonV3FreeMarkerUtil {
 	/**
 	 * FreeMarker を使ったテンプレート変換処理を実行します。
 	 * 
-	 * @param rootdir
 	 * @param file
+	 *            target file.
 	 * @param templateData
-	 * @return
+	 *            template data.
+	 * @param settings
+	 *            diary settings.
+	 * @return processed output.
 	 * @throws IOException
+	 *             io exception occurs.
 	 */
 	public static String process(File file, final Map<String, Object> templateData, final IgapyonV3Settings settings)
 			throws IOException {
@@ -221,7 +225,11 @@ public class IgapyonV3FreeMarkerUtil {
 	 * 
 	 * デフォルトからは、いくつか重要な変更が行われています。詳しくはソースコードを参照してください。
 	 * 
-	 * @return
+	 * @param settings
+	 *            diary settings.
+	 * @param isExpandHeaderFooter
+	 *            expand header footer
+	 * @return configured configuration.
 	 */
 	public static Configuration getConfiguration(final IgapyonV3Settings settings, final boolean isExpandHeaderFooter) {
 		// newest version at this point.

@@ -71,11 +71,13 @@ public class NavlistDirectiveModel implements TemplateDirectiveModel {
 	}
 
 	/**
-	 * タグが変換された後の出力文字列を取得します。
+	 * get string that with replaced tags.
 	 * 
 	 * @param sourceName
-	 * @return
+	 *            input source name.
+	 * @return replaced string.
 	 * @throws IOException
+	 *             io exception occured.
 	 */
 	public String getOutputString(final String sourceName) throws IOException {
 		final Pattern pat = Pattern.compile("ig[0-9][0-9][0-9][0-9][0-9][0-9]\\.");

@@ -81,6 +81,7 @@ public class IgapyonHtmlV2TitleParser {
 	 * コンストラクタ。
 	 * 
 	 * @param settings
+	 *            diary settings.
 	 */
 	public IgapyonHtmlV2TitleParser(final IgapyonV3Settings settings) {
 		this.settings = settings;
@@ -90,10 +91,12 @@ public class IgapyonHtmlV2TitleParser {
 	 * 指定ディレクトリを処理します。
 	 * 
 	 * @param dir
+	 *            target directory.
 	 * @param path
-	 *            /2017, /2016 など
-	 * @return
+	 *            path from root. /2017, /2016 など
+	 * @return list of diary item.
 	 * @throws IOException
+	 *             io exception occurs.
 	 */
 	public List<DiaryItemInfo> processDir(final File dir, final String path) throws IOException {
 		final File[] files = dir.listFiles();
@@ -123,6 +126,7 @@ public class IgapyonHtmlV2TitleParser {
 	 * @param path
 	 *            /2017, /2016 など
 	 * @throws IOException
+	 *             io exception occurs.
 	 */
 	void processFile(final File file, final String path) throws IOException {
 		String source = FileUtils.readFileToString(file, "UTF-8");
@@ -161,6 +165,7 @@ public class IgapyonHtmlV2TitleParser {
 	 * @param source
 	 * @return
 	 * @throws IOException
+	 *             io exception occurs.
 	 */
 	String getTitleString(final String source) throws IOException {
 		String title = "N/A";
@@ -173,7 +178,7 @@ public class IgapyonHtmlV2TitleParser {
 
 			// XPath をもちいてタイトル要素のテキストを取得します。
 			title = (String) xpath.evaluate("/html/head/title/text()", document, XPathConstants.STRING);
-			if (title==null) {
+			if (title == null) {
 				title = "<title> not found.";
 			}
 		} catch (ParserConfigurationException e) {

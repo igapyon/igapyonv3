@@ -102,9 +102,12 @@ public class SimpleTagSoupUtil {
 	 * 与えられた html ファイルを、TagSoup の能力により正規化します。
 	 * 
 	 * @param source
-	 * @return
+	 *            original html.
+	 * @return formatter html.
 	 * @throws IOException
+	 *             io exception occurs.
 	 * @throws SAXException
+	 *             XML exception occurs.
 	 */
 	public static String formatHtml(final String source) throws IOException, SAXException {
 		final XMLReader parser = new Parser();

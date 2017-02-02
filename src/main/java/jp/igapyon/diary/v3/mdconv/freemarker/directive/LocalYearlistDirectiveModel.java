@@ -53,7 +53,7 @@ import jp.igapyon.diary.v3.util.SimpleDirUtil;
 /**
  * ローカルの年リスト用のディレクティブモデル
  * 
- * <@localyearlist />
+ * &lt;@localyearlist /&gt;
  * 
  * @author Toshiki Iga
  */

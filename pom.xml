@@ -1,12 +1,11 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>jp.igapyon.diary.v3</groupId>
-	<artifactId>IgapyonV3</artifactId>
-	<version>1.2.13</version>
+	<groupId>jp.igapyon.diary</groupId>
+	<artifactId>igapyonv3</artifactId>
+	<version>1.3.1.5-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>IgapyonV3</name>
+	<name>igapyonv3</name>
 	<description>OSS diary generator system written in Java.</description>
 	<url>https://igapyon.github.io/igapyonv3/</url>
 
@@ -26,7 +25,35 @@
 
 	<scm>
 		<url>https://github.com/igapyon/igapyonv3</url>
+		<connection>scm:git:https://github.com/igapyon/igapyonv3.git</connection>
+		<developerConnection>scm:git:https://github.com/igapyon/igapyonv3.git</developerConnection>
+		<tag>igapyonv3-1.3.1.2</tag>
 	</scm>
+
+	<developers>
+		<developer>
+			<id>igapyon</id>
+			<name>Toshiki Iga</name>
+			<email>igapyon@gmail.com</email>
+			<url>http://www.igapyon.jp/</url>
+			<roles>
+				<role>lead</role>
+				<role>architect</role>
+				<role>developer</role>
+			</roles>
+			<timezone>-9</timezone>
+		</developer>
+	</developers>
+
+	<distributionManagement>
+		<repository>
+			<id>sonatype-nexus-staging</id>
+			<name>Nexus Release Repository</name>
+			<uniqueVersion>false</uniqueVersion>
+			<url>http://oss.sonatype.org/service/local/staging/deploy/maven2/
+            </url>
+		</repository>
+	</distributionManagement>
 
 	<dependencies>
 		<!-- https://mvnrepository.com/artifact/junit/junit -->
@@ -121,15 +148,6 @@
 		</repository>
 	</repositories>
 
-	<distributionManagement>
-		<!-- deploy into local repository for github -->
-		<repository>
-			<id>deploy-repository</id>
-			<name>deployRepository</name>
-			<url>file:///${project.basedir}/../igapyon-maven2</url>
-		</repository>
-	</distributionManagement>
-
 	<!-- basic spec for jar -->
 	<properties>
 		<!-- set source as UTF-8 -->
@@ -176,6 +194,22 @@
 						<configuration>
 							<outputDirectory>${project.build.directory}/lib</outputDirectory>
 						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+			<!-- gpg -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-gpg-plugin</artifactId>
+				<version>1.6</version>
+				<executions>
+					<execution>
+						<id>sign-artifacts</id>
+						<phase>verify</phase>
+						<goals>
+							<goal>sign</goal>
+						</goals>
 					</execution>
 				</executions>
 			</plugin>

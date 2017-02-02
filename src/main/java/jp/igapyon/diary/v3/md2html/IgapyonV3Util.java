@@ -47,6 +47,7 @@ import jp.igapyon.diary.v3.md2html.pegdownext.IgapyonPegDownProcessor;
 import jp.igapyon.diary.v3.md2html.pegdownext.IgapyonPegDownTagConf;
 
 /**
+ * utils for igapyonv3
  * 
  * @author Toshiki Iga
  * @deprecated tobe Apache FileUtils
@@ -56,8 +57,10 @@ public class IgapyonV3Util {
 	 * Read string from text file.
 	 * 
 	 * @param file
-	 * @return
+	 *            file to read.
+	 * @return string of file.
 	 * @throws IOException
+	 *             io exception occurs.
 	 */
 	public static String readTextFile(final File file) throws IOException {
 		final FileInputStream inStream = new FileInputStream(file);
@@ -72,8 +75,11 @@ public class IgapyonV3Util {
 	 * Write html file.
 	 * 
 	 * @param strHtml
+	 *            string to write.
 	 * @param file
+	 *            file to be written.
 	 * @throws IOException
+	 *             io exception occurs.
 	 */
 	public static void writeHtmlFile(final String strHtml, final File file) throws IOException {
 		final FileOutputStream outStream = new FileOutputStream(file);
@@ -163,13 +169,17 @@ public class IgapyonV3Util {
 	}
 
 	/**
+	 * Check if it should be written or not.
 	 * 
 	 * @param titleString
 	 *            like 'md2html'.
 	 * @param outputData
+	 *            data of string to be written.
 	 * @param targetHtml
-	 * @return
+	 *            file of target html.
+	 * @return true:write
 	 * @throws IOException
+	 *             io exception occurs.
 	 */
 	public static boolean checkWriteNecessary(final String titleString, final String outputData, final File targetHtml)
 			throws IOException {

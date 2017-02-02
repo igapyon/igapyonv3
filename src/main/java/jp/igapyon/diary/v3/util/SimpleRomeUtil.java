@@ -63,8 +63,14 @@ public class SimpleRomeUtil {
 	 * 与えられた atom.xml ファイルを入力して Markdown テキストを取得します。
 	 * 
 	 * @param atomXmlFile
-	 * @return
+	 *            input atom file.
+	 * @param currentDir
+	 *            current directory.
+	 * @param settings
+	 *            diary settings.
+	 * @return markdown text.
 	 * @throws IOException
+	 *             io exception occurs.
 	 */
 	public static String atomxml2String(final File atomXmlFile, final File currentDir, final IgapyonV3Settings settings)
 			throws IOException {
@@ -92,9 +98,12 @@ public class SimpleRomeUtil {
 	 * 与えれらた URL から入手できる atom.xml ファイルを入力して、markdown テキストファイルを取得します。
 	 * 
 	 * @param atomURL
+	 *            atom url.
 	 * @param maxcount
-	 * @return
+	 *            max of item count.
+	 * @return expanded markdown text.
 	 * @throws IOException
+	 *             io exception occurs.
 	 */
 	public static String atomxml2String(final URL atomURL, final int maxcount) throws IOException {
 		String indexmdText = "";
@@ -130,9 +139,15 @@ public class SimpleRomeUtil {
 	 * ソート済みのものを与えてください。
 	 * 
 	 * @param diaryItemInfoList
+	 *            diary item info list.
 	 * @param targetAtomFile
+	 *            target file.
 	 * @param title
+	 *            title of this atom.
+	 * @param settings
+	 *            diary settings.
 	 * @throws IOException
+	 *             io exception occurs.
 	 */
 	public static void itemList2AtomXml(final List<DiaryItemInfo> diaryItemInfoList, final File targetAtomFile,
 			final String title, final IgapyonV3Settings settings) throws IOException {

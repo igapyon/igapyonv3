@@ -61,8 +61,8 @@ public class TodayDiaryGenerator {
 	/**
 	 * 主たるエントリーポイント。
 	 * 
-	 * @param rootdir
 	 * @throws IOException
+	 *             io exception occurs.
 	 */
 	public void processDir() throws IOException {
 		final File yearDir = getYearDir();
@@ -102,7 +102,8 @@ public class TodayDiaryGenerator {
 	 * 本日の日記ファイルを取得します。
 	 * 
 	 * @param yearDir
-	 * @return
+	 *            base year dir.
+	 * @return today's file.
 	 */
 	protected File getTodayDiaryFile(final File yearDir) {
 		// ファイル名は igyyMMdd.html.src.md 形式。
@@ -111,13 +112,13 @@ public class TodayDiaryGenerator {
 	}
 
 	/**
-	 * 日記システムの今日の日記のためのルートディレクトリを取得します。
+	 * 日記システムの今日の日記のための年ディレクトリを取得します。
 	 * 
 	 * ディレクトリが存在しない場合は新規作成します。
 	 * 
-	 * @param rootdir
-	 * @return
+	 * @return year dir for today.
 	 * @throws IOException
+	 *             io exception occurs.
 	 */
 	protected File getYearDir() throws IOException {
 		final String yyyy = new SimpleDateFormat("yyyy").format(settings.getToday());
@@ -136,7 +137,9 @@ public class TodayDiaryGenerator {
 	 * テスト用のエントリポイント。
 	 * 
 	 * @param args
+	 *            java main args.
 	 * @throws IOException
+	 *             io exception occurs.
 	 */
 	public static void main(String[] args) throws IOException {
 		File dir = new File(".");

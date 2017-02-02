@@ -71,11 +71,13 @@ public class LinkTopDirectiveModel implements TemplateDirectiveModel {
 	}
 
 	/**
-	 * タグが変換された後の出力文字列を取得します。
+	 * get formatted string by tags.
 	 * 
 	 * @param sourceName
-	 * @return
+	 *            source name.
+	 * @return formatted string.
 	 * @throws IOException
+	 *             io exception occurs.
 	 */
 	public String getOutputString(final String sourceName) throws IOException {
 		// get current directory

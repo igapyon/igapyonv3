@@ -71,10 +71,11 @@ public class LinkTargetDirectiveModel implements TemplateDirectiveModel {
 	}
 
 	/**
-	 * タグが変換された後の出力文字列を取得します。
+	 * get formatted string by tags.
 	 * 
 	 * @param sourceName
-	 * @return
+	 *            source name.
+	 * @return formatted string.
 	 */
 	public String getOutputString(final String sourceName) {
 		return ("[target](" + settings.getBaseurl() + "/" + getTargetFilename(sourceName) + ")");
@@ -84,7 +85,8 @@ public class LinkTargetDirectiveModel implements TemplateDirectiveModel {
 	 * ソースファイル名からターゲットファイル名へと変換します。
 	 * 
 	 * @param sourceName
-	 * @return
+	 *            source name.
+	 * @return targetted name.
 	 */
 	public static String getTargetFilename(final String sourceName) {
 		String fileNameModified = sourceName;

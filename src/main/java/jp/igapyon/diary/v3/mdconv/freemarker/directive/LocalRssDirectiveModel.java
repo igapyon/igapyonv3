@@ -52,7 +52,7 @@ import jp.igapyon.diary.v3.util.SimpleRomeUtil;
 /**
  * RSS Feed 用のディレクティブモデル
  * 
- * <@localrss filename="atom.xml" />
+ * &lt;@localrss filename="atom.xml" /&gt;
  * 
  * @author Toshiki Iga
  */

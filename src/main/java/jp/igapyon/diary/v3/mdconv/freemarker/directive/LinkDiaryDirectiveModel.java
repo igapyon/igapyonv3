@@ -57,7 +57,7 @@ import jp.igapyon.diary.v3.util.IgapyonV3Settings;
 /**
  * ローカル日記へのリンク用のディレクティブモデル
  * 
- * <@linkdiary date="2017-01-02" />
+ * &lt;@linkdiary date="2017-01-02" /&gt;
  * 
  * @author Toshiki Iga
  */

@@ -42,11 +42,13 @@ import org.apache.commons.lang3.StringUtils;
  */
 public class IgStringUtil {
 	/**
-	 * get string with 13 and 38 and ... hardcoded StringUtils.abbreviateMiddle
+	 * get abbreviated string with 13 and 38
+	 * 
+	 * such as hardcoded StringUtils.abbreviateMiddle
 	 * 
 	 * @param message
-	 * @param maxlen
-	 * @return
+	 *            input message.
+	 * @return abbreviated message.
 	 */
 	public static String abbreviateMiddle(final String message) {
 		// hardcoded prefix length.

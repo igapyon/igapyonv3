@@ -63,6 +63,8 @@ public class IgXmlUtil {
 	 * @param inputXml
 	 *            XML string.
 	 * @return Element
+	 * @throws IOException
+	 *             io exception occurs.
 	 */
 	public static Element stringToElement(final String inputXml) throws IOException {
 		try {
@@ -82,6 +84,8 @@ public class IgXmlUtil {
 	 * @param rootElement
 	 *            Element.
 	 * @return XML string.
+	 * @throws IOException
+	 *             io exception occurs.
 	 */
 	public static String elementToString(final Element rootElement) throws IOException {
 		try {
