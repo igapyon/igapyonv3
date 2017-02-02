@@ -114,6 +114,7 @@ public class LinkPrevDirectiveModel implements TemplateDirectiveModel {
 	 * 処理の過程で必要になる各種 atom ファイルをロード済みかどうか念押し確認します。
 	 * 
 	 * @throws IOException
+	 *             io exception occurs
 	 */
 	public void ensureLoadAtomXml() throws IOException {
 		if (synEntryList == null) {

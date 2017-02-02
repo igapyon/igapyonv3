@@ -77,7 +77,8 @@ public class IgapyonV3TemplateLoader implements TemplateLoader {
 	 * 与えられたリソース名にロケール文字列が含まれている場合がこれを除去します。
 	 * 
 	 * @param resourceName
-	 * @return
+	 *            name of resource.
+	 * @return without locale name.
 	 */
 	public static String stripLocaleName(final String resourceName) {
 		String actualResourceName = resourceName;
@@ -186,7 +187,7 @@ public class IgapyonV3TemplateLoader implements TemplateLoader {
 	/**
 	 * 標準的なヘッダーを取得します。
 	 * 
-	 * @return
+	 * @return header string
 	 * @throws IOException
 	 *             io exception occurs.
 	 */

@@ -48,7 +48,7 @@ import jp.igapyon.diary.v3.util.IgapyonV3Settings;
 /**
  * Amazon コンテンツへのリンク用のディレクティブモデル
  * 
- * <@linkamazon title="やさしく学ぶ基礎からのJDBC" dp="4839913935" />
+ * &lt;@linkamazon title="やさしく学ぶ基礎からのJDBC" dp="4839913935" /&gt;
  * 
  * @author Toshiki Iga
  */
