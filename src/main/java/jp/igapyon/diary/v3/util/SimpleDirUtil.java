@@ -50,8 +50,10 @@ public class SimpleDirUtil {
 	 * 先頭は / や ￥ を含まないものとします。
 	 * 
 	 * @param baseDir
+	 *            dir of base.
 	 * @param file
-	 * @return
+	 *            file of input.
+	 * @return relative path.
 	 * @throws IOException
 	 *             io exception occurs.
 	 */
@@ -172,8 +174,10 @@ public class SimpleDirUtil {
 	 * URL を File に変換します。
 	 * 
 	 * @param url
+	 *            input URL.
 	 * @param settings
-	 * @return
+	 *            diary settings.
+	 * @return file style.
 	 * @throws IOException
 	 *             io exception occurs.
 	 * @deprecated 使いドコロがあったはずと思って作成したものの、実際に適用しようとしたらフィットする箇所がない。とりあえず
@@ -194,8 +198,10 @@ public class SimpleDirUtil {
 	 * このクラスの中から呼び出しされています。
 	 * 
 	 * @param file
+	 *            input file.
 	 * @param settings
-	 * @return
+	 *            diary settings.
+	 * @return URL string.
 	 * @throws IOException
 	 *             io exception occurs.
 	 */

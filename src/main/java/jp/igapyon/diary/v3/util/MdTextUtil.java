@@ -62,7 +62,8 @@ public class MdTextUtil {
 	 * シンプルな URL を MD リンク形式に変換します。
 	 * 
 	 * @param source
-	 * @return
+	 *            input URL.
+	 * @return markdown style string.
 	 */
 	public static String convertSimpleUrl2MdLink(final String source) {
 
