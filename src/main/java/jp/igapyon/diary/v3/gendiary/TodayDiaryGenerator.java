@@ -61,7 +61,6 @@ public class TodayDiaryGenerator {
 	/**
 	 * 主たるエントリーポイント。
 	 * 
-	 * @param rootdir
 	 * @throws IOException
 	 *             io exception occurs.
 	 */
@@ -103,7 +102,8 @@ public class TodayDiaryGenerator {
 	 * 本日の日記ファイルを取得します。
 	 * 
 	 * @param yearDir
-	 * @return
+	 *            base year dir.
+	 * @return today's file.
 	 */
 	protected File getTodayDiaryFile(final File yearDir) {
 		// ファイル名は igyyMMdd.html.src.md 形式。
@@ -112,12 +112,11 @@ public class TodayDiaryGenerator {
 	}
 
 	/**
-	 * 日記システムの今日の日記のためのルートディレクトリを取得します。
+	 * 日記システムの今日の日記のための年ディレクトリを取得します。
 	 * 
 	 * ディレクトリが存在しない場合は新規作成します。
 	 * 
-	 * @param rootdir
-	 * @return
+	 * @return year dir for today.
 	 * @throws IOException
 	 *             io exception occurs.
 	 */
