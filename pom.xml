@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>jp.igapyon.diary</groupId>
 	<artifactId>igapyonv3</artifactId>
-	<version>1.3.16-SNAPSHOT</version>
+	<version>1.3.17-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
 	<name>igapyonv3</name>
@@ -177,17 +177,6 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jar-plugin</artifactId>
 				<version>3.0.0</version>
-				<configuration>
-					<archive>
-						<index>true</index>
-						<manifest>
-							<addClasspath>true</addClasspath>
-						</manifest>
-						<manifestEntries>
-							<Built-By>Toshiki Iga</Built-By>
-						</manifestEntries>
-					</archive>
-				</configuration>
 			</plugin>
 
 			<!-- javadoc -->
