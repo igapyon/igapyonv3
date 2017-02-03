@@ -71,8 +71,8 @@ public class SimpleDirUtilTest {
 
 		assertEquals("/tmp/aaa",
 				SimpleDirUtil.url2File("https://igapyon.github.io/diary", settings).getCanonicalPath());
-		assertEquals(new File("/tmp/aaa/").getCanonicalPath(),
-				SimpleDirUtil.url2File("https://igapyon.github.io/diary/", settings).getCanonicalPath());
+		assertEquals("/tmp/aaa/", SimpleDirUtil.url2File("https://igapyon.github.io/diary/", settings)
+				.getCanonicalFile().getAbsolutePath());
 		assertEquals("/tmp/aaa/aaa",
 				SimpleDirUtil.url2File("https://igapyon.github.io/diary/aaa", settings).getCanonicalPath());
 		assertEquals("/tmp/aaa/bbb",
