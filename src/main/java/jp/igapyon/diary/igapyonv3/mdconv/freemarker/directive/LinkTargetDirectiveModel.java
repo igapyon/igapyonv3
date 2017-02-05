@@ -94,9 +94,9 @@ public class LinkTargetDirectiveModel implements TemplateDirectiveModel {
 			// do nothing
 		} else if (fileNameModified.endsWith(".html.md")) {
 			fileNameModified = fileNameModified.substring(0, fileNameModified.lastIndexOf("."));
-		} else if (fileNameModified.endsWith(".html.src.md")) {
+		} else if (fileNameModified.endsWith(".src.md")) {
 			// for igapyonv3
-			fileNameModified = fileNameModified.substring(0, fileNameModified.length() - ".html.src.md".length())
+			fileNameModified = fileNameModified.substring(0, fileNameModified.length() - ".src.md".length())
 					+ ".html";
 		} else if (fileNameModified.equals("README.src.md")) {
 			// FIXME

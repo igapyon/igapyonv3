@@ -1,4 +1,4 @@
-[top](index.html) / [index](index.html) / [target](https://igapyon.github.io/diary/index.html) / [source](https://github.com/igapyon/diary/blob/gh-pages/index.html.src.md) 
+[top](index.html) / [index](index.html) / [target](https://igapyon.github.io/diary/index.html) / [source](https://github.com/igapyon/diary/blob/gh-pages/index.src.md) 
 
 テストコンテンツ：トップ
 =====================================================================================================
@@ -13,7 +13,7 @@
 ### 比較的最近の日記 ([Feed](https://igapyon.github.io/diary/atomRecent.xml))
 
 * [2010-01-02 diary: 2009 年のふりかえり。JavaServer Faces (JSF) と Eclipse プラグイン開発](v2html/ig100102.html)
-* [[![いがぴょん画像(小) 2003/06](http://www.igapyon.jp/igapyon/image/iga200306s.jpg)](http://www.igapyon.jp) 2015/06/30 日記: Markdown 記法を Bootstrap 的な HTML に変換](src/diary/2015/ig150630)
+* [[![いがぴょん画像(小) 2003/06](http://www.igapyon.jp/igapyon/image/iga200306s.jpg)](http://www.igapyon.jp) 2015/06/30 日記: Markdown 記法を Bootstrap 的な HTML に変換](src/diary/2015/ig150630.html)
 * [2016-12-27 diary: [maven] Title for test](hatena/ig161227.html)
 * [2016-12-26 diary: [maven] Title for test](hatena/ig161226.html)
 * [2017-01-01 diary: [Test] テスト用データ](2017/ig170101.html)

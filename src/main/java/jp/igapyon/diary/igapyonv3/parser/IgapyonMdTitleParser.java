@@ -142,6 +142,14 @@ public class IgapyonMdTitleParser {
 	 * @return
 	 */
 	String getUrl(final String path, final String fileName) {
-		return settings.getBaseurl() + path + "/" + fileName.substring(0, fileName.length() - ".md".length());
+		if(fileName.endsWith(".html.md")){
+			// FIXME このパターンは将来なくします。
+			return settings.getBaseurl() + path + "/" + fileName.substring(0, fileName.length() - ".md".length()/* FIXME +".html"*/);
+		}else			if(fileName.endsWith(".html")){
+				// FIXME このパターンは将来なくします。
+				return settings.getBaseurl() + path + "/" + fileName.substring(0, fileName.length() - ".md".length());
+		}else {
+			return settings.getBaseurl() + path + "/" + fileName.substring(0, fileName.length() - ".md".length() )+".html";
+		}
 	}
 }

@@ -45,7 +45,7 @@ import org.apache.commons.lang3.StringUtils;
 import jp.igapyon.diary.igapyonv3.util.IgapyonV3Settings;
 
 /**
- * 分割された「はてなテキスト」からMDファイル (.html.src.md) を生成します。
+ * 分割された「はてなテキスト」からMDファイル (.src.md) を生成します。
  * 
  * はてな記法の一部しかサポートできていません。
  * 
@@ -223,7 +223,7 @@ public class HatenaText2SrcMdConverter {
 		}
 
 		String newName = file.getName().substring(0, file.getName().length() - (".src.hatenadiary".length()))
-				+ ".html.src.md";
+				+ ".src.md";
 		FileUtils.writeLines(new File(file.getParentFile(), newName), lines);
 
 		final String destString = FileUtils.readFileToString(file, "UTF-8");

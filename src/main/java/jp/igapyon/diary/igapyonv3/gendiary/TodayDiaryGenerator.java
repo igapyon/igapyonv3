@@ -45,7 +45,7 @@ import org.apache.commons.io.FileUtils;
 import jp.igapyon.diary.igapyonv3.util.IgapyonV3Settings;
 
 /**
- * 今日付けの日記ファイル igyyMMdd.html.src.md を生成するクラス。
+ * 今日付けの日記ファイル igyyMMdd.src.md を生成するクラス。
  * 
  * ファイルが存在しなければこれを新規作成します。
  * 
@@ -67,7 +67,7 @@ public class TodayDiaryGenerator {
 	public void processDir() throws IOException {
 		final File yearDir = getYearDir();
 
-		// ファイル名は igyyMMdd.html.src.md 形式。
+		// ファイル名は igyyMMdd.src.md 形式。
 		final File file = getTodayDiaryFile(yearDir);
 		if (file.exists()) {
 			// すでに本日の日記ファイルは存在します。処理中断します。
@@ -106,9 +106,9 @@ public class TodayDiaryGenerator {
 	 * @return today's file.
 	 */
 	protected File getTodayDiaryFile(final File yearDir) {
-		// ファイル名は igyyMMdd.html.src.md 形式。
+		// ファイル名は igyyMMdd.src.md 形式。
 		final String yymmdd = new SimpleDateFormat("yyMMdd").format(settings.getToday());
-		return new File(yearDir, ("ig" + yymmdd + ".html.src.md"));
+		return new File(yearDir, ("ig" + yymmdd + ".src.md"));
 	}
 
 	/**

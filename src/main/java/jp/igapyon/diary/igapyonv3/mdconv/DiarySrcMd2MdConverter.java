@@ -53,7 +53,7 @@ import jp.igapyon.diary.igapyonv3.util.SimpleDirUtil;
 /**
  * ソースのマークダウンファイル `.src.md` から ターゲットのマークダウンファイル `.md` を生成するためのクラスです。
  * 
- * 多くの場合、`.html.src.md` から ターゲットの `.html.md` を生成します。
+ * 多くの場合、`.src.md` から ターゲットの `.md` そしておまけで `.html.md` を生成します。
  * 
  * @author Toshiki Iga
  */
@@ -129,7 +129,8 @@ public class DiarySrcMd2MdConverter {
 		}
 
 		// TODO .src.md から .md を取得するための共通関数がほしいです。
-		String newName = file.getName().substring(0, file.getName().length() - (".src.md".length())) + ".md";
+		// FIXME 本来は .md がゴールで github 用に .html.md を複写生成するはず。
+		String newName = file.getName().substring(0, file.getName().length() - (".src.md".length())) + ".html.md";
 		FileUtils.writeLines(new File(file.getParentFile(), newName), lines);
 	}
 }

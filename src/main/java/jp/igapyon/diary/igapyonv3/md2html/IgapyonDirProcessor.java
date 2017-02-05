@@ -73,9 +73,9 @@ public abstract class IgapyonDirProcessor {
 			// for igapyonv3
 			return origName.substring(0, origName.lastIndexOf("."));
 		}
-		if (origName.endsWith(".html.src.md")) {
+		if (origName.endsWith(".src.md")) {
 			// for igapyonv3
-			return origName.substring(0, origName.length() - ".html.src.md".length()) + ".src.html";
+			return origName.substring(0, origName.length() - ".src.md".length()) + ".src.html";
 		}
 		final String withoutExt = origName.substring(0, origName.lastIndexOf("."));
 		return withoutExt + newExt;

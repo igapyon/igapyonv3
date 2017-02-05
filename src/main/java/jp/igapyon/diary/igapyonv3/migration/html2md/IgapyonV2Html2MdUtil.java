@@ -62,7 +62,7 @@ public class IgapyonV2Html2MdUtil {
 			source = SimpleTagSoupUtil.formatHtml(source);
 
 			final File newFile = new File(file.getParentFile(),
-					file.getName().substring(0, file.getName().length() - "-orig.html".length()) + ".html.src.md");
+					file.getName().substring(0, file.getName().length() - "-orig.html".length()) + ".src.md");
 			System.out.println("convert from " + file.getName() + " to " + newFile.getName());
 
 			final SAXParserFactory saxFactory = SAXParserFactory.newInstance();

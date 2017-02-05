@@ -126,8 +126,8 @@ public class IgDiaryProcessor {
 			System.err.println("Generate keyword md if exists.");
 			new KeywordMdTextGenerator(settings).generateNewKeyword();
 
-			// .html.src.md ファイルから .md ファイルを生成します。
-			System.err.println("Convert .html.src.md to .html.md file.");
+			// .src.md ファイルから .md ファイルを生成します。
+			System.err.println("Convert .src.md to .html.md file.");
 			new DiarySrcMd2MdConverter(settings).processDir(settings.getRootdir());
 		}
 

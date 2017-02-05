@@ -124,7 +124,7 @@ public class KeywordMdTextGenerator {
 
 					try {
 						final File keywordFile = new File(settings.getRootdir().getCanonicalPath() + "/keyword/"
-								+ new URLCodec().encode(word.toLowerCase()) + ".html.src.md");
+								+ new URLCodec().encode(word.toLowerCase()) + ".src.md");
 						if (keywordFile.exists()) {
 							continue;
 						}
