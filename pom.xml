@@ -1,9 +1,8 @@
-<project xmlns="https://maven.apache.org/POM/4.0.0" xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="https://maven.apache.org/POM/4.0.0 https://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>jp.igapyon.diary</groupId>
 	<artifactId>igapyonv3</artifactId>
-	<version>1.3.1.6-SNAPSHOT</version>
+	<version>1.4.0.9-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
 	<name>igapyonv3</name>
@@ -28,7 +27,7 @@
 		<url>https://github.com/igapyon/igapyonv3</url>
 		<connection>scm:git:https://github.com/igapyon/igapyonv3.git</connection>
 		<developerConnection>scm:git:https://github.com/igapyon/igapyonv3.git</developerConnection>
-		<tag>igapyonv3-1.3.1.2</tag>
+		<tag>HEAD</tag>
 	</scm>
 
 	<developers>
@@ -53,7 +52,8 @@
 		</snapshotRepository>
 		<repository>
 			<id>ossrh</id>
-			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/
+			</url>
 		</repository>
 	</distributionManagement>
 
@@ -62,21 +62,21 @@
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>[4.12,5.0)</version>
+			<version>4.12</version>
 		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/org.apache.ant/ant -->
 		<dependency>
 			<groupId>org.apache.ant</groupId>
 			<artifactId>ant</artifactId>
-			<version>[1.9.7,2.0)</version>
+			<version>1.9.8</version>
 		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/commons-cli/commons-cli -->
 		<dependency>
 			<groupId>commons-cli</groupId>
 			<artifactId>commons-cli</artifactId>
-			<version>[1.3.1,2.0)</version>
+			<version>1.3.1</version>
 		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/org.pegdown/pegdown -->
@@ -92,7 +92,7 @@
 		<dependency>
 			<groupId>commons-io</groupId>
 			<artifactId>commons-io</artifactId>
-			<version>[2.5,3.0)</version>
+			<version>2.5</version>
 		</dependency>
 
 		<!-- Apache StringUtil -->
@@ -100,7 +100,7 @@
 		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
-			<version>[3.5,4.0)</version>
+			<version>3.5</version>
 		</dependency>
 
 		<!-- URLCodec -->
@@ -108,7 +108,7 @@
 		<dependency>
 			<groupId>commons-codec</groupId>
 			<artifactId>commons-codec</artifactId>
-			<version>[1.10,2.0)</version>
+			<version>1.10</version>
 		</dependency>
 
 		<!-- normalize html tag -->
@@ -116,7 +116,7 @@
 		<dependency>
 			<groupId>org.ccil.cowan.tagsoup</groupId>
 			<artifactId>tagsoup</artifactId>
-			<version>[1.2.1,2.0)</version>
+			<version>1.2.1</version>
 		</dependency>
 
 		<!-- template engine -->
@@ -124,7 +124,7 @@
 		<dependency>
 			<groupId>org.freemarker</groupId>
 			<artifactId>freemarker</artifactId>
-			<version>[2.3.25-incubating,3.0)</version>
+			<version>2.3.25-incubating</version>
 		</dependency>
 
 		<!-- RSS parser -->
@@ -132,9 +132,8 @@
 		<dependency>
 			<groupId>com.rometools</groupId>
 			<artifactId>rome</artifactId>
-			<version>[1.7.0,2.0)</version>
+			<version>1.7.1</version>
 		</dependency>
-
 	</dependencies>
 
 	<!-- basic spec for jar -->
@@ -164,6 +163,28 @@
 				<executions>
 					<execution>
 						<id>attach-sources</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+			<!-- javadoc -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>2.10.4</version>
+				<configuration>
+					<author>true</author>
+					<source>1.6</source>
+					<locale>en</locale>
+					<showPackage>true</showPackage>
+					<charset>utf-8</charset>
+				</configuration>
+				<executions>
+					<execution>
+						<phase>package</phase>
 						<goals>
 							<goal>jar</goal>
 						</goals>
@@ -203,6 +224,7 @@
 				</executions>
 			</plugin>
 
+			<!-- for sonatype -->
 			<plugin>
 				<groupId>org.sonatype.plugins</groupId>
 				<artifactId>nexus-staging-maven-plugin</artifactId>
