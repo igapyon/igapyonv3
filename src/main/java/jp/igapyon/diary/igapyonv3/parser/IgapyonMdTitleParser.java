@@ -129,6 +129,9 @@ public class IgapyonMdTitleParser {
 			}
 		}
 
+		if (fileName.endsWith(".html.md")) {
+			return false;
+		}
 		return (fileName.startsWith(prefixName) && fileName.endsWith(".md") && false == fileName.endsWith(".src.md"));
 	}
 
@@ -142,14 +145,16 @@ public class IgapyonMdTitleParser {
 	 * @return
 	 */
 	String getUrl(final String path, final String fileName) {
-		if(fileName.endsWith(".html.md")){
+		if (fileName.endsWith(".html.md")) {
 			// FIXME このパターンは将来なくします。
-			return settings.getBaseurl() + path + "/" + fileName.substring(0, fileName.length() - ".md".length()/* FIXME +".html"*/);
-		}else			if(fileName.endsWith(".html")){
-				// FIXME このパターンは将来なくします。
-				return settings.getBaseurl() + path + "/" + fileName.substring(0, fileName.length() - ".md".length());
-		}else {
-			return settings.getBaseurl() + path + "/" + fileName.substring(0, fileName.length() - ".md".length() )+".html";
+			return settings.getBaseurl() + path + "/" + fileName.substring(0,
+					fileName.length() - ".md".length()/* FIXME +".html" */);
+		} else if (fileName.endsWith(".html")) {
+			// FIXME このパターンは将来なくします。
+			return settings.getBaseurl() + path + "/" + fileName.substring(0, fileName.length() - ".md".length());
+		} else {
+			return settings.getBaseurl() + path + "/" + fileName.substring(0, fileName.length() - ".md".length())
+					+ ".html";
 		}
 	}
 }

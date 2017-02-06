@@ -129,8 +129,16 @@ public class DiarySrcMd2MdConverter {
 		}
 
 		// TODO .src.md から .md を取得するための共通関数がほしいです。
-		// FIXME 本来は .md がゴールで github 用に .html.md を複写生成するはず。
-		String newName = file.getName().substring(0, file.getName().length() - (".src.md".length())) + ".html.md";
-		FileUtils.writeLines(new File(file.getParentFile(), newName), lines);
+		{
+			// generate from .src.md to .md
+			String newName = file.getName().substring(0, file.getName().length() - (".src.md".length())) + ".md";
+			FileUtils.writeLines(new File(file.getParentFile(), newName), lines);
+		}
+
+		if (settings.isDuplicateFakeHtmlMd()) {
+			// generate fake html.md file for gh-pages
+			String newName = file.getName().substring(0, file.getName().length() - (".src.md".length())) + ".html.md";
+			FileUtils.writeLines(new File(file.getParentFile(), newName), lines);
+		}
 	}
 }
