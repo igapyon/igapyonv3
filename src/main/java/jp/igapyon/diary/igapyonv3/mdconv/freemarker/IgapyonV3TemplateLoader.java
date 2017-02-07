@@ -46,7 +46,6 @@ import org.apache.commons.io.FileUtils;
 
 import freemarker.cache.TemplateLoader;
 import jp.igapyon.diary.igapyonv3.util.IgapyonV3Settings;
-import jp.igapyon.diary.igapyonv3.util.SimpleDirUtil;
 
 /**
  * igapyonv3 向けの所定の挙動をおこなうテンプロードローダーです。
@@ -113,46 +112,40 @@ public class IgapyonV3TemplateLoader implements TemplateLoader {
 			return resourceName;
 		}
 
-		if (actualFile.getName().startsWith("ig") && false == actualFile.getName().startsWith("iga")
-				|| actualFile.getName().startsWith("index") || actualFile.getName().startsWith("idxall")
-				|| actualFile.getName().startsWith("README") || actualFile.getName().startsWith("memo")
-				|| SimpleDirUtil.getRelativePath(settings.getRootdir(), actualFile).startsWith("keyword")) {
+		load = getStandardHeaderString() + load;
 
-			load = getStandardHeaderString() + load;
+		{
+			// keyword の場合の特殊処理。
+			final File sourceDir = new File(settings.getRootdir(), resourceName).getCanonicalFile().getParentFile();
+			if (sourceDir.getName().equals("keyword")) {
+				String fileName = resourceName;
+				fileName = fileName.substring(fileName.lastIndexOf("/") + 1);
+				fileName = fileName.substring(0, fileName.indexOf("."));
 
-			{
-				// keyword の場合の特殊処理。
-				final File sourceDir = new File(settings.getRootdir(), resourceName).getCanonicalFile().getParentFile();
-				if (sourceDir.getName().equals("keyword")) {
-					String fileName = resourceName;
-					fileName = fileName.substring(fileName.lastIndexOf("/") + 1);
-					fileName = fileName.substring(0, fileName.indexOf("."));
-
-					String footer = "";
-					footer += "\n";
-					footer += "### 日記\n";
-					footer += "\n";
-					footer += "<@localrss filename=\"atom/" + fileName + ".xml\" /><#-- 利用日記情報を読み込み -->\n";
-					footer += "\n";
-					load += footer;
-				}
+				String footer = "";
+				footer += "\n";
+				footer += "### 日記\n";
+				footer += "\n";
+				footer += "<@localrss filename=\"atom/" + fileName + ".xml\" /><#-- 利用日記情報を読み込み -->\n";
+				footer += "\n";
+				load += footer;
 			}
-
-			{
-				final File fileTemplate = new File(settings.getRootdir(), "template-footer.md");
-				if (fileTemplate.exists()) {
-					final String template = FileUtils.readFileToString(fileTemplate, "UTF-8");
-					load += template;
-				} else {
-					System.err.println("template-footer.md not found.:" + fileTemplate.getCanonicalPath());
-				}
-			}
-		} else {
-			// TODO そのうちに、どのように判断するのか検討。
-			// 加工無し出力。
-			resourceMap.put(resourceName, load);
-			return resourceName;
 		}
+
+		{
+			final File fileTemplate = new File(settings.getRootdir(), "template-footer.md");
+			if (fileTemplate.exists()) {
+				final String template = FileUtils.readFileToString(fileTemplate, "UTF-8");
+				load += template;
+			} else {
+				System.err.println("template-footer.md not found.:" + fileTemplate.getCanonicalPath());
+			}
+		}
+
+		// 加工無し出力は、いまのところ実装なし。
+		// resourceMap.put(resourceName, load);
+		// return resourceName;
+		// }
 
 		resourceMap.put(resourceName, load);
 
