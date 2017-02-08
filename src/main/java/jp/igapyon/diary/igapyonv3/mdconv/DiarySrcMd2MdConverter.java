@@ -96,6 +96,10 @@ public class DiarySrcMd2MdConverter {
 	}
 
 	public void processFile(final File file) throws IOException {
+		if (settings.isVerbose()) {
+			System.err.println("srcmd2md: " + SimpleDirUtil.getRelativePath(settings.getRootdir(), file));
+		}
+
 		final Map<String, Object> templateData = new HashMap<String, Object>();
 
 		// テンプレート適用処理を実施します。

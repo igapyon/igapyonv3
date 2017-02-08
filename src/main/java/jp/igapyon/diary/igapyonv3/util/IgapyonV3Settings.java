@@ -80,6 +80,11 @@ public class IgapyonV3Settings {
 	private boolean verbose = false;
 
 	/**
+	 * debug mode for debugging.
+	 */
+	private boolean debug = false;
+
+	/**
 	 * Generate today's diary or not.
 	 */
 	private boolean generateTodayDiary = true;
@@ -262,6 +267,14 @@ public class IgapyonV3Settings {
 
 	public void setVerbose(boolean verbose) {
 		this.verbose = verbose;
+	}
+
+	public boolean isDebug() {
+		return debug;
+	}
+
+	public void setDebug(boolean debug) {
+		this.debug = debug;
 	}
 
 	public boolean isGenerateTodayDiary() {

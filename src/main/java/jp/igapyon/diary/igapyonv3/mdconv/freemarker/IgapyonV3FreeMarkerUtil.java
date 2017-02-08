@@ -67,6 +67,7 @@ import jp.igapyon.diary.igapyonv3.mdconv.freemarker.directive.RSSFeedDirectiveMo
 import jp.igapyon.diary.igapyonv3.mdconv.freemarker.method.SetAuthorMethodModel;
 import jp.igapyon.diary.igapyonv3.mdconv.freemarker.method.SetBaseurlMethodModel;
 import jp.igapyon.diary.igapyonv3.mdconv.freemarker.method.SetConvertmarkdown2htmlMethodModel;
+import jp.igapyon.diary.igapyonv3.mdconv.freemarker.method.SetDebugMethodModel;
 import jp.igapyon.diary.igapyonv3.mdconv.freemarker.method.SetDuplicatefakehtmlmdMethodModel;
 import jp.igapyon.diary.igapyonv3.mdconv.freemarker.method.SetGeneratetodaydiaryMethodModel;
 import jp.igapyon.diary.igapyonv3.mdconv.freemarker.method.SetSourcebaseurlMethodModel;
@@ -267,6 +268,7 @@ public class IgapyonV3FreeMarkerUtil {
 
 		// methos
 		config.setSharedVariable("setVerbose", new SetVerboseMethodModel(settings));
+		config.setSharedVariable("setDebug", new SetDebugMethodModel(settings));
 		config.setSharedVariable("setGeneratetodaydiary", new SetGeneratetodaydiaryMethodModel(settings));
 		config.setSharedVariable("setDuplicatefakehtmlmd", new SetDuplicatefakehtmlmdMethodModel(settings));
 		config.setSharedVariable("setConvertmarkdown2html", new SetConvertmarkdown2htmlMethodModel(settings));
