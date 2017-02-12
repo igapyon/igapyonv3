@@ -38,6 +38,7 @@ import java.io.IOException;
 
 import org.apache.commons.io.FileUtils;
 
+import jp.igapyon.diary.igapyonv3.IgDiaryConstants;
 import jp.igapyon.diary.igapyonv3.util.IgapyonV3Settings;
 
 public class IgInitDiaryDir {
@@ -52,25 +53,7 @@ public class IgInitDiaryDir {
 		final File settingsMd = new File(settings.getRootdir(), "settings.src.md");
 		final File settingsMdTarget = new File(settings.getRootdir(), "settings.md");
 		if (settingsMd.exists() == false && settingsMdTarget.exists() == false) {
-			String contents = "";
-			contents += "## Settings for igapyonv3 env\n"; //
-			contents += "\n"; //
-			contents += "This file is settings for [[igapyonv3]].\n"; //
-			contents += "\n"; //
-			contents += "### Setting\n"; //
-			contents += "\n"; //
-			contents += "${setVerbose(\"false\")}\n"; //
-			contents += "${setGeneratetodaydiary(\"false\")}\n"; //
-			contents += "${setDuplicatefakehtmlmd(\"true\")}\n"; //
-			contents += "${setConvertmarkdown2html(\"true\")}\n"; //
-			contents += "${setAuthor(\"Test Author's name.\")}\n"; //
-			contents += "${setBaseurl(\"https://igapyon.github.io/diary\")}\n"; //
-			contents += "${setSourcebaseurl(\"https://github.com/igapyon/diary/blob/gh-pages\")}\n"; //
-			contents += "\n"; //
-			contents += "### Result\n"; //
-			contents += "\n"; //
-			contents += "${showSettings()}\n"; //
-			FileUtils.writeStringToFile(settingsMd, contents, "UTF-8");
+			FileUtils.writeStringToFile(settingsMd, IgDiaryConstants.DEFAULT_SETTINGS_SRC_MD, "UTF-8");
 		}
 	}
 }
