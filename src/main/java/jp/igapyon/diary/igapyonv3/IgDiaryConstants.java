@@ -41,17 +41,26 @@ package jp.igapyon.diary.igapyonv3;
 public class IgDiaryConstants {
 	public static final String DEFAULT_SETTINGS_SRC_MD = "## Settings for igapyonv3 env\n" //
 			+ "\n" //
-			+ "This file is settings for [[igapyonv3]].\n" //
+			+ "This file is settings for [[igapyonv3]].\n" // FIXME how to specify igapyonv3 ??? default keyword???
 			+ "\n" //
 			+ "### Setting\n" //
 			+ "\n" //
-			+ "${setVerbose(\"false\")}\n" //
-			+ "${setGeneratetodaydiary(\"false\")}\n" //
-			+ "${setDuplicatefakehtmlmd(\"true\")}\n" //
+			+ "${setVerbose(\"true\")}\n" //
+			+ "${setDebug(\"false\")}\n" //
+			+ "${setGeneratetodaydiary(\"true\")}\n" //
+			+ "${setDuplicatefakehtmlmd(\"false\")}\n" // TODO change for gh-pages
 			+ "${setConvertmarkdown2html(\"true\")}\n" //
 			+ "${setAuthor(\"Test Author's name.\")}\n" //
-			+ "${setBaseurl(\"https://igapyon.github.io/diary\")}\n" //
-			+ "${setSourcebaseurl(\"https://github.com/igapyon/diary/blob/gh-pages\")}\n" //
+			+ "${setBaseurl(\"https://igapyon.github.io/diary\")}\n" // FIXME
+																		// should
+																		// be
+																		// from
+																		// outside
+			+ "${setSourcebaseurl(\"https://github.com/igapyon/diary/blob/gh-pages\")}\n" // FIXME
+																							// should
+																							// be
+																							// from
+																							// outside
 			+ "\n" //
 			+ "### Result\n" //
 			+ "\n" //

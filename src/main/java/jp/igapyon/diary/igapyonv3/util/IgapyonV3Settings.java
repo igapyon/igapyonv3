@@ -92,7 +92,7 @@ public class IgapyonV3Settings {
 	/**
 	 * Convert markdown to html
 	 */
-	private boolean convertMarkdown2Html = false;
+	private boolean convertMarkdown2Html = true;
 
 	/**
 	 * Duplicate fake html.md or not.
