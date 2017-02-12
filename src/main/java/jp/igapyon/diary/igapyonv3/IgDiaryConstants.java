@@ -39,6 +39,24 @@ package jp.igapyon.diary.igapyonv3;
  * @author Toshiki Iga
  */
 public class IgDiaryConstants {
+	public static final String DEFAULT_SETTINGS_SRC_MD = "## Settings for igapyonv3 env\n" //
+			+ "\n" //
+			+ "This file is settings for [[igapyonv3]].\n" //
+			+ "\n" //
+			+ "### Setting\n" //
+			+ "\n" //
+			+ "${setVerbose(\"false\")}\n" //
+			+ "${setGeneratetodaydiary(\"false\")}\n" //
+			+ "${setDuplicatefakehtmlmd(\"true\")}\n" //
+			+ "${setConvertmarkdown2html(\"true\")}\n" //
+			+ "${setAuthor(\"Test Author's name.\")}\n" //
+			+ "${setBaseurl(\"https://igapyon.github.io/diary\")}\n" //
+			+ "${setSourcebaseurl(\"https://github.com/igapyon/diary/blob/gh-pages\")}\n" //
+			+ "\n" //
+			+ "### Result\n" //
+			+ "\n" //
+			+ "${showSettings()}\n"; //
+
 	/**
 	 * default template header.
 	 */
