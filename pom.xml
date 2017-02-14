@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>jp.igapyon.diary</groupId>
 	<artifactId>igapyonv3</artifactId>
-	<version>1.4.5-SNAPSHOT</version>
+	<version>1.4.8-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
 	<name>igapyonv3</name>
@@ -27,7 +27,7 @@
 		<url>https://github.com/igapyon/igapyonv3</url>
 		<connection>scm:git:https://github.com/igapyon/igapyonv3.git</connection>
 		<developerConnection>scm:git:https://github.com/igapyon/igapyonv3.git</developerConnection>
-		<tag>HEAD</tag>
+		<tag>igapyonv3-1.4.5</tag>
 	</scm>
 
 	<developers>
