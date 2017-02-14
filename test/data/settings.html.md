@@ -28,6 +28,7 @@ This file is settings for [[igapyonv3]].
 * generatetodaydiary: false
 * convertmarkdown2html: true
 * duplicatefakehtmlmd: true
+* generatekeywordifneeded: true
 
 ----------------------------------------------------------------------------------------------------
 

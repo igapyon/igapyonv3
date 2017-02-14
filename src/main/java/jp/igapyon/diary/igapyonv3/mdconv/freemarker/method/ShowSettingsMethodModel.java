@@ -28,7 +28,9 @@ public class ShowSettingsMethodModel implements TemplateMethodModelEx {
 				+ "* author: " + settings.getAuthor() + "\n" //
 				+ "* generatetodaydiary: " + settings.isGenerateTodayDiary() + "\n" //
 				+ "* convertmarkdown2html: " + settings.isConvertMarkdown2Html() + "\n" //
-				+ "* duplicatefakehtmlmd: " + settings.isDuplicateFakeHtmlMd();
+				+ "* duplicatefakehtmlmd: " + settings.isDuplicateFakeHtmlMd() + "\n" //
+				+ "* generatekeywordifneeded: " + settings.isGenerateKeywordIfNeeded();
+
 		// NOTICE: rootdir not to be shown.
 	}
 }

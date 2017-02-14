@@ -69,6 +69,7 @@ import jp.igapyon.diary.igapyonv3.mdconv.freemarker.method.SetBaseurlMethodModel
 import jp.igapyon.diary.igapyonv3.mdconv.freemarker.method.SetConvertmarkdown2htmlMethodModel;
 import jp.igapyon.diary.igapyonv3.mdconv.freemarker.method.SetDebugMethodModel;
 import jp.igapyon.diary.igapyonv3.mdconv.freemarker.method.SetDuplicatefakehtmlmdMethodModel;
+import jp.igapyon.diary.igapyonv3.mdconv.freemarker.method.SetGenerateKeywordIfNeededMethodModel;
 import jp.igapyon.diary.igapyonv3.mdconv.freemarker.method.SetGeneratetodaydiaryMethodModel;
 import jp.igapyon.diary.igapyonv3.mdconv.freemarker.method.SetSourcebaseurlMethodModel;
 import jp.igapyon.diary.igapyonv3.mdconv.freemarker.method.SetVerboseMethodModel;
@@ -272,6 +273,7 @@ public class IgapyonV3FreeMarkerUtil {
 		config.setSharedVariable("setGeneratetodaydiary", new SetGeneratetodaydiaryMethodModel(settings));
 		config.setSharedVariable("setDuplicatefakehtmlmd", new SetDuplicatefakehtmlmdMethodModel(settings));
 		config.setSharedVariable("setConvertmarkdown2html", new SetConvertmarkdown2htmlMethodModel(settings));
+		config.setSharedVariable("setGeneratekeywordifneeded", new SetGenerateKeywordIfNeededMethodModel(settings));
 		config.setSharedVariable("setAuthor", new SetAuthorMethodModel(settings));
 		config.setSharedVariable("setBaseurl", new SetBaseurlMethodModel(settings));
 		config.setSharedVariable("setSourcebaseurl", new SetSourcebaseurlMethodModel(settings));

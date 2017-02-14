@@ -104,7 +104,7 @@ public class IgapyonV3Settings {
 	/**
 	 * Generate keyword srcmd if needed.
 	 */
-	private boolean generateKeywordSrcMdIfNeeded = true;
+	private boolean generateKeywordIfNeeded = true;
 
 	private List<String[]> doubleKeywordList = new ArrayList<String[]>();
 
@@ -306,11 +306,11 @@ public class IgapyonV3Settings {
 		this.duplicateFakeHtmlMd = duplicateFakeHtmlMd;
 	}
 
-	public boolean isGenerateKeywordSrcMdIfNeeded() {
-		return generateKeywordSrcMdIfNeeded;
+	public boolean isGenerateKeywordIfNeeded() {
+		return generateKeywordIfNeeded;
 	}
 
-	public void setGenerateKeywordSrcMdIfNeeded(boolean generateKeywordSrcMdIfNeeded) {
-		this.generateKeywordSrcMdIfNeeded = generateKeywordSrcMdIfNeeded;
+	public void setGenerateKeywordIfNeeded(boolean generateKeywordSrcMdIfNeeded) {
+		this.generateKeywordIfNeeded = generateKeywordSrcMdIfNeeded;
 	}
 }

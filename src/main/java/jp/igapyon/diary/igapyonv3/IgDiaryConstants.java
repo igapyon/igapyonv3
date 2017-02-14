@@ -41,14 +41,18 @@ package jp.igapyon.diary.igapyonv3;
 public class IgDiaryConstants {
 	public static final String DEFAULT_SETTINGS_SRC_MD = "## Settings for igapyonv3 env\n" //
 			+ "\n" //
-			+ "This file is settings for [[igapyonv3]].\n" // FIXME how to specify igapyonv3 ??? default keyword???
+			+ "This file is settings for [[igapyonv3]].\n" // FIXME how to
+															// specify igapyonv3
+															// ??? default
+															// keyword???
 			+ "\n" //
 			+ "### Setting\n" //
 			+ "\n" //
 			+ "${setVerbose(\"true\")}\n" //
 			+ "${setDebug(\"false\")}\n" //
 			+ "${setGeneratetodaydiary(\"true\")}\n" //
-			+ "${setDuplicatefakehtmlmd(\"false\")}\n" // TODO change for gh-pages
+			+ "${setDuplicatefakehtmlmd(\"false\")}\n" // TODO change for
+														// gh-pages
 			+ "${setConvertmarkdown2html(\"true\")}\n" //
 			+ "${setAuthor(\"Test Author's name.\")}\n" //
 			+ "${setBaseurl(\"https://igapyon.github.io/diary\")}\n" // FIXME
@@ -61,6 +65,7 @@ public class IgDiaryConstants {
 																							// be
 																							// from
 																							// outside
+			+ "${setGeneratekeywordifneeded(\"true\")}\n" //
 			+ "\n" //
 			+ "### Result\n" //
 			+ "\n" //
