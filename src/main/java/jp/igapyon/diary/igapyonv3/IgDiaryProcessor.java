@@ -123,8 +123,10 @@ public class IgDiaryProcessor {
 			System.err.println("Update keyword atom.xml.");
 			new KeywordAtomByTitleGenerator(settings).process();
 
-			System.err.println("Generate keyword md if exists.");
-			new KeywordMdTextGenerator(settings).generateNewKeyword();
+			if (settings.isGenerateKeywordIfNeeded()) {
+				System.err.println("Generate keyword md if needed.");
+				new KeywordMdTextGenerator(settings).generateNewKeyword();
+			}
 
 			// .src.md ファイルから .md ファイルを生成します。
 			System.err.println("Convert .src.md to .html.md file.");

@@ -54,6 +54,7 @@ import com.rometools.rome.io.SyndFeedInput;
 import com.rometools.rome.io.XmlReader;
 
 import jp.igapyon.diary.igapyonv3.util.IgapyonV3Settings;
+import jp.igapyon.diary.igapyonv3.util.SimpleDirUtil;
 
 /**
  * キーワードファイルを日記タイトルキーワード由来で必要が出た場合のみ作成します。
@@ -120,14 +121,16 @@ public class KeywordMdTextGenerator {
 				String word = mat.group();
 				word = word.substring(1, word.length() - 1);
 				if (keywordEntryMap.get(word.toLowerCase()) == null) {
-					System.out.println("日記タイトルの新規のキーワードによるファイル新規作成:" + word);
 
 					try {
 						final File keywordFile = new File(settings.getRootdir().getCanonicalPath() + "/keyword/"
 								+ new URLCodec().encode(word.toLowerCase()) + ".src.md");
-						if (keywordFile.exists()) {
+						if (SimpleDirUtil.existsTargetMdOrSrcMd(keywordFile)) {
 							continue;
 						}
+
+						System.out.println(
+								"Generate keyword src.md because newly keyword was found on diary title:" + word);
 
 						final List<String> lines = new ArrayList<String>();
 						lines.add("## " + word + "");
