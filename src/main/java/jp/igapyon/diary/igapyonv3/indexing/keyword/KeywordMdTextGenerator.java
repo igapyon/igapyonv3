@@ -129,8 +129,8 @@ public class KeywordMdTextGenerator {
 							continue;
 						}
 
-						System.out.println(
-								"Generate keyword src.md because newly keyword was found on diary title:" + word);
+						System.err.println("Generate keyword src.md : "
+								+ SimpleDirUtil.getRelativePath(settings.getRootdir(), keywordFile));
 
 						final List<String> lines = new ArrayList<String>();
 						lines.add("## " + word + "");
