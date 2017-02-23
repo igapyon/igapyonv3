@@ -28,7 +28,7 @@ igapyonv3 require maven.
 
 ### Edit pom.xml
 
-Edit pom.xml to enabele igapyonv3.
+Edit pom.xml to enable igapyonv3 like below:
 
 ```xml
  <build>
@@ -53,25 +53,39 @@ Edit pom.xml to enabele igapyonv3.
   </build>
 ```
 
-### Init igapyonv3 settings
+## Setup
+
+### Init igapyonv3 directory
+
+You can init directory using command line below:
 
 ```sh
 mvn jp.igapyon.diary.igapyonv3.plugin:igapyonv3-maven-plugin:init
 ```
 
+Default directory will be your current directory.
+
+### Edit igapyonv3 setting file.
+
+Modify `settings.src.md` to adjust diary that to fit to your favor.
+
 ```sh
-vi settings.src.md 
+vi settings.src.md
 ```
 
-I strongly recommnd that modify settings.src.md to be like `${setDuplicatefakehtmlmd("true")}` .
+And, It is strongly recommended that modify settings.src.md to enable dup-mode setting like `${setDuplicatefakehtmlmd("true")}` .
+
+### Force update template files.
+
+Update template files to apply `settings.src.md` changes, using command line below:
 
 ```sh
 mvn jp.igapyon.diary.igapyonv3.plugin:igapyonv3-maven-plugin:inittemplate
 ```
 
-### Running igapyonv3
+## Running igapyonv3
 
-You can generate markdown and html using command line below:
+You can generate compiled markdown files and html files, using command line below:
 
 ```sh
 mvn compile
