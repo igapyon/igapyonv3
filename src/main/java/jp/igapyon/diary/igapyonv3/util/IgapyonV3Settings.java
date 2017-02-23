@@ -123,6 +123,8 @@ public class IgapyonV3Settings {
 	 */
 	private String titleEn = "Igapyon Diary v3";
 
+	private String siteTitle = "Watashi's diary";
+
 	/**
 	 * Default double keywords.
 	 */
@@ -312,5 +314,13 @@ public class IgapyonV3Settings {
 
 	public void setGenerateKeywordIfNeeded(boolean generateKeywordSrcMdIfNeeded) {
 		this.generateKeywordIfNeeded = generateKeywordSrcMdIfNeeded;
+	}
+
+	public String getSiteTitle() {
+		return siteTitle;
+	}
+
+	public void setSiteTitle(String siteTitle) {
+		this.siteTitle = siteTitle;
 	}
 }

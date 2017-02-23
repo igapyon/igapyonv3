@@ -67,6 +67,17 @@ public class IgDiaryProcessor {
 		this.settings = settings;
 	}
 
+	public static void loadSettingsSrcMd(final IgapyonV3Settings settings) throws IOException {
+		// settings.src.md first.
+		final File fileSettings = new File(settings.getRootdir(), "settings.src.md");
+		if (fileSettings.exists()) {
+			System.err.println("igapyonv3 setting file found. :" + fileSettings.getCanonicalPath());
+			new DiarySrcMd2MdConverter(settings).processFile(fileSettings);
+		} else {
+			System.err.println("igapyonv3 setting file not found. :" + fileSettings.getCanonicalPath());
+		}
+	}
+
 	/**
 	 * run igapyonv3 with specified settings.
 	 * 
@@ -74,16 +85,7 @@ public class IgDiaryProcessor {
 	 *             io exception occurs.
 	 */
 	public void process() throws IOException {
-		{
-			// settings.src.md first.
-			final File fileSettings = new File(settings.getRootdir(), "settings.src.md");
-			if (fileSettings.exists()) {
-				System.err.println("igapyonv3 setting file found. :" + fileSettings.getCanonicalPath());
-				new DiarySrcMd2MdConverter(settings).processFile(fileSettings);
-			} else {
-				System.err.println("igapyonv3 setting file not found. :" + fileSettings.getCanonicalPath());
-			}
-		}
+		loadSettingsSrcMd(settings);
 
 		{
 			// FIXME

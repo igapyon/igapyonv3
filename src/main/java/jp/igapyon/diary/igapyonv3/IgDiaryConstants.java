@@ -78,7 +78,7 @@ public class IgDiaryConstants {
 			+ "\n" //
 			+ "<#if current.isDiary()>${current.getDiaryTitle()}<#else>${current.title}</#if>\n" //
 			+ "=====================================================================================================\n" //
-			+ "[![いがぴょん画像(小)](${settings.baseurl}/images/iga200306s.jpg \"いがぴょん\")](${settings.baseurl}/memo/memoigapyon.html) 日記形式でつづる [いがぴょん](${settings.baseurl}/memo/memoigapyon.html)コラム ウェブページです。\n" //
+			+ "%SITETITLE%\n" //
 			+ "";
 
 	/**
@@ -88,22 +88,22 @@ public class IgDiaryConstants {
 			+ "<@keywordlist /></#if>\n" //
 			+ "----------------------------------------------------------------------------------------------------\n" //
 			+ "\n" //
-			+ "## この日記について\n" //
+			+ "## About %SITETITLE%\n" //
 			+ "\n" //
-			+ "<@linkshare /> / <@linktop /> / [いがぴょんについて](${settings.baseurl}/memo/memoigapyon.html) / [Diary Generator](https://github.com/igapyon/igapyonv3)\n" //
+			+ "<@linkshare /> / <@linktop /> [Diary Generator](https://github.com/igapyon/igapyonv3)\n" //
 			+ "\n";
 
 	public static String DEFAULT_INDEX_SRC_MD = "<@localyearlist /> / [keyword](keyword/index.html) / [memo](memo/index.html) / [mirror1](http://www.igapyon.jp/igapyon/diary/) / [mirror2](http://igapyon.a.la9.jp/igapyon/diary/) / [mirror3](https://igapyon.github.io/diary/)\n" //
 			+ "\n" //
-			+ "## いがぴょんの日記ウェブページv3：トップ\n" //
+			+ "## %SITETITLE%: top\n" //
 			+ "\n" //
-			+ "### 比較的最近の日記 ([Feed](${settings.baseurl}/atomRecent.xml))\n" //
+			+ "### Recent diary ([Feed](${settings.baseurl}/atomRecent.xml))\n" //
 			+ "\n" //
 			+ "<@localrss filename=\"atomRecent.xml\" /><#-- Load recent updates from local -->\n"; //
 
-	public static String DEFAULT_KEYWORD_INDEX_SRC_MD = "<@localyearlist /> / [keyword](../keyword/index.html) / [memo](../memo/index.html) / [mirror1](http://www.igapyon.jp/igapyon/diary/) / [mirror2](http://igapyon.a.la9.jp/igapyon/diary/index.html) / [mirror3](https://igapyon.github.io/diary/)\n" //
+	public static String DEFAULT_KEYWORD_INDEX_SRC_MD = "<@localyearlist /> / [keyword](../keyword/index.html)\n" //
 			+ "\n" //
-			+ "## いがぴょんの日記：キーワード\n" //
+			+ "## %SITETITLE%: keyword\n" //
 			+ "\n" //
 			+ "<@localrss filename=\"atom.xml\" />";
 }
