@@ -118,4 +118,10 @@ public class IgDiaryConstants {
 			+ "## %SITETITLE%: keyword\n" //
 			+ "\n" //
 			+ "<@localrss filename=\"atom.xml\" />";
+
+	public static String DEFAULT_YEAR_INDEX_SRC_MD = "<@localyearlist /> / [keyword](../keyword/index.html)\n" //
+			+ "\n" //
+			+ "## %SITETITLE%: diary of %SITECURRENTYEAR%\n" //
+			+ "\n" //
+			+ "<@localrss filename=\"atom.xml\" />\n"; //
 }

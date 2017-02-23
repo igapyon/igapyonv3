@@ -35,6 +35,7 @@ package jp.igapyon.diary.igapyonv3.init;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 
 import org.apache.commons.io.FileUtils;
 
@@ -80,7 +81,12 @@ public class IgInitDiaryDir {
 	}
 
 	public String replaceReservedKeys(final String input) {
-		return input.replace("%SITETITLE%", settings.getSiteTitle());
+		String output = input.replaceAll("%SITETITLE%", settings.getSiteTitle());
+
+		final String yyyy = new SimpleDateFormat("yyyy").format(settings.getToday());
+		output = output.replaceAll("%SITECURRENTYEAR%", yyyy);
+
+		return output;
 	}
 
 	public void generateTemplate(final boolean forceOverwrite) throws IOException {
@@ -123,6 +129,22 @@ public class IgInitDiaryDir {
 				System.err.println("IgInitDiaryDir: generate " + lookupSrcMd.getCanonicalPath());
 				FileUtils.writeStringToFile(lookupSrcMd, replaceReservedKeys(IgDiaryConstants.DEFAULT_INDEX_SRC_MD),
 						"UTF-8");
+			}
+		}
+
+		{
+			final String yyyy = new SimpleDateFormat("yyyy").format(settings.getToday());
+			final File yearDir = new File(settings.getRootdir(), yyyy);
+			if (yearDir.exists() == false) {
+				yearDir.mkdirs();
+			}
+
+			final File lookupSrcMd = new File(yearDir, "index.src.md");
+
+			if (forceOverwrite || SimpleDirUtil.existsTargetMdOrSrcMd(lookupSrcMd) == false) {
+				System.err.println("IgInitDiaryDir: generate " + lookupSrcMd.getCanonicalPath());
+				FileUtils.writeStringToFile(lookupSrcMd,
+						replaceReservedKeys(IgDiaryConstants.DEFAULT_YEAR_INDEX_SRC_MD), "UTF-8");
 			}
 		}
 
