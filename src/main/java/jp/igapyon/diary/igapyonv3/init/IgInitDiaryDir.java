@@ -110,6 +110,14 @@ public class IgInitDiaryDir {
 			}
 		}
 		{
+			final File lookupSrcMd = new File(settings.getRootdir(), "idxall.src.md");
+			if (forceOverwrite || SimpleDirUtil.existsTargetMdOrSrcMd(lookupSrcMd) == false) {
+				System.err.println("IgInitDiaryDir: generate " + lookupSrcMd.getCanonicalPath());
+				FileUtils.writeStringToFile(lookupSrcMd, replaceReservedKeys(IgDiaryConstants.DEFAULT_IDXALL_SRC_MD),
+						"UTF-8");
+			}
+		}
+		{
 			final File lookupSrcMd = new File(settings.getRootdir(), "README.src.md");
 			if (forceOverwrite || SimpleDirUtil.existsTargetMdOrSrcMd(lookupSrcMd) == false) {
 				System.err.println("IgInitDiaryDir: generate " + lookupSrcMd.getCanonicalPath());
