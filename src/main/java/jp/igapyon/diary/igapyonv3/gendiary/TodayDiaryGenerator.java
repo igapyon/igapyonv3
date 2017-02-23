@@ -36,12 +36,11 @@ package jp.igapyon.diary.igapyonv3.gendiary;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import org.apache.commons.io.FileUtils;
 
+import jp.igapyon.diary.igapyonv3.IgDiaryConstants;
 import jp.igapyon.diary.igapyonv3.util.IgapyonV3Settings;
 
 /**
@@ -77,24 +76,11 @@ public class TodayDiaryGenerator {
 
 		// 日記ファイルの新規作成に移ります。
 
-		final List<String> lines = new ArrayList<String>();
-		lines.add("## ここにコンテンツのタイトル");
-		lines.add("");
-		lines.add("ここに何か内容。");
-		lines.add("");
-		lines.add("* 箇条書き1");
-		lines.add("* 箇条書き2");
-		lines.add("  * 箇条書き2-1");
-		lines.add("");
-		lines.add("```java");
-		lines.add("System.out.println(\"Hello world\");");
-		lines.add("```");
-		lines.add("");
-		lines.add("<#-- copyright " + settings.getAuthor() + " -->");
-		lines.add("<@lastmodified date=\"" + new SimpleDateFormat("yyyy-MM-dd").format(new Date()) + "\"/>");
+		final String mdfile = IgDiaryConstants.DEFAULT_NEW_DIARY_SRC_MD.replaceAll("%SITECURRENTYMD%",
+				new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
 
 		// 日記ファイルを新規作成します。
-		FileUtils.writeLines(file, lines);
+		FileUtils.writeStringToFile(file, mdfile, "UTF-8");
 		System.err.println("Today's diary md file was created: " + file.getAbsolutePath());
 	}
 

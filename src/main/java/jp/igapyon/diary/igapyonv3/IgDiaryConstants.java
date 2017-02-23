@@ -124,4 +124,21 @@ public class IgDiaryConstants {
 			+ "## %SITETITLE%: diary of %SITECURRENTYEAR%\n" //
 			+ "\n" //
 			+ "<@localrss filename=\"atom.xml\" />\n"; //
+
+	//////////////////////////////
+	
+	public static String DEFAULT_NEW_DIARY_SRC_MD = "## Diary title here\n" //
+			+ "\n" //
+			+ "Write `contents` here\n" //
+			+ "\n" //
+			+ "* line 1\n" //
+			+ "* line 2\n" //
+			+ "  * line 2-1\n" //
+			+ "\n" //
+			+ "```java\n" //
+			+ "System.out.println(\"Hello world\");\n" //
+			+ "```\n" //
+			+ "\n" //
+			+ "<@lastmodified date=\"%SITECURRENTYMD%\"/>\n";
+
 }
