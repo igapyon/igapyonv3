@@ -22,9 +22,18 @@ public class ShowSettingsMethodModel implements TemplateMethodModelEx {
 		// result blank string
 		return "" //
 				+ "* verbose: " + settings.isVerbose() + "\n" //
+				+ "* debug: " + settings.isDebug() + "\n" //
 				+ "* baseurl: " + settings.getBaseurl() + "\n" //
 				+ "* sourcebaseurl: " + settings.getSourcebaseurl() + "\n" //
-				+ "* author: " + settings.getAuthor();
+				+ "* author: " + settings.getAuthor() + "\n" //
+				+ "* generatetodaydiary: " + settings.isGenerateTodayDiary() + "\n" //
+				+ "* convertmarkdown2html: " + settings.isConvertMarkdown2Html() + "\n" //
+				+ "* duplicatefakehtmlmd: " + settings.isDuplicateFakeHtmlMd() + "\n" //
+				+ "* generatekeywordifneeded: " + settings.isGenerateKeywordIfNeeded() + "\n" //
+				+ "* sitetitle: " + settings.getSiteTitle(); // site seriese:
+																// for
+																// inittemplate
+
 		// NOTICE: rootdir not to be shown.
 	}
 }

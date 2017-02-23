@@ -50,40 +50,42 @@ import jp.igapyon.diary.igapyonv3.util.IgapyonV3Settings;
  * @author Toshiki Iga
  */
 public class IgDiaryProcessor {
-	/**
-	 * run igapyonv3 with specified rootdir.
-	 * 
-	 * @param rootdir
-	 *            root dir of diary.
-	 * @throws IOException
-	 *             io exception occurs.
-	 */
-	public void process(final File rootdir) throws IOException {
-		final IgapyonV3Settings settings = new IgapyonV3Settings();
-		settings.setRootdir(rootdir);
+	protected IgapyonV3Settings settings = null;
 
-		process(settings);
+	public IgDiaryProcessor(final File rootdir) {
+		settings = new IgapyonV3Settings();
+		settings.setRootdir(rootdir);
+	}
+
+	/**
+	 * construct newly with settings.
+	 * 
+	 * @param settings
+	 *            igapyonv3 settings.
+	 */
+	public IgDiaryProcessor(final IgapyonV3Settings settings) {
+		this.settings = settings;
+	}
+
+	public static void loadSettingsSrcMd(final IgapyonV3Settings settings) throws IOException {
+		// settings.src.md first.
+		final File fileSettings = new File(settings.getRootdir(), "settings.src.md");
+		if (fileSettings.exists()) {
+			System.err.println("igapyonv3 setting file found. :" + fileSettings.getCanonicalPath());
+			new DiarySrcMd2MdConverter(settings).processFile(fileSettings);
+		} else {
+			System.err.println("igapyonv3 setting file not found. :" + fileSettings.getCanonicalPath());
+		}
 	}
 
 	/**
 	 * run igapyonv3 with specified settings.
 	 * 
-	 * @param settings
-	 *            igapyonv3 settings.
 	 * @throws IOException
 	 *             io exception occurs.
 	 */
-	public void process(final IgapyonV3Settings settings) throws IOException {
-		{
-			// settings.src.md first.
-			final File fileSettings = new File(settings.getRootdir(), "settings.src.md");
-			if (fileSettings.exists()) {
-				System.err.println("igapyonv3 setting file found. :" + fileSettings.getCanonicalPath());
-				new DiarySrcMd2MdConverter(settings).processFile(fileSettings);
-			} else {
-				System.err.println("igapyonv3 setting file not found. :" + fileSettings.getCanonicalPath());
-			}
-		}
+	public void process() throws IOException {
+		loadSettingsSrcMd(settings);
 
 		{
 			// FIXME
@@ -123,8 +125,10 @@ public class IgDiaryProcessor {
 			System.err.println("Update keyword atom.xml.");
 			new KeywordAtomByTitleGenerator(settings).process();
 
-			System.err.println("Generate keyword md if exists.");
-			new KeywordMdTextGenerator(settings).generateNewKeyword();
+			if (settings.isGenerateKeywordIfNeeded()) {
+				System.err.println("Generate keyword md if needed.");
+				new KeywordMdTextGenerator(settings).generateNewKeyword();
+			}
 
 			// .src.md ファイルから .md ファイルを生成します。
 			System.err.println("Convert .src.md to .html.md file.");
@@ -148,7 +152,7 @@ public class IgDiaryProcessor {
 	 */
 	public static void main(final String[] args) {
 		try {
-			new IgDiaryProcessor().process(new File("."));
+			new IgDiaryProcessor(new File(".")).process();
 		} catch (IOException e) {
 			System.err.println("ERROR: " + e.toString());
 			e.printStackTrace();

@@ -80,6 +80,11 @@ public class IgapyonV3Settings {
 	private boolean verbose = false;
 
 	/**
+	 * debug mode for debugging.
+	 */
+	private boolean debug = false;
+
+	/**
 	 * Generate today's diary or not.
 	 */
 	private boolean generateTodayDiary = true;
@@ -87,7 +92,19 @@ public class IgapyonV3Settings {
 	/**
 	 * Convert markdown to html
 	 */
-	private boolean convertMarkdown2Html = false;
+	private boolean convertMarkdown2Html = true;
+
+	/**
+	 * Duplicate fake html.md or not.
+	 * 
+	 * for gh-pages
+	 */
+	private boolean duplicateFakeHtmlMd = false;
+
+	/**
+	 * Generate keyword srcmd if needed.
+	 */
+	private boolean generateKeywordIfNeeded = true;
 
 	private List<String[]> doubleKeywordList = new ArrayList<String[]>();
 
@@ -102,9 +119,9 @@ public class IgapyonV3Settings {
 	private String language = "ja_JP";
 
 	/**
-	 * 日記のタイトル。 主に atom で利用されます。
+	 * 日記のタイトル。
 	 */
-	private String titleEn = "Igapyon Diary v3";
+	private String siteTitle = "Watashi's diary";
 
 	/**
 	 * Default double keywords.
@@ -233,14 +250,6 @@ public class IgapyonV3Settings {
 		this.baseurl = baseurl;
 	}
 
-	public String getTitleEn() {
-		return titleEn;
-	}
-
-	public void setTitleEn(String titleEn) {
-		this.titleEn = titleEn;
-	}
-
 	public String getSourcebaseurl() {
 		return sourcebaseurl;
 	}
@@ -257,6 +266,14 @@ public class IgapyonV3Settings {
 		this.verbose = verbose;
 	}
 
+	public boolean isDebug() {
+		return debug;
+	}
+
+	public void setDebug(boolean debug) {
+		this.debug = debug;
+	}
+
 	public boolean isGenerateTodayDiary() {
 		return generateTodayDiary;
 	}
@@ -271,5 +288,29 @@ public class IgapyonV3Settings {
 
 	public void setConvertMarkdown2Html(boolean convertMarkdown2Html) {
 		this.convertMarkdown2Html = convertMarkdown2Html;
+	}
+
+	public boolean isDuplicateFakeHtmlMd() {
+		return duplicateFakeHtmlMd;
+	}
+
+	public void setDuplicateFakeHtmlMd(boolean duplicateFakeHtmlMd) {
+		this.duplicateFakeHtmlMd = duplicateFakeHtmlMd;
+	}
+
+	public boolean isGenerateKeywordIfNeeded() {
+		return generateKeywordIfNeeded;
+	}
+
+	public void setGenerateKeywordIfNeeded(boolean generateKeywordSrcMdIfNeeded) {
+		this.generateKeywordIfNeeded = generateKeywordSrcMdIfNeeded;
+	}
+
+	public String getSiteTitle() {
+		return siteTitle;
+	}
+
+	public void setSiteTitle(String siteTitle) {
+		this.siteTitle = siteTitle;
 	}
 }

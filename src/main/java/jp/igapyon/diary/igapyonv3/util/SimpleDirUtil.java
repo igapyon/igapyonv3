@@ -216,4 +216,61 @@ public class SimpleDirUtil {
 			return settings.getBaseurl() + "/" + relativePath;
 		}
 	}
+
+	/**
+	 * get file from .src.md file.
+	 * 
+	 * @param file
+	 *            '.src.md' file
+	 * @return target file
+	 * @throws IOException
+	 *             io exception occurs.
+	 */
+	public static File getTargetMdFile(final File file) throws IOException {
+		if (file.getName().toLowerCase().endsWith(".src.md") == false) {
+			throw new IOException("Illegal Filename: " + file.getName() + " should ends with .src.md");
+		}
+
+		final File mdSrc = file.getCanonicalFile();
+		final String strMdSrc = mdSrc.getName();
+		final File md = new File(mdSrc.getParentFile(),
+				strMdSrc.substring(0, strMdSrc.length() - ".src.md".length()) + ".md");
+		return md;
+	}
+
+	/**
+	 * get src.md file from target file.
+	 * 
+	 * @param file
+	 *            target file.
+	 * @return file '.src.md' file
+	 * @throws IOException
+	 *             io exception occurs.
+	 */
+	public static File getSrcMdFile(final File file) throws IOException {
+		if (file.getName().toLowerCase().endsWith(".md") == false) {
+			throw new IOException("Illegal Filename: " + file.getName() + " should ends with .md");
+		}
+
+		final File md = file.getCanonicalFile();
+		final String strMd = md.getName();
+		final File mdSrc = new File(md.getParentFile(),
+				strMd.substring(0, strMd.length() - ".md".length()) + ".src.md");
+		return mdSrc;
+	}
+
+	public static boolean existsTargetMdOrSrcMd(final File file) throws IOException {
+		if (file.getName().toLowerCase().endsWith(".src.md")) {
+			final File md = getTargetMdFile(file);
+			if (file.exists() || md.exists()) {
+				return true;
+			}
+		} else {
+			final File mdSrc = getSrcMdFile(file);
+			if (file.exists() || mdSrc.exists()) {
+				return true;
+			}
+		}
+		return false;
+	}
 }

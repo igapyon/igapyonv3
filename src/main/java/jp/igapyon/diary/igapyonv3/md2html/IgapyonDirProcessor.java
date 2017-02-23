@@ -69,14 +69,6 @@ public abstract class IgapyonDirProcessor {
 		if (origName.contains(".") == false) {
 			return origName + newExt;
 		}
-		if (origName.endsWith(".html.md")) {
-			// for igapyonv3
-			return origName.substring(0, origName.lastIndexOf("."));
-		}
-		if (origName.endsWith(".src.md")) {
-			// for igapyonv3
-			return origName.substring(0, origName.length() - ".src.md".length()) + ".src.html";
-		}
 		final String withoutExt = origName.substring(0, origName.lastIndexOf("."));
 		return withoutExt + newExt;
 	}
@@ -93,6 +85,10 @@ public abstract class IgapyonDirProcessor {
 				}
 			}
 			if (file.isFile()) {
+				if (file.getName().toLowerCase().endsWith(".html.md")) {
+					// special for igapyonv3
+					continue;
+				}
 				if (file.getName().toLowerCase().endsWith(fileExt)) {
 					final String baseDirStr = baseDir.getCanonicalPath();
 					final String targetFileStr = file.getCanonicalPath();

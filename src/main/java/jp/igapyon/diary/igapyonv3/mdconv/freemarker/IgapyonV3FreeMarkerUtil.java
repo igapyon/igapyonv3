@@ -67,7 +67,11 @@ import jp.igapyon.diary.igapyonv3.mdconv.freemarker.directive.RSSFeedDirectiveMo
 import jp.igapyon.diary.igapyonv3.mdconv.freemarker.method.SetAuthorMethodModel;
 import jp.igapyon.diary.igapyonv3.mdconv.freemarker.method.SetBaseurlMethodModel;
 import jp.igapyon.diary.igapyonv3.mdconv.freemarker.method.SetConvertmarkdown2htmlMethodModel;
+import jp.igapyon.diary.igapyonv3.mdconv.freemarker.method.SetDebugMethodModel;
+import jp.igapyon.diary.igapyonv3.mdconv.freemarker.method.SetDuplicatefakehtmlmdMethodModel;
+import jp.igapyon.diary.igapyonv3.mdconv.freemarker.method.SetGenerateKeywordIfNeededMethodModel;
 import jp.igapyon.diary.igapyonv3.mdconv.freemarker.method.SetGeneratetodaydiaryMethodModel;
+import jp.igapyon.diary.igapyonv3.mdconv.freemarker.method.SetSitetitleMethodModel;
 import jp.igapyon.diary.igapyonv3.mdconv.freemarker.method.SetSourcebaseurlMethodModel;
 import jp.igapyon.diary.igapyonv3.mdconv.freemarker.method.SetVerboseMethodModel;
 import jp.igapyon.diary.igapyonv3.mdconv.freemarker.method.ShowSettingsMethodModel;
@@ -163,7 +167,7 @@ public class IgapyonV3FreeMarkerUtil {
 				// TODO共通関数化せよ。
 				// igapyonv3 特有のファイル名変化に当たります。
 				if (url.endsWith(".src.md")) {
-					url = url.substring(0, url.length() - ".src.md".length())+".html";
+					url = url.substring(0, url.length() - ".src.md".length()) + ".html";
 				}
 				// README.md は index.html に読み替えます。
 				if (url.endsWith("/README.src.md")) {
@@ -266,13 +270,17 @@ public class IgapyonV3FreeMarkerUtil {
 
 		// methos
 		config.setSharedVariable("setVerbose", new SetVerboseMethodModel(settings));
+		config.setSharedVariable("setDebug", new SetDebugMethodModel(settings));
 		config.setSharedVariable("setGeneratetodaydiary", new SetGeneratetodaydiaryMethodModel(settings));
+		config.setSharedVariable("setDuplicatefakehtmlmd", new SetDuplicatefakehtmlmdMethodModel(settings));
 		config.setSharedVariable("setConvertmarkdown2html", new SetConvertmarkdown2htmlMethodModel(settings));
+		config.setSharedVariable("setGeneratekeywordifneeded", new SetGenerateKeywordIfNeededMethodModel(settings));
 		config.setSharedVariable("setAuthor", new SetAuthorMethodModel(settings));
 		config.setSharedVariable("setBaseurl", new SetBaseurlMethodModel(settings));
 		config.setSharedVariable("setSourcebaseurl", new SetSourcebaseurlMethodModel(settings));
+		config.setSharedVariable("setSitetitle", new SetSitetitleMethodModel(settings));
 		config.setSharedVariable("showSettings", new ShowSettingsMethodModel(settings));
-
+		
 		// search
 		config.setSharedVariable("linksearch", new LinkSearchDirectiveModel(settings));
 
