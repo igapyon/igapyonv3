@@ -73,7 +73,7 @@ Modify `settings.src.md` to adjust diary that to fit to your favor.
 vi settings.src.md
 ```
 
-If you want to publish output of igapyonv3, setting `${setDuplicatefakehtmlmd("true")}` in settings.src.md is strongly recommended.
+If you want to publish output of igapyonv3 at `gh-pages`, change settings.src.md like `${setDuplicatefakehtmlmd("true")}` is strongly recommended.
 
 ### Force update template files.
 
