@@ -10,7 +10,7 @@ homepage: https://igapyon.github.io/igapyonv3/
 language: Java
 license: Apache 2
 templates: Freemarker
-description: A static site/blog generator for developers & designers
+description: A static site/blog generator for developers
 ---
 
 * Lightweight and turnkey static site/blog generator.
@@ -24,7 +24,7 @@ description: A static site/blog generator for developers & designers
 
 ### Maven is required
 
-igapyonv3 require maven.
+igapyonv3 requires maven.
 
 ### Edit pom.xml
 
@@ -73,7 +73,7 @@ Modify `settings.src.md` to adjust diary that to fit to your favor.
 vi settings.src.md
 ```
 
-And, It is strongly recommended that modify settings.src.md to enable dup-mode setting like `${setDuplicatefakehtmlmd("true")}` .
+If you want to publish output of igapyonv3, setting `${setDuplicatefakehtmlmd("true")}` in settings.src.md is strongly recommended.
 
 ### Force update template files.
 
