@@ -50,30 +50,30 @@ import jp.igapyon.diary.igapyonv3.util.IgapyonV3Settings;
  * @author Toshiki Iga
  */
 public class IgDiaryProcessor {
-	/**
-	 * run igapyonv3 with specified rootdir.
-	 * 
-	 * @param rootdir
-	 *            root dir of diary.
-	 * @throws IOException
-	 *             io exception occurs.
-	 */
-	public void process(final File rootdir) throws IOException {
-		final IgapyonV3Settings settings = new IgapyonV3Settings();
-		settings.setRootdir(rootdir);
+	protected IgapyonV3Settings settings = null;
 
-		process(settings);
+	public IgDiaryProcessor(final File rootdir) {
+		settings = new IgapyonV3Settings();
+		settings.setRootdir(rootdir);
+	}
+
+	/**
+	 * construct newly with settings.
+	 * 
+	 * @param settings
+	 *            igapyonv3 settings.
+	 */
+	public IgDiaryProcessor(final IgapyonV3Settings settings) {
+		this.settings = settings;
 	}
 
 	/**
 	 * run igapyonv3 with specified settings.
 	 * 
-	 * @param settings
-	 *            igapyonv3 settings.
 	 * @throws IOException
 	 *             io exception occurs.
 	 */
-	public void process(final IgapyonV3Settings settings) throws IOException {
+	public void process() throws IOException {
 		{
 			// settings.src.md first.
 			final File fileSettings = new File(settings.getRootdir(), "settings.src.md");
@@ -150,7 +150,7 @@ public class IgDiaryProcessor {
 	 */
 	public static void main(final String[] args) {
 		try {
-			new IgDiaryProcessor().process(new File("."));
+			new IgDiaryProcessor(new File(".")).process();
 		} catch (IOException e) {
 			System.err.println("ERROR: " + e.toString());
 			e.printStackTrace();

@@ -10,8 +10,8 @@ public class IgInitDiaryDirTest {
 
 	@Test
 	public void test() throws Exception {
-		new IgInitDiaryDir().process(new File("./target/diarydirtest"));
+		new IgInitDiaryDir(new File("./target/diarydirtest")).process();
 
-		new IgDiaryProcessor().process(new File("./target/diarydirtest"));
+		new IgDiaryProcessor(new File("./target/diarydirtest")).process();
 	}
 }
