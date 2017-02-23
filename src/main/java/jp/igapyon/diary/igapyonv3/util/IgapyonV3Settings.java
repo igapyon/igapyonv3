@@ -119,10 +119,8 @@ public class IgapyonV3Settings {
 	private String language = "ja_JP";
 
 	/**
-	 * 日記のタイトル。 主に atom で利用されます。
+	 * 日記のタイトル。
 	 */
-	private String titleEn = "Igapyon Diary v3";
-
 	private String siteTitle = "Watashi's diary";
 
 	/**
@@ -250,14 +248,6 @@ public class IgapyonV3Settings {
 
 	public void setBaseurl(String baseurl) {
 		this.baseurl = baseurl;
-	}
-
-	public String getTitleEn() {
-		return titleEn;
-	}
-
-	public void setTitleEn(String titleEn) {
-		this.titleEn = titleEn;
 	}
 
 	public String getSourcebaseurl() {

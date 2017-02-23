@@ -80,7 +80,7 @@ public class DiaryIndexAtomGenerator {
 			Collections.sort(diaryItemInfoList, new DiaryItemInfoComparator(true));
 
 			SimpleRomeUtil.itemList2AtomXml(diaryItemInfoList, new File(settings.getRootdir(), "atom.xml"),
-					settings.getTitleEn() + " all", settings);
+					settings.getSiteTitle() + " all", settings);
 
 			{
 				int diaryListupCount = 15;
@@ -99,7 +99,7 @@ public class DiaryIndexAtomGenerator {
 				Collections.sort(diaryItemInfoList, new DiaryItemInfoComparator(true));
 
 				SimpleRomeUtil.itemList2AtomXml(recentItemInfoList, new File(settings.getRootdir(), "atomRecent.xml"),
-						settings.getTitleEn() + " recent", settings);
+						settings.getSiteTitle() + " recent", settings);
 			}
 		}
 
@@ -141,7 +141,7 @@ public class DiaryIndexAtomGenerator {
 			Collections.sort(diaryItemInfoList, new DiaryItemInfoComparator(true));
 
 			SimpleRomeUtil.itemList2AtomXml(diaryItemInfoList, new File(settings.getRootdir(), year + "/atom.xml"),
-					settings.getTitleEn() + " year " + year, settings);
+					settings.getSiteTitle() + " year " + year, settings);
 		}
 
 		{
@@ -159,7 +159,8 @@ public class DiaryIndexAtomGenerator {
 			if (fileAtom.exists() == false) {
 				System.err.println("Atom file [" + fileAtom.getCanonicalPath() + "] not found.");
 			} else {
-				SimpleRomeUtil.itemList2AtomXml(diaryItemInfoList, fileAtom, settings.getTitleEn() + " memo", settings);
+				SimpleRomeUtil.itemList2AtomXml(diaryItemInfoList, fileAtom, settings.getSiteTitle() + " memo",
+						settings);
 			}
 		}
 
@@ -175,7 +176,7 @@ public class DiaryIndexAtomGenerator {
 			if (fileAtom.exists() == false) {
 				System.err.println("Atom file [" + fileAtom.getCanonicalPath() + "] not found.");
 			} else {
-				SimpleRomeUtil.itemList2AtomXml(diaryItemInfoList, fileAtom, settings.getTitleEn() + " keyword",
+				SimpleRomeUtil.itemList2AtomXml(diaryItemInfoList, fileAtom, settings.getSiteTitle() + " keyword",
 						settings);
 			}
 		}
