@@ -43,14 +43,18 @@ import jp.igapyon.diary.igapyonv3.util.IgapyonV3Settings;
 import jp.igapyon.diary.igapyonv3.util.SimpleDirUtil;
 
 public class IgInitDiaryDir {
-	public void process(final File rootdir) throws IOException {
-		final IgapyonV3Settings settings = new IgapyonV3Settings();
-		settings.setRootdir(rootdir);
+	protected IgapyonV3Settings settings = null;
 
-		process(settings);
+	public IgInitDiaryDir(final File rootdir) {
+		settings = new IgapyonV3Settings();
+		settings.setRootdir(rootdir);
 	}
 
-	public void process(final IgapyonV3Settings settings) throws IOException {
+	public void process() throws IOException {
+		process(false);
+	}
+
+	public void process(final boolean forceOverwrite) throws IOException {
 		{
 			final File newdir = new File(settings.getRootdir(), "keyword");
 			if (newdir.exists() == false) {
@@ -58,23 +62,30 @@ public class IgInitDiaryDir {
 			}
 		}
 
-		{
-			final File lookupSrcMd = new File(settings.getRootdir(), "settings.src.md");
-			if (SimpleDirUtil.existsTargetMdOrSrcMd(lookupSrcMd) == false) {
-				System.err.println("IgInitDiaryDir: generate " + lookupSrcMd.getCanonicalPath());
-				FileUtils.writeStringToFile(lookupSrcMd, IgDiaryConstants.DEFAULT_SETTINGS_SRC_MD, "UTF-8");
-			}
+		generateSettingsSrcMdIfNotExists();
+
+		generateTemplate(forceOverwrite);
+	}
+
+	public void generateSettingsSrcMdIfNotExists() throws IOException {
+		final File lookupSrcMd = new File(settings.getRootdir(), "settings.src.md");
+		if (SimpleDirUtil.existsTargetMdOrSrcMd(lookupSrcMd) == false) {
+			System.err.println("IgInit*DiaryDir: generate " + lookupSrcMd.getCanonicalPath());
+			FileUtils.writeStringToFile(lookupSrcMd, IgDiaryConstants.DEFAULT_SETTINGS_SRC_MD, "UTF-8");
 		}
+	}
+
+	public void generateTemplate(final boolean forceOverwrite) throws IOException {
 		{
 			final File lookupTargetMd = new File(settings.getRootdir(), "template-header.md");
-			if (lookupTargetMd.exists() == false) {
+			if (forceOverwrite || lookupTargetMd.exists() == false) {
 				System.err.println("IgInitDiaryDir: generate " + lookupTargetMd.getCanonicalPath());
 				FileUtils.writeStringToFile(lookupTargetMd, IgDiaryConstants.TEMPLATE_HEADER, "UTF-8");
 			}
 		}
 		{
 			final File lookupTargetMd = new File(settings.getRootdir(), "template-footer.md");
-			if (lookupTargetMd.exists() == false) {
+			if (forceOverwrite || lookupTargetMd.exists() == false) {
 				System.err.println("IgInitDiaryDir: generate " + lookupTargetMd.getCanonicalPath());
 				FileUtils.writeStringToFile(lookupTargetMd, IgDiaryConstants.TEMPLATE_FOOTER, "UTF-8");
 			}
@@ -82,14 +93,14 @@ public class IgInitDiaryDir {
 
 		{
 			final File lookupSrcMd = new File(settings.getRootdir(), "index.src.md");
-			if (SimpleDirUtil.existsTargetMdOrSrcMd(lookupSrcMd) == false) {
+			if (forceOverwrite || SimpleDirUtil.existsTargetMdOrSrcMd(lookupSrcMd) == false) {
 				System.err.println("IgInitDiaryDir: generate " + lookupSrcMd.getCanonicalPath());
 				FileUtils.writeStringToFile(lookupSrcMd, IgDiaryConstants.DEFAULT_INDEX_SRC_MD, "UTF-8");
 			}
 		}
 		{
 			final File lookupSrcMd = new File(settings.getRootdir(), "README.src.md");
-			if (SimpleDirUtil.existsTargetMdOrSrcMd(lookupSrcMd) == false) {
+			if (forceOverwrite || SimpleDirUtil.existsTargetMdOrSrcMd(lookupSrcMd) == false) {
 				System.err.println("IgInitDiaryDir: generate " + lookupSrcMd.getCanonicalPath());
 				FileUtils.writeStringToFile(lookupSrcMd, IgDiaryConstants.DEFAULT_INDEX_SRC_MD, "UTF-8");
 			}
@@ -97,7 +108,7 @@ public class IgInitDiaryDir {
 
 		{
 			final File lookupSrcMd = new File(settings.getRootdir().getAbsolutePath() + "/keyword", "index.src.md");
-			if (SimpleDirUtil.existsTargetMdOrSrcMd(lookupSrcMd) == false) {
+			if (forceOverwrite || SimpleDirUtil.existsTargetMdOrSrcMd(lookupSrcMd) == false) {
 				System.err.println("IgInitDiaryDir: generate " + lookupSrcMd.getCanonicalPath());
 				FileUtils.writeStringToFile(lookupSrcMd, IgDiaryConstants.DEFAULT_KEYWORD_INDEX_SRC_MD, "UTF-8");
 			}
