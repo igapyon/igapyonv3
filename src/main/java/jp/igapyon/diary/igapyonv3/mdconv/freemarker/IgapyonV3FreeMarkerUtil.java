@@ -71,6 +71,7 @@ import jp.igapyon.diary.igapyonv3.mdconv.freemarker.method.SetDebugMethodModel;
 import jp.igapyon.diary.igapyonv3.mdconv.freemarker.method.SetDuplicatefakehtmlmdMethodModel;
 import jp.igapyon.diary.igapyonv3.mdconv.freemarker.method.SetGenerateKeywordIfNeededMethodModel;
 import jp.igapyon.diary.igapyonv3.mdconv.freemarker.method.SetGeneratetodaydiaryMethodModel;
+import jp.igapyon.diary.igapyonv3.mdconv.freemarker.method.SetSitetitleMethodModel;
 import jp.igapyon.diary.igapyonv3.mdconv.freemarker.method.SetSourcebaseurlMethodModel;
 import jp.igapyon.diary.igapyonv3.mdconv.freemarker.method.SetVerboseMethodModel;
 import jp.igapyon.diary.igapyonv3.mdconv.freemarker.method.ShowSettingsMethodModel;
@@ -277,8 +278,9 @@ public class IgapyonV3FreeMarkerUtil {
 		config.setSharedVariable("setAuthor", new SetAuthorMethodModel(settings));
 		config.setSharedVariable("setBaseurl", new SetBaseurlMethodModel(settings));
 		config.setSharedVariable("setSourcebaseurl", new SetSourcebaseurlMethodModel(settings));
+		config.setSharedVariable("setSitetitle", new SetSitetitleMethodModel(settings));
 		config.setSharedVariable("showSettings", new ShowSettingsMethodModel(settings));
-
+		
 		// search
 		config.setSharedVariable("linksearch", new LinkSearchDirectiveModel(settings));
 

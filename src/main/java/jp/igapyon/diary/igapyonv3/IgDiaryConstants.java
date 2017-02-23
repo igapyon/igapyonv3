@@ -67,6 +67,10 @@ public class IgDiaryConstants {
 																							// outside
 			+ "${setGeneratekeywordifneeded(\"true\")}\n" //
 			+ "\n" //
+			+ "### Setting: inittemplate\n" //
+			+ "\n" //
+			+ "${setSitetitle(\"Watashi's diary\")}\n" //
+			+ "\n" //
 			+ "### Result\n" //
 			+ "\n" //
 			+ "${showSettings()}\n"; //

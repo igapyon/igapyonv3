@@ -29,6 +29,7 @@ This file is settings for [[igapyonv3]].
 * convertmarkdown2html: true
 * duplicatefakehtmlmd: true
 * generatekeywordifneeded: true
+* sitetitle: Watashi's diary
 
 ----------------------------------------------------------------------------------------------------
 
