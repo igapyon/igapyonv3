@@ -94,7 +94,7 @@ public class IgDiaryConstants {
 			+ "\n" //
 			+ "## About %SITETITLE%\n" //
 			+ "\n" //
-			+ "<@linkshare /> / <@linktop /> [Diary Generator](https://github.com/igapyon/igapyonv3)\n" //
+			+ "<@linkshare /> / <@linktop /> / [Diary Generator](https://github.com/igapyon/igapyonv3)\n" //
 			+ "\n";
 
 	public static String DEFAULT_INDEX_SRC_MD = "<@localyearlist /> / [keyword](keyword/index.html) / [memo](memo/index.html) / [mirror1](http://www.igapyon.jp/igapyon/diary/) / [mirror2](http://igapyon.a.la9.jp/igapyon/diary/) / [mirror3](https://igapyon.github.io/diary/)\n" //
