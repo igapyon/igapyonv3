@@ -48,28 +48,30 @@ public class IgDiaryConstants {
 			+ "\n" //
 			+ "### Setting\n" //
 			+ "\n" //
-			+ "${setVerbose(\"true\")}\n" //
-			+ "${setDebug(\"false\")}\n" //
-			+ "${setGeneratetodaydiary(\"true\")}\n" //
-			+ "${setDuplicatefakehtmlmd(\"false\")}\n" // TODO change for
-														// gh-pages
-			+ "${setConvertmarkdown2html(\"true\")}\n" //
-			+ "${setAuthor(\"Test Author's name.\")}\n" //
-			+ "${setBaseurl(\"https://igapyon.github.io/diary\")}\n" // FIXME
-																		// should
-																		// be
-																		// from
-																		// outside
-			+ "${setSourcebaseurl(\"https://github.com/igapyon/diary/blob/gh-pages\")}\n" // FIXME
-																							// should
-																							// be
-																							// from
-																							// outside
+			+ "${setVerbose(\"%DEFAULT_SETTINGS_SRC_VERBOSE%\")}\n" //
+			+ "${setDebug(\"%DEFAULT_SETTINGS_SRC_DEBUG%\")}\n" //
+			+ "${setGeneratetodaydiary(\"%DEFAULT_SETTINGS_SRC_GENERATETODAYDIARY%\")}\n" //
+			+ "${setDuplicatefakehtmlmd(\"%DEFAULT_SETTINGS_SRC_DUPLICATEFAKEHTMLMD%\")}\n" // TODO
+																							// change
+																							// for
+			// gh-pages
+			+ "${setConvertmarkdown2html(\"%DEFAULT_SETTINGS_SRC_CONVERTMARKDOWN2HTML%\")}\n" //
+			+ "${setAuthor(\"%DEFAULT_SETTINGS_SRC_AUTHOR%\")}\n" //
+			+ "${setBaseurl(\"%DEFAULT_SETTINGS_SRC_BASEURL%\")}\n" // FIXME
+																	// should
+																	// be
+																	// from
+																	// outside
+			+ "${setSourcebaseurl(\"%DEFAULT_SETTINGS_SRC_SOURCEBASEURL%\")}\n" // FIXME
+																				// should
+																				// be
+																				// from
+																				// outside
 			+ "${setGeneratekeywordifneeded(\"true\")}\n" //
 			+ "\n" //
 			+ "### Setting: inittemplate\n" //
 			+ "\n" //
-			+ "${setSitetitle(\"Watashi's diary\")}\n" //
+			+ "${setSitetitle(\"%DEFAULT_SETTINGS_SRC_SITETITLE%\")}\n" //
 			+ "\n" //
 			+ "### Result\n" //
 			+ "\n" //
@@ -126,7 +128,7 @@ public class IgDiaryConstants {
 			+ "<@localrss filename=\"atom.xml\" />\n"; //
 
 	//////////////////////////////
-	
+
 	public static String DEFAULT_NEW_DIARY_SRC_MD = "## Diary title here\n" //
 			+ "\n" //
 			+ "Write `contents` here\n" //

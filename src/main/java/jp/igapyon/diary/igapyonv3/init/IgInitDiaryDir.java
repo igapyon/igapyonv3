@@ -76,7 +76,8 @@ public class IgInitDiaryDir {
 		final File lookupSrcMd = new File(settings.getRootdir(), "settings.src.md");
 		if (SimpleDirUtil.existsTargetMdOrSrcMd(lookupSrcMd) == false) {
 			System.err.println("IgInit*DiaryDir: generate " + lookupSrcMd.getCanonicalPath());
-			FileUtils.writeStringToFile(lookupSrcMd, IgDiaryConstants.DEFAULT_SETTINGS_SRC_MD, "UTF-8");
+			FileUtils.writeStringToFile(lookupSrcMd, replaceReservedKeys(IgDiaryConstants.DEFAULT_SETTINGS_SRC_MD),
+					"UTF-8");
 		}
 	}
 
@@ -85,6 +86,20 @@ public class IgInitDiaryDir {
 
 		final String yyyy = new SimpleDateFormat("yyyy").format(settings.getToday());
 		output = output.replaceAll("%SITECURRENTYEAR%", yyyy);
+
+		// DEFAULT_SETTINGS_SRC
+		output = output.replaceAll("%DEFAULT_SETTINGS_SRC_VERBOSE%", Boolean.toString(settings.isVerbose()));
+		output = output.replaceAll("%DEFAULT_SETTINGS_SRC_DEBUG%", Boolean.toString(settings.isDebug()));
+		output = output.replaceAll("%DEFAULT_SETTINGS_SRC_GENERATETODAYDIARY%",
+				Boolean.toString(settings.isGenerateTodayDiary()));
+		output = output.replaceAll("%DEFAULT_SETTINGS_SRC_DUPLICATEFAKEHTMLMD%",
+				Boolean.toString(settings.isDuplicateFakeHtmlMd()));
+		output = output.replaceAll("%DEFAULT_SETTINGS_SRC_CONVERTMARKDOWN2HTML%",
+				Boolean.toString(settings.isConvertMarkdown2Html()));
+		output = output.replaceAll("%DEFAULT_SETTINGS_SRC_AUTHOR%", settings.getAuthor());
+		output = output.replaceAll("%DEFAULT_SETTINGS_SRC_BASEURL%", settings.getBaseurl());
+		output = output.replaceAll("%DEFAULT_SETTINGS_SRC_SOURCEBASEURL%", settings.getSourcebaseurl());
+		output = output.replaceAll("%DEFAULT_SETTINGS_SRC_SITETITLE%", settings.getSiteTitle());
 
 		return output;
 	}
