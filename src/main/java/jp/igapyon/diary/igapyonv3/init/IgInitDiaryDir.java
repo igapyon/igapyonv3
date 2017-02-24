@@ -50,6 +50,13 @@ public class IgInitDiaryDir {
 	public IgInitDiaryDir(final File rootdir) {
 		settings = new IgapyonV3Settings();
 		settings.setRootdir(rootdir);
+
+		// load settings.src.md
+		try {
+			IgDiaryProcessor.loadSettingsSrcMd(settings);
+		} catch (IOException e) {
+			System.err.println("IgInitDiaryDir: load settings.src.md failed: " + e.toString());
+		}
 	}
 
 	public void process() throws IOException {
@@ -64,7 +71,7 @@ public class IgInitDiaryDir {
 			}
 		}
 
-		generateSettingsSrcMdIfNotExists();
+		generateSettingsSrcMd(forceOverwrite);
 
 		// load settings.src.md
 		IgDiaryProcessor.loadSettingsSrcMd(settings);
@@ -72,9 +79,9 @@ public class IgInitDiaryDir {
 		generateTemplate(forceOverwrite);
 	}
 
-	public void generateSettingsSrcMdIfNotExists() throws IOException {
+	public void generateSettingsSrcMd(final boolean forceOverwrite) throws IOException {
 		final File lookupSrcMd = new File(settings.getRootdir(), "settings.src.md");
-		if (SimpleDirUtil.existsTargetMdOrSrcMd(lookupSrcMd) == false) {
+		if (forceOverwrite || SimpleDirUtil.existsTargetMdOrSrcMd(lookupSrcMd) == false) {
 			System.err.println("IgInit*DiaryDir: generate " + lookupSrcMd.getCanonicalPath());
 			FileUtils.writeStringToFile(lookupSrcMd, replaceReservedKeys(IgDiaryConstants.DEFAULT_SETTINGS_SRC_MD),
 					"UTF-8");

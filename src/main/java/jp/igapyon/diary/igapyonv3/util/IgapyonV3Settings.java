@@ -81,7 +81,7 @@ public class IgapyonV3Settings {
 	/**
 	 * verbose mode for debugging.
 	 */
-	private boolean verbose = false;
+	private boolean verbose = true;
 
 	/**
 	 * debug mode for debugging.
