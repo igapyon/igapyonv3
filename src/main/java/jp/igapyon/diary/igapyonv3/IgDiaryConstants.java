@@ -46,6 +46,10 @@ public class IgDiaryConstants {
 															// ??? default
 															// keyword???
 			+ "\n" //
+			+ "### Result\n" //
+			+ "\n" //
+			+ "${showSettings()}\n" //
+			+ "\n" //
 			+ "### Setting\n" //
 			+ "\n" //
 			+ "${setVerbose(\"%DEFAULT_SETTINGS_SRC_VERBOSE%\")}\n" //
@@ -72,10 +76,7 @@ public class IgDiaryConstants {
 			+ "### Setting: inittemplate\n" //
 			+ "\n" //
 			+ "${setSitetitle(\"%DEFAULT_SETTINGS_SRC_SITETITLE%\")}\n" //
-			+ "\n" //
-			+ "### Result\n" //
-			+ "\n" //
-			+ "${showSettings()}\n"; //
+			+ "\n"; //
 
 	/**
 	 * default template header.
