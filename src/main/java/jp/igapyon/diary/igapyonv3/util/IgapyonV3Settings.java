@@ -60,14 +60,18 @@ public class IgapyonV3Settings {
 	private File rootdir = new File(".");
 
 	/**
-	 * 日記のベース URL。最後のスラッシュは含まないこと。
+	 * URL of diary base.
+	 * 
+	 * URL should NOT be ended with '/'
 	 */
-	private String baseurl = "https://igapyon.github.io/diary";
+	private String baseurl = "https://igapyon.github.io/mydiary";
 
 	/**
-	 * 日記のソースのベース URL。最後のスラッシュは含まないこと。
+	 * URL of diary source base.
+	 * 
+	 * URL should NOT be ended with '/'
 	 */
-	private String sourcebaseurl = "https://github.com/igapyon/diary/blob/gh-pages";
+	private String sourcebaseurl = "https://github.com/igapyon/mydiary/blob/gh-pages";
 
 	/**
 	 * TODAY! for newly diary.
@@ -111,7 +115,7 @@ public class IgapyonV3Settings {
 	/**
 	 * この日記の作成者。
 	 */
-	private String author = "Toshiki Iga";
+	private String author = "Taro Yamada";
 
 	/**
 	 * 日記の記述言語。
