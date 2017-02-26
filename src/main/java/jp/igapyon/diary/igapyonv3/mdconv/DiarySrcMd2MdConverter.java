@@ -127,7 +127,7 @@ public class DiarySrcMd2MdConverter {
 
 			// 直リンク形式を md リンク形式に変換します。
 			// FreeMarker の都合、＜リンク＞の形式は利用せず、直リンク形式を採用しています。
-			line = MdTextUtil.convertSimpleUrl2MdLink(line);
+//			line = MdTextUtil.convertSimpleUrl2MdLink(line);
 
 			lines.set(index, line);
 		}
