@@ -42,6 +42,8 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 
 public class IgFileUtil {
+	public static final boolean IS_SHOW_NON = false;
+
 	/**
 	 * Check if it should be written or not.
 	 * 
@@ -58,15 +60,17 @@ public class IgFileUtil {
 	public static boolean checkWriteNecessary(final String titleString, final String outputData, final File targetFile)
 			throws IOException {
 		if (targetFile.exists() == false) {
-			System.out.println(titleString + ": add: " + targetFile.getCanonicalPath());
+			System.err.println(titleString + ": add: " + targetFile.getCanonicalPath());
 			return true;
 		} else {
 			final String origOutputHtmlString = FileUtils.readFileToString(targetFile, "UTF-8");
 			if (outputData.equals(origOutputHtmlString)) {
-				System.out.println(titleString + ": non: " + targetFile.getCanonicalPath());
+				if (IS_SHOW_NON) {
+					System.err.println(titleString + ": non: " + targetFile.getCanonicalPath());
+				}
 				return false;
 			} else {
-				System.out.println(titleString + ": upd: " + targetFile.getCanonicalPath());
+				System.err.println(titleString + ": upd: " + targetFile.getCanonicalPath());
 				return true;
 			}
 		}

@@ -104,7 +104,7 @@ public class DiarySrcMd2MdConverter {
 	}
 
 	public void processFile(final File file) throws IOException {
-		if (settings.isVerbose()) {
+		if (settings.isDebug()) {
 			System.err.println("srcmd2md: " + SimpleDirUtil.getRelativePath(settings.getRootdir(), file));
 		}
 
