@@ -35,8 +35,11 @@ package jp.igapyon.diary.util;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.StringWriter;
+import java.util.List;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
 
 public class IgFileUtil {
 	/**
@@ -67,5 +70,13 @@ public class IgFileUtil {
 				return true;
 			}
 		}
+	}
+
+	public static boolean checkWriteNecessary(final String titleString, final List<String> outputDataList,
+			final File targetFile) throws IOException {
+		final StringWriter writer = new StringWriter();
+		IOUtils.writeLines(outputDataList, null, writer);
+		writer.flush();
+		return checkWriteNecessary(titleString, writer.toString(), targetFile);
 	}
 }

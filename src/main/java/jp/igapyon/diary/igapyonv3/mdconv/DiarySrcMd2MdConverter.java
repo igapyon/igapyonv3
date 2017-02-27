@@ -51,6 +51,7 @@ import jp.igapyon.diary.igapyonv3.util.IgapyonV3Settings;
 import jp.igapyon.diary.igapyonv3.util.MdTextUtil;
 import jp.igapyon.diary.igapyonv3.util.SimpleDirUtil;
 import jp.igapyon.diary.util.IgFileComparatorByName;
+import jp.igapyon.diary.util.IgFileUtil;
 
 /**
  * ソースのマークダウンファイル `.src.md` から ターゲットのマークダウンファイル `.md` を生成するためのクラスです。
@@ -142,14 +143,21 @@ public class DiarySrcMd2MdConverter {
 		// TODO .src.md から .md を取得するための共通関数がほしいです。
 		{
 			// generate from .src.md to .md
-			String newName = file.getName().substring(0, file.getName().length() - (".src.md".length())) + ".md";
-			FileUtils.writeLines(new File(file.getParentFile(), newName), lines);
+			final String newName = file.getName().substring(0, file.getName().length() - (".src.md".length())) + ".md";
+			final File fileWrite = new File(file.getParentFile(), newName);
+			if (IgFileUtil.checkWriteNecessary("srcmd2md", lines, fileWrite)) {
+				FileUtils.writeLines(fileWrite, lines);
+			}
 		}
 
 		if (settings.isDuplicateFakeHtmlMd()) {
 			// generate fake html.md file for gh-pages
-			String newName = file.getName().substring(0, file.getName().length() - (".src.md".length())) + ".html.md";
-			FileUtils.writeLines(new File(file.getParentFile(), newName), lines);
+			final String newName = file.getName().substring(0, file.getName().length() - (".src.md".length()))
+					+ ".html.md";
+			final File fileWrite = new File(file.getParentFile(), newName);
+			if (IgFileUtil.checkWriteNecessary("srcmd2md", lines, fileWrite)) {
+				FileUtils.writeLines(fileWrite, lines);
+			}
 		}
 	}
 }
