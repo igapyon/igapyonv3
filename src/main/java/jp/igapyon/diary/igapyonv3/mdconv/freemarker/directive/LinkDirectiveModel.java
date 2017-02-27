@@ -70,7 +70,7 @@ public class LinkDirectiveModel implements TemplateDirectiveModel {
 		String valueString = params.get("value").toString();
 		// 直リンク形式を md リンク形式に変換します。
 		// FreeMarker の都合、＜リンク＞の形式は利用せず、直リンク形式を採用しています。
-		valueString = MdTextUtil.convertSimpleUrl2MdLink(valueString);
+		valueString = MdTextUtil.getMdLinkString(valueString);
 
 		writer.write(valueString);
 

@@ -97,12 +97,16 @@ public class MdTextUtil {
 		}
 
 		// それでは生リンクの埋め込み処理を実施します。
-		String urlShow = matURL.group();
 		// iPhone SE だと 38 が好適そう...
-		urlShow = IgStringUtil.abbreviateMiddle(urlShow);
-		return source.substring(0, matURL.start()) + "[" + urlShow + "](" + matURL.group() + ")"
+		return source.substring(0, matURL.start()) + getMdLinkString(matURL.group())
 				+ convertSimpleUrl2MdLink(source.substring(matURL.end()));
 
+	}
+
+	public static String getMdLinkString(final String originalUrl) {
+		// iPhone SE だと 38 が好適そう...
+		final String urlShow = IgStringUtil.abbreviateMiddle(originalUrl);
+		return "[" + urlShow + "](" + originalUrl + ")";
 	}
 
 	public static String convertDoubleKeyword2MdLink(final String source, final File currentdir,
