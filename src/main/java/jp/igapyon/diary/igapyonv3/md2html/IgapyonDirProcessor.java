@@ -35,6 +35,11 @@ package jp.igapyon.diary.igapyonv3.md2html;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+import jp.igapyon.diary.util.IgFileComparatorByName;
 
 /**
  * md ファイルから html ファイルを生成します。
@@ -74,11 +79,20 @@ public abstract class IgapyonDirProcessor {
 	}
 
 	protected void parseDir(final File baseDir, final File lookup, final boolean recursivedir) throws IOException {
-		final File[] files = lookup.listFiles();
-		if (files == null) {
-			return;
+		final List<File> fileList = new ArrayList<File>();
+		{
+			final File[] files = lookup.listFiles();
+			if (files == null) {
+				return;
+			}
+			for (File file : files) {
+				fileList.add(file);
+			}
 		}
-		for (File file : files) {
+
+		Collections.sort(fileList, new IgFileComparatorByName());
+
+		for (File file : fileList) {
 			if (file.isDirectory()) {
 				if (recursivedir) {
 					parseDir(baseDir, file, recursivedir);
