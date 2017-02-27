@@ -38,6 +38,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.StringReader;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -49,6 +50,7 @@ import jp.igapyon.diary.igapyonv3.mdconv.freemarker.IgapyonV3FreeMarkerUtil;
 import jp.igapyon.diary.igapyonv3.util.IgapyonV3Settings;
 import jp.igapyon.diary.igapyonv3.util.MdTextUtil;
 import jp.igapyon.diary.igapyonv3.util.SimpleDirUtil;
+import jp.igapyon.diary.util.IgFileComparatorByName;
 
 /**
  * ソースのマークダウンファイル `.src.md` から ターゲットのマークダウンファイル `.md` を生成するためのクラスです。
@@ -70,15 +72,20 @@ public class DiarySrcMd2MdConverter {
 	}
 
 	public void processDir(final File dir) throws IOException {
-		// System.err.println("DiarySrcMd2MdConverter#processDir(" +
-		// dir.getCanonicalPath() + ")");
-
-		final File[] files = dir.listFiles();
-		if (files == null) {
-			return;
+		final List<File> fileList = new ArrayList<File>();
+		{
+			final File[] files = dir.listFiles();
+			if (files == null) {
+				return;
+			}
+			for (File file : files) {
+				fileList.add(file);
+			}
 		}
 
-		for (File file : files) {
+		Collections.sort(fileList, new IgFileComparatorByName());
+
+		for (File file : fileList) {
 			if (file.isDirectory()) {
 				// 根っこレベルの target および srcのみ除外する必要があります。
 				final String dirName = SimpleDirUtil.getRelativePath(settings.getRootdir(), file);
@@ -127,7 +134,7 @@ public class DiarySrcMd2MdConverter {
 
 			// 直リンク形式を md リンク形式に変換します。
 			// FreeMarker の都合、＜リンク＞の形式は利用せず、直リンク形式を採用しています。
-//			line = MdTextUtil.convertSimpleUrl2MdLink(line);
+			// line = MdTextUtil.convertSimpleUrl2MdLink(line);
 
 			lines.set(index, line);
 		}

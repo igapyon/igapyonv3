@@ -1,4 +1,4 @@
-[top](../index.html) / [index](index.html) / [target](https://igapyon.github.io/diary/keyword/maven.html) / [source](https://github.com/igapyon/diary/blob/gh-pages/keyword/maven.src.md) 
+[top](../index.html) / [index](index.html) / [target](https://igapyon.github.io/mydiary/keyword/maven.html) / [source](https://github.com/igapyon/mydiary/blob/gh-pages/keyword/maven.src.md) 
 
 maven
 =====================================================================================================
@@ -31,4 +31,4 @@ maven
 
 ## この日記について
 
-[Share on Twitter](https://twitter.com/intent/tweet?hashtags=igapyon%2Cdiary%2C%E3%81%84%E3%81%8C%E3%81%B4%E3%82%87%E3%82%93%2Cmaven&text=maven&url=https%3A%2F%2Figapyon.github.io%2Fdiary%2Fkeyword%2Fmaven.html) / [top](../index.html) / [Diary Generator](https://github.com/igapyon/igapyonv3)
+[Share on Twitter](https://twitter.com/intent/tweet?hashtags=igapyon%2Cdiary%2C%E3%81%84%E3%81%8C%E3%81%B4%E3%82%87%E3%82%93%2Cmaven&text=maven&url=https%3A%2F%2Figapyon.github.io%2Fmydiary%2Fkeyword%2Fmaven.html) / [top](../index.html) / [Diary Generator](https://github.com/igapyon/igapyonv3)
