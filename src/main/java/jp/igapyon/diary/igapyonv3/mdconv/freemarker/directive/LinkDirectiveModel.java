@@ -68,8 +68,7 @@ public class LinkDirectiveModel implements TemplateDirectiveModel {
 			throw new TemplateModelException("value param is required.");
 		}
 		String valueString = params.get("value").toString();
-		// 直リンク形式を md リンク形式に変換します。
-		// FreeMarker の都合、＜リンク＞の形式は利用せず、直リンク形式を採用しています。
+		// 所定の加工を伴ったリンクテキスト取得を実施します。
 		valueString = MdTextUtil.getMdLinkString(valueString);
 
 		writer.write(valueString);
