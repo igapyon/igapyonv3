@@ -55,7 +55,7 @@ public class OnePointMigrationTest {
 
 	@Test
 	public void testDoOnePointMigration() throws Exception {
-		final File targetDir = new File("../diary/2002");
+		final File targetDir = new File("../diary/2015");
 		final File[] files = targetDir.listFiles();
 		for (File file : files) {
 			if (file.isFile() == false) {
