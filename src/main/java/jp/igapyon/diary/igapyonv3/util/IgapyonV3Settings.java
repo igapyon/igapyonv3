@@ -60,6 +60,11 @@ public class IgapyonV3Settings {
 	private File rootdir = new File(".");
 
 	/**
+	 * md2html の出力ディレクトリ。
+	 */
+	private File outputhtmldir = new File("./target/html");
+
+	/**
 	 * URL of diary base.
 	 * 
 	 * URL should NOT be ended with '/'
@@ -316,5 +321,13 @@ public class IgapyonV3Settings {
 
 	public void setSiteTitle(String siteTitle) {
 		this.siteTitle = siteTitle;
+	}
+
+	public File getOutputhtmldir() {
+		return outputhtmldir;
+	}
+
+	public void setOutputhtmldir(File outputhtmldir) {
+		this.outputhtmldir = outputhtmldir;
 	}
 }

@@ -136,11 +136,10 @@ public class IgDiaryProcessor {
 		}
 
 		if (settings.isConvertMarkdown2Html()) {
-			final File targetDir = new File(settings.getRootdir().getCanonicalPath() + "/target", "md2html");
-			if (targetDir.exists() == false) {
-				targetDir.mkdirs();
+			if (settings.getOutputhtmldir().exists() == false) {
+				settings.getOutputhtmldir().mkdirs();
 			}
-			new IgapyonMd2Html().processDir(settings.getRootdir(), targetDir, true);
+			new IgapyonMd2Html().processDir(settings.getRootdir(), settings.getOutputhtmldir(), true);
 		}
 	}
 
