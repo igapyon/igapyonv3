@@ -55,21 +55,23 @@ public class OnePointMigrationTest {
 
 	@Test
 	public void testDoOnePointMigration() throws Exception {
-		final File targetDir = new File("../diary/2014");
-		final File[] files = targetDir.listFiles();
-		for (File file : files) {
-			if (file.isFile() == false) {
-				continue;
-			}
-			if (file.getName().endsWith(".src.md") == false) {
-				continue;
-			}
+		if (false) {
+			final File targetDir = new File("../diary/2014");
+			final File[] files = targetDir.listFiles();
+			for (File file : files) {
+				if (file.isFile() == false) {
+					continue;
+				}
+				if (file.getName().endsWith(".src.md") == false) {
+					continue;
+				}
 
-			final String content = FileUtils.readFileToString(file, "UTF-8");
-			final String converted = convertSimpleUrl2MdLink(content);
-			if (content.equals(converted) == false) {
-				System.err.println("Convert link:" + file.getName());
-				FileUtils.writeStringToFile(file, converted, "UTF-8");
+				final String content = FileUtils.readFileToString(file, "UTF-8");
+				final String converted = convertSimpleUrl2MdLink(content);
+				if (content.equals(converted) == false) {
+					System.err.println("Convert link:" + file.getName());
+					FileUtils.writeStringToFile(file, converted, "UTF-8");
+				}
 			}
 		}
 	}
