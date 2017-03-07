@@ -1,4 +1,4 @@
-[top](../index.html) / [index](index.html) / [target](https://igapyon.github.io/mydiary/keyword/test.html) / [source](https://github.com/igapyon/mydiary/blob/gh-pages/keyword/test.src.md) 
+[top](../index.html) / [index](index.html) / [target](https://igapyon.github.io/mydiary/keyword/test.html) / [source](https://github.com/igapyon/mydiary/blob/master/keyword/test.src.md) 
 
 Test
 =====================================================================================================

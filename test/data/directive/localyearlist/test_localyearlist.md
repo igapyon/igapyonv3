@@ -1,4 +1,4 @@
-[top](../../index.html) / [index](index.html) / [target](https://igapyon.github.io/mydiary/directive/localyearlist/test_localyearlist.html) / [source](https://github.com/igapyon/mydiary/blob/gh-pages/directive/localyearlist/test_localyearlist.src.md) 
+[top](../../index.html) / [index](index.html) / [target](https://igapyon.github.io/mydiary/directive/localyearlist/test_localyearlist.html) / [source](https://github.com/igapyon/mydiary/blob/master/directive/localyearlist/test_localyearlist.src.md) 
 
 Test
 =====================================================================================================

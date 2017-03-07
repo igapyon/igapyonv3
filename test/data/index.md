@@ -1,4 +1,4 @@
-[top](index.html) / [index](index.html) / [target](https://igapyon.github.io/mydiary/index.html) / [source](https://github.com/igapyon/mydiary/blob/gh-pages/index.src.md) 
+[top](index.html) / [index](index.html) / [target](https://igapyon.github.io/mydiary/index.html) / [source](https://github.com/igapyon/mydiary/blob/master/index.src.md) 
 
 テストコンテンツ：トップ
 =====================================================================================================

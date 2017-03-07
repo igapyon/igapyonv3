@@ -126,7 +126,6 @@ public class DiaryIndexAtomGenerator {
 			// 各年ディレクトリ用
 
 			// ファイルからファイル一覧情報を作成します。
-			System.err.println("Listing md files for :" + year);
 			final List<DiaryItemInfo> diaryItemInfoList = new IgapyonMdTitleParser(settings, "ig")
 					.processDir(new File(settings.getRootdir(), year), "/" + year);
 
@@ -156,6 +155,7 @@ public class DiaryIndexAtomGenerator {
 			Collections.sort(diaryItemInfoList, new DiaryItemInfoComparator(false));
 
 			final File fileAtom = new File(settings.getRootdir(), "memo" + "/atom.xml");
+			// FIXME memoディレクトリの処理妥当性を確認のこと。エントリありのみ生成、などが妥当か？
 			if (fileAtom.exists() == false) {
 				System.err.println("Atom file [" + fileAtom.getCanonicalPath() + "] not found.");
 			} else {
@@ -173,6 +173,7 @@ public class DiaryIndexAtomGenerator {
 			Collections.sort(diaryItemInfoList, new DiaryItemInfoComparator(false));
 
 			final File fileAtom = new File(settings.getRootdir(), "keyword" + "/atom.xml");
+			// FIXME keywordディレクトリの処理妥当性を確認のこと。エントリありのみ生成、などが妥当か？
 			if (fileAtom.exists() == false) {
 				System.err.println("Atom file [" + fileAtom.getCanonicalPath() + "] not found.");
 			} else {

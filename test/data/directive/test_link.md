@@ -1,4 +1,4 @@
-[top](../index.html) / [index](index.html) / [target](https://igapyon.github.io/mydiary/directive/test_link.html) / [source](https://github.com/igapyon/mydiary/blob/gh-pages/directive/test_link.src.md) 
+[top](../index.html) / [index](index.html) / [target](https://igapyon.github.io/mydiary/directive/test_link.html) / [source](https://github.com/igapyon/mydiary/blob/master/directive/test_link.src.md) 
 
 この日記について
 =====================================================================================================
