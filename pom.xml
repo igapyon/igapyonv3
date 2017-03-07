@@ -134,6 +134,13 @@
 			<artifactId>rome</artifactId>
 			<version>1.7.1</version>
 		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/com.vladsch.flexmark/flexmark-profile-pegdown -->
+		<dependency>
+			<groupId>com.vladsch.flexmark</groupId>
+			<artifactId>flexmark-profile-pegdown</artifactId>
+			<version>0.16.1</version>
+		</dependency>
 	</dependencies>
 
 	<!-- basic spec for jar -->
