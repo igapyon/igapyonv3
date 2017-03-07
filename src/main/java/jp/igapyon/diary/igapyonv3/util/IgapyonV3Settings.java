@@ -76,7 +76,7 @@ public class IgapyonV3Settings {
 	 * 
 	 * URL should NOT be ended with '/'
 	 */
-	private String sourcebaseurl = "https://github.com/igapyon/mydiary/blob/gh-pages";
+	private String sourcebaseurl = "https://github.com/igapyon/mydiary/blob/master";
 
 	/**
 	 * TODAY! for newly diary.
