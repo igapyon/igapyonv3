@@ -124,7 +124,7 @@
 		<dependency>
 			<groupId>org.freemarker</groupId>
 			<artifactId>freemarker</artifactId>
-			<version>2.3.25-incubating</version>
+			<version>2.3.28</version>
 		</dependency>
 
 		<!-- RSS parser -->

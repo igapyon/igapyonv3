@@ -88,9 +88,15 @@ public class RSSFeedDirectiveModel implements TemplateDirectiveModel {
 		{
 			if (cacheAtomStringMap.get(url) == null) {
 				final URL atomURL = new URL(url);
-				cacheAtomStringMap.put(url, SimpleRomeUtil.atomxml2String(atomURL, maxcount));
+				try {
+				    cacheAtomStringMap.put(url, SimpleRomeUtil.atomxml2String(atomURL, maxcount));
+				} catch (IOException ex) {
+				    System.err.println("Error occured during parsing URL [" + atomURL.toString() + "]: " + ex.toString());
+				}
 			}
-			writer.write(cacheAtomStringMap.get(url));
+			if (cacheAtomStringMap.get(url) != null) {
+			    writer.write(cacheAtomStringMap.get(url));
+			}
 		}
 
 		writer.flush();

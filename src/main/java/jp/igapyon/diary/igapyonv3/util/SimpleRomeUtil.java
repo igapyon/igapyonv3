@@ -111,7 +111,8 @@ public class SimpleRomeUtil {
 	public static String atomxml2String(final URL atomURL, final int maxcount) throws IOException {
 		String indexmdText = "";
 		try {
-			final SyndFeed synFeed = new SyndFeedInput().build(new XmlReader(atomURL));
+		    SyndFeedInput feedInput = new SyndFeedInput();
+			final SyndFeed synFeed = feedInput.build(new XmlReader(atomURL));
 
 			// FIXME File 版と挙動が異なります。いつか直します。
 
@@ -132,7 +133,7 @@ public class SimpleRomeUtil {
 
 			return indexmdText;
 		} catch (FeedException e) {
-			throw new IOException(e);
+			throw new IOException("Error parsing [" + atomURL.toString() + "]", e);
 		}
 	}
 
