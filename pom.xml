@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>jp.igapyon.diary</groupId>
 	<artifactId>igapyonv3</artifactId>
-	<version>1.5.4</version>
+	<version>1.5.5-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
 	<name>igapyonv3</name>
@@ -27,8 +27,8 @@
 		<url>https://github.com/igapyon/igapyonv3</url>
 		<connection>scm:git:https://github.com/igapyon/igapyonv3.git</connection>
 		<developerConnection>scm:git:https://github.com/igapyon/igapyonv3.git</developerConnection>
-		<tag>igapyonv3-1.5.3</tag>
-	</scm>
+	  <tag>HEAD</tag>
+  </scm>
 
 	<developers>
 		<developer>
@@ -41,7 +41,7 @@
 				<role>architect</role>
 				<role>developer</role>
 			</roles>
-			<timezone>-9</timezone>
+			<timezone>+9</timezone>
 		</developer>
 	</developers>
 
