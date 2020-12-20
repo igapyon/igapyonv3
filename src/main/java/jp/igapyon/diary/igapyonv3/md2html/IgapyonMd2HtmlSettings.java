@@ -55,7 +55,7 @@ public class IgapyonMd2HtmlSettings {
 
 	protected String htmlDescription;
 
-	protected int pegdownProcessorExtensions = Extensions.AUTOLINKS | Extensions.STRIKETHROUGH
+	protected int pegdownProcessorExtensions = Extensions.STRIKETHROUGH
 			| Extensions.FENCED_CODE_BLOCKS | Extensions.TABLES | Extensions.WIKILINKS;
 
 	public String getTargetPathJQuery() {

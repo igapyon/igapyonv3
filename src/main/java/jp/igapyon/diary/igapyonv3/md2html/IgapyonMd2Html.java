@@ -44,6 +44,7 @@ import jp.igapyon.diary.igapyonv3.md2html.pegdownext.IgapyonLinkRenderer;
 import jp.igapyon.diary.igapyonv3.md2html.pegdownext.IgapyonPegDownProcessor;
 import jp.igapyon.diary.igapyonv3.md2html.pegdownext.IgapyonPegDownTagConf;
 import jp.igapyon.diary.igapyonv3.md2html.pegdownext.IgapyonPegDownUtil;
+import jp.igapyon.diary.util.IgFileUtil;
 
 /**
  * Igapyon's Markdown to Html converter.
@@ -118,7 +119,7 @@ public class IgapyonMd2Html {
 			targetHtml.getParentFile().mkdirs();
 		}
 
-		if (IgapyonV3Util.checkWriteNecessary("md2html", outputHtmlWriter.toString(), targetHtml) == false) {
+		if (IgFileUtil.checkWriteNecessary("md2html", outputHtmlWriter.toString(), targetHtml) == false) {
 			// no need to write
 			return;
 		}

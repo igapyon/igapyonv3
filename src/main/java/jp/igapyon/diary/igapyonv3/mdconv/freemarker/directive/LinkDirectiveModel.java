@@ -35,11 +35,7 @@ package jp.igapyon.diary.igapyonv3.mdconv.freemarker.directive;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
-import java.net.URL;
-import java.util.HashMap;
 import java.util.Map;
-
-import org.apache.commons.lang3.math.NumberUtils;
 
 import freemarker.core.Environment;
 import freemarker.template.TemplateDirectiveBody;
@@ -48,21 +44,19 @@ import freemarker.template.TemplateException;
 import freemarker.template.TemplateModel;
 import freemarker.template.TemplateModelException;
 import jp.igapyon.diary.igapyonv3.util.IgapyonV3Settings;
-import jp.igapyon.diary.igapyonv3.util.SimpleRomeUtil;
+import jp.igapyon.diary.igapyonv3.util.MdTextUtil;
 
 /**
- * RSS Feed 用のディレクティブモデル
+ * Simple output text.
  * 
- * &lt;@rssfeed url="http://www.publickey1.jp/atom.xml" maxcount="5" /&gt;
+ * &lt;@outputtext value="text" /&gt;
  * 
  * @author Toshiki Iga
  */
-public class RSSFeedDirectiveModel implements TemplateDirectiveModel {
+public class LinkDirectiveModel implements TemplateDirectiveModel {
 	private IgapyonV3Settings settings = null;
 
-	protected final Map<String, String> cacheAtomStringMap = new HashMap<String, String>();
-
-	public RSSFeedDirectiveModel(final IgapyonV3Settings settings) {
+	public LinkDirectiveModel(final IgapyonV3Settings settings) {
 		this.settings = settings;
 	}
 
@@ -70,34 +64,14 @@ public class RSSFeedDirectiveModel implements TemplateDirectiveModel {
 			final TemplateModel[] loopVars, final TemplateDirectiveBody body) throws TemplateException, IOException {
 		final BufferedWriter writer = new BufferedWriter(env.getOut());
 
-		if (params.get("url") == null) {
-			throw new TemplateModelException("url param is required.");
+		if (params.get("value") == null) {
+			throw new TemplateModelException("value param is required.");
 		}
+		String valueString = params.get("value").toString();
+		// 所定の加工を伴ったリンクテキスト取得を実施します。
+		valueString = MdTextUtil.getMdLinkString(valueString);
 
-		// SimpleScalar#toString()
-		final String url = params.get("url").toString();
-
-		int maxcount = 10;
-		if (params.get("maxcount") != null) {
-			final String maxcountString = params.get("maxcount").toString();
-			if (NumberUtils.isParsable(maxcountString)) {
-				maxcount = NumberUtils.toInt(maxcountString);
-			}
-		}
-
-		{
-			if (cacheAtomStringMap.get(url) == null) {
-				final URL atomURL = new URL(url);
-				try {
-				    cacheAtomStringMap.put(url, SimpleRomeUtil.atomxml2String(atomURL, maxcount));
-				} catch (IOException ex) {
-				    System.err.println("Error occured during parsing URL [" + atomURL.toString() + "]: " + ex.toString());
-				}
-			}
-			if (cacheAtomStringMap.get(url) != null) {
-			    writer.write(cacheAtomStringMap.get(url));
-			}
-		}
+		writer.write(valueString);
 
 		writer.flush();
 	}

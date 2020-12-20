@@ -64,6 +64,7 @@ import jp.igapyon.diary.igapyonv3.mdconv.freemarker.directive.LocalRssDirectiveM
 import jp.igapyon.diary.igapyonv3.mdconv.freemarker.directive.LocalYearlistDirectiveModel;
 import jp.igapyon.diary.igapyonv3.mdconv.freemarker.directive.NavlistDirectiveModel;
 import jp.igapyon.diary.igapyonv3.mdconv.freemarker.directive.RSSFeedDirectiveModel;
+import jp.igapyon.diary.igapyonv3.mdconv.freemarker.directive.LinkDirectiveModel;
 import jp.igapyon.diary.igapyonv3.mdconv.freemarker.method.SetAuthorMethodModel;
 import jp.igapyon.diary.igapyonv3.mdconv.freemarker.method.SetBaseurlMethodModel;
 import jp.igapyon.diary.igapyonv3.mdconv.freemarker.method.SetConvertmarkdown2htmlMethodModel;
@@ -280,7 +281,7 @@ public class IgapyonV3FreeMarkerUtil {
 		config.setSharedVariable("setSourcebaseurl", new SetSourcebaseurlMethodModel(settings));
 		config.setSharedVariable("setSitetitle", new SetSitetitleMethodModel(settings));
 		config.setSharedVariable("showSettings", new ShowSettingsMethodModel(settings));
-		
+
 		// search
 		config.setSharedVariable("linksearch", new LinkSearchDirectiveModel(settings));
 
@@ -296,6 +297,7 @@ public class IgapyonV3FreeMarkerUtil {
 		config.setSharedVariable("navlist", new NavlistDirectiveModel(settings));
 
 		// others
+		config.setSharedVariable("link", new LinkDirectiveModel(settings));
 		config.setSharedVariable("linkdiary", new LinkDiaryDirectiveModel(settings));
 		config.setSharedVariable("linkamazon", new LinkAmazonDirectiveModel(settings));
 		config.setSharedVariable("linkmap", new LinkMapDirectiveModel(settings));

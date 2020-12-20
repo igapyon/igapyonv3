@@ -167,34 +167,4 @@ public class IgapyonV3Util {
 		writer.write("</body>\n");
 		writer.write("</html>");
 	}
-
-	/**
-	 * Check if it should be written or not.
-	 * 
-	 * @param titleString
-	 *            like 'md2html'.
-	 * @param outputData
-	 *            data of string to be written.
-	 * @param targetHtml
-	 *            file of target html.
-	 * @return true:write
-	 * @throws IOException
-	 *             io exception occurs.
-	 */
-	public static boolean checkWriteNecessary(final String titleString, final String outputData, final File targetHtml)
-			throws IOException {
-		if (targetHtml.exists() == false) {
-			System.out.println(titleString + ": add: " + targetHtml.getCanonicalPath());
-			return true;
-		} else {
-			final String origOutputHtmlString = IgapyonV3Util.readTextFile(targetHtml);
-			if (outputData.equals(origOutputHtmlString)) {
-				System.out.println(titleString + ": non: " + targetHtml.getCanonicalPath());
-				return false;
-			} else {
-				System.out.println(titleString + ": upd: " + targetHtml.getCanonicalPath());
-				return true;
-			}
-		}
-	}
 }

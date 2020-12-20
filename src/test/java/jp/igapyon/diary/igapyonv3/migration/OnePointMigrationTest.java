@@ -31,21 +31,16 @@
  *  limitations under the License.
  */
 
-package jp.igapyon.diary.igapyonv3.util;
+package jp.igapyon.diary.igapyonv3.migration;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import jp.igapyon.diary.util.IgStringUtil;
+import org.apache.commons.io.FileUtils;
+import org.junit.Test;
 
-/**
- * Markdown テキストのためのユーティリティです。
- * 
- * @author Toshiki Iga
- */
-public class MdTextUtil {
+public class OnePointMigrationTest {
 	/**
 	 * 対象とするシンプルなURLリンクパターン。
 	 */
@@ -58,13 +53,29 @@ public class MdTextUtil {
 	 */
 	public static final String SKIPPING_MARKED_LINK_PATTERN = "(\\[.*?\\]|\\(.*?\\))";
 
-	/**
-	 * シンプルな URL を MD リンク形式に変換します。
-	 * 
-	 * @param source
-	 *            input URL.
-	 * @return markdown style string.
-	 */
+	@Test
+	public void testDoOnePointMigration() throws Exception {
+		if (false) {
+			final File targetDir = new File("../diary/2014");
+			final File[] files = targetDir.listFiles();
+			for (File file : files) {
+				if (file.isFile() == false) {
+					continue;
+				}
+				if (file.getName().endsWith(".src.md") == false) {
+					continue;
+				}
+
+				final String content = FileUtils.readFileToString(file, "UTF-8");
+				final String converted = convertSimpleUrl2MdLink(content);
+				if (content.equals(converted) == false) {
+					System.err.println("Convert link:" + file.getName());
+					FileUtils.writeStringToFile(file, converted, "UTF-8");
+				}
+			}
+		}
+	}
+
 	public static String convertSimpleUrl2MdLink(final String source) {
 
 		final Pattern patMdLink = Pattern.compile(SKIPPING_MARKED_LINK_PATTERN);
@@ -100,41 +111,9 @@ public class MdTextUtil {
 		// iPhone SE だと 38 が好適そう...
 		return source.substring(0, matURL.start()) + getMdLinkString(matURL.group())
 				+ convertSimpleUrl2MdLink(source.substring(matURL.end()));
-
 	}
 
-	public static String getMdLinkString(final String originalUrl) {
-		// iPhone SE だと 38 が好適そう...
-		final String urlShow = IgStringUtil.abbreviateMiddle(originalUrl);
-		return "[" + urlShow + "](" + originalUrl + ")";
-	}
-
-	public static String convertDoubleKeyword2MdLink(final String source, final File currentdir,
-			final IgapyonV3Settings settings) throws IOException {
-
-		// [[key]]system
-		final String DOUBLE_KEYWORD_PATTERN = "\\[\\[.*?\\]\\]";
-		final Pattern patDoubleKeyword = Pattern.compile(DOUBLE_KEYWORD_PATTERN);
-		final Matcher matDoubleKeyword = patDoubleKeyword.matcher(source);
-		final boolean isDoubleKeywordFound = matDoubleKeyword.find();
-		if (isDoubleKeywordFound == false) {
-			return source;
-		}
-
-		String foundKeyword = matDoubleKeyword.group();
-		foundKeyword = foundKeyword.substring(2, foundKeyword.length() - 2);
-
-		for (String[] registeredPair : settings.getDoubleKeywordList()) {
-			if (registeredPair[0].compareToIgnoreCase(foundKeyword) == 0) {
-				// 最初のヒットのみ置換したうえで残り部分を再帰呼出し。
-				return source.substring(0, matDoubleKeyword.start()) + "[" + registeredPair[0] + "]("
-						+ SimpleDirUtil.getRelativeUrlIfPossible(registeredPair[1], currentdir, settings) + ")"
-						+ convertDoubleKeyword2MdLink(source.substring(matDoubleKeyword.end()), currentdir, settings);
-			}
-		}
-
-		System.err.println("Keyword [[" + foundKeyword + "]] was skipped.");
-
-		return source;
+	public static String getMdLinkString(final String link) {
+		return "<@link value=\"" + link + "\" />";
 	}
 }

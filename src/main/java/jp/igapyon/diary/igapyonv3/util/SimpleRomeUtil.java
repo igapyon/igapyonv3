@@ -36,10 +36,12 @@ package jp.igapyon.diary.igapyonv3.util;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.StringWriter;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringEscapeUtils;
 
 import com.rometools.rome.feed.synd.SyndEntry;
@@ -52,6 +54,7 @@ import com.rometools.rome.io.SyndFeedOutput;
 import com.rometools.rome.io.XmlReader;
 
 import jp.igapyon.diary.igapyonv3.item.DiaryItemInfo;
+import jp.igapyon.diary.util.IgFileUtil;
 
 /**
  * Atom / RSS 読み書きを実現する ROME ライブラリのためのユーティリティクラスです。
@@ -108,7 +111,8 @@ public class SimpleRomeUtil {
 	public static String atomxml2String(final URL atomURL, final int maxcount) throws IOException {
 		String indexmdText = "";
 		try {
-			final SyndFeed synFeed = new SyndFeedInput().build(new XmlReader(atomURL));
+		    SyndFeedInput feedInput = new SyndFeedInput();
+			final SyndFeed synFeed = feedInput.build(new XmlReader(atomURL));
 
 			// FIXME File 版と挙動が異なります。いつか直します。
 
@@ -129,7 +133,7 @@ public class SimpleRomeUtil {
 
 			return indexmdText;
 		} catch (FeedException e) {
-			throw new IOException(e);
+			throw new IOException("Error parsing [" + atomURL.toString() + "]", e);
 		}
 	}
 
@@ -169,7 +173,13 @@ public class SimpleRomeUtil {
 		}
 
 		try {
-			new SyndFeedOutput().output(feed, targetAtomFile);
+			final StringWriter writer = new StringWriter();
+			new SyndFeedOutput().output(feed, writer);
+			writer.flush();
+			final String outputData = writer.toString();
+			if (IgFileUtil.checkWriteNecessary("writeatom", outputData, targetAtomFile)) {
+				FileUtils.writeStringToFile(targetAtomFile, outputData, "UTF-8");
+			}
 		} catch (FeedException e) {
 			throw new IOException(e);
 		}
@@ -194,7 +204,13 @@ public class SimpleRomeUtil {
 		}
 
 		try {
-			new SyndFeedOutput().output(feed, targetAtomFile);
+			final StringWriter writer = new StringWriter();
+			new SyndFeedOutput().output(feed, writer);
+			writer.flush();
+			final String outputData = writer.toString();
+			if (IgFileUtil.checkWriteNecessary("writeatom", outputData, targetAtomFile)) {
+				FileUtils.writeStringToFile(targetAtomFile, outputData, "UTF-8");
+			}
 		} catch (FeedException e) {
 			throw new IOException(e);
 		}

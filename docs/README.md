@@ -1,30 +1,31 @@
-Igapyon Diary System v3
+igapyonv3
 =======================
 
-[igapyonv3](https://github.com/igapyon/igapyonv3) (#igapyonv3) is a Java based open source static site/blog generator for developers written in Java.
+[igapyonv3](https://github.com/igapyon/igapyonv3) is an open source static site/blog generator for developers written in Java.
 
----
-title: igapyonv3
-repo: https://github.com/igapyon/igapyonv3
-homepage: https://igapyon.github.io/igapyonv3/
-language: Java
-license: Apache 2
-templates: Freemarker
-description: A static site/blog generator for developers
----
+* title: igapyonv3
+  * repo: https://github.com/igapyon/igapyonv3
+  * homepage: https://igapyon.github.io/igapyonv3/
+  * language: Java
+  * license: Apache 2 / LGPL
+  * templates: Freemarker
+  * description: A static site/blog generator for developers
 
-* Lightweight and turnkey static site/blog generator.
-* Provided as a Maven Plugin.
-* Supports Markdown content.
-* RSS feed support.
-* Freemarker and igapyonv3's additional diary directive support.
-* Convert markdown into Bootstrap based HTML.
+* characteristics
+  * Lightweight and turnkey static site/blog generator.
+  * Provided as a Maven Plugin.
+  * Supports Markdown content.
+  * RSS feed support.
+  * Freemarker and igapyonv3's additional diary directive support.
+  * Supports github gh-pages.
+  * Also support to convert markdown into Bootstrap based HTML.
 
 ## Install
 
 ### Maven is required
 
-igapyonv3 requires maven.
+igapyonv3 requires Maven.
+Java is required too.
 
 ### Edit pom.xml
 
@@ -53,27 +54,29 @@ Edit pom.xml to enable igapyonv3 like below:
   </build>
 ```
 
+That is all to install igayponv3!
+
 ## Setup
 
 ### Init igapyonv3 directory
 
-You can init directory using command line below:
+You can initialize directory using command line like below:
 
 ```sh
 mvn jp.igapyon.diary.igapyonv3.plugin:igapyonv3-maven-plugin:init
 ```
 
-Default directory will be your current directory.
+Default directory will be set on your current directory.
 
 ### Edit igapyonv3 setting file.
 
-Modify `settings.src.md` to adjust diary that to fit to your favor.
+Modify `settings.src.md` to fit your favor to adjust diary settings. Linux / Mac will be like below:
 
 ```sh
 vi settings.src.md
 ```
 
-If you want to publish output of igapyonv3 at `gh-pages`, change settings.src.md like `${setDuplicatefakehtmlmd("true")}` is strongly recommended.
+Notice: If you want to publish your contents at `gh-pages`, change settings.src.md to be like `${setDuplicatefakehtmlmd("true")}`.
 
 ### Force update template files.
 
@@ -83,17 +86,19 @@ Update template files to apply `settings.src.md` changes, using command line bel
 mvn jp.igapyon.diary.igapyonv3.plugin:igapyonv3-maven-plugin:inittemplate
 ```
 
+Notice: Be case that the command will overwrite template files if you may changed them.
+
 ## Running igapyonv3
 
-You can generate compiled markdown files and html files, using command line below:
+To generate/update markdown files and html files, use command line like below:
 
 ```sh
 mvn compile
 ```
 
-Modify XXX.src.md and run `mvn compile` again, and you will be able to get generated `md` and `html` files and many index files.
+If you modify XXX.src.md and you want to update, run `mvn compile` again, and you will be able to get updated `md` and `html` files and many index files.
 
 ## License
 
-[Igapyon Diary System v3](https://github.com/igapyon/igapyonv3) is released under GNU LGPL version 3 and Apache License version 2 (dual license). 
+[igapyonv3](https://github.com/igapyon/igapyonv3) is released under GNU LGPL version 3 and Apache License version 2 (dual license). 
 You can select either LGPL or ASL or both. 

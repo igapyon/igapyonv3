@@ -38,6 +38,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.StringReader;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -49,6 +50,8 @@ import jp.igapyon.diary.igapyonv3.mdconv.freemarker.IgapyonV3FreeMarkerUtil;
 import jp.igapyon.diary.igapyonv3.util.IgapyonV3Settings;
 import jp.igapyon.diary.igapyonv3.util.MdTextUtil;
 import jp.igapyon.diary.igapyonv3.util.SimpleDirUtil;
+import jp.igapyon.diary.util.IgFileComparatorByName;
+import jp.igapyon.diary.util.IgFileUtil;
 
 /**
  * ソースのマークダウンファイル `.src.md` から ターゲットのマークダウンファイル `.md` を生成するためのクラスです。
@@ -70,15 +73,20 @@ public class DiarySrcMd2MdConverter {
 	}
 
 	public void processDir(final File dir) throws IOException {
-		// System.err.println("DiarySrcMd2MdConverter#processDir(" +
-		// dir.getCanonicalPath() + ")");
-
-		final File[] files = dir.listFiles();
-		if (files == null) {
-			return;
+		final List<File> fileList = new ArrayList<File>();
+		{
+			final File[] files = dir.listFiles();
+			if (files == null) {
+				return;
+			}
+			for (File file : files) {
+				fileList.add(file);
+			}
 		}
 
-		for (File file : files) {
+		Collections.sort(fileList, new IgFileComparatorByName());
+
+		for (File file : fileList) {
 			if (file.isDirectory()) {
 				// 根っこレベルの target および srcのみ除外する必要があります。
 				final String dirName = SimpleDirUtil.getRelativePath(settings.getRootdir(), file);
@@ -96,7 +104,7 @@ public class DiarySrcMd2MdConverter {
 	}
 
 	public void processFile(final File file) throws IOException {
-		if (settings.isVerbose()) {
+		if (settings.isDebug()) {
 			System.err.println("srcmd2md: " + SimpleDirUtil.getRelativePath(settings.getRootdir(), file));
 		}
 
@@ -127,7 +135,7 @@ public class DiarySrcMd2MdConverter {
 
 			// 直リンク形式を md リンク形式に変換します。
 			// FreeMarker の都合、＜リンク＞の形式は利用せず、直リンク形式を採用しています。
-			line = MdTextUtil.convertSimpleUrl2MdLink(line);
+			// line = MdTextUtil.convertSimpleUrl2MdLink(line);
 
 			lines.set(index, line);
 		}
@@ -135,14 +143,21 @@ public class DiarySrcMd2MdConverter {
 		// TODO .src.md から .md を取得するための共通関数がほしいです。
 		{
 			// generate from .src.md to .md
-			String newName = file.getName().substring(0, file.getName().length() - (".src.md".length())) + ".md";
-			FileUtils.writeLines(new File(file.getParentFile(), newName), lines);
+			final String newName = file.getName().substring(0, file.getName().length() - (".src.md".length())) + ".md";
+			final File fileWrite = new File(file.getParentFile(), newName);
+			if (IgFileUtil.checkWriteNecessary("srcmd2md", lines, fileWrite)) {
+				FileUtils.writeLines(fileWrite, lines);
+			}
 		}
 
 		if (settings.isDuplicateFakeHtmlMd()) {
 			// generate fake html.md file for gh-pages
-			String newName = file.getName().substring(0, file.getName().length() - (".src.md".length())) + ".html.md";
-			FileUtils.writeLines(new File(file.getParentFile(), newName), lines);
+			final String newName = file.getName().substring(0, file.getName().length() - (".src.md".length()))
+					+ ".html.md";
+			final File fileWrite = new File(file.getParentFile(), newName);
+			if (IgFileUtil.checkWriteNecessary("srcmd2md", lines, fileWrite)) {
+				FileUtils.writeLines(fileWrite, lines);
+			}
 		}
 	}
 }

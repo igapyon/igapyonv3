@@ -60,14 +60,23 @@ public class IgapyonV3Settings {
 	private File rootdir = new File(".");
 
 	/**
-	 * 日記のベース URL。最後のスラッシュは含まないこと。
+	 * md2html の出力ディレクトリ。
 	 */
-	private String baseurl = "https://igapyon.github.io/diary";
+	private File outputhtmldir = new File("./target/html");
 
 	/**
-	 * 日記のソースのベース URL。最後のスラッシュは含まないこと。
+	 * URL of diary base.
+	 * 
+	 * URL should NOT be ended with '/'
 	 */
-	private String sourcebaseurl = "https://github.com/igapyon/diary/blob/gh-pages";
+	private String baseurl = "https://igapyon.github.io/mydiary";
+
+	/**
+	 * URL of diary source base.
+	 * 
+	 * URL should NOT be ended with '/'
+	 */
+	private String sourcebaseurl = "https://github.com/igapyon/mydiary/blob/master";
 
 	/**
 	 * TODAY! for newly diary.
@@ -77,7 +86,7 @@ public class IgapyonV3Settings {
 	/**
 	 * verbose mode for debugging.
 	 */
-	private boolean verbose = false;
+	private boolean verbose = true;
 
 	/**
 	 * debug mode for debugging.
@@ -111,7 +120,7 @@ public class IgapyonV3Settings {
 	/**
 	 * この日記の作成者。
 	 */
-	private String author = "Toshiki Iga";
+	private String author = "Taro Yamada";
 
 	/**
 	 * 日記の記述言語。
@@ -312,5 +321,13 @@ public class IgapyonV3Settings {
 
 	public void setSiteTitle(String siteTitle) {
 		this.siteTitle = siteTitle;
+	}
+
+	public File getOutputhtmldir() {
+		return outputhtmldir;
+	}
+
+	public void setOutputhtmldir(File outputhtmldir) {
+		this.outputhtmldir = outputhtmldir;
 	}
 }
