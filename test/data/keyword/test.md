@@ -1,4 +1,4 @@
-[top](../index.html) / [index](index.html) / [target](https://igapyon.github.io/mydiary/keyword/test.html) / [source](https://github.com/igapyon/mydiary/blob/master/keyword/test.src.md) 
+[top](../index.html) / [index](index.html) / [target](https://igapyon.github.io/diary/keyword/test.html) / [source](https://github.com/igapyon/diary/blob/gh-pages/keyword/test.src.md) 
 
 Test
 =====================================================================================================
@@ -31,4 +31,4 @@ Test
 
 ## この日記について
 
-[Share on Twitter](https://twitter.com/intent/tweet?hashtags=igapyon%2Cdiary%2C%E3%81%84%E3%81%8C%E3%81%B4%E3%82%87%E3%82%93%2CTest&text=Test&url=https%3A%2F%2Figapyon.github.io%2Fmydiary%2Fkeyword%2Ftest.html) / [top](../index.html) / [Diary Generator](https://github.com/igapyon/igapyonv3)
+[Share on Twitter](https://twitter.com/intent/tweet?hashtags=igapyon%2Cdiary%2C%E3%81%84%E3%81%8C%E3%81%B4%E3%82%87%E3%82%93%2CTest&text=Test&url=https%3A%2F%2Figapyon.github.io%2Fdiary%2Fkeyword%2Ftest.html) / [top](../index.html) / [Diary Generator](https://github.com/igapyon/igapyonv3)
