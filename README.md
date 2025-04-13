@@ -31,6 +31,15 @@ Igapyon Diary System v3 (#igapyonv3) depends on several great OSSs. Great thanks
 - [Apache Commons CLI](https://commons.apache.org/proper/commons-cli/)
 - [Apache Commons IO](https://commons.apache.org/proper/commons-io/)
 
+## Run igapyonv3 without maven plugin
+
+Move to diary directory and run command below:
+
+```
+java -classpath ../igapyonv3/target/igapyonv3-1.9.1-SNAPSHOT-jar-with-dependencies.jar jp.igapyon.diary.igapyonv3.IgDiaryProcessor
+java -classpath ../igapyonv3/target/igapyonv3-1.9.1-SNAPSHOT-jar-with-dependencies.jar jp.igapyon.diary.igapyonv3.md2html.IgapyonMd2Html -s . -t target/md2html -r
+```
+
 ## Misc
 ### TODO
 - Write HatenaDialy2md prog.
