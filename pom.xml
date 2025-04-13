@@ -225,7 +225,7 @@
         </descriptorRefs>
         <archive>
           <manifest>
-            <mainClass>jp.igapyon.diary.igapyonv3IgDiaryProcessor</mainClass>
+            <mainClass>jp.igapyon.diary.igapyonv3.IgDiaryProcessor</mainClass>
           </manifest>
         </archive>
       </configuration>
