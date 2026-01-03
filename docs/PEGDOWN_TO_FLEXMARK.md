@@ -22,6 +22,23 @@
 3) `IgapyonMd2Html` の変換ロジックを flexmark ベースで再実装。
 4) HTML 出力の差分を確認。
 
+## pegdown 互換依存の扱い
+
+現在は `flexmark-profile-pegdown` に依存しており、`FlexmarkPegdownOpts` で pegdown 互換のオプションを利用している。
+最終的には、通常の flexmark 拡張構成へ移行し、`flexmark-profile-pegdown` を不要にする。
+
+対応方針（案）:
+
+1) `FlexmarkPegdownOpts` を通常の flexmark 拡張設定に置き換える。
+2) `flexmark-profile-pegdown` 依存を削除する。
+3) HTML 出力差分を確認し、必要なら調整する。
+
+受け入れ条件:
+
+- `mvn -U package` が成功する。
+- `flexmark-profile-pegdown` 依存が不要になる。
+- HTML 出力が実運用で許容できる範囲に収まる。
+
 ## 置き換え候補
 
 - `IgapyonPegDownProcessor` 相当のパーサ処理を flexmark に置換。
