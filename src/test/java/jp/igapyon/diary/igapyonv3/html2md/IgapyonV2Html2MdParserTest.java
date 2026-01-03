@@ -2,7 +2,7 @@ package jp.igapyon.diary.igapyonv3.html2md;
 
 import java.io.File;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import jp.igapyon.diary.igapyonv3.migration.html2md.IgapyonV2Html2MdUtil;
 

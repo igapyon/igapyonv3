@@ -37,13 +37,11 @@ import java.io.File;
 import java.io.IOException;
 import java.io.StringWriter;
 
-import org.pegdown.ast.HeaderNode;
-import org.pegdown.ast.RootNode;
+import com.vladsch.flexmark.ast.Heading;
+import com.vladsch.flexmark.util.ast.Node;
 
-import jp.igapyon.diary.igapyonv3.md2html.pegdownext.IgapyonLinkRenderer;
-import jp.igapyon.diary.igapyonv3.md2html.pegdownext.IgapyonPegDownProcessor;
+import jp.igapyon.diary.igapyonv3.md2html.flexmark.FlexmarkUtil;
 import jp.igapyon.diary.igapyonv3.md2html.pegdownext.IgapyonPegDownTagConf;
-import jp.igapyon.diary.igapyonv3.md2html.pegdownext.IgapyonPegDownUtil;
 import jp.igapyon.diary.util.IgFileUtil;
 
 /**
@@ -67,28 +65,24 @@ public class IgapyonMd2Html {
 		// には画像を含めない処理が必要???
 
 		final String inputMdString = IgapyonV3Util.readTextFile(sourceMd);
-		final char[] inputMdChars = inputMdString.toCharArray();
+		final Node document = FlexmarkUtil.getParser().parse(inputMdString);
 
-		final IgapyonPegDownProcessor processor = new IgapyonPegDownProcessor(settings.getPegdownProcessorExtensions());
-		final RootNode rootNode = processor.parseMarkdown(inputMdChars);
-
-		final HeaderNode firstHeader = IgapyonPegDownUtil.getFistHeader(rootNode);
-		final HeaderNode secondHeader = IgapyonPegDownUtil.getSecondHeader(rootNode);
+		final Heading firstHeader = FlexmarkUtil.getFirstHeading(document);
+		final Heading secondHeader = FlexmarkUtil.getSecondHeading(document);
 
 		if (firstHeader != null) {
-			settings.setHtmlTitle(IgapyonPegDownUtil.getElementChildText(firstHeader));
+			settings.setHtmlTitle(FlexmarkUtil.collectText(firstHeader));
 		}
 		if (firstHeader != null && secondHeader != null) {
-			String desc = IgapyonPegDownUtil.getElementChildText(rootNode, firstHeader.getEndIndex(),
-					secondHeader.getStartIndex());
-			settings.setHtmlDescription(desc);
+			final String descMd = inputMdString.substring(firstHeader.getEndOffset(), secondHeader.getStartOffset());
+			settings.setHtmlDescription(FlexmarkUtil.collectTextFromMarkdown(descMd));
 		}
 
 		String mdStringHead = inputMdString;
 		String mdStringBody = "";
 		if (firstHeader != null && secondHeader != null) {
-			mdStringHead = inputMdString.substring(0, secondHeader.getStartIndex());
-			mdStringBody = inputMdString.substring(secondHeader.getStartIndex());
+			mdStringHead = inputMdString.substring(0, secondHeader.getStartOffset());
+			mdStringBody = inputMdString.substring(secondHeader.getStartOffset());
 		}
 
 		final StringWriter outputHtmlWriter = new StringWriter();
@@ -106,8 +100,7 @@ public class IgapyonMd2Html {
 
 		{
 			final IgapyonPegDownTagConf tagConf = IgapyonPegDownTagConf.getDefault();
-			final String bodyMarkdown = IgapyonV3Util.simpleMd2Html(settings, tagConf, mdStringBody,
-					new IgapyonLinkRenderer());
+			final String bodyMarkdown = IgapyonV3Util.simpleMd2Html(settings, tagConf, mdStringBody);
 			outputHtmlWriter.write(bodyMarkdown);
 		}
 

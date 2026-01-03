@@ -4,10 +4,23 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="You have found a bug or you have an idea for a cool new feature? Contributing code is a great way to give something back to the open source community. Before you dig right into the code there are a few guidelines that we need contributors to follow so that we can have a chance of keeping on top of things.">
+<meta name="description" content="Make sure you have a JIRA account.
+
+Make sure you have a GitHub account.
+
+If you're planning to implement a new feature it makes sense to discuss you're changes on the dev list first. This way you can make sure you're not wasting your time on something that isn't considered to be in Apache Commons CLI's scope.
+
+Submit a ticket for your issue, assuming one does not already exist.
+
+Clearly describe the issue including steps to reproduce when it is a bug.
+
+Make sure you fill in the earliest version that you know has the issue.
+
+Fork the repository on GitHub.
+">
 <meta name="author" content="Toshiki Iga">
 <meta name="generator" content="Igapyon Diary System v3 (igapyonv3) ver010">
-<title>Contributing to Apache Commons CLI</title>
+<title>Getting Started</title>
 <!-- Compiled and minified CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 </head>
@@ -53,44 +66,54 @@
  |  </properties>                                                       |
  |                                                                      |
  +======================================================================+
----><h1><a href="#contributing-to-apache-commons-cli" name="contributing-to-apache-commons-cli">Contributing to Apache Commons CLI</a></h1><p>You have found a bug or you have an idea for a cool new feature? Contributing code is a great way to give something back to the open source community. Before you dig right into the code there are a few guidelines that we need contributors to follow so that we can have a chance of keeping on top of things.</p></div>
-<div class="container-fluid">
-<h2 class="alert alert-warning"><a href="#getting-started" name="getting-started">Getting Started</a></h2>
+--->
+Contributing to Apache Commons CLI
+======================
+<p>You have found a bug or you have an idea for a cool new feature? Contributing code is a great way to give something back to the open source community. Before you dig right into the code there are a few guidelines that we need contributors to follow so that we can have a chance of keeping on top of things.</p>
+<h2 class="alert alert-warning">Getting Started</h2>
 <ul>
-  <li>Make sure you have a <a href="https://issues.apache.org/jira/">JIRA account</a>.</li>
-  <li>Make sure you have a <a href="https://github.com/signup/free">GitHub account</a>.</li>
-  <li>If you're planning to implement a new feature it makes sense to discuss you're changes on the <a href="https://commons.apache.org/mail-lists.html">dev list</a> first. This way you can make sure you're not wasting your time on something that isn't considered to be in Apache Commons CLI's scope.</li>
-  <li>Submit a ticket for your issue, assuming one does not already exist.</li>
-  <li>Clearly describe the issue including steps to reproduce when it is a bug.</li>
-  <li>Make sure you fill in the earliest version that you know has the issue.</li>
-  <li>Fork the repository on GitHub.</li>
-</ul><h2 class="alert alert-warning"><a href="#making-changes" name="making-changes">Making Changes</a></h2>
-<ul>
-  <li>Create a topic branch from where you want to base your work (this is usually the master/trunk branch).</li>
-  <li>Make commits of logical units.</li>
-  <li>Respect the original code style:</li>
-  <li>Only use spaces for indentation.</li>
-  <li>Create minimal diffs - disable on save actions like reformat source code or organize imports. If you feel the source code should be reformatted create a separate PR for this change.</li>
-  <li>Check for unnecessary whitespace with git diff --check before committing.</li>
-  <li>Make sure your commit messages are in the proper format. Your commit message should contain the key of the JIRA issue.</li>
-  <li>Make sure you have added the necessary tests for your changes.</li>
-  <li>Run all the tests with <code>mvn clean verify</code> to assure nothing else was accidentally broken.</li>
-</ul><h2 class="alert alert-warning"><a href="#making-trivial-changes" name="making-trivial-changes">Making Trivial Changes</a></h2><p>For changes of a trivial nature to comments and documentation, it is not always necessary to create a new ticket in JIRA. In this case, it is appropriate to start the first line of a commit with '(doc)' instead of a ticket number.</p><h2 class="alert alert-warning"><a href="#submitting-changes" name="submitting-changes">Submitting Changes</a></h2>
-<ul>
-  <li>Sign the <a href="https://www.apache.org/licenses/#clas">Contributor License Agreement</a> if you haven't already.</li>
-  <li>Push your changes to a topic branch in your fork of the repository.</li>
-  <li>Submit a pull request to the repository in the apache organization.</li>
-  <li>Update your JIRA ticket and include a link to the pull request in the ticket.</li>
-</ul><h2 class="alert alert-warning"><a href="#additional-resources" name="additional-resources">Additional Resources</a></h2>
-<ul>
-  <li><a href="https://commons.apache.org/patches.html">Contributing patches</a></li>
-  <li><a href="https://issues.apache.org/jira/browse/CLI">Apache Commons CLI JIRA project page</a></li>
-  <li><a href="https://www.apache.org/licenses/#clas">Contributor License Agreement</a></li>
-  <li><a href="https://help.github.com/">General GitHub documentation</a></li>
-  <li><a href="https://help.github.com/send-pull-requests/">GitHub pull request documentation</a></li>
-  <li><a href="https://twitter.com/ApacheCommons">Apache Commons Twitter Account</a></li>
-  <li>#apachecommons IRC channel on freenode.org</li>
+<li>Make sure you have a <a href="https://issues.apache.org/jira/">JIRA account</a>.</li>
+<li>Make sure you have a <a href="https://github.com/signup/free">GitHub account</a>.</li>
+<li>If you're planning to implement a new feature it makes sense to discuss you're changes on the <a href="https://commons.apache.org/mail-lists.html">dev list</a> first. This way you can make sure you're not wasting your time on something that isn't considered to be in Apache Commons CLI's scope.</li>
+<li>Submit a ticket for your issue, assuming one does not already exist.</li>
+<li>Clearly describe the issue including steps to reproduce when it is a bug.</li>
+<li>Make sure you fill in the earliest version that you know has the issue.</li>
+<li>Fork the repository on GitHub.</li>
 </ul>
+</div>
+<div class="container-fluid">
+<h2 class="alert alert-warning">Making Changes</h2>
+<ul>
+<li>Create a topic branch from where you want to base your work (this is usually the master/trunk branch).</li>
+<li>Make commits of logical units.</li>
+<li>Respect the original code style:</li>
+<li>Only use spaces for indentation.</li>
+<li>Create minimal diffs - disable on save actions like reformat source code or organize imports. If you feel the source code should be reformatted create a separate PR for this change.</li>
+<li>Check for unnecessary whitespace with git diff --check before committing.</li>
+<li>Make sure your commit messages are in the proper format. Your commit message should contain the key of the JIRA issue.</li>
+<li>Make sure you have added the necessary tests for your changes.</li>
+<li>Run all the tests with <code>mvn clean verify</code> to assure nothing else was accidentally broken.</li>
+</ul>
+<h2 class="alert alert-warning">Making Trivial Changes</h2>
+<p>For changes of a trivial nature to comments and documentation, it is not always necessary to create a new ticket in JIRA. In this case, it is appropriate to start the first line of a commit with '(doc)' instead of a ticket number.</p>
+<h2 class="alert alert-warning">Submitting Changes</h2>
+<ul>
+<li>Sign the <a href="https://www.apache.org/licenses/#clas">Contributor License Agreement</a> if you haven't already.</li>
+<li>Push your changes to a topic branch in your fork of the repository.</li>
+<li>Submit a pull request to the repository in the apache organization.</li>
+<li>Update your JIRA ticket and include a link to the pull request in the ticket.</li>
+</ul>
+<h2 class="alert alert-warning">Additional Resources</h2>
+<ul>
+<li><a href="https://commons.apache.org/patches.html">Contributing patches</a></li>
+<li><a href="https://issues.apache.org/jira/browse/CLI">Apache Commons CLI JIRA project page</a></li>
+<li><a href="https://www.apache.org/licenses/#clas">Contributor License Agreement</a></li>
+<li><a href="https://help.github.com/">General GitHub documentation</a></li>
+<li><a href="https://help.github.com/send-pull-requests/">GitHub pull request documentation</a></li>
+<li><a href="https://twitter.com/ApacheCommons">Apache Commons Twitter Account</a></li>
+<li>#apachecommons IRC channel on freenode.org</li>
+</ul>
+
 </div><!-- container-fluid -->
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>

@@ -40,11 +40,8 @@ import java.io.IOException;
 import java.io.Writer;
 
 import org.apache.commons.io.IOUtils;
-import org.pegdown.LinkRenderer;
-
-import jp.igapyon.diary.igapyonv3.md2html.pegdownext.IgapyonLinkRenderer;
-import jp.igapyon.diary.igapyonv3.md2html.pegdownext.IgapyonPegDownProcessor;
 import jp.igapyon.diary.igapyonv3.md2html.pegdownext.IgapyonPegDownTagConf;
+import jp.igapyon.diary.igapyonv3.md2html.flexmark.FlexmarkUtil;
 
 /**
  * utils for igapyonv3
@@ -126,7 +123,7 @@ public class IgapyonV3Util {
 		writer.write("<div class=\"jumbotron\">\n");
 
 		if (mdStringHead.length() > 0) {
-			final String bodyMarkdown = simpleMd2Html(settings, tagConf, mdStringHead, new IgapyonLinkRenderer());
+			final String bodyMarkdown = simpleMd2Html(settings, tagConf, mdStringHead);
 			writer.write(bodyMarkdown);
 		}
 
@@ -137,10 +134,8 @@ public class IgapyonV3Util {
 	}
 
 	public static String simpleMd2Html(final IgapyonMd2HtmlSettings settings, final IgapyonPegDownTagConf tagConf,
-			final String mdString, final LinkRenderer linkRenderer) {
-		final IgapyonPegDownProcessor processor = new IgapyonPegDownProcessor(settings.getPegdownProcessorExtensions());
-		processor.setTagConf(tagConf);
-		return processor.markdownToHtml(mdString, new IgapyonLinkRenderer());
+			final String mdString) {
+		return FlexmarkUtil.renderMarkdown(mdString, tagConf);
 	}
 
 	public static void writePostHtml(final Writer writer) throws IOException {

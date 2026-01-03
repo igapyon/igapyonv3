@@ -2,7 +2,7 @@ package jp.igapyon.diary.igapyonv3;
 
 import java.io.File;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import jp.igapyon.diary.igapyonv3.util.IgapyonV3Settings;
 
