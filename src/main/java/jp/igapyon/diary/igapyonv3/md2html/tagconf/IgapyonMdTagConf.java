@@ -64,6 +64,8 @@ public class IgapyonMdTagConf {
 		tagConf.setAttrClassValue("td", "border border-slate-300 px-3 py-2");
 		tagConf.setAttrClassValue("a",
 				"text-slate-700 font-medium hover:text-sky-800 hover:bg-sky-50 rounded px-0.5 -mx-0.5");
+		tagConf.setAttrClassValue("a-image", "inline-block align-middle hover:opacity-90");
+		tagConf.setAttrClassValue("img", "inline-block align-middle");
 
 		return tagConf;
 	}

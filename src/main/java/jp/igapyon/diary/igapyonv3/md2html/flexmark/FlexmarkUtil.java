@@ -44,6 +44,7 @@ import com.vladsch.flexmark.ast.AutoLink;
 import com.vladsch.flexmark.ast.BulletList;
 import com.vladsch.flexmark.ast.FencedCodeBlock;
 import com.vladsch.flexmark.ast.Heading;
+import com.vladsch.flexmark.ast.Image;
 import com.vladsch.flexmark.ast.IndentedCodeBlock;
 import com.vladsch.flexmark.ast.Link;
 import com.vladsch.flexmark.ast.MailLink;
@@ -162,7 +163,7 @@ public final class FlexmarkUtil {
 
 		@Override
 		public void setAttributes(final Node node, final AttributablePart part, final MutableAttributes attributes) {
-			if (tagConf == null || part != AttributablePart.NODE) {
+			if (tagConf == null) {
 				return;
 			}
 			final String tagName = getTagName(node);
@@ -197,10 +198,21 @@ public final class FlexmarkUtil {
 			if (node instanceof FencedCodeBlock || node instanceof IndentedCodeBlock) {
 				return "pre";
 			}
-			if (node instanceof Link || node instanceof AutoLink || node instanceof MailLink || node instanceof WikiLink) {
+			if (node instanceof Image) {
+				return "img";
+			}
+			if (node instanceof Link) {
+				return isImageOnlyLink((Link) node) ? "a-image" : "a";
+			}
+			if (node instanceof AutoLink || node instanceof MailLink || node instanceof WikiLink) {
 				return "a";
 			}
 			return null;
+		}
+
+		private boolean isImageOnlyLink(final Link link) {
+			final Node firstChild = link.getFirstChild();
+			return firstChild instanceof Image && firstChild.getNext() == null;
 		}
 	}
 
