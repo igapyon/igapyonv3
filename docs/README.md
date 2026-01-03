@@ -1,35 +1,41 @@
 igapyonv3
 =======================
 
-[igapyonv3](https://github.com/igapyon/igapyonv3) is an open source static site/blog generator for developers written in Java.
+[igapyonv3](https://github.com/igapyon/igapyonv3) は、Java で書かれた開発者向けのオープンソース静的サイト/ブログジェネレータです。
 
-* title: igapyonv3
-  * repo: https://github.com/igapyon/igapyonv3
-  * homepage: https://igapyon.github.io/igapyonv3/
-  * language: Java
-  * license: Apache 2 / LGPL
-  * templates: Freemarker
-  * description: A static site/blog generator for developers
+* タイトル: igapyonv3
+  * リポジトリ: https://github.com/igapyon/igapyonv3
+  * ホームページ: https://igapyon.github.io/igapyonv3/
+  * 言語: Java
+  * ライセンス: Apache 2 / LGPL
+  * テンプレート: Freemarker
+  * 説明: 開発者向けの静的サイト/ブログジェネレータ
 
-* characteristics
-  * Lightweight and turnkey static site/blog generator.
-  * Provided as a Maven Plugin.
-  * Supports Markdown content.
-  * RSS feed support.
-  * Freemarker and igapyonv3's additional diary directive support.
-  * Supports github gh-pages.
-  * Also support to convert markdown into Bootstrap based HTML.
+* 特徴
+  * 軽量で手軽に使える静的サイト/ブログジェネレータ。
+  * Maven プラグインとして提供。
+  * Markdown コンテンツをサポート。
+  * RSS フィードをサポート。
+  * Freemarker と igapyonv3 独自の日記ディレクティブをサポート。
+  * Markdown から Bootstrap ベースの HTML へ変換も可能。
+  * GitHub Pages への出力は deprecated。
 
-## Install
+## Docs
 
-### Maven is required
+- `docs/ARCHITECTURE.md` 内部構造のメモ。
+- `docs/OPERATIONS.md` ビルド/デプロイのメモと設定例。
+- `docs/PROGRAMS.md` エントリポイント一覧と分類。
 
-igapyonv3 requires Maven.
-Java is required too.
+## インストール
 
-### Edit pom.xml
+### Maven が必要
 
-Edit pom.xml to enable igapyonv3 like below:
+igapyonv3 には Maven が必要です。
+Java も必要です。
+
+### pom.xml を編集
+
+以下のように pom.xml を編集して igapyonv3 を有効化します:
 
 ```xml
  <build>
@@ -54,51 +60,41 @@ Edit pom.xml to enable igapyonv3 like below:
   </build>
 ```
 
-That is all to install igayponv3!
+以上で igapyonv3 のインストールは完了です。
 
-## Setup
+## セットアップ
 
-### Init igapyonv3 directory
+### igapyonv3 設定ファイルの編集
 
-You can initialize directory using command line like below:
-
-```sh
-mvn jp.igapyon.diary.igapyonv3.plugin:igapyonv3-maven-plugin:init
-```
-
-Default directory will be set on your current directory.
-
-### Edit igapyonv3 setting file.
-
-Modify `settings.src.md` to fit your favor to adjust diary settings. Linux / Mac will be like below:
+`settings.src.md` を編集して日記の設定を調整します。Linux / Mac の例:
 
 ```sh
 vi settings.src.md
 ```
 
-Notice: If you want to publish your contents at `gh-pages`, change settings.src.md to be like `${setDuplicatefakehtmlmd("true")}`.
+注意: GitHub Pages への出力は deprecated のため、`setDuplicatefakehtmlmd` を使った運用は非推奨です。
 
-### Force update template files.
+### テンプレートファイルの強制更新
 
-Update template files to apply `settings.src.md` changes, using command line below:
+`settings.src.md` の変更をテンプレートに反映するには、次のコマンドを使います:
 
 ```sh
 mvn jp.igapyon.diary.igapyonv3.plugin:igapyonv3-maven-plugin:inittemplate
 ```
 
-Notice: Be case that the command will overwrite template files if you may changed them.
+注意: このコマンドはテンプレートファイルを上書きするので、手元で変更している場合は注意してください。
 
-## Running igapyonv3
+## igapyonv3 の実行
 
-To generate/update markdown files and html files, use command line like below:
+Markdown と HTML を生成/更新するには、次のコマンドを実行します:
 
 ```sh
 mvn compile
 ```
 
-If you modify XXX.src.md and you want to update, run `mvn compile` again, and you will be able to get updated `md` and `html` files and many index files.
+XXX.src.md を更新した場合は、`mvn compile` を再実行すると、更新された `md` / `html` と各種インデックスファイルが生成されます。
 
-## License
+## ライセンス
 
-[igapyonv3](https://github.com/igapyon/igapyonv3) is released under GNU LGPL version 3 and Apache License version 2 (dual license). 
-You can select either LGPL or ASL or both. 
+[igapyonv3](https://github.com/igapyon/igapyonv3) は GNU LGPL v3 と Apache License v2 のデュアルライセンスで提供されます。 
+LGPL または ASL、あるいは両方を選択できます。 
