@@ -25,3 +25,15 @@
 
 ※ `setGeneratetodaydiary("false")` のため `TodayDiaryGenerator` は実行されない。  
 ※ `setConvertmarkdown2html("false")` のため `IgapyonMd2Html` は実行されない。
+
+## サブメインストリームのエントリポイント一覧
+
+`settings.src.md` の設定値を切り替えることで、同じ `IgDiaryProcessor` 内で追加実行される入口。
+
+- `jp.igapyon.diary.igapyonv3.gendiary.TodayDiaryGenerator`
+  - `setGeneratetodaydiary("true")` のとき実行される。
+  - 今日の日記ファイルを自動生成。
+
+- `jp.igapyon.diary.igapyonv3.md2html.IgapyonMd2Html`
+  - `setConvertmarkdown2html("true")` のとき実行される。
+  - `.md` → `.html` 変換を実施する。
