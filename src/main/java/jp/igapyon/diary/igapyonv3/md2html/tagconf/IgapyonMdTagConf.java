@@ -60,7 +60,7 @@ public class IgapyonMdTagConf {
 		tagConf.setAttrClassValue("ol", "list-decimal pl-6");
 		tagConf.setAttrClassValue("pre",
 				"my-2 overflow-auto rounded bg-slate-900 p-2 text-slate-100 text-sm font-mono whitespace-pre-wrap leading-6 block");
-		tagConf.setAttrClassValue("table", "w-full text-left text-sm border border-slate-400");
+		tagConf.setAttrClassValue("table", "my-4 w-full text-left text-sm border border-slate-400");
 		tagConf.setAttrClassValue("th", "border border-slate-400 bg-slate-200 px-3 py-2 font-semibold");
 		tagConf.setAttrClassValue("td", "border border-slate-400 px-3 py-2");
 		tagConf.setAttrClassValue("a", "text-sky-800 font-medium bg-sky-50/50 rounded px-0.5 -mx-0.5");
