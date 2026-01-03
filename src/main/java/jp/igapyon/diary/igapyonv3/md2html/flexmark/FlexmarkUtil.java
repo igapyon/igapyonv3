@@ -59,7 +59,7 @@ import com.vladsch.flexmark.util.ast.TextCollectingVisitor;
 import com.vladsch.flexmark.util.data.DataHolder;
 import com.vladsch.flexmark.util.html.MutableAttributes;
 
-import jp.igapyon.diary.igapyonv3.md2html.pegdownext.IgapyonPegDownTagConf;
+import jp.igapyon.diary.igapyonv3.md2html.tagconf.IgapyonMdTagConf;
 
 public final class FlexmarkUtil {
 	private FlexmarkUtil() {
@@ -67,11 +67,11 @@ public final class FlexmarkUtil {
 	}
 
 	public static Parser getParser() {
-		return FlexmarkPegdownOpts.PARSER;
+		return FlexmarkOptions.PARSER;
 	}
 
-	public static String renderMarkdown(final String markdown, final IgapyonPegDownTagConf tagConf) {
-		final HtmlRenderer renderer = buildRenderer(FlexmarkPegdownOpts.OPTIONS, tagConf);
+	public static String renderMarkdown(final String markdown, final IgapyonMdTagConf tagConf) {
+		final HtmlRenderer renderer = buildRenderer(FlexmarkOptions.OPTIONS, tagConf);
 		final Node document = getParser().parse(markdown);
 		return renderer.render(document);
 	}
@@ -113,7 +113,7 @@ public final class FlexmarkUtil {
 		}
 	}
 
-	private static HtmlRenderer buildRenderer(final DataHolder options, final IgapyonPegDownTagConf tagConf) {
+	private static HtmlRenderer buildRenderer(final DataHolder options, final IgapyonMdTagConf tagConf) {
 		return HtmlRenderer.builder(options)
 				.attributeProviderFactory(new AttributeProviderFactory() {
 					@Override
@@ -145,9 +145,9 @@ public final class FlexmarkUtil {
 	}
 
 	private static class TagClassAttributeProvider implements AttributeProvider {
-		private final IgapyonPegDownTagConf tagConf;
+		private final IgapyonMdTagConf tagConf;
 
-		TagClassAttributeProvider(final IgapyonPegDownTagConf tagConf) {
+		TagClassAttributeProvider(final IgapyonMdTagConf tagConf) {
 			this.tagConf = tagConf;
 		}
 

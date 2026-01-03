@@ -31,22 +31,26 @@
  *  limitations under the License.
  */
 
-package jp.igapyon.diary.igapyonv3.md2html.flexmark;
+package jp.igapyon.diary.igapyonv3.md2html.tagconf;
 
-import java.util.Arrays;
+/**
+ * tag attr
+ * 
+ * @author Toshiki Iga
+ */
+public class IgapyonMdTagAttr {
+	/**
+	 * shows &lt;tag class="value" /&gt;
+	 * 
+	 * ex: [alert alert-warning]
+	 */
+	protected String tagClassValue;
 
-import com.vladsch.flexmark.ext.gfm.strikethrough.StrikethroughExtension;
-import com.vladsch.flexmark.ext.tables.TablesExtension;
-import com.vladsch.flexmark.ext.wikilink.WikiLinkExtension;
-import com.vladsch.flexmark.html.HtmlRenderer;
-import com.vladsch.flexmark.parser.Parser;
-import com.vladsch.flexmark.util.data.MutableDataSet;
+	public String getTagClassValue() {
+		return tagClassValue;
+	}
 
-public class FlexmarkPegdownOpts {
-	static final MutableDataSet OPTIONS = new MutableDataSet()
-			.set(Parser.EXTENSIONS, Arrays.asList(TablesExtension.create(), WikiLinkExtension.create(),
-					StrikethroughExtension.create()));
-
-	static final Parser PARSER = Parser.builder(OPTIONS).build();
-	static final HtmlRenderer RENDERER = HtmlRenderer.builder(OPTIONS).build();
+	public void setTagClassValue(String tagClassValue) {
+		this.tagClassValue = tagClassValue;
+	}
 }
