@@ -44,3 +44,15 @@
 - `jp.igapyon.diary.igapyonv3.md2html.IgapyonMd2Html`
   - `setConvertmarkdown2html("true")` のとき実行される。
   - `.md` → `.html` 変換を実施する。
+
+## IgDiaryProcessor 以外から呼ばれる機能
+
+運用 pom などから直接起動され、`IgDiaryProcessor` を経由しない入口。
+
+- `jp.igapyon.diary.igapyonv3.indexing.keyword.KeywordMdTextGenerator`
+  - `maven-antrun-plugin` から直接実行される。
+  - キーワード `.md` の生成を単体で行う。
+
+- `jp.igapyon.diary.igapyonv3.md2html.IgapyonMd2Html`
+  - `maven-antrun-plugin` から直接実行される。
+  - `.md` → `.html` 変換を単体で行う。
