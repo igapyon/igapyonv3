@@ -105,8 +105,9 @@ public class IgapyonV3Util {
 		writer.write("<meta name=\"generator\" content=\"" + IgapyonMd2HtmlConstants.PROGRAM_DISPLAY_NAME + " ver"
 				+ IgapyonMd2HtmlConstants.VERSION + "\">\n");
 		writer.write("<title>" + settings.getHtmlTitle() + "</title>\n");
-		writer.write("<!-- Tailwind CSS (CDN for static preview) -->\n");
-		writer.write("<script src=\"https://cdn.tailwindcss.com\"></script>\n");
+		final String cssPath = "https://igapyon.jp/lib.css/tailwind.css";
+		writer.write("<!-- Tailwind CSS (local) -->\n");
+		writer.write("<link rel=\"stylesheet\" href=\"" + cssPath + "\">\n");
 
 		writer.write("</head>\n");
 		writer.write("<body class=\"text-slate-900 leading-7\">\n");

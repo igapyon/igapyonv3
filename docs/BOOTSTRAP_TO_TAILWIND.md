@@ -32,6 +32,7 @@ Bootstrap ベースのスタイリングを Tailwind ベースに置き換える
 - 静的アセット:
   - ローカル Bootstrap: `lib.js/bootstrap/3.3.5/`
   - ローカル jQuery: `lib.js/jquery/1.11.3/`
+  - ローカル Tailwind（ビルド生成）: `lib.css/tailwind.css`
 - ビルド/パッケージ参照:
   - Bootstrap/JQuery の参照設定: `src/main/java/jp/igapyon/diary/igapyonv3/md2html/IgapyonMd2HtmlSettings.java`
 
@@ -49,9 +50,16 @@ Bootstrap ベースのスタイリングを Tailwind ベースに置き換える
 
 ### HTML 骨格/ヘッダ
 
-- `<link rel="stylesheet" ...bootstrap...>` を削除し、`<script src="https://cdn.tailwindcss.com"></script>` を追加する。
+- `<link rel="stylesheet" ...bootstrap...>` を削除し、`<link rel="stylesheet" href="https://igapyon.jp/lib.css/tailwind.css">` を追加する。
 - `<body>` に `class="text-slate-900 leading-7"` を付与する。
 - Bootstrap JS と jQuery の `<script>` を削除する。
+  - NOTE: CSS パスは現状ハードコード。将来的に設定化する余地あり。
+
+### Tailwind CSS の生成（原因切り分け用）
+
+- 入力: `tailwind-input.css`
+- 設定: `tailwind.config.js`
+- 生成例: `npx tailwindcss@3.4.15 -i ./tailwind-input.css -o lib.css/tailwind.css --minify`
 
 ### レイアウト
 
