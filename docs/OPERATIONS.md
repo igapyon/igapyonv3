@@ -54,6 +54,28 @@ ${setBaseurl("https://www.igapyon.jp/igapyon/diary")}
 - `setSitetitle(...)` はサイトタイトル。
 - `setBaseurl(...)` は公開サイトの base URL。
 
+### settings.src.md の配置場所と役割
+
+- 配置場所はプロジェクトのルート（`IgDiaryProcessor` の `rootdir`）直下。
+- `.src.md` に対する FreeMarker の設定ファイルとして動作し、`settings`/`current` などの変数やディレクティブ/メソッドを提供する。
+
+### 運用時の必須項目（最低限の設定セット）
+
+最低限の設定例:
+
+```md
+${setAuthor("Your Name")}
+${setSitetitle("Your Site Title")}
+${setBaseurl("https://example.com")}
+${setSourcebaseurl("https://github.com/your/repo/blob/master")}
+```
+
+用途に応じて次のフラグを追加する。
+
+- `setGeneratekeywordifneeded("true")` キーワード `.md` を必要に応じて生成。
+- `setConvertmarkdown2html("true")` HTML まで生成したい場合に有効化。
+- `setGeneratetodaydiary("true")` 今日の日記を自動生成したい場合に有効化。
+
 ## 運用 pom の実行フロー
 
 運用中の `pom.xml` では、次の流れで生成処理が動く構成。
@@ -79,3 +101,11 @@ ${setBaseurl("https://www.igapyon.jp/igapyon/diary")}
 - `maven-assembly-plugin` で依存込み JAR を作成し、`mainClass` は `jp.igapyon.diary.igapyonv3.IgDiaryProcessor`。
 - テストは `maven-surefire-plugin`（言語/地域を en/US に固定）。
 - `maven-gpg-plugin` で `verify` フェーズに署名を実行。
+
+## 出力ディレクトリの規約
+
+- `.src.md` はソース原稿。FreeMarker 展開対象。
+- `.md` は `.src.md` から生成される Markdown。
+- `.html` は `.md` から生成される HTML。
+- `target/html` はデフォルトの HTML 出力先（`IgapyonV3Settings` の既定値）。
+- `target/md2html` は運用 pom の `maven-antrun-plugin` で使われる HTML 出力先。
