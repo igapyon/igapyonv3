@@ -4,7 +4,7 @@
 
 ## IgDiaryProcessor から呼ばれる機能
 
-ここではまず、`IgDiaryProcessor` から呼ばれる機能を 2 つに分類する。
+ここではまず、メインとなるクラスである `IgDiaryProcessor` から呼ばれる機能を 2 つに分類する。
 
 - メインストリーム: `settings.src.md` の設定に関わらず必ず通る処理。
 - サブメインストリーム: `settings.src.md` の設定変更で実行される/されない処理。
@@ -39,11 +39,12 @@
 
 - `jp.igapyon.diary.igapyonv3.gendiary.TodayDiaryGenerator`
   - `setGeneratetodaydiary("true")` のとき実行される。
-  - 今日の日記ファイルを自動生成。
+  - 今日の日付の空の日記ファイルを自動生成。
 
 - `jp.igapyon.diary.igapyonv3.md2html.IgapyonMd2Html`
   - `setConvertmarkdown2html("true")` のとき実行される。
   - `.md` → `.html` 変換を実施する。
+  - pom.xmlから直接呼び出すので、`settings.src.md` の設定により実行を抑止する。
 
 ## IgDiaryProcessor 以外から呼ばれる機能
 
@@ -62,7 +63,15 @@
 移行用途で使うエントリポイント。
 
 - `jp.igapyon.diary.igapyonv3.migration.html2md.IgapyonV2Html2MdConverter`
-  - 旧 v2 の HTML から Markdown へ変換する CLI。
+  - 旧版である いがぴょんv2 の HTML から、Markdown 形式へ変換する CLI。
+  - 旧版から新版への移行時にのみ利用。
 
 - `jp.igapyon.diary.igapyonv3.migration.hatena2md.HatenaXml2SeparatedTextConverter`
-  - はてなエクスポート XML を分割テキストに変換する CLI。
+  - はてなダイアリーのエクスポート XML を入力に分割テキストに変換する CLI。
+  - はてなダイアリーから新版への移行時にのみ利用。
+
+## その他
+
+- `jp.igapyon.diary.igapyonv3.util.SimpleTagSoupUtil`
+  - TagSoup を使った HTML 正規化のサンプル兼ユーティリティ。
+  - 破綻した HTML ファイルを妥当な形式に変換。
