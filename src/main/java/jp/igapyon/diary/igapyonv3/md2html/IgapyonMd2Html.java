@@ -94,7 +94,7 @@ public class IgapyonMd2Html {
 			final IgapyonMdTagConf tagConf = IgapyonMdTagConf.getDefault();
 
 			// set h1 to null for Jumbotron.
-			tagConf.setAttrClassValue("h1", null);
+			tagConf.setAttrClassValue("h1", "text-3xl font-bold tracking-tight");
 			IgapyonV3Util.writePreHtml(settings, tagConf, outputHtmlWriter, mdStringHead, "Toshiki Iga");
 		}
 
