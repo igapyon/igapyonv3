@@ -11,6 +11,12 @@ cp -vpR /home/USERNAME/git/diary/target/md2html/* /var/www/html/igapyon/diary/
 cp -vpR /home/USERNAME/git/diary/images/* /var/www/html/igapyon/diary/images/
 ```
 
+## ビルドコマンド例
+
+```sh
+MAVEN_OPTS="-Djava.net.preferIPv4Stack=true" mvn -U package
+```
+
 ## settings.src.md の例とフラグの意味
 
 例:
