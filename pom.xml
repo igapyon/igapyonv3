@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>jp.igapyon.diary</groupId>
 	<artifactId>igapyonv3</artifactId>
-	<version>1.9.2-SNAPSHOT</version>
+	<version>1.9.3-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
 	<name>igapyonv3</name>
@@ -44,20 +44,6 @@
 			<timezone>+9</timezone>
 		</developer>
 	</developers>
-
-	<!--
-	<distributionManagement>
-		<snapshotRepository>
-			<id>ossrh</id>
-			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
-		</snapshotRepository>
-		<repository>
-			<id>ossrh</id>
-			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/
-			</url>
-		</repository>
-	</distributionManagement>
-	-->
 
 	<dependencies>
 		<!-- https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api -->
