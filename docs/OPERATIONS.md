@@ -53,3 +53,19 @@ ${setBaseurl("https://www.igapyon.jp/igapyon/diary")}
 - `setSourcebaseurl(...)` はソースの base URL。
 - `setSitetitle(...)` はサイトタイトル。
 - `setBaseurl(...)` は公開サイトの base URL。
+
+## 運用 pom の実行フロー
+
+運用中の `pom.xml` では、次の流れで生成処理が動く構成。
+
+1) `igapyonv3-maven-plugin:generate` が `generate-resources` フェーズで実行  
+   - `.src.md` → `.md` などの生成が走る。
+2) `maven-antrun-plugin:run` で追加処理を実行  
+   - `KeywordMdTextGenerator` を起動してキーワード `.md` を生成。  
+   - `IgapyonMd2Html` を起動して `target/md2html` に HTML を生成。
+3) 生成物を `cp` で公開先へコピー（作業メモの手順に一致）。
+
+補足:
+
+- JDK は `maven-compiler-plugin` で 1.8 指定。
+- `exec-maven-plugin` により `mvn install exec:java` で `igapyon.diary.ghpages.App` を実行可能。
