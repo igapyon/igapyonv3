@@ -45,6 +45,42 @@ Bootstrap ベースのスタイリングを Tailwind ベースに置き換える
 6) 既存構造に合わせた Tailwind のビルド/出力フローを用意する。
 7) 出力 HTML と見た目の差分を確認する。
 
+## 机上確認から導出した変換ルール（README.md → README-tw.html）
+
+### HTML 骨格/ヘッダ
+
+- `<link rel="stylesheet" ...bootstrap...>` を削除し、`<script src="https://cdn.tailwindcss.com"></script>` を追加する。
+- `<body>` に `class="text-slate-900 leading-7"` を付与する。
+- Bootstrap JS と jQuery の `<script>` を削除する。
+
+### レイアウト
+
+- `container-fluid` → `mx-auto w-full px-4 sm:px-6 lg:px-8`
+- `jumbotron` → `my-8 rounded-lg bg-slate-100 p-6 sm:p-8`
+
+### 見出し
+
+- `h1.alert.alert-danger` → `mb-4 rounded-md bg-red-100 px-4 py-2 text-2xl font-bold text-red-900`
+- `h2.alert.alert-warning` → `mt-8 mb-3 rounded-md bg-amber-100 px-3 py-2 text-xl font-semibold text-amber-900`
+- `h3.bg-success` → `mt-6 mb-2 rounded-md bg-emerald-100 px-3 py-1.5 text-lg font-semibold text-emerald-900`
+- `h4.bg-info` → `mt-5 mb-2 rounded-md bg-sky-100 px-3 py-1.5 text-base font-semibold text-sky-900`
+- 追加補正: `h1` に `text-3xl font-bold tracking-tight` を付与する。
+
+### 本文/リスト/コード/テーブル
+
+- `p` → `mt-2`
+- `ul` → `list-disc pl-6`
+- `ol` → `list-decimal pl-6`
+- `pre` → `my-4 overflow-auto rounded bg-slate-900 p-4 text-slate-100 text-sm`
+- `table.table.table-bordered` → `w-full border border-slate-300 text-left text-sm`
+- `th` → `border border-slate-300 bg-slate-50 px-3 py-2 font-semibold`
+- `td` → `border border-slate-300 px-3 py-2`
+- 特例強調: inline `code` に必要なら `rounded bg-red-50 px-1.5 py-0.5 font-semibold text-red-800`
+
+### リンク（下線なし）
+
+- `<a>` に `text-slate-700 font-medium hover:text-sky-800 hover:bg-sky-50 rounded px-0.5 -mx-0.5`
+
 ## 受け入れ条件
 
 - 出力 HTML の構造は維持される（差分は class レベルのみ）。
