@@ -33,15 +33,19 @@
 
 package jp.igapyon.diary.igapyonv3.md2html.flexmark;
 
+import java.util.Arrays;
+
+import com.vladsch.flexmark.ext.gfm.strikethrough.StrikethroughExtension;
+import com.vladsch.flexmark.ext.tables.TablesExtension;
+import com.vladsch.flexmark.ext.wikilink.WikiLinkExtension;
 import com.vladsch.flexmark.html.HtmlRenderer;
 import com.vladsch.flexmark.parser.Parser;
-import com.vladsch.flexmark.profile.pegdown.Extensions;
-import com.vladsch.flexmark.profile.pegdown.PegdownOptionsAdapter;
-import com.vladsch.flexmark.util.data.DataHolder;
+import com.vladsch.flexmark.util.data.MutableDataSet;
 
 public class FlexmarkPegdownOpts {
-	static final DataHolder OPTIONS = PegdownOptionsAdapter.flexmarkOptions(
-			Extensions.STRIKETHROUGH | Extensions.FENCED_CODE_BLOCKS | Extensions.TABLES | Extensions.WIKILINKS);
+	static final MutableDataSet OPTIONS = new MutableDataSet()
+			.set(Parser.EXTENSIONS, Arrays.asList(TablesExtension.create(), WikiLinkExtension.create(),
+					StrikethroughExtension.create()));
 
 	static final Parser PARSER = Parser.builder(OPTIONS).build();
 	static final HtmlRenderer RENDERER = HtmlRenderer.builder(OPTIONS).build();

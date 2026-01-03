@@ -14,7 +14,7 @@ cp -vpR /home/USERNAME/git/diary/images/* /var/www/html/igapyon/diary/images/
 ## ビルドコマンド例
 
 ```sh
-MAVEN_OPTS="-Djava.net.preferIPv4Stack=true" mvn -U package
+MAVEN_OPTS="-Djava.net.preferIPv4Stack=true" mvn -U install
 ```
 
 ## settings.src.md の例とフラグの意味
