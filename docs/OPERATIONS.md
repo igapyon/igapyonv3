@@ -46,7 +46,7 @@ ${setBaseurl("https://www.igapyon.jp/igapyon/diary")}
 - `setVerbose("true")` は詳細ログを有効化。
 - `setDebug("false")` はデバッグログを無効化。
 - `setGeneratetodaydiary("false")` は今日の日記の自動生成を無効化。
-- `setDuplicatefakehtmlmd("true")` は `.html.md` を複製生成（gh-pages 用）。
+- `setDuplicatefakehtmlmd("true")` は `.html.md` を複製生成（GitHub Pages 向け）だが deprecated。
 - `setConvertmarkdown2html("false")` は `.md` → `.html` 変換を無効化。
 - `setGeneratekeywordifneeded("true")` は不足しているキーワード `.md` を生成。
 - `setAuthor(...)` は作者名。
