@@ -24,9 +24,16 @@ Bootstrap ベースのスタイリングを Tailwind ベースに置き換える
 ## インベントリ（要記入）
 
 - テンプレートファイル:
+  - 生成されるテンプレート: `template-header.md` / `template-footer.md`
+  - 既定値の定義: `src/main/java/jp/igapyon/diary/igapyonv3/IgDiaryConstants.java`
 - ジェネレータ側の class 付与:
+  - HTML 骨格/Bootstrap CDN（`container-fluid`/`jumbotron` など）: `src/main/java/jp/igapyon/diary/igapyonv3/md2html/IgapyonV3Util.java`
+  - タグへの class 付与（見出し/テーブル）: `src/main/java/jp/igapyon/diary/igapyonv3/md2html/tagconf/IgapyonMdTagConf.java`
 - 静的アセット:
+  - ローカル Bootstrap: `lib.js/bootstrap/3.3.5/`
+  - ローカル jQuery: `lib.js/jquery/1.11.3/`
 - ビルド/パッケージ参照:
+  - Bootstrap/JQuery の参照設定: `src/main/java/jp/igapyon/diary/igapyonv3/md2html/IgapyonMd2HtmlSettings.java`
 
 ## 作業項目
 
@@ -43,6 +50,7 @@ Bootstrap ベースのスタイリングを Tailwind ベースに置き換える
 - 出力 HTML の構造は維持される（差分は class レベルのみ）。
 - Bootstrap の CSS/JS 参照が削除されている。
 - Tailwind CSS が適切に読み込まれている。
+- jQuery の参照が削除されている（Bootstrap JS 撤去に伴う）。
 - 見た目が許容範囲内に収まっている。
 
 ## リスク
