@@ -1,7 +1,7 @@
 package jp.igapyon.diary.igapyonv3;
 
 import org.apache.commons.lang3.StringUtils;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import jp.igapyon.diary.util.IgStringUtil;
 

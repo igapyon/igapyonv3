@@ -31,7 +31,7 @@
  *********************************************************************** */
 package jp.igapyon.diary.igapyonv3.md2html;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import jp.igapyon.diary.igapyonv3.md2html.IgapyonMd2Html;
 
