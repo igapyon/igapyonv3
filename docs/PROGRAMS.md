@@ -2,7 +2,14 @@
 
 このファイルは、運用時に意味のあるプログラムエントリポイントを整理するためのメモ。
 
-## メインストリームのエントリポイント一覧
+## IgDiaryProcessor から呼ばれる機能
+
+ここではまず、`IgDiaryProcessor` から呼ばれる機能を 2 つに分類する。
+
+- メインストリーム: `settings.src.md` の設定に関わらず必ず通る処理。
+- サブメインストリーム: `settings.src.md` の設定変更で実行される/されない処理。
+
+### メインストリームのエントリポイント一覧
 
 前提: `settings.src.md` が以下の値で運用される想定。
 
@@ -26,7 +33,7 @@
 ※ `setGeneratetodaydiary("false")` のため `TodayDiaryGenerator` は実行されない。  
 ※ `setConvertmarkdown2html("false")` のため `IgapyonMd2Html` は実行されない。
 
-## サブメインストリームのエントリポイント一覧
+### サブメインストリームのエントリポイント一覧
 
 `settings.src.md` の設定値を切り替えることで、同じ `IgDiaryProcessor` 内で追加実行される入口。
 
