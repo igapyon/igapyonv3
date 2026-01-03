@@ -69,3 +69,13 @@ ${setBaseurl("https://www.igapyon.jp/igapyon/diary")}
 
 - JDK は `maven-compiler-plugin` で 1.8 指定。
 - `exec-maven-plugin` により `mvn install exec:java` で `igapyon.diary.ghpages.App` を実行可能。
+
+## 本リポジトリの pom.xml 概要
+
+このリポジトリ配下の `pom.xml` の要点。
+
+- Java 11 を指定（`maven.compiler.source/target=11`）。
+- 主要依存は pegdown/freemarker/rome/tagsoup/commons-*。
+- `maven-assembly-plugin` で依存込み JAR を作成し、`mainClass` は `jp.igapyon.diary.igapyonv3.IgDiaryProcessor`。
+- テストは `maven-surefire-plugin`（言語/地域を en/US に固定）。
+- `maven-gpg-plugin` で `verify` フェーズに署名を実行。
