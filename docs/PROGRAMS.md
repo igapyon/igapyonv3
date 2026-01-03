@@ -56,3 +56,13 @@
 - `jp.igapyon.diary.igapyonv3.md2html.IgapyonMd2Html`
   - `maven-antrun-plugin` から直接実行される。
   - `.md` → `.html` 変換を単体で行う。
+
+## 移行ツール
+
+移行用途で使うエントリポイント。
+
+- `jp.igapyon.diary.igapyonv3.migration.html2md.IgapyonV2Html2MdConverter`
+  - 旧 v2 の HTML から Markdown へ変換する CLI。
+
+- `jp.igapyon.diary.igapyonv3.migration.hatena2md.HatenaXml2SeparatedTextConverter`
+  - はてなエクスポート XML を分割テキストに変換する CLI。
