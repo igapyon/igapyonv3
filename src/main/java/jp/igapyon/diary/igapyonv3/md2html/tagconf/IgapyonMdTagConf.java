@@ -58,7 +58,8 @@ public class IgapyonMdTagConf {
 		tagConf.setAttrClassValue("p", "mt-2");
 		tagConf.setAttrClassValue("ul", "list-disc pl-6");
 		tagConf.setAttrClassValue("ol", "list-decimal pl-6");
-		tagConf.setAttrClassValue("pre", "my-4 overflow-auto rounded bg-slate-900 p-4 text-slate-100 text-sm");
+		tagConf.setAttrClassValue("pre",
+				"my-2 overflow-auto rounded bg-slate-900 p-2 text-slate-100 text-sm font-mono whitespace-pre-wrap leading-6 block");
 		tagConf.setAttrClassValue("table", "w-full border border-slate-300 text-left text-sm");
 		tagConf.setAttrClassValue("th", "border border-slate-300 bg-slate-50 px-3 py-2 font-semibold");
 		tagConf.setAttrClassValue("td", "border border-slate-300 px-3 py-2");
