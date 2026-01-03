@@ -27,6 +27,30 @@
 現在は `flexmark-profile-pegdown` に依存しており、`FlexmarkPegdownOpts` で pegdown 互換のオプションを利用している。
 最終的には、通常の flexmark 拡張構成へ移行し、`flexmark-profile-pegdown` を不要にする。
 
+具体化案:
+
+- `pom.xml` から `flexmark-profile-pegdown` を削除し、必要な拡張を個別に追加する。
+  - テーブル: `com.vladsch.flexmark:flexmark-ext-tables`
+  - WikiLink: `com.vladsch.flexmark:flexmark-ext-wikilink`
+  - 取り消し線: `com.vladsch.flexmark:flexmark-ext-gfm-strikethrough`（必要なら `flexmark-ext-strikethrough` を選択）
+- `FlexmarkPegdownOpts` を「通常の flexmark オプション定義」に置き換える。
+  - `PegdownOptionsAdapter` を使わず、`MutableDataSet` と拡張リストで `Parser` / `HtmlRenderer` を構築。
+  - 既存の `Extensions.*` で有効化していた機能（STRIKETHROUGH / FENCED_CODE_BLOCKS / TABLES / WIKILINKS）を、flexmark 拡張で再現する。
+- `FlexmarkUtil` が参照する `FlexmarkPegdownOpts` の差し替えと、必要な import の更新。
+
+例（置き換えイメージ）:
+
+```java
+MutableDataSet options = new MutableDataSet();
+options.set(Parser.EXTENSIONS, Arrays.asList(
+    TablesExtension.create(),
+    WikiLinkExtension.create(),
+    StrikethroughExtension.create()
+));
+Parser parser = Parser.builder(options).build();
+HtmlRenderer renderer = HtmlRenderer.builder(options).build();
+```
+
 対応方針（案）:
 
 1) `FlexmarkPegdownOpts` を通常の flexmark 拡張設定に置き換える。
