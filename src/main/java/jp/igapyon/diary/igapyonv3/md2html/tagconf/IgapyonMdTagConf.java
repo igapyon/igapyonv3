@@ -63,7 +63,8 @@ public class IgapyonMdTagConf {
 		tagConf.setAttrClassValue("table", "my-4 w-full text-left text-sm border border-slate-400");
 		tagConf.setAttrClassValue("th", "border border-slate-400 bg-slate-200 px-3 py-2 font-semibold");
 		tagConf.setAttrClassValue("td", "border border-slate-400 px-3 py-2");
-		tagConf.setAttrClassValue("a", "text-sky-800 font-medium bg-sky-50/50 rounded px-0.5 -mx-0.5");
+		tagConf.setAttrClassValue("a",
+				"text-sky-800 font-medium bg-sky-50/50 rounded px-0.5 -mx-0.5 hover:text-emerald-900 hover:bg-emerald-100/60 hover:underline");
 		tagConf.setAttrClassValue("a-image", "inline-block align-middle hover:opacity-90");
 		tagConf.setAttrClassValue("img", "inline-block align-middle");
 
