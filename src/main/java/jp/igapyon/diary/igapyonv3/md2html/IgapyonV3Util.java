@@ -40,7 +40,7 @@ import java.io.IOException;
 import java.io.Writer;
 
 import org.apache.commons.io.IOUtils;
-import jp.igapyon.diary.igapyonv3.md2html.pegdownext.IgapyonPegDownTagConf;
+import jp.igapyon.diary.igapyonv3.md2html.tagconf.IgapyonMdTagConf;
 import jp.igapyon.diary.igapyonv3.md2html.flexmark.FlexmarkUtil;
 
 /**
@@ -88,7 +88,7 @@ public class IgapyonV3Util {
 		}
 	}
 
-	public static void writePreHtml(final IgapyonMd2HtmlSettings settings, final IgapyonPegDownTagConf tagConf,
+	public static void writePreHtml(final IgapyonMd2HtmlSettings settings, final IgapyonMdTagConf tagConf,
 			final Writer writer, final String mdStringHead, final String author) throws IOException {
 
 		writer.write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
@@ -133,7 +133,7 @@ public class IgapyonV3Util {
 		writer.write("<div class=\"container-fluid\">\n");
 	}
 
-	public static String simpleMd2Html(final IgapyonMd2HtmlSettings settings, final IgapyonPegDownTagConf tagConf,
+	public static String simpleMd2Html(final IgapyonMd2HtmlSettings settings, final IgapyonMdTagConf tagConf,
 			final String mdString) {
 		return FlexmarkUtil.renderMarkdown(mdString, tagConf);
 	}

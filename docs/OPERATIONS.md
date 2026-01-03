@@ -103,7 +103,7 @@ ${setSourcebaseurl("https://github.com/your/repo/blob/master")}
 このリポジトリ配下の `pom.xml` の要点。
 
 - Java 11 を指定（`maven.compiler.source/target=11`）。
-- 主要依存は pegdown/freemarker/rome/tagsoup/commons-*。
+- 主要依存は flexmark/freemarker/rome/tagsoup/commons-*。
 - `maven-assembly-plugin` で依存込み JAR を作成し、`mainClass` は `jp.igapyon.diary.igapyonv3.IgDiaryProcessor`。
 - テストは `maven-surefire-plugin`（言語/地域を en/US に固定）。
 - `maven-gpg-plugin` で `verify` フェーズに署名を実行。

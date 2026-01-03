@@ -41,7 +41,7 @@
 ### Markdown → HTML
 
 - `src/main/java/jp/igapyon/diary/igapyonv3/md2html/IgapyonMd2Html.java`
-  - pegdown で Markdown を解析し、HTML を出力。
+  - flexmark で Markdown を解析し、HTML を出力。
   - 最初の見出しをタイトル、次の見出しまでを description として扱う。
 
 ### 設定

@@ -31,26 +31,44 @@
  *  limitations under the License.
  */
 
-package jp.igapyon.diary.igapyonv3.md2html.pegdownext;
+package jp.igapyon.diary.igapyonv3.md2html.tagconf;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
- * tag attr
+ * 
  * 
  * @author Toshiki Iga
  */
-public class IgapyonPegDownTagAttr {
-	/**
-	 * shows &lt;tag class="value" /&gt;
-	 * 
-	 * ex: [alert alert-warning]
-	 */
-	protected String tagClassValue;
+public class IgapyonMdTagConf {
+	protected final Map<String, IgapyonMdTagAttr> tagAttrMap = new HashMap<String, IgapyonMdTagAttr>();
 
-	public String getTagClassValue() {
-		return tagClassValue;
+	public static IgapyonMdTagConf getDefault() {
+		final IgapyonMdTagConf tagConf = new IgapyonMdTagConf();
+
+		tagConf.setAttrClassValue("h1", "alert alert-danger");
+		tagConf.setAttrClassValue("h2", "alert alert-warning");
+		tagConf.setAttrClassValue("h3", "bg-success");
+		tagConf.setAttrClassValue("h4", "bg-info");
+		tagConf.setAttrClassValue("table", "table table-bordered");
+
+		return tagConf;
 	}
 
-	public void setTagClassValue(String tagClassValue) {
-		this.tagClassValue = tagClassValue;
+	public void setAttrClassValue(final String tagName, final String tagClassValue) {
+		final IgapyonMdTagAttr tagAttr = new IgapyonMdTagAttr();
+		tagAttr.setTagClassValue(tagClassValue);
+
+		tagAttrMap.put(tagName, tagAttr);
+	}
+
+	public String getAttrClassValue(final String tagName) {
+		final IgapyonMdTagAttr tagAttr = tagAttrMap.get(tagName);
+		if (tagAttr != null) {
+			return tagAttr.getTagClassValue();
+		}
+
+		return null;
 	}
 }

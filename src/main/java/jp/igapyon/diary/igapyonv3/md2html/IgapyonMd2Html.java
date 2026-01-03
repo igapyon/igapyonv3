@@ -41,7 +41,7 @@ import com.vladsch.flexmark.ast.Heading;
 import com.vladsch.flexmark.util.ast.Node;
 
 import jp.igapyon.diary.igapyonv3.md2html.flexmark.FlexmarkUtil;
-import jp.igapyon.diary.igapyonv3.md2html.pegdownext.IgapyonPegDownTagConf;
+import jp.igapyon.diary.igapyonv3.md2html.tagconf.IgapyonMdTagConf;
 import jp.igapyon.diary.util.IgFileUtil;
 
 /**
@@ -91,7 +91,7 @@ public class IgapyonMd2Html {
 		// TODO Description link with Markdown.
 
 		{
-			final IgapyonPegDownTagConf tagConf = IgapyonPegDownTagConf.getDefault();
+			final IgapyonMdTagConf tagConf = IgapyonMdTagConf.getDefault();
 
 			// set h1 to null for Jumbotron.
 			tagConf.setAttrClassValue("h1", null);
@@ -99,7 +99,7 @@ public class IgapyonMd2Html {
 		}
 
 		{
-			final IgapyonPegDownTagConf tagConf = IgapyonPegDownTagConf.getDefault();
+			final IgapyonMdTagConf tagConf = IgapyonMdTagConf.getDefault();
 			final String bodyMarkdown = IgapyonV3Util.simpleMd2Html(settings, tagConf, mdStringBody);
 			outputHtmlWriter.write(bodyMarkdown);
 		}

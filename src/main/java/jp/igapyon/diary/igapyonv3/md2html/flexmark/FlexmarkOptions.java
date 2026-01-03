@@ -31,44 +31,22 @@
  *  limitations under the License.
  */
 
-package jp.igapyon.diary.igapyonv3.md2html.pegdownext;
+package jp.igapyon.diary.igapyonv3.md2html.flexmark;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Arrays;
 
-/**
- * 
- * 
- * @author Toshiki Iga
- */
-public class IgapyonPegDownTagConf {
-	protected final Map<String, IgapyonPegDownTagAttr> tagAttrMap = new HashMap<String, IgapyonPegDownTagAttr>();
+import com.vladsch.flexmark.ext.gfm.strikethrough.StrikethroughExtension;
+import com.vladsch.flexmark.ext.tables.TablesExtension;
+import com.vladsch.flexmark.ext.wikilink.WikiLinkExtension;
+import com.vladsch.flexmark.html.HtmlRenderer;
+import com.vladsch.flexmark.parser.Parser;
+import com.vladsch.flexmark.util.data.MutableDataSet;
 
-	public static IgapyonPegDownTagConf getDefault() {
-		final IgapyonPegDownTagConf tagConf = new IgapyonPegDownTagConf();
+public class FlexmarkOptions {
+	static final MutableDataSet OPTIONS = new MutableDataSet()
+			.set(Parser.EXTENSIONS, Arrays.asList(TablesExtension.create(), WikiLinkExtension.create(),
+					StrikethroughExtension.create()));
 
-		tagConf.setAttrClassValue("h1", "alert alert-danger");
-		tagConf.setAttrClassValue("h2", "alert alert-warning");
-		tagConf.setAttrClassValue("h3", "bg-success");
-		tagConf.setAttrClassValue("h4", "bg-info");
-		tagConf.setAttrClassValue("table", "table table-bordered");
-
-		return tagConf;
-	}
-
-	public void setAttrClassValue(final String tagName, final String tagClassValue) {
-		final IgapyonPegDownTagAttr tagAttr = new IgapyonPegDownTagAttr();
-		tagAttr.setTagClassValue(tagClassValue);
-
-		tagAttrMap.put(tagName, tagAttr);
-	}
-
-	public String getAttrClassValue(final String tagName) {
-		final IgapyonPegDownTagAttr tagAttr = tagAttrMap.get(tagName);
-		if (tagAttr != null) {
-			return tagAttr.getTagClassValue();
-		}
-
-		return null;
-	}
+	static final Parser PARSER = Parser.builder(OPTIONS).build();
+	static final HtmlRenderer RENDERER = HtmlRenderer.builder(OPTIONS).build();
 }
