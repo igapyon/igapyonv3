@@ -4,6 +4,7 @@ Igapyon Diary System v3
 [Igapyon Diary System v3](https://github.com/igapyon/igapyonv3)（#igapyonv3）は、Java 製の OSS 日記システムです。
 Markdown 原稿（*.md）から HTML（*.html）を生成する機能を中核に据えています。
 HTML 出力は Tailwind CSS を前提とした class を付与します。
+最短の利用手順は「Maven プラグインを使わずに igapyonv3 を実行する」を参照してください。
 
 ### 主要エントリポイント
 - `jp.igapyon.diary.igapyonv3.IgDiaryProcessor` : 生成処理の主入口。設定読み込み、インデックス/キーワード生成、`.src.md` 変換を実行。

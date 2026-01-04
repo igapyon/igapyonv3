@@ -25,13 +25,16 @@ MAVEN_OPTS="-Djava.net.preferIPv4Stack=true" mvn -U install
 # 設定や生成物の反映のため、同じコマンドを2回実行する。
 mvn clean exec:java@igdiary antrun:run
 mvn clean exec:java@igdiary antrun:run
-cp -vpR /home/USERNAME/git/diary/target/md2html/* /var/www/html/igapyon/diary/
-cp -vpR /home/USERNAME/git/diary/images/* /var/www/html/igapyon/diary/images/
 ```
 
 ### 公開（デプロイ）例
 
 ※GitHub Pages への出力は deprecated のため、上記の `cp -vpR` コマンドで /var/www/html に公開する例です。
+
+```
+cp -vpR /home/USERNAME/git/diary/target/md2html/* /var/www/html/igapyon/diary/
+cp -vpR /home/USERNAME/git/diary/images/* /var/www/html/igapyon/diary/images/
+```
 
 ## settings.src.md の例とフラグの意味
 
