@@ -93,8 +93,8 @@ public class LinkMapDirectiveModel implements TemplateDirectiveModel {
 	 * @return formatted string.
 	 */
 	public String getOutputString(final String titleString, final String latString, final String lonString) {
-		String qString = "https://openstreetmap.jp/map#zoom=17&lat=" + latString + "&lon=" + lonString
-				+ "&layers=00BFF";
+		String qString = "https://www.openstreetmap.org/?mlat=" + latString + "&mlon=" + lonString + "#map=17/"
+				+ latString + "/" + lonString;
 		return ("[" + titleString + "](" + qString + ")");
 	}
 }
