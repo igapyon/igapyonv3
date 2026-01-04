@@ -2,19 +2,37 @@
 
 作業者メモとして残っていた実行手順を記録します。
 
-## ビルドとデプロイ手順
+## ビルドとインストール
+
+igapyonv3 開発者のビルドとインストールは `mvn clean install` で OK。
 
 ```sh
-mvn clean install antrun:run
-mvn clean install antrun:run
-cp -vpR /home/USERNAME/git/diary/target/md2html/* /var/www/html/igapyon/diary/
-cp -vpR /home/USERNAME/git/diary/images/* /var/www/html/igapyon/diary/images/
+mvn clean install
 ```
 
-## ビルドコマンド例
+### ビルドとインストール実行例
 
 ```sh
 MAVEN_OPTS="-Djava.net.preferIPv4Stack=true" mvn -U install
+```
+
+## igapyonv3 の使用例
+
+※前提条件: `exec-maven-plugin` の `igdiary` 実行設定を `pom.xml` に追加済みであること。利用者の実行は `mvn clean exec:java@igdiary antrun:run` が正解。
+
+```
+# 設定や生成物の反映のため、同じコマンドを2回実行する。
+mvn clean exec:java@igdiary antrun:run
+mvn clean exec:java@igdiary antrun:run
+```
+
+### 公開（デプロイ）例
+
+※GitHub Pages への出力は deprecated のため、上記の `cp -vpR` コマンドで /var/www/html に公開する例です。
+
+```
+cp -vpR /home/USERNAME/git/diary/target/md2html/* /var/www/html/igapyon/diary/
+cp -vpR /home/USERNAME/git/diary/images/* /var/www/html/igapyon/diary/images/
 ```
 
 ## settings.src.md の例とフラグの意味
