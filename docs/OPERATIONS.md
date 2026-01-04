@@ -108,6 +108,13 @@ ${setSourcebaseurl("https://github.com/your/repo/blob/master")}
 - テストは `maven-surefire-plugin`（言語/地域を en/US に固定）。
 - `maven-gpg-plugin` で `verify` フェーズに署名を実行。
 
+## バージョン更新メモ
+
+バージョンを更新する際は、次の 2 箇所を変更する。
+
+- `pom.xml` の `<version>`
+- `src/main/java/jp/igapyon/diary/igapyonv3/md2html/IgapyonMd2HtmlConstants.java` の `VERSION`
+
 ## 出力ディレクトリの規約
 
 - `.src.md` はソース原稿。FreeMarker 展開対象。
