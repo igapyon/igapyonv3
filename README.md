@@ -5,13 +5,6 @@ Igapyon Diary System v3
 Markdown 原稿（*.md）から HTML（*.html）を生成する機能を中核に据えています。
 HTML 出力は Tailwind CSS を前提とした class を付与します。
 
-## About
-### 構成要素
-- ハッシュタグ: #igapyonv3
-- データ形式: #Markdown
-- Web デザイン: #TailwindCSS
-- 実装言語: #Java
-
 ### 主要エントリポイント
 - `jp.igapyon.diary.igapyonv3.IgDiaryProcessor` : 生成処理の主入口。設定読み込み、インデックス/キーワード生成、`.src.md` 変換を実行。
 - `jp.igapyon.diary.igapyonv3.gendiary.TodayDiaryGenerator` : 設定で有効化時に、今日の日記テンプレートを生成。
@@ -41,13 +34,8 @@ Igapyon Diary System v3（#igapyonv3）は以下の OSS に依存しています
 
 ## Maven プラグインを使わずに igapyonv3 を実行する
 
-日記ディレクトリに移動して以下を実行します。
+日記ディレクトリに移動して以下を実行します（`exec-maven-plugin` の `igdiary` 実行設定を `pom.xml` に追加済みであることが前提）。
 
 ```
-java -classpath ../igapyonv3/target/igapyonv3-2.0.20260104.2-jar-with-dependencies.jar jp.igapyon.diary.igapyonv3.IgDiaryProcessor
-java -classpath ../igapyonv3/target/igapyonv3-2.0.20260104.2-jar-with-dependencies.jar jp.igapyon.diary.igapyonv3.md2html.IgapyonMd2Html -s . -t target/md2html -r
+mvn clean exec:java@igdiary antrun:run
 ```
-
-## その他
-### TODO
-- HatenaDialy2md プログラムを書く。
