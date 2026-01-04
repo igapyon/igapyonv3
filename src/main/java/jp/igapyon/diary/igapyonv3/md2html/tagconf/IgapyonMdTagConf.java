@@ -47,11 +47,26 @@ public class IgapyonMdTagConf {
 	public static IgapyonMdTagConf getDefault() {
 		final IgapyonMdTagConf tagConf = new IgapyonMdTagConf();
 
-		tagConf.setAttrClassValue("h1", "alert alert-danger");
-		tagConf.setAttrClassValue("h2", "alert alert-warning");
-		tagConf.setAttrClassValue("h3", "bg-success");
-		tagConf.setAttrClassValue("h4", "bg-info");
-		tagConf.setAttrClassValue("table", "table table-bordered");
+		tagConf.setAttrClassValue("h1",
+				"mt-8 mb-4 rounded-md bg-red-100 px-4 py-2 text-3xl font-bold tracking-tight text-red-900");
+		tagConf.setAttrClassValue("h2",
+				"mt-8 mb-3 rounded-md bg-amber-100 px-3 py-2 text-xl font-semibold text-amber-900");
+		tagConf.setAttrClassValue("h3",
+				"mt-6 mb-2 rounded-md bg-emerald-100 px-3 py-1.5 text-lg font-semibold text-emerald-900");
+		tagConf.setAttrClassValue("h4",
+				"mt-5 mb-2 rounded-md bg-sky-100 px-3 py-1.5 text-base font-semibold text-sky-900");
+		tagConf.setAttrClassValue("p", "mt-2");
+		tagConf.setAttrClassValue("ul", "list-disc pl-6");
+		tagConf.setAttrClassValue("ol", "list-decimal pl-6");
+		tagConf.setAttrClassValue("pre",
+				"my-2 overflow-auto rounded bg-slate-900 p-2 text-slate-100 text-sm font-mono whitespace-pre-wrap leading-6 block");
+		tagConf.setAttrClassValue("table", "my-4 w-full text-left text-sm border border-slate-400");
+		tagConf.setAttrClassValue("th", "border border-slate-400 bg-slate-200 px-3 py-2 font-semibold");
+		tagConf.setAttrClassValue("td", "border border-slate-400 px-3 py-2");
+		tagConf.setAttrClassValue("a",
+				"text-sky-800 font-medium bg-sky-50/50 rounded px-0.5 -mx-0.5 hover:text-emerald-900 hover:bg-emerald-100/60 hover:underline");
+		tagConf.setAttrClassValue("a-image", "inline-block align-middle hover:opacity-90");
+		tagConf.setAttrClassValue("img", "inline-block align-middle");
 
 		return tagConf;
 	}

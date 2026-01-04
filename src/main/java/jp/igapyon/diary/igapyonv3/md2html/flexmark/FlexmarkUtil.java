@@ -40,8 +40,18 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import com.vladsch.flexmark.ast.AutoLink;
+import com.vladsch.flexmark.ast.BulletList;
+import com.vladsch.flexmark.ast.FencedCodeBlock;
 import com.vladsch.flexmark.ast.Heading;
+import com.vladsch.flexmark.ast.Image;
+import com.vladsch.flexmark.ast.IndentedCodeBlock;
+import com.vladsch.flexmark.ast.Link;
+import com.vladsch.flexmark.ast.MailLink;
+import com.vladsch.flexmark.ast.OrderedList;
+import com.vladsch.flexmark.ast.Paragraph;
 import com.vladsch.flexmark.ext.tables.TableBlock;
+import com.vladsch.flexmark.ext.tables.TableCell;
 import com.vladsch.flexmark.ext.wikilink.WikiLink;
 import com.vladsch.flexmark.html.AttributeProvider;
 import com.vladsch.flexmark.html.AttributeProviderFactory;
@@ -139,7 +149,7 @@ public final class FlexmarkUtil {
 				.nodeRendererFactory(new NodeRendererFactory() {
 					@Override
 					public NodeRenderer apply(final DataHolder contextOptions) {
-						return new WikiLinkNodeRenderer();
+						return new WikiLinkNodeRenderer(tagConf);
 					}
 				}).build();
 	}
@@ -153,7 +163,7 @@ public final class FlexmarkUtil {
 
 		@Override
 		public void setAttributes(final Node node, final AttributablePart part, final MutableAttributes attributes) {
-			if (tagConf == null || part != AttributablePart.NODE) {
+			if (tagConf == null) {
 				return;
 			}
 			final String tagName = getTagName(node);
@@ -173,11 +183,46 @@ public final class FlexmarkUtil {
 			if (node instanceof TableBlock) {
 				return "table";
 			}
+			if (node instanceof TableCell) {
+				return ((TableCell) node).isHeader() ? "th" : "td";
+			}
+			if (node instanceof Paragraph) {
+				return "p";
+			}
+			if (node instanceof BulletList) {
+				return "ul";
+			}
+			if (node instanceof OrderedList) {
+				return "ol";
+			}
+			if (node instanceof FencedCodeBlock || node instanceof IndentedCodeBlock) {
+				return "pre";
+			}
+			if (node instanceof Image) {
+				return "img";
+			}
+			if (node instanceof Link) {
+				return isImageOnlyLink((Link) node) ? "a-image" : "a";
+			}
+			if (node instanceof AutoLink || node instanceof MailLink || node instanceof WikiLink) {
+				return "a";
+			}
 			return null;
+		}
+
+		private boolean isImageOnlyLink(final Link link) {
+			final Node firstChild = link.getFirstChild();
+			return firstChild instanceof Image && firstChild.getNext() == null;
 		}
 	}
 
 	private static class WikiLinkNodeRenderer implements NodeRenderer {
+		private final IgapyonMdTagConf tagConf;
+
+		WikiLinkNodeRenderer(final IgapyonMdTagConf tagConf) {
+			this.tagConf = tagConf;
+		}
+
 		@Override
 		public Set<NodeRenderingHandler<?>> getNodeRenderingHandlers() {
 			final Set<NodeRenderingHandler<?>> set = new HashSet<NodeRenderingHandler<?>>();
@@ -188,7 +233,12 @@ public final class FlexmarkUtil {
 		private void render(final WikiLink node, final NodeRendererContext context, final HtmlWriter html) {
 			final String text = node.getText().toString();
 			final String url = buildHatenaKeywordUrl(text);
-			html.attr("href", url).withAttr().tag("a");
+			final String classValue = tagConf == null ? null : tagConf.getAttrClassValue("a");
+			html.attr("href", url);
+			if (classValue != null) {
+				html.attr("class", classValue);
+			}
+			html.withAttr().tag("a");
 			html.text(text);
 			html.tag("/a");
 		}

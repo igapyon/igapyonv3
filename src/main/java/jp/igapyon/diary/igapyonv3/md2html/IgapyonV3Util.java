@@ -105,22 +105,14 @@ public class IgapyonV3Util {
 		writer.write("<meta name=\"generator\" content=\"" + IgapyonMd2HtmlConstants.PROGRAM_DISPLAY_NAME + " ver"
 				+ IgapyonMd2HtmlConstants.VERSION + "\">\n");
 		writer.write("<title>" + settings.getHtmlTitle() + "</title>\n");
-		writer.write("<!-- Compiled and minified CSS -->\n");
-		writer.write(
-				"<link rel=\"stylesheet\" href=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css\">\n");
-
-		// see: http://getbootstrap.com/examples/theme/
-		// try to remove optional theme
-		// writer.write("<!-- Optional theme -->\n");
-		// writer.write("<link rel=\"stylesheet\"
-		// href=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css\">\n");
+		final String cssPath = "https://igapyon.jp/lib.css/tailwind.css";
+		writer.write("<!-- Tailwind CSS (local) -->\n");
+		writer.write("<link rel=\"stylesheet\" href=\"" + cssPath + "\">\n");
 
 		writer.write("</head>\n");
-		writer.write("<body>\n");
-		// Use container-fluid instead container.
-		writer.write("<div class=\"container-fluid\">\n");
-
-		writer.write("<div class=\"jumbotron\">\n");
+		writer.write("<body class=\"text-slate-900 leading-7\">\n");
+		writer.write("<div class=\"mx-auto w-full px-4 sm:px-6 lg:px-8\">\n");
+		writer.write("<div class=\"my-8 rounded-lg bg-slate-100 p-6 sm:p-8\">\n");
 
 		if (mdStringHead.length() > 0) {
 			final String bodyMarkdown = simpleMd2Html(settings, tagConf, mdStringHead);
@@ -130,7 +122,7 @@ public class IgapyonV3Util {
 		writer.write("</div>\n");
 
 		// TODO container should be outside.
-		writer.write("<div class=\"container-fluid\">\n");
+		writer.write("<div class=\"mx-auto w-full px-4 sm:px-6 lg:px-8\">\n");
 	}
 
 	public static String simpleMd2Html(final IgapyonMd2HtmlSettings settings, final IgapyonMdTagConf tagConf,
@@ -139,12 +131,7 @@ public class IgapyonV3Util {
 	}
 
 	public static void writePostHtml(final Writer writer) throws IOException {
-		writer.write("\n</div><!-- container-fluid -->\n");
-
-		writer.write("<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->\n");
-		writer.write("<script src=\"https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js\"></script>\n");
-		writer.write("<!-- Compiled and minified JavaScript -->\n");
-		writer.write("<script src=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js\"></script>\n");
+		writer.write("\n</div><!-- container -->\n");
 
 		if (false) {
 			// Codes for direct jQuery call.
