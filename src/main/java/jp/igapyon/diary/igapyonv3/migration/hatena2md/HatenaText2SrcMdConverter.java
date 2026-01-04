@@ -40,7 +40,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.lang3.StringUtils;
 
 import jp.igapyon.diary.igapyonv3.util.IgapyonV3Settings;
 
@@ -106,11 +105,11 @@ public class HatenaText2SrcMdConverter {
 						|| line.startsWith("*p4*") || line.startsWith("*p5*")) {
 					// はてなタイトルを md のh2 に変換。
 					String newLine = line;
-					newLine = StringUtils.replace(newLine, "*p1*", "## ");
-					newLine = StringUtils.replace(newLine, "*p2*", "## ");
-					newLine = StringUtils.replace(newLine, "*p3*", "## ");
-					newLine = StringUtils.replace(newLine, "*p4*", "## ");
-					newLine = StringUtils.replace(newLine, "*p5*", "## ");
+					newLine = newLine.replace("*p1*", "## ");
+					newLine = newLine.replace("*p2*", "## ");
+					newLine = newLine.replace("*p3*", "## ");
+					newLine = newLine.replace("*p4*", "## ");
+					newLine = newLine.replace("*p5*", "## ");
 
 					if (index > 0) {
 						lines.set(index++, "");
@@ -128,11 +127,11 @@ public class HatenaText2SrcMdConverter {
 				if (line.startsWith("**") || line.startsWith("***") || line.startsWith("****")
 						|| line.startsWith("*****") || line.startsWith("******")) {
 					String newLine = line;
-					newLine = StringUtils.replace(newLine, "******", "####### ");
-					newLine = StringUtils.replace(newLine, "*****", "###### ");
-					newLine = StringUtils.replace(newLine, "****", "##### ");
-					newLine = StringUtils.replace(newLine, "***", "#### ");
-					newLine = StringUtils.replace(newLine, "**", "### ");
+					newLine = newLine.replace("******", "####### ");
+					newLine = newLine.replace("*****", "###### ");
+					newLine = newLine.replace("****", "##### ");
+					newLine = newLine.replace("***", "#### ");
+					newLine = newLine.replace("**", "### ");
 
 					if (index > 0) {
 						lines.set(index++, "");
@@ -189,21 +188,21 @@ public class HatenaText2SrcMdConverter {
 						isProcessInListing = true;
 						lines.add(index++, "");
 					}
-					line = StringUtils.replaceFirst(line, "\\---", "    * ");
+					line = line.replaceFirst("\\---", "    * ");
 					lines.set(index, line);
 				} else if (line.trim().startsWith("--")) {
 					if (isProcessInListing == false) {
 						isProcessInListing = true;
 						lines.add(index++, "");
 					}
-					line = StringUtils.replaceFirst(line, "\\--", "  * ");
+					line = line.replaceFirst("\\--", "  * ");
 					lines.set(index, line);
 				} else if (line.trim().startsWith("-")) {
 					if (isProcessInListing == false) {
 						isProcessInListing = true;
 						lines.add(index++, "");
 					}
-					line = StringUtils.replaceFirst(line, "\\-", "* ");
+					line = line.replaceFirst("\\-", "* ");
 					lines.set(index, line);
 				} else {
 					if (isProcessInListing) {

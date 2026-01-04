@@ -89,6 +89,13 @@
 			<artifactId>commons-lang3</artifactId>
 			<version>3.18.0</version>
 		</dependency>
+		<!-- Apache Text -->
+		<!-- https://mvnrepository.com/artifact/org.apache.commons/commons-text -->
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-text</artifactId>
+			<version>1.13.1</version>
+		</dependency>
 
 		<!-- URLCodec -->
 		<!-- https://mvnrepository.com/artifact/commons-codec/commons-codec -->
@@ -175,7 +182,6 @@
 				<artifactId>maven-surefire-plugin</artifactId>
 				<version>3.0.0-M5</version>
 				<configuration>
-					<argLine>-Duser.language=en -Duser.region=US</argLine>
 					<systemPropertyVariables>
 						<user.language>en</user.language>
 						<user.region>US</user.region>
