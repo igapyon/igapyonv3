@@ -18,8 +18,7 @@ MAVEN_OPTS="-Djava.net.preferIPv4Stack=true" mvn -U install
 
 ## igapyonv3 の使用例
 
-※前提条件: `exec-maven-plugin` の `igdiary` 実行設定を `pom.xml` に追加済みであること
-※igapyonv3 利用者の実行は `mvn clean exec:java@igdiary antrun:run` が正解。
+※前提条件: `exec-maven-plugin` の `igdiary` 実行設定を `pom.xml` に追加済みであること。利用者の実行は `mvn clean exec:java@igdiary antrun:run` が正解。
 
 ```
 # 設定や生成物の反映のため、同じコマンドを2回実行する。
