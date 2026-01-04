@@ -52,6 +52,7 @@ public class IgapyonMd2HtmlSettings {
 	protected String htmlTitle;
 
 	protected String htmlDescription;
+	protected String htmlCanonical;
 
 	public String getTargetPathJQuery() {
 		return targetPathJQuery;
@@ -85,5 +86,13 @@ public class IgapyonMd2HtmlSettings {
 
 	public void setHtmlDescription(String htmlDescription) {
 		this.htmlDescription = htmlDescription;
+	}
+
+	public String getHtmlCanonical() {
+		return htmlCanonical;
+	}
+
+	public void setHtmlCanonical(String htmlCanonical) {
+		this.htmlCanonical = htmlCanonical;
 	}
 }

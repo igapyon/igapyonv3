@@ -98,15 +98,33 @@ public class IgapyonV3Util {
 		writer.write("<html xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"ja\" lang=\"ja\">");
 		writer.write("<head>\n");
 		writer.write("<meta charset=\"utf-8\">\n");
-		writer.write("<meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">\n");
 		writer.write("<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n");
 		writer.write("<meta name=\"description\" content=\"" + settings.getHtmlDescription() + "\">\n");
 		writer.write("<meta name=\"author\" content=\"" + author + "\">\n");
 		writer.write("<meta name=\"generator\" content=\"" + IgapyonMd2HtmlConstants.PROGRAM_DISPLAY_NAME + " ver"
 				+ IgapyonMd2HtmlConstants.VERSION + "\">\n");
 		writer.write("<title>" + settings.getHtmlTitle() + "</title>\n");
+		final String canonicalUrl = settings.getHtmlCanonical();
+		if (canonicalUrl != null && canonicalUrl.length() > 0) {
+			writer.write("<link rel=\"canonical\" href=\"" + canonicalUrl + "\">\n");
+		}
+		final String title = settings.getHtmlTitle();
+		final String description = settings.getHtmlDescription();
+		if (title != null && title.length() > 0) {
+			writer.write("<meta property=\"og:title\" content=\"" + title + "\">\n");
+			writer.write("<meta name=\"twitter:title\" content=\"" + title + "\">\n");
+		}
+		if (description != null && description.length() > 0) {
+			writer.write("<meta property=\"og:description\" content=\"" + description + "\">\n");
+			writer.write("<meta name=\"twitter:description\" content=\"" + description + "\">\n");
+		}
+		if (canonicalUrl != null && canonicalUrl.length() > 0) {
+			writer.write("<meta property=\"og:url\" content=\"" + canonicalUrl + "\">\n");
+			writer.write("<meta name=\"twitter:url\" content=\"" + canonicalUrl + "\">\n");
+		}
+		writer.write("<meta property=\"og:type\" content=\"website\">\n");
+		writer.write("<meta name=\"twitter:card\" content=\"summary\">\n");
 		final String cssPath = "https://igapyon.jp/lib.css/tailwind.css";
-		writer.write("<!-- Tailwind CSS (local) -->\n");
 		writer.write("<link rel=\"stylesheet\" href=\"" + cssPath + "\">\n");
 
 		writer.write("</head>\n");
