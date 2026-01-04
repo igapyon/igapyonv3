@@ -99,8 +99,8 @@ public class LinkSearchDirectiveModel implements TemplateDirectiveModel {
 
 		final URLCodec codec = new URLCodec();
 		try {
-			String qString = "https://www.google.co.jp/#pws=0&q="
-					+ (siteString == null ? "" : "site:" + codec.encode(siteString) + "+") + codec.encode(wordString);
+			final String queryString = (siteString == null ? "" : "site:" + siteString + " ") + wordString;
+			String qString = "https://www.google.com/search?q=" + codec.encode(queryString);
 			if ("twitter".equals(engineString)) {
 				// twitter はサイト内検索はサポートしません。
 				// TODO site指定の際にエラー処理が必要か検討。

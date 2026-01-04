@@ -10,16 +10,16 @@ maven
 
 ### URL
 
-* TBD [Search 'maven' in google](https://www.google.co.jp/#pws=0&q=maven)
+* TBD [Search 'maven' in google](https://www.google.com/search?q=maven)
 
 ### 特徴
 
-* TBD [Search 'maven' in google](https://www.google.co.jp/#pws=0&q=maven)
+* TBD [Search 'maven' in google](https://www.google.com/search?q=maven)
 
 ### 検索
 
-* [Search 'maven' in google in-site](https://www.google.co.jp/#pws=0&q=site:https%3A%2F%2Figapyon.github.io%2Fdiary%2F+maven)
-* [Search 'maven' in google](https://www.google.co.jp/#pws=0&q=maven)
+* [Search 'maven' in google in-site](https://www.google.com/search?q=site%3Ahttps%3A%2F%2Figapyon.github.io%2Fdiary%2F+maven)
+* [Search 'maven' in google](https://www.google.com/search?q=maven)
 * [Search 'maven' in twitter](https://twitter.com/search?q=%23maven)
 
 ### 日記
