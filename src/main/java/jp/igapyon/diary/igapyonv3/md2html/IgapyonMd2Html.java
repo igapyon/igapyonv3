@@ -42,6 +42,8 @@ import com.vladsch.flexmark.util.ast.Node;
 
 import jp.igapyon.diary.igapyonv3.md2html.flexmark.FlexmarkUtil;
 import jp.igapyon.diary.igapyonv3.md2html.tagconf.IgapyonMdTagConf;
+import jp.igapyon.diary.igapyonv3.util.IgapyonV3Settings;
+import jp.igapyon.diary.igapyonv3.util.SimpleDirUtil;
 import jp.igapyon.diary.util.IgFileUtil;
 
 /**
@@ -53,6 +55,16 @@ import jp.igapyon.diary.util.IgFileUtil;
  */
 public class IgapyonMd2Html {
 	protected IgapyonMd2HtmlSettings settings = new IgapyonMd2HtmlSettings();
+	protected String baseurl;
+	protected File outputRootDir;
+
+	public IgapyonMd2Html() {
+		// default constructor
+	}
+
+	public IgapyonMd2Html(final IgapyonV3Settings settings) {
+		this.baseurl = settings.getBaseurl();
+	}
 
 	public static void main(final String[] args) throws IOException {
 		new IgapyonMd2HtmlCli().process(args);
@@ -86,6 +98,9 @@ public class IgapyonMd2Html {
 		}
 
 		final StringWriter outputHtmlWriter = new StringWriter();
+		if (baseurl != null && outputRootDir != null) {
+			settings.setHtmlCanonical(buildCanonicalUrl(targetHtml));
+		}
 		// TODO first h1 to be title, after text to be description
 		// TODO properties should be VO.
 		// TODO Description link with Markdown.
@@ -122,6 +137,7 @@ public class IgapyonMd2Html {
 
 	public void processDir(final File sourceMdDir, final File targetHtmlDir, final boolean recursivedir)
 			throws IOException {
+		outputRootDir = targetHtmlDir;
 		// TODO check to be another method.
 		if (sourceMdDir.exists() == false) {
 			System.err.println("md2html: source dir not exists: " + sourceMdDir.getAbsolutePath());
@@ -156,5 +172,13 @@ public class IgapyonMd2Html {
 		final File targetHtmlDir = new File(targetHtmlDirString);
 
 		processDir(sourceMdDir, targetHtmlDir, recursivedir);
+	}
+
+	private String buildCanonicalUrl(final File targetHtml) throws IOException {
+		final String relativePath = SimpleDirUtil.getRelativePath(outputRootDir, targetHtml);
+		if (relativePath.length() == 0) {
+			return baseurl;
+		}
+		return baseurl + "/" + relativePath.replace('\\', '/');
 	}
 }

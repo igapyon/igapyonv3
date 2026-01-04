@@ -139,7 +139,7 @@ public class IgDiaryProcessor {
 			if (settings.getOutputhtmldir().exists() == false) {
 				settings.getOutputhtmldir().mkdirs();
 			}
-			new IgapyonMd2Html().processDir(settings.getRootdir(), settings.getOutputhtmldir(), true);
+			new IgapyonMd2Html(settings).processDir(settings.getRootdir(), settings.getOutputhtmldir(), true);
 		}
 	}
 

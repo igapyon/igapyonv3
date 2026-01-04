@@ -82,7 +82,8 @@ public class IgapyonMd2HtmlTask extends Task {
 		checkAttr();
 
 		System.out.println(
-				"md2html: " + IgapyonMd2HtmlConstants.PROGRAM_DISPLAY_NAME + " ver" + IgapyonMd2HtmlConstants.VERSION);
+				"md2html: " + IgapyonMd2HtmlConstants.PROGRAM_DISPLAY_NAME + " ver"
+						+ IgapyonMd2HtmlConstants.VERSION);
 		System.out.println("   source:[" + source + "]");
 		System.out.println("   target:[" + target + "]");
 		System.out.println("   recursivedir:" + recursivedir);
