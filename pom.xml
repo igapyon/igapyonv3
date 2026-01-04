@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>jp.igapyon.diary</groupId>
 	<artifactId>igapyonv3</artifactId>
-	<version>2.0.20260104.1</version> <!-- SNAPSHOT は maven repos リリース時に追加など工夫して -->
+	<version>2.0.20260104.2</version> <!-- SNAPSHOT は maven repos リリース時に追加など工夫して -->
 	<packaging>jar</packaging>
 
 	<name>igapyonv3</name>
@@ -163,6 +163,9 @@
 				<version>3.13.0</version>
 				<configuration>
 					<release>11</release>
+					<compilerArgs>
+						<arg>-Xlint:deprecation</arg>
+					</compilerArgs>
 				</configuration>
 			</plugin>
 
