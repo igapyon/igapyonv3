@@ -125,7 +125,6 @@ public class IgapyonV3Util {
 		writer.write("<meta property=\"og:type\" content=\"website\">\n");
 		writer.write("<meta name=\"twitter:card\" content=\"summary\">\n");
 		final String cssPath = "https://igapyon.jp/lib.css/tailwind.css";
-		writer.write("<!-- Tailwind CSS (local) -->\n");
 		writer.write("<link rel=\"stylesheet\" href=\"" + cssPath + "\">\n");
 
 		writer.write("</head>\n");
