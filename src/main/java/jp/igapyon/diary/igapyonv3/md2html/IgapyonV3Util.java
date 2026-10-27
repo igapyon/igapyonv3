@@ -33,6 +33,8 @@
 
 package jp.igapyon.diary.igapyonv3.md2html;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.IOException;
 import java.io.Writer;
@@ -58,7 +60,15 @@ public class IgapyonV3Util {
 	 *             io exception occurs.
 	 */
 	public static String readTextFile(final File file) throws IOException {
-		return Files.readString(file.toPath(), StandardCharsets.UTF_8);
+		try (BufferedReader reader = Files.newBufferedReader(file.toPath(), StandardCharsets.UTF_8)) {
+			final StringBuilder content = new StringBuilder();
+			final char[] buffer = new char[8192];
+			int length;
+			while ((length = reader.read(buffer)) != -1) {
+				content.append(buffer, 0, length);
+			}
+			return content.toString();
+		}
 	}
 
 	/**
@@ -72,7 +82,9 @@ public class IgapyonV3Util {
 	 *             io exception occurs.
 	 */
 	public static void writeHtmlFile(final String strHtml, final File file) throws IOException {
-		Files.writeString(file.toPath(), strHtml, StandardCharsets.UTF_8);
+		try (BufferedWriter writer = Files.newBufferedWriter(file.toPath(), StandardCharsets.UTF_8)) {
+			writer.write(strHtml);
+		}
 	}
 
 	public static void writePreHtml(final IgapyonMd2HtmlSettings settings, final IgapyonMdTagConf tagConf,

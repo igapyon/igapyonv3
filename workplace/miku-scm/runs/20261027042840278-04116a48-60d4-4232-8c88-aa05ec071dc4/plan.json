@@ -1,0 +1,19 @@
+{
+  "schema_version": "miku-scm.runner/v1",
+  "run_id": "20261027042840278-04116a48-60d4-4232-8c88-aa05ec071dc4",
+  "workflow": "writing.pr.prepare",
+  "workflow_version": 1,
+  "workflow_manifest_version": "miku-scm.workflow-manifest/v2",
+  "mutation_level": "readonly",
+  "approval_gate": "none",
+  "workflow_contract": "writing.pr.prepare",
+  "contract_version": 1,
+  "contract_pair_sha256": "f4d119f8b7b135fd93a6d9706264895f1c7f3d29abfb8821ade695ccd3407192",
+  "workflow_contract_lock_version": "miku-scm.workflow-contract-lock/v1",
+  "operation": "writing-pr-prepare",
+  "repository": "/Users/igapyon/Documents/git/igapyonv3",
+  "target": "origin/devel..HEAD",
+  "github_repository": null,
+  "issue": null,
+  "mutation_invocation_allowed": false
+}

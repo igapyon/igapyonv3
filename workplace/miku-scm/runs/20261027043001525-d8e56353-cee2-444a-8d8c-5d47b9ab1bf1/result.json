@@ -1,0 +1,68 @@
+{
+  "schema_version": "miku-scm.runner-result/v1",
+  "run_id": "20261027043001525-d8e56353-cee2-444a-8d8c-5d47b9ab1bf1",
+  "workflow": "pr.recommit.preflight",
+  "workflow_version": 1,
+  "workflow_manifest_version": "miku-scm.workflow-manifest/v2",
+  "mutation_level": "readonly",
+  "approval_gate": "preflight",
+  "workflow_contract": "pr.recommit.preflight",
+  "contract_version": 1,
+  "contract_pair_sha256": "8b54f9270fe4c16926efc6b3a473564688ac324fa7360d7d7f1b04f5444681d3",
+  "workflow_contract_lock_version": "miku-scm.workflow-contract-lock/v1",
+  "status": "not-applied",
+  "delegate_status": "not-applied",
+  "started_at": "2026-10-27T04:30:01.525Z",
+  "finished_at": "2026-10-27T04:30:01.699Z",
+  "duration_ms": 172.654,
+  "mutation_invoked": false,
+  "run_directory": "workplace/miku-scm/runs/20261027043001525-d8e56353-cee2-444a-8d8c-5d47b9ab1bf1",
+  "result": {
+    "status": "not-applied",
+    "mode": "preflight",
+    "readonly": true,
+    "repository": "igapyonv3",
+    "remote": "origin",
+    "base": "origin/devel",
+    "base_source": "explicit --base",
+    "base_commit": "3e733cef8a5ba0f9749bb79d70947b1ddc3a9eaa",
+    "base_exists": true,
+    "base_is_ancestor": true,
+    "head": "e166c7a0d54db848cb7d4ed2ad4f222c5157ee03",
+    "head_summary": "e166c7a (HEAD -> tiga0104k) Restore Java 8 compatibility and update build tooling",
+    "commits_to_collapse": 1,
+    "commits_log": "e166c7a (HEAD -> tiga0104k) Restore Java 8 compatibility and update build tooling",
+    "diff_stat": " README.md                                          |   3 +\n docs/OPERATIONS.md                                 |   2 +-\n pom.xml                                            | 127 ++++++++++++++++++---\n .../diary/igapyonv3/md2html/IgapyonV3Util.java     |  16 ++-\n test/data/hatena/ig161226.html.md                  |   2 +\n test/data/hatena/ig161226.md                       |   2 +\n .../plan.json                                      |  17 +++\n .../request.json                                   |  21 ++++\n 8 files changed, 174 insertions(+), 16 deletions(-)",
+    "branch": "tiga0104k",
+    "frozen": false,
+    "branch_slug": "tiga0104k",
+    "pr_draft": "workplace/miku-scm/pr-drafts/pr-tiga0104k-202610271328.md",
+    "pr_draft_sha256": "32cda38545c2f87f457296e4f310bf9d450dcd26e67b6e36480666868d1d8731",
+    "pr_draft_status": "The explicitly selected PR draft exists.",
+    "pr_draft_safe": true,
+    "backup_branch": "backup/2026-10-27-1330",
+    "dirty": true,
+    "status_summary": "## tiga0104k...origin/tiga0104k [ahead 1]\n?? workplace/miku-scm/pr-drafts/\n?? workplace/miku-scm/runs/20261027040336320-93ed5e5a-97c8-48b0-a17c-a7c3b218d7f7/attempt.json\n?? workplace/miku-scm/runs/20261027040336320-93ed5e5a-97c8-48b0-a17c-a7c3b218d7f7/result.json\n?? workplace/miku-scm/runs/20261027040336320-93ed5e5a-97c8-48b0-a17c-a7c3b218d7f7/snapshot.json\n?? workplace/miku-scm/runs/20261027042823655-14b78234-f1a0-46b1-a3b4-f12aea7aa32d/\n?? workplace/miku-scm/runs/20261027042840278-04116a48-60d4-4232-8c88-aa05ec071dc4/\n?? workplace/miku-scm/runs/20261027043001525-d8e56353-cee2-444a-8d8c-5d47b9ab1bf1/",
+    "draft_candidates": [
+      {
+        "path": "workplace/miku-scm/pr-drafts/pr-tiga0104k-202610271328.md",
+        "timestamp": "202610271328"
+      }
+    ],
+    "blockers": [
+      "working tree contains unconfirmed changes"
+    ],
+    "apply_arguments": [
+      "--remote",
+      "origin",
+      "--base",
+      "origin/devel",
+      "--pr-draft",
+      "workplace/miku-scm/pr-drafts/pr-tiga0104k-202610271328.md",
+      "--apply"
+    ],
+    "mutation_invoked": false
+  },
+  "human_output_schema_version": "miku-scm.human-output/v15",
+  "human_output": "[NOT APPLIED] PR recommit\n\nRepository: igapyonv3\nBranch: tiga0104k\nDelegate status: not-applied\nBase: origin/devel\nBase commit: 3e733cef8a5ba0f9749bb79d70947b1ddc3a9eaa\nBackup branch candidate: backup/2026-10-27-1330\nPR draft: workplace/miku-scm/pr-drafts/pr-tiga0104k-202610271328.md\nPR draft SHA-256: 32cda38545c2f87f457296e4f310bf9d450dcd26e67b6e36480666868d1d8731\nCommits to collapse: 1\nWorking tree: dirty\nBlockers: working tree contains unconfirmed changes\nMutation invoked: no\n"
+}
