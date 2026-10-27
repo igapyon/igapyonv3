@@ -41,6 +41,7 @@ import java.io.IOException;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
 
 import jp.igapyon.diary.igapyonv3.util.IgapyonV3Settings;
 import jp.igapyon.diary.igapyonv3.util.SimpleDirParser;
@@ -69,23 +70,24 @@ public class SimpleDirUtilTest {
 
 	@Test
 	@SuppressWarnings("deprecation")
-	public void testUrl2File() throws Exception {
+	public void testUrl2File(@TempDir File rootDir) throws Exception {
 		IgapyonV3Settings settings = new IgapyonV3Settings();
-		settings.setRootdir(new File("/private/tmp/aaa/"));
+		File baseDir = rootDir.getCanonicalFile();
+		settings.setRootdir(baseDir);
 		settings.setBaseurl("https://igapyon.github.io/diary");
 
-		assertEquals("/private/tmp/aaa",
-				SimpleDirUtil.url2File("https://igapyon.github.io/diary", settings).getCanonicalPath());
-		assertEquals("/private/tmp/aaa/", SimpleDirUtil.url2File("https://igapyon.github.io/diary/", settings)
-				.getCanonicalFile().getAbsolutePath());
-		assertEquals("/private/tmp/aaa/aaa",
-				SimpleDirUtil.url2File("https://igapyon.github.io/diary/aaa", settings).getCanonicalPath());
-		assertEquals("/private/tmp/aaa/bbb",
-				SimpleDirUtil.url2File("https://igapyon.github.io/diary/bbb", settings).getCanonicalPath());
-		assertEquals("/private/tmp/aaa/bbb",
-				SimpleDirUtil.url2File("https://igapyon.github.io/diary/bbb/", settings).getCanonicalPath());
-		assertEquals("/private/tmp/aaa/bbb.txt",
-				SimpleDirUtil.url2File("https://igapyon.github.io/diary/bbb.txt", settings).getCanonicalPath());
+		assertEquals(baseDir,
+				SimpleDirUtil.url2File("https://igapyon.github.io/diary", settings).getCanonicalFile());
+		assertEquals(baseDir,
+				SimpleDirUtil.url2File("https://igapyon.github.io/diary/", settings).getCanonicalFile());
+		assertEquals(new File(baseDir, "aaa"),
+				SimpleDirUtil.url2File("https://igapyon.github.io/diary/aaa", settings).getCanonicalFile());
+		assertEquals(new File(baseDir, "bbb"),
+				SimpleDirUtil.url2File("https://igapyon.github.io/diary/bbb", settings).getCanonicalFile());
+		assertEquals(new File(baseDir, "bbb"),
+				SimpleDirUtil.url2File("https://igapyon.github.io/diary/bbb/", settings).getCanonicalFile());
+		assertEquals(new File(baseDir, "bbb.txt"),
+				SimpleDirUtil.url2File("https://igapyon.github.io/diary/bbb.txt", settings).getCanonicalFile());
 	}
 
 	@Test

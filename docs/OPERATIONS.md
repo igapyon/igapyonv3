@@ -16,6 +16,21 @@ mvn clean install
 MAVEN_OPTS="-Djava.net.preferIPv4Stack=true" mvn -U install
 ```
 
+## GitHub Releasesの配布JAR生成
+
+[`build.yml`](../.github/workflows/build.yml)は`devel`・`main`へのpushと両ブランチ宛てのPull Requestでテストとビルドを実行します。Release配布物はartifactではなく、GitHub Releaseへ添付します。
+
+[`release.yml`](../.github/workflows/release.yml)は`v*`タグのpushで動作します。タグの`v`以降がPOMのproject versionと完全一致することを確認してから、タグのソースをTemurin JDK 17でテスト・ビルドします。本体のclass出力はPOMの`release=11`に従います。
+
+成功すると、そのタグのGitHub Releaseを作成または更新し、次の2つのJARを添付します。同名の添付ファイルが既にある場合は置き換えます。
+
+- `igapyonv3-<version>.jar`
+- `igapyonv3-sources-<version>.jar`
+
+実行用JARにはMaven Assembly Pluginで依存ライブラリを含め、配布名を`igapyonv3-<version>.jar`に揃えます。sources JARはMaven Source Pluginで通常の`clean verify`時に生成します。
+
+リリースするコミットを選び、POMと一致する`v<version>`タグを作成してoriginへpushすると配布を開始します。失敗時はActionsの実行ログを確認してください。
+
 ## igapyonv3 の使用例
 
 ※前提条件: `exec-maven-plugin` の `igdiary` 実行設定を `pom.xml` に追加済みであること。利用者の実行は `mvn clean exec:java@igdiary antrun:run` が正解。
