@@ -113,14 +113,15 @@ ${setSourcebaseurl("https://github.com/your/repo/blob/master")}
 
 補足:
 
-- JDK は `maven-compiler-plugin` で 1.8 指定。
+- igapyonv3 の実行には JDK 11 以上を使用する。
 - `exec-maven-plugin` により `mvn install exec:java` で `igapyon.diary.ghpages.App` を実行可能。
 
 ## 本リポジトリの pom.xml 概要
 
 このリポジトリ配下の `pom.xml` の要点。
 
-- Java 8互換のclassを生成する（`maven.compiler.source/target=1.8`、`maven-compiler-plugin` の `release=8`）。ビルドには新しいJDKを利用できる。
+- Java 11形式のclass（major 55）を生成する（`maven.compiler.source/target=11`、`maven-compiler-plugin` の `release=11`）。ビルド確認には JDK 17 を使用している。
+- 通常の JAR と依存込み JAR の実行には JDK 11 以上が必要。
 - 主要依存は flexmark/freemarker/rome/tagsoup/commons-*。
 - `maven-assembly-plugin` で依存込み JAR を作成し、`mainClass` は `jp.igapyon.diary.igapyonv3.IgDiaryProcessor`。
 - テストは `maven-surefire-plugin`（言語/地域を en/US に固定）。
