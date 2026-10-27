@@ -183,6 +183,7 @@ public class SimpleDirUtil {
 	 * @deprecated 使いドコロがあったはずと思って作成したものの、実際に適用しようとしたらフィットする箇所がない。とりあえず
 	 *             deprecated マークとする
 	 */
+	@Deprecated
 	public static File url2File(String url, final IgapyonV3Settings settings) throws IOException {
 		if (url.startsWith(settings.getBaseurl()) == false) {
 			throw new IOException(

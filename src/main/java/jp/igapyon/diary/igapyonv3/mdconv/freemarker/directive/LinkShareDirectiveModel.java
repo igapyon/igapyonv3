@@ -41,7 +41,7 @@ import org.apache.commons.codec.EncoderException;
 import org.apache.commons.codec.net.URLCodec;
 
 import freemarker.core.Environment;
-import freemarker.ext.beans.StringModel;
+import freemarker.ext.beans.BeanModel;
 import freemarker.template.TemplateDirectiveBody;
 import freemarker.template.TemplateDirectiveModel;
 import freemarker.template.TemplateException;
@@ -68,7 +68,7 @@ public class LinkShareDirectiveModel implements TemplateDirectiveModel {
 			final TemplateModel[] loopVars, final TemplateDirectiveBody body) throws TemplateException, IOException {
 		final BufferedWriter writer = new BufferedWriter(env.getOut());
 
-		final StringModel smodel = (StringModel) env.getDataModel().get("current");
+		final BeanModel smodel = (BeanModel) env.getDataModel().get("current");
 		final IgapyonV3Current current = (IgapyonV3Current) smodel.getWrappedObject();
 
 		String urlString = current.getUrl();

@@ -33,13 +33,14 @@
 
 package jp.igapyon.diary.igapyonv3.md2html;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.Writer;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 
-import org.apache.commons.io.IOUtils;
 import jp.igapyon.diary.igapyonv3.md2html.tagconf.IgapyonMdTagConf;
 import jp.igapyon.diary.igapyonv3.md2html.flexmark.FlexmarkUtil;
 
@@ -47,7 +48,6 @@ import jp.igapyon.diary.igapyonv3.md2html.flexmark.FlexmarkUtil;
  * utils for igapyonv3
  * 
  * @author Toshiki Iga
- * @deprecated tobe Apache FileUtils
  */
 public class IgapyonV3Util {
 	/**
@@ -60,11 +60,14 @@ public class IgapyonV3Util {
 	 *             io exception occurs.
 	 */
 	public static String readTextFile(final File file) throws IOException {
-		final FileInputStream inStream = new FileInputStream(file);
-		try {
-			return IOUtils.toString(inStream, "UTF-8");
-		} finally {
-			IOUtils.closeQuietly(inStream);
+		try (BufferedReader reader = Files.newBufferedReader(file.toPath(), StandardCharsets.UTF_8)) {
+			final StringBuilder content = new StringBuilder();
+			final char[] buffer = new char[8192];
+			int length;
+			while ((length = reader.read(buffer)) != -1) {
+				content.append(buffer, 0, length);
+			}
+			return content.toString();
 		}
 	}
 
@@ -79,12 +82,8 @@ public class IgapyonV3Util {
 	 *             io exception occurs.
 	 */
 	public static void writeHtmlFile(final String strHtml, final File file) throws IOException {
-		final FileOutputStream outStream = new FileOutputStream(file);
-		try {
-			IOUtils.write(strHtml, outStream, "UTF-8");
-			outStream.flush();
-		} finally {
-			IOUtils.closeQuietly(outStream);
+		try (BufferedWriter writer = Files.newBufferedWriter(file.toPath(), StandardCharsets.UTF_8)) {
+			writer.write(strHtml);
 		}
 	}
 

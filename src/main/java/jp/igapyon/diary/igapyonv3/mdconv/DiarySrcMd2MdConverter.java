@@ -44,7 +44,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.lang3.StringUtils;
 
 import jp.igapyon.diary.igapyonv3.mdconv.freemarker.IgapyonV3FreeMarkerUtil;
 import jp.igapyon.diary.igapyonv3.util.IgapyonV3Settings;
@@ -131,7 +130,7 @@ public class DiarySrcMd2MdConverter {
 			line = MdTextUtil.convertDoubleKeyword2MdLink(line, file.getParentFile(), settings);
 
 			// タブは２スペースに変換。
-			line = StringUtils.replaceAll(line, "\t", "  ");
+			line = line.replace("\t", "  ");
 
 			// 直リンク形式を md リンク形式に変換します。
 			// FreeMarker の都合、＜リンク＞の形式は利用せず、直リンク形式を採用しています。

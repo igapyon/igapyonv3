@@ -38,11 +38,12 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.net.URL;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.lang3.StringEscapeUtils;
+import org.apache.commons.text.StringEscapeUtils;
 
 import com.rometools.rome.feed.synd.SyndEntry;
 import com.rometools.rome.feed.synd.SyndEntryImpl;
@@ -110,9 +111,9 @@ public class SimpleRomeUtil {
 	 */
 	public static String atomxml2String(final URL atomURL, final int maxcount) throws IOException {
 		String indexmdText = "";
-		try {
-		    SyndFeedInput feedInput = new SyndFeedInput();
-			final SyndFeed synFeed = feedInput.build(new XmlReader(atomURL));
+		try (InputStream inStream = atomURL.openStream()) {
+			final SyndFeedInput feedInput = new SyndFeedInput();
+			final SyndFeed synFeed = feedInput.build(new XmlReader(inStream));
 
 			// FIXME File 版と挙動が異なります。いつか直します。
 

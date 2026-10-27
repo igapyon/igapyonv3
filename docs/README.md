@@ -17,7 +17,7 @@ igapyonv3
   * Markdown コンテンツをサポート。
   * RSS フィードをサポート。
   * Freemarker と igapyonv3 独自の日記ディレクティブをサポート。
-  * Markdown から Bootstrap ベースの HTML へ変換も可能。
+  * Markdown から Tailwind CSS ベースの HTML へ変換も可能。
   * GitHub Pages への出力は deprecated。
 
 ## Docs
@@ -89,10 +89,10 @@ mvn jp.igapyon.diary.igapyonv3.plugin:igapyonv3-maven-plugin:inittemplate
 Markdown と HTML を生成/更新するには、次のコマンドを実行します:
 
 ```sh
-mvn compile
+mvn clean exec:java@igdiary antrun:run
 ```
 
-XXX.src.md を更新した場合は、`mvn compile` を再実行すると、更新された `md` / `html` と各種インデックスファイルが生成されます。
+XXX.src.md を更新した場合は、`mvn clean exec:java@igdiary antrun:run` を再実行すると、更新された `md` / `html` と各種インデックスファイルが生成されます。
 
 ## ライセンス
 

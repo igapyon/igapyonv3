@@ -68,6 +68,7 @@ public class SimpleDirUtilTest {
 	}
 
 	@Test
+	@SuppressWarnings("deprecation")
 	public void testUrl2File() throws Exception {
 		IgapyonV3Settings settings = new IgapyonV3Settings();
 		settings.setRootdir(new File("/private/tmp/aaa/"));
