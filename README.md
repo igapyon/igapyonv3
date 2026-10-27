@@ -14,8 +14,13 @@ HTML 出力は Tailwind CSS を前提とした class を付与します。
 - `jp.igapyon.diary.igapyonv3.migration.html2md.IgapyonV2Html2MdConverter` : 旧 igapyonv2 の HTML を Markdown に移行する CLI。
 - `jp.igapyon.diary.igapyonv3.migration.hatena2md.HatenaXml2SeparatedTextConverter` : はてなダイアリーの XML を分割 Markdown に変換する CLI。
 
-### Javaの互換性
-`pom.xml`の`maven.compiler.release=8`により、igapyonv3本体はJava 8形式（class major 52）で出力します。現在のビルド確認にはJDK 17を使用しています。一方、flexmark-java 0.64.8の依存classはmajor 55（Java 11）で、JDK 8では読み込めません。現在の依存構成で実行するにはJDK 11以上が必要です。
+### Java の互換性
+
+- ビルド確認環境: JDK 17。
+- 本体のclass出力: Java 11形式（class major 55）。`pom.xml`の`maven-compiler-plugin`で`release=11`を指定しています。
+- 実行環境: JDK 11以上。
+
+本体と依存するflexmark-java 0.64.8の実行要件をJava 11以上に揃えています。通常のJARと依存込みJARのどちらも、実行にはJDK 11以上が必要です。
 
 ### ライセンス
 [Igapyon Diary System v3](https://github.com/igapyon/igapyonv3) は GNU LGPL v3 と Apache License v2 のデュアルライセンスで提供されます。  
