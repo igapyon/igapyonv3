@@ -1,0 +1,25 @@
+{
+  "schema_version": "miku-scm.runner/v1",
+  "run_id": "20261027043418428-3669382b-4bdf-4dde-aa9f-259ae22f184f",
+  "workflow": "version.status",
+  "workflow_version": 1,
+  "workflow_manifest_version": "miku-scm.workflow-manifest/v2",
+  "mutation_level": "readonly",
+  "approval_gate": "none",
+  "workflow_contract": "version.status",
+  "contract_version": 1,
+  "contract_pair_sha256": "ddfb19c99f7984a943b00fd36d31f76339fcad1d6951de1b3833cb3587560c0d",
+  "workflow_contract_lock_version": "miku-scm.workflow-contract-lock/v1",
+  "operation": "version-status",
+  "repository": "/Users/igapyon/Documents/git/igapyonv3",
+  "version_files": [
+    "pom.xml"
+  ],
+  "coupled_version_files": [
+    "src/main/java/jp/igapyon/diary/igapyonv3/md2html/IgapyonMd2HtmlConstants.java"
+  ],
+  "policy": "auto",
+  "timezone": null,
+  "level": null,
+  "mutation_invocation_allowed": false
+}

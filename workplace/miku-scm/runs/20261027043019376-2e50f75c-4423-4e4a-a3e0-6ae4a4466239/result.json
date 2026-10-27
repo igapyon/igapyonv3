@@ -1,0 +1,51 @@
+{
+  "schema_version": "miku-scm.runner-result/v1",
+  "run_id": "20261027043019376-2e50f75c-4423-4e4a-a3e0-6ae4a4466239",
+  "workflow": "version.status",
+  "workflow_version": 1,
+  "workflow_manifest_version": "miku-scm.workflow-manifest/v2",
+  "mutation_level": "readonly",
+  "approval_gate": "none",
+  "workflow_contract": "version.status",
+  "contract_version": 1,
+  "contract_pair_sha256": "ddfb19c99f7984a943b00fd36d31f76339fcad1d6951de1b3833cb3587560c0d",
+  "workflow_contract_lock_version": "miku-scm.workflow-contract-lock/v1",
+  "status": "success",
+  "delegate_status": "inspected",
+  "started_at": "2026-10-27T04:30:19.376Z",
+  "finished_at": "2026-10-27T04:30:19.437Z",
+  "duration_ms": 59.59,
+  "mutation_invoked": false,
+  "run_directory": "workplace/miku-scm/runs/20261027043019376-2e50f75c-4423-4e4a-a3e0-6ae4a4466239",
+  "result": {
+    "schema_version": "miku-scm.version/v1",
+    "status": "inspected",
+    "readonly": true,
+    "mutation_invoked": false,
+    "identity_sha256": "e4b90ac0f047cb8cea46b1caaf2c7dc575d1487a1a665e6c9bbf0de72b9aab44",
+    "repository": "igapyonv3",
+    "root": "/Users/igapyon/Documents/git/igapyonv3",
+    "branch": "tiga0104k",
+    "head": "e166c7a0d54db848cb7d4ed2ad4f222c5157ee03",
+    "dirty": true,
+    "policy": "auto",
+    "policy_explicit": false,
+    "policy_matches_source": null,
+    "policy_resolved": false,
+    "timezone": null,
+    "level": null,
+    "authoritative": [
+      {
+        "path": "pom.xml",
+        "role": "authoritative",
+        "value": "2.0.20260104.3",
+        "format_candidates": []
+      }
+    ],
+    "coupled": [],
+    "alignment": "not-configured",
+    "proposed": null
+  },
+  "human_output_schema_version": "miku-scm.human-output/v15",
+  "human_output": "[SUCCESS] Version status\n\nRepository: igapyonv3\nBranch: tiga0104k\nDelegate status: inspected\nPolicy: auto\nPolicy resolved: no\nCurrent value (pom.xml): 2.0.20260104.3\nMutation invoked: no\n"
+}
