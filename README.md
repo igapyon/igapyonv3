@@ -22,6 +22,15 @@ HTML 出力は Tailwind CSS を前提とした class を付与します。
 
 本体と依存するflexmark-java 0.64.8の実行要件をJava 11以上に揃えています。通常のJARと依存込みJARのどちらも、実行にはJDK 11以上が必要です。
 
+### GitHub Releasesの配布JAR
+
+POMのバージョンと一致する`v<version>`タグをpushすると、GitHub ActionsがJDK 17でテスト・ビルドし、次の2ファイルをGitHub Releaseへ添付します。
+
+- 実行用JAR（依存ライブラリ込み）: `igapyonv3-<version>.jar`
+- ソースJAR: `igapyonv3-sources-<version>.jar`
+
+本体のclass出力はPOMの`release=11`に従います。詳しくは[運用手順](docs/OPERATIONS.md#github-releasesの配布jar生成)を参照してください。
+
 ### ライセンス
 [Igapyon Diary System v3](https://github.com/igapyon/igapyonv3) は GNU LGPL v3 と Apache License v2 のデュアルライセンスで提供されます。  
 LGPL または ASL、あるいは両方を選択できます。
